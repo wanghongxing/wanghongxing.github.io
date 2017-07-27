@@ -29,14 +29,21 @@
   <script src="../dist/js/bootstrap.js"></script>
 {% endif %}
 
-{% if site.github %}
+ <!-- {% if site.github %} 
   <script src="../assets/js/docs.min.js"></script>
-{% else %}
+  {% else %}
   {% for file in site.data.configBridge.paths.docsJs %}
+  whxwhxwhx
   <script src="{{ file }}"></script>
   {% endfor %}
-{% endif %}
+{% endif %}   -->
 
+        <script src="../assets/js/vendor/holder.min.js"></script>
+        <script src="../assets/js/vendor/ZeroClipboard.min.js"></script>
+        <script src="../assets/js/vendor/anchor.min.js"></script>
+        <script src="../assets/js/src/application.js"></script>
+
+<!-- 
 {% if page.slug == "customize" %}
   <script>var __configBridge = {{ site.data.configBridge.config | jsonify }}</script>
   {% if site.github %}
@@ -46,7 +53,7 @@
     <script src="{{ file }}"></script>
     {% endfor %}
   {% endif %}
-{% endif %}
+{% endif %} -->
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="../assets/js/ie10-viewport-bug-workaround.js"></script>
