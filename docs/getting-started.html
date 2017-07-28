@@ -1,28 +1,16 @@
 ---
 layout: default
-title: Getting started
+title: 基础入门
 slug: getting-started
-lead: "An overview of Bootstrap, how to download and use, basic templates and examples, and more."
+lead: "怎么从头开始新建项目到发布上线"
 ---
 
+{% capture prepare_include %}{% include getting-started/prepare.md %}{% endcapture %}
+{{ prepare_include | markdownify }} 
 
-{% include getting-started/download.html %}
-{% include getting-started/whats-included.html %}
-{% include getting-started/grunt.html %}
-{% include getting-started/template.html %}
-{% include getting-started/examples.html %}
-{% include getting-started/tools.html %}
-{% include getting-started/community.html %}
-{% include getting-started/disabling-responsiveness.html %}
+{% capture create_project_include %}{% include getting-started/create-project.md %}{% endcapture %}
+{{ create_project_include | markdownify }} 
+ 
 
-<!-- Cross link to new migration page -->
-<div class="bs-callout bs-callout-info" id="migration">
-  <h4>Migrating from v2.x to v3.x</h4>
-  <p>Looking to migrate from an older version of Bootstrap to v3.x? Check out <a href="../migration">our migration guide</a>.</p>
-</div>
-
-{% include getting-started/browser-device-support.html %}
-{% include getting-started/third-party-support.html %}
-{% include getting-started/accessibility.html %}
-{% include getting-started/license.html %}
-{% include getting-started/translations.html %}
+{% capture create_page_include %}{% include getting-started/create-page.md %}{% endcapture %}
+{{ create_page_include | markdownify }} 
