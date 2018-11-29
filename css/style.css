@@ -352,6 +352,7 @@ body {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
+  background-color: #262a30;
   z-index: -1;
 }
 #header-title {
