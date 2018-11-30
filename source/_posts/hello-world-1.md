@@ -1,7 +1,9 @@
 ---
 title: hello world
 date: 2018-11-29 15:01:48
+category: test
 tags:
+  - test
 ---
 
 # 标题1
@@ -54,7 +56,7 @@ __Coding，让开发更简单__
 
 只要把你的代码块包裹在 “` 之间，你就不需要通过无休止的缩进来标记代码块了。 在围栏式代码块中，你可以指定一个可选的语言标识符，然后我们就可以为它启用语法着色了。 举个例子，这样可以为一段 Ruby 代码着色：
 
-```ruby
+```JS
 require 'redcarpet'
 markdown = Redcarpet.new("Hello World!")
 puts markdown.to_html
@@ -64,7 +66,9 @@ puts markdown.to_html
 ## 自动链接
 
 方括号显示说明，圆括号内显示网址， Markdown 会自动把它转成链接，例如：
-
+```
+[超强大的云开发平台Coding](http://coding.net)
+```
 [超强大的云开发平台Coding](http://coding.net)
 
 

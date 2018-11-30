@@ -3,12 +3,12 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: wanghongxing blog
-subtitle: 没有副标题
-description: 试一试
+title: 老王
+subtitle: 
+description: 
 keywords:
-author: wang hongxing
-language: zh-CN
+author: 王红星
+language: zh-cn
 timezone:
 
 # URL
@@ -29,7 +29,7 @@ i18n_dir: :lang
 skip_render:
 
 # Writing
-new_post_name: :title.md # File name of new posts
+new_post_name: title.md # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
@@ -40,7 +40,7 @@ relative_link: false
 future: true
 highlight:
   enable: true
-  line_number: true
+  line_number: false
   auto_detect: false
   tab_replace:
   
@@ -73,7 +73,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: even
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -81,3 +81,6 @@ deploy:
   type: git
   repo: git@github.com:wanghongxing/wanghongxing.github.io.git
   branch: master
+
+
+
