@@ -188,6 +188,51 @@
     <header class="post-header">
       <h1 class="post-title">
         
+          <a class="post-link" href="/2018/11/30/windows-run-spring-boot-as-services/">在windows以服务的方式启动springboot</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-11-30
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>了解一下：<br><a href="https://github.com/kohsuke/winsw" target="_blank" rel="noopener">Windows service wrapper </a><br>这个软件可以把任何程序作为服务运行，首先下载exe执行文件，我的执行文件命名:customs.exe<br>创建customs.xml<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">service</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>Customs<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Customs<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>This runs Spring Boot Customs as a Service.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executable</span>&gt;</span>java<span class="tag">&lt;/<span class="name">executable</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arguments</span>&gt;</span>-Xmx256m -jar  -Dspring.profiles.active=test "c:\jenkins\soft\customs\customs.jar"<span class="tag">&lt;/<span class="name">arguments</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logmode</span>&gt;</span>rotate<span class="tag">&lt;/<span class="name">logmode</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>然后执行安装服务命令<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\jenkins\soft\customs&gt;customs install</span><br><span class="line">2018-11-30 11:11:23,416 INFO  - Installing the service with id &apos;Customs&apos;</span><br></pre></td></tr></table></figure></p>
+<p>启动服务<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\jenkins\soft\customs&gt;customs start</span><br><span class="line">2018-11-30 11:12:42,031 INFO  - Starting the service with id &apos;Customs&apos;</span><br><span class="line"></span><br><span class="line">C:\jenkins\soft\customs&gt;dir</span><br><span class="line"> 驱动器 C 中的卷没有标签。</span><br><span class="line"> 卷的序列号是 BCFA-AA62</span><br><span class="line"></span><br><span class="line"> C:\jenkins\soft\customs 的目录</span><br><span class="line"></span><br><span class="line">2018/11/30  11:12    &lt;DIR&gt;          .</span><br><span class="line">2018/11/30  11:12    &lt;DIR&gt;          ..</span><br><span class="line">2018/11/30  11:12                 0 customs.err.log</span><br><span class="line">2018/11/30  11:06           360,448 customs.exe</span><br><span class="line">2018/11/30  10:37        39,628,558 customs.jar</span><br><span class="line">2018/11/30  11:12               978 customs.out.log</span><br><span class="line">2018/11/30  11:12             1,612 customs.wrapper.log</span><br><span class="line">2018/11/30  11:09               367 customs.xml</span><br></pre></td></tr></table></figure></p>
+<p>其中customs.out.log 是spring boot 的执行日志，customs.err.log是错误日志<br>customs.wrapper.log是service wrapper 的执行日志</p>
+<p>看到目录名是jenkins开头的，其实这个项目是用jenkins做CI的，在windows节点执行，要求windows节点接入的时候用管理员身份执行，项目用maven打包完成后添加一个windows shell任务<br>shell脚本如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rem copy jar to c:\jenkins\customs\customs.jar</span><br><span class="line">copy target\customs-0.0.1-SNAPSHOT.jar c:\jenkins\soft\customs\customs.jar</span><br><span class="line">rem 进入工作目录</span><br><span class="line">cd c:\jenkins\soft\customs</span><br><span class="line"></span><br><span class="line">rem 停止服务</span><br><span class="line">customs stop</span><br><span class="line"></span><br><span class="line">rem 启动服务</span><br><span class="line">customs start</span><br></pre></td></tr></table></figure></p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
           <a class="post-link" href="/2018/11/29/开始测试/">开始测试</a>
         
       </h1>
