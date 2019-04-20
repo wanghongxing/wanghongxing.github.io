@@ -111,7 +111,7 @@ cryptogen 使用 crypto-config.yml 做配置文件，配置文件中包含了网
 超级账本上的交易和通讯采用实体的私钥来签名，并用他自己的公钥校验。
 
 orderer 名字从配置文件里根据 Specs/Hostname 及 Domain 来确定
-> The naming convention for a network entity is as follows - “{{.Hostname}}.{{.Domain}}”. So using our ordering node as a reference point, we are left with an ordering node named - orderer.example.com that is tied to an MSP ID of Orderer. This file contains extensive documentation on the definitions and syntax. You can also refer to the Membership Service Providers (MSP) documentation for a deeper dive on MSP.
+> The naming convention for a network entity is as follows - “{ {.Hostname} }.{ {.Domain} }”. So using our ordering node as a reference point, we are left with an ordering node named - orderer.example.com that is tied to an MSP ID of Orderer. This file contains extensive documentation on the definitions and syntax. You can also refer to the Membership Service Providers (MSP) documentation for a deeper dive on MSP.
 
 > After we run the cryptogen tool, the generated certificates and keys will be saved to a folder titled crypto-config.
 
