@@ -1,5 +1,5 @@
 ---
-title: Hello World
+title: hexo 的基本用法
 category: test
 tags:
   - test

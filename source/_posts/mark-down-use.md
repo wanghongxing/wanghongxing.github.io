@@ -1,5 +1,5 @@
 ---
-title: hello world
+title: mark down 的基本用法
 date: 2018-11-29 15:01:48
 category: test
 tags:
@@ -42,12 +42,20 @@ allala
 在Markdown中，可以使用 * 和  _  来表示斜体和加粗。
 
 ## 斜体：
-
+```
+*Coding，让开发更简单*
+_Coding，让开发更简单_
+```
 *Coding，让开发更简单*
 _Coding，让开发更简单_
 
 
 ## 加粗：
+
+```
+**Coding，让开发更简单**
+__Coding，让开发更简单__
+```
 
 **Coding，让开发更简单**
 __Coding，让开发更简单__
@@ -95,11 +103,12 @@ Content Cell | Content Cell  | Content Cell
 ```
 这是分隔线上部分内容
 ---
-这是分隔线上部分内容
+这是分隔线下部分内容
 ```
 效果图如下：
 
-
 这是分隔线上部分内容
 ---
-这是分隔线上部分内容
+这是分隔线下部分内容
+
+没有了
