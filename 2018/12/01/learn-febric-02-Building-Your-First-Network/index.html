@@ -17,6 +17,8 @@
 
 
 
+  <meta name="description" content="learn febric 02 Building Your First Network">
+
 
 
 
@@ -38,7 +40,7 @@
 
 
 
-<link rel="canonical" href="http://wanghongxing.github.io/">
+<link rel="canonical" href="http://wanghongxing.github.io/2018/12/01/learn-febric-02-Building-Your-First-Network/">
 
 
 
@@ -86,7 +88,7 @@
   window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
 </script>
 
-    <title> wanghongxing </title>
+    <title> learn febric 02 Building Your First Network - wanghongxing </title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -180,55 +182,11 @@
           <div id="content" class="content">
             
   
-  <section id="posts" class="posts">
-    
-      
-        
   <article class="post">
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2018/12/05/python-学画图/">python 学画图</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-12-05
-        </span>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-
-        
-          <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip install numpy</span><br><span class="line">pip install scipy</span><br><span class="line">sudo apt-get install python-matplotlib</span><br></pre></td></tr></table></figure>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/12/01/learn-febric-02-Building-Your-First-Network/">learn febric 02 Building Your First Network</a>
+          learn febric 02 Building Your First Network
         
       </h1>
 
@@ -243,15 +201,18 @@
 
     
     
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#加密生成器-Crypto-Generator"><span class="toc-text">加密生成器 Crypto Generator</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#加密是怎么工作的-How-does-it-work"><span class="toc-text">加密是怎么工作的 How does it work?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#交易配置生成器-Configuration-Transaction-Generator"><span class="toc-text">交易配置生成器 Configuration Transaction Generator</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#交易配置生成器是怎么工作的-How-does-it-work"><span class="toc-text">交易配置生成器是怎么工作的 How does it work?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行工具-Run-the-tools"><span class="toc-text">运行工具 Run the tools</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#手动创建-Manually-generate-the-artifacts"><span class="toc-text">手动创建 Manually generate the artifacts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建-一个-Channel-Configuration-Transaction"><span class="toc-text">创建 一个 Channel Configuration Transaction</span></a></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#The-channel-tx-artifact-contains-the-definitions-for-our-sample-channel"><span class="toc-text">The channel.tx artifact contains the definitions for our sample channel</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#启动网络-Start-the-network"><span class="toc-text">启动网络 Start the network</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#环境变量-Environment-variables"><span class="toc-text">环境变量 Environment variables</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建、加入-Channel-Create-amp-Join-Channel"><span class="toc-text">创建、加入 Channel Create &amp; Join Channel</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结果"><span class="toc-text">结果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#this-installs-the-Go-chaincode-For-go-chaincode-p-takes-the-relative-path-from-GOPATH-src"><span class="toc-text">this installs the Go chaincode. For go chaincode -p takes the relative path from $GOPATH/src</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#环境变量"><span class="toc-text">环境变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#this-installs-the-Node-js-chaincode"><span class="toc-text">this installs the Node.js chaincode</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#make-note-of-the-l-flag-to-indicate-“node”-chaincode"><span class="toc-text">make note of the -l flag to indicate “node” chaincode</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#for-node-chaincode-p-takes-the-absolute-path-to-the-node-js-chaincode"><span class="toc-text">for node chaincode -p takes the absolute path to the node.js chaincode</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#make-note-of-the-l-flag-to-indicate-“java”-chaincode"><span class="toc-text">make note of the -l flag to indicate “java” chaincode</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#for-java-chaincode-p-takes-the-absolute-path-to-the-java-chaincode"><span class="toc-text">for java chaincode -p takes the absolute path to the java chaincode</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#be-sure-to-replace-the-CHANNEL-NAME-environment-variable-if-you-have-not-exported-it"><span class="toc-text">be sure to replace the $CHANNEL_NAME environment variable if you have not exported it</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#if-you-did-not-install-your-chaincode-with-a-name-of-mycc-then-modify-that-argument-as-well"><span class="toc-text">if you did not install your chaincode with a name of mycc, then modify that argument as well</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#be-sure-to-replace-the-CHANNEL-NAME-environment-variable-if-you-have-not-exported-it-1"><span class="toc-text">be sure to replace the $CHANNEL_NAME environment variable if you have not exported it</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#if-you-did-not-install-your-chaincode-with-a-name-of-mycc-then-modify-that-argument-as-well-1"><span class="toc-text">if you did not install your chaincode with a name of mycc, then modify that argument as well</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#notice-that-we-must-pass-the-l-flag-after-the-chaincode-name-to-identify-the-language"><span class="toc-text">notice that we must pass the -l flag after the chaincode name to identify the language</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#be-sure-to-set-the-C-and-n-flags-appropriately"><span class="toc-text">be sure to set the -C and -n flags appropriately</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#be-sure-to-set-the-C-and-n-flags-appropriately-1"><span class="toc-text">be sure to set the -C and -n flags appropriately</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#提示出错了"><span class="toc-text">提示出错了</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#再转-a-gt-b-2"><span class="toc-text">再转 a=&gt;b 2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#b-gt-a-3"><span class="toc-text">b=&gt;a 3</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#这到底都干了些什么-What’s-happening-behind-the-scenes"><span class="toc-text">这到底都干了些什么 What’s happening behind the scenes?</span></a></li></ol>
+    </li></div>
+  </div>
+
 
 
     <div class="post-content">
       
-        
-        
-
-        
-          <p>参照官网：<br><a href="https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html" target="_blank" rel="noopener">https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html</a></p>
+        <p>参照官网：<br><a href="https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html" target="_blank" rel="noopener">https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html</a></p>
 <blockquote>
 <p>We provide a fully annotated script - byfn.sh - that leverages these Docker images to quickly bootstrap a Hyperledger Fabric network comprised of 4 peers representing two different organizations, and an orderer node. It will also launch a container to run a scripted execution that will join peers to a channel, deploy and instantiate chaincode and drive execution of transactions against the deployed chaincode.</p>
 </blockquote>
@@ -441,341 +402,58 @@
 </li>
 </ul>
 
-        
       
     </div>
 
     
-
-    
-
-  </article>
-
       
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/12/01/破解光猫/">破解光猫</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-12-01
-        </span>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
       
-        
-        
-
-        
-          <p>从<a href="https://blog.csdn.net/kt_ZhangSheng/article/details/80855083" target="_blank" rel="noopener">这里看到</a></p>
-<blockquote>
-<p>进入TEWA-800E的管理页面，发现只能使用默认用户user登陆，而user没有修改路由模式的权限，现在的问题就是想办法登陆超级用户了，查到超级用户账号密码为CUAdmin/CUAdmin。以前似乎可以使用cu.html来登陆，但我试了下，现在（2018年6月底）应该是已经封掉了。<br>Chrome打开光猫登陆页面，默认是192.168.1.1，F12进入开发工具，在source中可以看到user_name固定为user，且提交时还加了对用户名的验证。 找到对应的代码，拷贝到console，修改user_name的值为CUAdmin，去掉用户名的验证。 </p>
-</blockquote>
-<p>就是在console中执行<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">document.getElementById(&apos;user_name&apos;).value= &apos;CUAdmin&apos;;</span><br><span class="line">function submitFrm()</span><br><span class="line">&#123;</span><br><span class="line">  document.getElementById(&apos;loginfrm&apos;).submit();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>就进入管理界面</p>
-<p>上行管理中设置第二个连接为桥接方式，保存就可以了。<br>然后在自己的路由器中设置wlan为ppoe方式，填上用户名密码就行了。</p>
-
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/11/30/learn-febric-01-install-samples-binaries-docker-images/">learn febric install samples, Binaries and Docker Images</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-11-30
-        </span>
-        
-        
-      </div>
-    </header>
-
-    
-    
 
 
-    <div class="post-content">
-      
-        
-        
-
-        
-          <p><a href="https://hyperledger-fabric.readthedocs.io/en/latest/install.html" target="_blank" rel="noopener">Febric GetStart</a></p>
-<p>新建一个试验项目目录，我起名 febric ,在这个目录里执行如下命令<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl -sSL http://bit.ly/2ysbOFE | bash -s 1.3.0</span><br></pre></td></tr></table></figure></p>
-<p>我自己curl执行错误，就手动下载<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh</span><br></pre></td></tr></table></figure></p>
-<p>保存为bootstrap.sh,然后手动执行</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chmod +x bootstrap.sh</span><br><span class="line">./bootstrap.sh  -s 1.3.0</span><br></pre></td></tr></table></figure>
-<p>应该是下载了好多tools在bin目录，这个目录需要设置的path中<br>下载速度比较慢…</p>
-<blockquote>
-<p>The command above downloads and executes a bash script that will download and extract all of the platform-specific binaries you will need to set up your network and place them into the cloned repo you created above. It retrieves the following platform-specific binaries:</p>
-<ul>
-<li>configtxgen,</li>
-<li>configtxlator,</li>
-<li>cryptogen,</li>
-<li>discover,</li>
-<li>idemixgen</li>
-<li>orderer,</li>
-<li>peer, and</li>
-<li>fabric-ca-client<br><code>`</code><br>Finally, the script will download the Hyperledger Fabric docker images from Docker Hub into your local Docker registry and tag them as ‘latest’.</li>
-</ul>
-</blockquote>
-<p>然后最好把～/febric/bin 添加到系统 PATH 中，方便执行</p>
-
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/11/30/windows-run-spring-boot-as-services/">在windows以服务的方式启动springboot</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-11-30
-        </span>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-
-        
-          <p>了解一下：<br><a href="https://github.com/kohsuke/winsw" target="_blank" rel="noopener">Windows service wrapper </a><br>这个软件可以把任何程序作为服务运行，首先下载exe执行文件，我的执行文件命名:customs.exe<br>创建customs.xml<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">service</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>Customs<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Customs<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>This runs Spring Boot Customs as a Service.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executable</span>&gt;</span>java<span class="tag">&lt;/<span class="name">executable</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arguments</span>&gt;</span>-Xmx256m -jar  -Dspring.profiles.active=test "c:\jenkins\soft\customs\customs.jar"<span class="tag">&lt;/<span class="name">arguments</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logmode</span>&gt;</span>rotate<span class="tag">&lt;/<span class="name">logmode</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>然后执行安装服务命令<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\jenkins\soft\customs&gt;customs install</span><br><span class="line">2018-11-30 11:11:23,416 INFO  - Installing the service with id &apos;Customs&apos;</span><br></pre></td></tr></table></figure></p>
-<p>启动服务<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\jenkins\soft\customs&gt;customs start</span><br><span class="line">2018-11-30 11:12:42,031 INFO  - Starting the service with id &apos;Customs&apos;</span><br><span class="line"></span><br><span class="line">C:\jenkins\soft\customs&gt;dir</span><br><span class="line"> 驱动器 C 中的卷没有标签。</span><br><span class="line"> 卷的序列号是 BCFA-AA62</span><br><span class="line"></span><br><span class="line"> C:\jenkins\soft\customs 的目录</span><br><span class="line"></span><br><span class="line">2018/11/30  11:12    &lt;DIR&gt;          .</span><br><span class="line">2018/11/30  11:12    &lt;DIR&gt;          ..</span><br><span class="line">2018/11/30  11:12                 0 customs.err.log</span><br><span class="line">2018/11/30  11:06           360,448 customs.exe</span><br><span class="line">2018/11/30  10:37        39,628,558 customs.jar</span><br><span class="line">2018/11/30  11:12               978 customs.out.log</span><br><span class="line">2018/11/30  11:12             1,612 customs.wrapper.log</span><br><span class="line">2018/11/30  11:09               367 customs.xml</span><br></pre></td></tr></table></figure></p>
-<p>其中customs.out.log 是spring boot 的执行日志，customs.err.log是错误日志<br>customs.wrapper.log是service wrapper 的执行日志</p>
-<p>看到目录名是jenkins开头的，其实这个项目是用jenkins做CI的，在windows节点执行，要求windows节点接入的时候用管理员身份执行，项目用maven打包完成后添加一个windows shell任务<br>shell脚本如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rem copy jar to c:\jenkins\customs\customs.jar</span><br><span class="line">copy target\customs-0.0.1-SNAPSHOT.jar c:\jenkins\soft\customs\customs.jar</span><br><span class="line">rem 进入工作目录</span><br><span class="line">cd c:\jenkins\soft\customs</span><br><span class="line"></span><br><span class="line">rem 停止服务</span><br><span class="line">customs stop</span><br><span class="line"></span><br><span class="line">rem 启动服务</span><br><span class="line">customs start</span><br></pre></td></tr></table></figure></p>
-
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/11/29/hello-world-1/">hello world</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-11-29
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/test/">test</a>
-            
-          </span>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-
-        
-          <h1 id="标题1"><a href="#标题1" class="headerlink" title="标题1"></a>标题1</h1><p>allala</p>
-<h2 id="标题二"><a href="#标题二" class="headerlink" title="标题二"></a>标题二</h2><p>第二部分</p>
-<h2 id="无序列表：使用星号、加号或是减号作为列表标记"><a href="#无序列表：使用星号、加号或是减号作为列表标记" class="headerlink" title="无序列表：使用星号、加号或是减号作为列表标记"></a>无序列表：使用星号、加号或是减号作为列表标记</h2><ul>
-<li>Red</li>
-<li>Green</li>
-<li>Blue</li>
-</ul>
-<h2 id="有序列表：使用数字接着一个英文句点"><a href="#有序列表：使用数字接着一个英文句点" class="headerlink" title="有序列表：使用数字接着一个英文句点"></a>有序列表：使用数字接着一个英文句点</h2><ol>
-<li>Red</li>
-<li>Green</li>
-<li><p>Blue</p>
-<blockquote>
-<p>aaa<br>bbb</p>
-</blockquote>
-</li>
-<li><p>11</p>
-</li>
-<li>333</li>
-<li style="list-style: none"><input type="checkbox"> 不勾选</li>
-<li style="list-style: none"><input type="checkbox" checked> 勾选</li>
-<li>223</li>
-</ol>
-<ul>
-<li style="list-style: none"><input type="checkbox"> 不勾选</li>
-<li style="list-style: none"><input type="checkbox" checked> 勾选</li>
-</ul>
-<h2 id="强调"><a href="#强调" class="headerlink" title="强调"></a>强调</h2><p>在Markdown中，可以使用 * 和  _  来表示斜体和加粗。</p>
-<h2 id="斜体："><a href="#斜体：" class="headerlink" title="斜体："></a>斜体：</h2><p><em>Coding，让开发更简单</em><br><em>Coding，让开发更简单</em></p>
-<h2 id="加粗："><a href="#加粗：" class="headerlink" title="加粗："></a>加粗：</h2><p><strong>Coding，让开发更简单</strong><br><strong>Coding，让开发更简单</strong></p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>只要把你的代码块包裹在 “` 之间，你就不需要通过无休止的缩进来标记代码块了。 在围栏式代码块中，你可以指定一个可选的语言标识符，然后我们就可以为它启用语法着色了。 举个例子，这样可以为一段 Ruby 代码着色：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">require</span> <span class="string">'redcarpet'</span></span><br><span class="line">markdown = Redcarpet.new(<span class="string">"Hello World!"</span>)</span><br><span class="line">puts markdown.to_html</span><br></pre></td></tr></table></figure>
-<h2 id="自动链接"><a href="#自动链接" class="headerlink" title="自动链接"></a>自动链接</h2><p>方括号显示说明，圆括号内显示网址， Markdown 会自动把它转成链接，例如：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[超强大的云开发平台Coding](http://coding.net)</span><br></pre></td></tr></table></figure></p>
-<p><a href="http://coding.net" target="_blank" rel="noopener">超强大的云开发平台Coding</a></p>
-<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>在 Markdown 中，可以制作表格，例如：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">First Header | Second Header | Third Header</span><br><span class="line">------------ | ------------- | ------------</span><br><span class="line">Content Cell | Content Cell  | Content Cell</span><br><span class="line">Content Cell | Content Cell  | Content Cell</span><br></pre></td></tr></table></figure></p>
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-<th>Third Header</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-</tbody>
-</table>
-<p>分割线</p>
-<p>在 Markdown 中，可以使用 3 个以上『-』符号制作分割线，例如：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是分隔线上部分内容</span><br><span class="line">---</span><br><span class="line">这是分隔线上部分内容</span><br></pre></td></tr></table></figure></p>
-<p>效果图如下：</p>
-<h2 id="这是分隔线上部分内容"><a href="#这是分隔线上部分内容" class="headerlink" title="这是分隔线上部分内容"></a>这是分隔线上部分内容</h2><p>这是分隔线上部分内容</p>
-
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/11/29/hello-world/">Hello World</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-11-29
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/test/">test</a>
-            
-          </span>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-
-        
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
 
       
       
-  <nav class="pagination">
     
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/12/05/python-学画图/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">python 学画图</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/12/01/破解光猫/">
+        <span class="next-text nav-default">破解光猫</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
     
   </nav>
 
 
+      </footer>
     
-  </section>
+
+  </article>
+
 
           </div>
           
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MTM3MC8xNzkxNw==">
+        <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+      </div>  
+    
+  </div>
+
 
         </div>
       </main>
@@ -860,6 +538,25 @@
     </div>
 
     
+  
+  
+
+  
+   <script type="text/javascript">
+	(function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+  </script>
+
+
 
 
     

@@ -17,7 +17,7 @@
 
 
 
-  <meta name="description" content="about">
+  <meta name="description" content="learn febric install samples, Binaries and Docker Images">
 
 
 
@@ -40,7 +40,7 @@
 
 
 
-<link rel="canonical" href="http://wanghongxing.github.io/about/">
+<link rel="canonical" href="http://wanghongxing.github.io/2018/11/30/learn-febric-01-install-samples-binaries-docker-images/">
 
 
 
@@ -88,7 +88,7 @@
   window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
 </script>
 
-    <title> about - wanghongxing </title>
+    <title> learn febric install samples, Binaries and Docker Images - wanghongxing </title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -181,12 +181,92 @@
         <div class="content-wrapper">
           <div id="content" class="content">
             
+  
   <article class="post">
-    <div class="post-content">
-      <h2 id="我是谁-谁又是我"><a href="#我是谁-谁又是我" class="headerlink" title="我是谁 谁又是我"></a>我是谁 谁又是我</h2><p><img src="/images/whx.jpg" alt="whx"></p>
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          learn febric install samples, Binaries and Docker Images
+        
+      </h1>
 
+      <div class="post-meta">
+        <span class="post-time">
+          2018-11-30
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        <p><a href="https://hyperledger-fabric.readthedocs.io/en/latest/install.html" target="_blank" rel="noopener">Febric GetStart</a></p>
+<p>新建一个试验项目目录，我起名 febric ,在这个目录里执行如下命令<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl -sSL http://bit.ly/2ysbOFE | bash -s 1.3.0</span><br></pre></td></tr></table></figure></p>
+<p>我自己curl执行错误，就手动下载<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh</span><br></pre></td></tr></table></figure></p>
+<p>保存为bootstrap.sh,然后手动执行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chmod +x bootstrap.sh</span><br><span class="line">./bootstrap.sh  -s 1.3.0</span><br></pre></td></tr></table></figure>
+<p>应该是下载了好多tools在bin目录，这个目录需要设置的path中<br>下载速度比较慢…</p>
+<blockquote>
+<p>The command above downloads and executes a bash script that will download and extract all of the platform-specific binaries you will need to set up your network and place them into the cloned repo you created above. It retrieves the following platform-specific binaries:</p>
+<ul>
+<li>configtxgen,</li>
+<li>configtxlator,</li>
+<li>cryptogen,</li>
+<li>discover,</li>
+<li>idemixgen</li>
+<li>orderer,</li>
+<li>peer, and</li>
+<li>fabric-ca-client<br><code>`</code><br>Finally, the script will download the Hyperledger Fabric docker images from Docker Hub into your local Docker registry and tag them as ‘latest’.</li>
+</ul>
+</blockquote>
+<p>然后最好把～/febric/bin 添加到系统 PATH 中，方便执行</p>
+
+      
     </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/12/01/破解光猫/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">破解光猫</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/11/30/windows-run-spring-boot-as-services/">
+        <span class="next-text nav-default">在windows以服务的方式启动springboot</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
   </article>
+
 
           </div>
           
