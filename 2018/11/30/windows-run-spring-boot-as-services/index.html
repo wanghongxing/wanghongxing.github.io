@@ -1,209 +1,88 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
-  <head><meta name="generator" content="Hexo 3.8.0">
-    
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-<meta name="theme-color" content="#f8f5ec">
-<meta name="msapplication-navbutton-color" content="#f8f5ec">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
-
-
-
-  <meta name="description" content="在windows以服务的方式启动springboot">
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <link rel="alternate" href="/default" title="wanghongxing">
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
-
-
-
-<link rel="canonical" href="http://wanghongxing.github.io/2018/11/30/windows-run-spring-boot-as-services/">
-
-
-
-  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
-
-
-
-
-  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
-
-
-
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
-
-
-
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
   
 
-
-
-  <script id="baidu_push">
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
-
-
-
-
-
-
-
-
-
-<script>
-  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
-</script>
-
-    <title> 在windows以服务的方式启动springboot - wanghongxing </title>
-  </head>
-
-  <body><div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/." class="logo">wanghongxing</a>
+  
+  <title>在windows以服务的方式启动springboot | wanghongxing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="了解一下：Windows service wrapper 这个软件可以把任何程序作为服务运行，首先下载exe执行文件，我的执行文件命名:customs.exe创建customs.xml&amp;lt;service&amp;gt;    &amp;lt;id&amp;gt;Customs&amp;lt;/id&amp;gt;    &amp;lt;name&amp;gt;Customs&amp;lt;/name&amp;gt;    &amp;lt;description&amp;gt;Th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在windows以服务的方式启动springboot">
+<meta property="og:url" content="http://wanghongxing.github.io/2018/11/30/windows-run-spring-boot-as-services/index.html">
+<meta property="og:site_name" content="wanghongxing">
+<meta property="og:description" content="了解一下：Windows service wrapper 这个软件可以把任何程序作为服务运行，首先下载exe执行文件，我的执行文件命名:customs.exe创建customs.xml&amp;lt;service&amp;gt;    &amp;lt;id&amp;gt;Customs&amp;lt;/id&amp;gt;    &amp;lt;name&amp;gt;Customs&amp;lt;/name&amp;gt;    &amp;lt;description&amp;gt;Th">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:updated_time" content="2018-11-30T03:32:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在windows以服务的方式启动springboot">
+<meta name="twitter:description" content="了解一下：Windows service wrapper 这个软件可以把任何程序作为服务运行，首先下载exe执行文件，我的执行文件命名:customs.exe创建customs.xml&amp;lt;service&amp;gt;    &amp;lt;id&amp;gt;Customs&amp;lt;/id&amp;gt;    &amp;lt;name&amp;gt;Customs&amp;lt;/name&amp;gt;    &amp;lt;description&amp;gt;Th">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">wanghongxing</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">我</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://wanghongxing.github.io"></form>
+      </div>
+    </div>
   </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-windows-run-spring-boot-as-services" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/30/windows-run-spring-boot-as-services/" class="article-date">
+  <time datetime="2018-11-30T03:20:34.000Z" itemprop="datePublished">2018-11-30</time>
+</a>
+    
   </div>
-</div>
-
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
+  <div class="article-inner">
     
-      <a href="/">
-        <li class="mobile-menu-item">
-          
-          
-            首页
-          
-        </li>
-      </a>
     
-      <a href="/archives/">
-        <li class="mobile-menu-item">
-          
-          
-            归档
-          
-        </li>
-      </a>
-    
-      <a href="/about">
-        <li class="mobile-menu-item">
-          
-          
-            关于
-          
-        </li>
-      </a>
-    
-  </ul>
-</nav>
-
-    <div class="container" id="mobile-panel">
-      <header id="header" class="header"><div class="logo-wrapper">
-  <a href="/." class="logo">wanghongxing</a>
-</div>
-
-<nav class="site-navbar">
+      <header class="article-header">
+        
   
-    <ul id="menu" class="menu">
-      
-        <li class="menu-item">
-          <a class="menu-item-link" href="/">
-            
-            
-              首页
-            
-          </a>
-        </li>
-      
-        <li class="menu-item">
-          <a class="menu-item-link" href="/archives/">
-            
-            
-              归档
-            
-          </a>
-        </li>
-      
-        <li class="menu-item">
-          <a class="menu-item-link" href="/about">
-            
-            
-              关于
-            
-          </a>
-        </li>
-      
-    </ul>
+    <h1 class="article-title" itemprop="name">
+      在windows以服务的方式启动springboot
+    </h1>
   
-</nav>
 
       </header>
-
-      <main id="main" class="main">
-        <div class="content-wrapper">
-          <div id="content" class="content">
-            
-  
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          在windows以服务的方式启动springboot
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-11-30
-        </span>
-        
-        
-      </div>
-    </header>
-
     
-    
-
-
-    <div class="post-content">
+    <div class="article-entry" itemprop="articleBody">
       
         <p>了解一下：<br><a href="https://github.com/kohsuke/winsw" target="_blank" rel="noopener">Windows service wrapper </a><br>这个软件可以把任何程序作为服务运行，首先下载exe执行文件，我的执行文件命名:customs.exe<br>创建customs.xml<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">service</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>Customs<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Customs<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>This runs Spring Boot Customs as a Service.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executable</span>&gt;</span>java<span class="tag">&lt;/<span class="name">executable</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arguments</span>&gt;</span>-Xmx256m -jar  -Dspring.profiles.active=test "c:\jenkins\soft\customs\customs.jar"<span class="tag">&lt;/<span class="name">arguments</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logmode</span>&gt;</span>rotate<span class="tag">&lt;/<span class="name">logmode</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>然后执行安装服务命令<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\jenkins\soft\customs&gt;customs install</span><br><span class="line">2018-11-30 11:11:23,416 INFO  - Installing the service with id &apos;Customs&apos;</span><br></pre></td></tr></table></figure></p>
@@ -213,177 +92,145 @@
 
       
     </div>
-
-    
+    <footer class="article-footer">
+      <a data-url="http://wanghongxing.github.io/2018/11/30/windows-run-spring-boot-as-services/" data-id="cjvre44n8000amxy997ii829b" class="article-share-link">Share</a>
       
       
-
-
-
-      
-      
-    
-
-    
-      <footer class="post-footer">
-        
-        
-        
-  <nav class="post-nav">
-    
-      <a class="prev" href="/2018/11/30/learn-febric-01-install-samples-binaries-docker-images/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">learn febric install samples, Binaries and Docker Images</span>
-        <span class="prev-text nav-mobile">上一篇</span>
-      </a>
-    
-    
-      <a class="next" href="/2018/11/29/mark-down-use/">
-        <span class="next-text nav-default">mark down 的基本用法</span>
-        <span class="prev-text nav-mobile">下一篇</span>
-        <i class="iconfont icon-right"></i>
-      </a>
-    
-  </nav>
-
-
-      </footer>
-    
-
-  </article>
-
-
-          </div>
-          
-  <div class="comments" id="comments">
-    
+    </footer>
   </div>
-
-
-        </div>
-      </main>
-
-      <footer id="footer" class="footer">
-
-  <div class="social-links">
+  
     
-      
+<nav id="article-nav">
+  
+    <a href="/2018/11/30/learn-febric-01-install-samples-binaries-docker-images/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
         
-          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+          learn febric install samples, Binaries and Docker Images
         
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-        
-          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
-        
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-
-    
-      
-      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
-    
-  </div>
-
-
-
-<div class="copyright">
-  <span class="power-by">
-    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
-  </span>
-  <span class="division">|</span>
-  <span class="theme-info">
-    主题 - 
-    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
-  </span>
-
-  <span class="copyright-year">
-    
-    &copy; 
-     
-      2018 - 
-    
-    2019
-
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">wanghongxing</span>
-  </span>
-</div>
-
-      </footer>
-
-      <div class="back-to-top" id="back-to-top">
-        <i class="iconfont icon-up"></i>
       </div>
+    </a>
+  
+  
+    <a href="/2018/11/29/mark-down-use/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">mark down 的基本用法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/fabric/">fabric</a></li></ul>
     </div>
+  </div>
 
+
+  
     
-  
-  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blockchain/">blockchain</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fabric/">fabric</a></li></ul>
+    </div>
+  </div>
+
 
   
-
-
-
     
-  
-
-
-
-  
-  
-
-
-
-
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/blockchain/" style="font-size: 10px;">blockchain</a> <a href="/tags/fabric/" style="font-size: 10px;">fabric</a>
+    </div>
+  </div>
 
   
-    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
-  
-
-  
-    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
-  
-
-  
-    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
-  
-
-  
-    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
-  
-
-  
-    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
-  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li></ul>
+    </div>
+  </div>
 
 
-    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/04/21/Hyperledger-Fabric-02-Glossary/">Hyperledger Fabric Glossary</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/21/Hyperledger-Fabric-03-Key-Concepts/">Hyperledger Fabric Key Concepts</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/21/Hyperledger-Fabric-01-Introduction/">Hyperledger Fabric 介绍（Introduction）</a>
+          </li>
+        
+          <li>
+            <a href="/2018/12/05/python-学画图/">python 学画图</a>
+          </li>
+        
+          <li>
+            <a href="/2018/12/01/learn-febric-02-Building-Your-First-Network/">learn febric 02 Building Your First Network</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
 
-  </body>
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 wanghongxing<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">我</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
 </html>
