@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="hyperledger fabric">
+
+
+
+
+  <meta name="keywords" content=", , wanghongxing">
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="wanghongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/fabric/zanata_guide.html">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> hyperledger fabric - wanghongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">wanghongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">wanghongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  <article class="post">
+    <div class="post-content">
+      <table>
+<thead>
+<tr>
+<th>原文</th>
+<th>作者</th>
+<th>审核修正</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无</td>
+<td>于林生</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Zanata"><a href="#Zanata" class="headerlink" title="Zanata"></a>Zanata</h2><p><a href="http://zanata.org/" target="_blank" rel="noopener">Zanata</a>是一个基于网络的翻译平台，用于翻译者、内容创作者和开发人员来管理本地化项目。</p>
+<p>为了更好的管理、推广、翻译Hyperledger国际化文档，工作组尝试使用zanata翻译平台。</p>
+<ul>
+<li><a href="http://docs.zanata.org/en/release/user-guide/translator-guide/" target="_blank" rel="noopener">Zanata官方快速使用指南</a></li>
+<li><a href="http://docs.zanata.org/en/release/" target="_blank" rel="noopener">Zanata官方文档</a></li>
+</ul>
+<h2 id="用Zanata翻译Hyperledger文档"><a href="#用Zanata翻译Hyperledger文档" class="headerlink" title="用Zanata翻译Hyperledger文档"></a>用Zanata翻译Hyperledger文档</h2><ol>
+<li><p>注册用户并登陆</p>
+<p> 注册新用户，并将您的Zanata ID添加至项目组<a href="https://wiki.hyperledger.org/groups/twgc/team_ie" target="_blank" rel="noopener">wiki页面</a>。</p>
+</li>
+<li><p>申请加入Zanata中文团队</p>
+<p> 通过<code>Launguage</code>-&gt;<code>Chinese (Simplified, China)</code>-&gt;<code>Request to Join</code>，申请加入Zanata中文翻译团队。通常这个申请只需要一两天就可以被通过。若两天后您的申请仍处于<code>pending</code>状态，请联系Linsheng Yu或Jiannan Guo。</p>
+</li>
+<li><p>查找并单击进入项目<code>hyperledger-fabric-docs</code><br><img src="img/zanata-1.jpeg" alt=""></p>
+</li>
+<li>单击选择版本号<br><img src="img/zanata-2.png" alt=""></li>
+<li>单击选择语言<br><img src="img/zanata-3.jpg" alt=""></li>
+<li>单击选择要翻译的文件（或先6后5）<br><img src="img/zanata-4.jpg" alt=""></li>
+<li><p>在右侧编辑翻译</p>
+<p> 在右侧输入译文，编辑完后会自动保存；下侧是翻译提示内容，可直接<code>copy</code>；也可以点击<code>使用新版</code>体验新版翻译页面。</p>
+<p> <strong>注意：翻译中的固定术语尽量按照翻译提示统一命名，以免混乱！！！</strong></p>
+<p> <strong>注意：翻译中的原文特有的格式符号（如<code>---</code>、<code>====</code>等）一定要保留！！！</strong></p>
+<p> <img src="img/zanata-5.jpg" alt=""></p>
+<p> 新版翻译页面<br> <img src="img/zanata-6.jpg" alt=""></p>
+</li>
+<li><p>译文显示</p>
+<p> 点击<a href="http://hyperledger-zh.readthedocs.io/zh_CN/latest/" target="_blank" rel="noopener">查看译文</a>，<strong>译文设置为20分钟自动编译更新一次</strong>，所以请不要着急，接着翻译其他内容，等一会儿就能看到译文了。</p>
+</li>
+<li><p>原文更新</p>
+<p> fabric官方源文档更新后，会有专人跟新Zanata上的原文。原文更新后，变化的地方如果被翻译过则译文会被删除掉，同时文档完成度会降低。</p>
+</li>
+</ol>
+<h2 id="Zanata-Github-Read-the-Docs"><a href="#Zanata-Github-Read-the-Docs" class="headerlink" title="Zanata + Github + Read the Docs"></a>Zanata + Github + Read the Docs</h2><p>目前使用Jenkins实现了Zanata+github+Read the docs的集成。<strong>Jenkins20分钟自动编译一次</strong>，编译过程包括见下图。</p>
+<p><img src="img/zanata-7.png" alt=""></p>
+
+    </div>
+  </article>
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2019
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

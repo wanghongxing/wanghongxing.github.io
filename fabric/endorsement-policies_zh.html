@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="hyperledger fabric endorsement policies">
+
+
+
+
+  <meta name="keywords" content=", , wanghongxing">
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="wanghongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/fabric/endorsement-policies_zh.html">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> hyperledger fabric endorsement policies - wanghongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">wanghongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">wanghongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  <article class="post">
+    <div class="post-content">
+      <table>
+<thead>
+<tr>
+<th>原文</th>
+<th>作者</th>
+<th>审核修正</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://hyperledger-fabric.readthedocs.io/en/latest/endorsement-policies.html" target="_blank" rel="noopener">原文</a></td>
+<td>Linsheng Yu</td>
+</tr>
+</tbody>
+</table>
+<p>Endorsement policies are used to instruct a peer on how to decide whether a transaction is properly endorsed. When a peer receives a transaction, it invokes the VSCC (Validation System Chaincode) associated with the transaction’s Chaincode as part of the transaction validation flow to determine the validity of the transaction. Recall that a transaction contains one or more endorsement from as many endorsing peers. VSCC is tasked to make the following determinations: </p>
+<ul>
+<li>all endorsements are valid (i.e. they are valid signatures from valid certificates over the expected message) </li>
+<li>there is an appropriate number of endorsements </li>
+<li>endorsements come from the expected source(s)</li>
+</ul>
+<p>节点通过背书策略来确定一个交易是否被正确背书。当一个peer接收一个交易后，就会调用与该交易Chaincode相关的VSCC（Chaincode 实例化时指定的）作为交易验证流程的一部分（还有RW版本验证）来确定交易的有效性。为此，一个交易包含一个或多个来自背书节点的背书。VSCC的背书校验包括：</p>
+<ul>
+<li>所有的背书是有效的（即，有效证书做的有效签名）</li>
+<li>恰当的（满足要求的）背书数量</li>
+<li>背书来自预期的背书节点</li>
+</ul>
+<p>Endorsement policies are a way of specifying the second and third points.</p>
+<p>背书策略就是用来定义上边的第二和第三点。</p>
+<h2 id="Endorsement-policy-design-背书策略设计"><a href="#Endorsement-policy-design-背书策略设计" class="headerlink" title="Endorsement policy design - 背书策略设计"></a>Endorsement policy design - 背书策略设计</h2><p>Endorsement policies have two main components: </p>
+<ul>
+<li>a principal </li>
+<li>a threshold gate</li>
+</ul>
+<p>A principal <code>P</code> identifies the entity whose signature is expected.</p>
+<p>A threshold gate <code>T</code> takes two inputs: an integer <code>t</code> (the threshold) and a list of <code>n</code> principals or gates; this gate essentially captures the expectation that out of those <code>n</code> principals or gates, <code>t</code> are requested to be satisfied.</p>
+<p>背书策略有两个主要组成部分：</p>
+<ul>
+<li>主体（principal）：<code>P</code> 定义了期望的签名来源实体</li>
+<li>门阀阈值（threshold gate）：<code>T</code> 有两个参数：整数<code>t</code>（阈值）和<code>n</code>个主体，表示从这<code>n</code>个主体中获取<code>t</code>个签名</li>
+</ul>
+<p>For example: - <code>T(2, &#39;A&#39;, &#39;B&#39;, &#39;C&#39;)</code> requests a signature from any 2 principals out of <code>A</code>, <code>B</code> or <code>C</code>; - <code>T(1, &#39;A&#39;, T(2, &#39;B&#39;, &#39;C&#39;))</code> requests either one signature from principal <code>A</code> or 1 signature from <code>B</code> and <code>C</code> each.</p>
+<p>例如：</p>
+<ul>
+<li><code>T(2, &#39;A&#39;, &#39;B&#39;, &#39;C&#39;)</code>表示需要<code>A</code>、<code>B</code>、<code>C</code>中任意2个主体的签名背书</li>
+<li><code>T(1, &#39;A&#39;, T(2, &#39;B&#39;, &#39;C&#39;))</code>表示需要来自主体<code>A</code>的签名或者来自<code>B</code>和<code>C</code>两者的签名背书</li>
+</ul>
+<h2 id="Endorsement-policy-syntax-in-the-CLI-CLI中背书策略语法"><a href="#Endorsement-policy-syntax-in-the-CLI-CLI中背书策略语法" class="headerlink" title="Endorsement policy syntax in the CLI - CLI中背书策略语法"></a>Endorsement policy syntax in the CLI - CLI中背书策略语法</h2><p>In the CLI, a simple language is used to express policies in terms of boolean expressions over principals.</p>
+<p>在CLI中，用一种简单的布尔表达式来表示背书策略。</p>
+<p>A principal is described in terms of the MSP that is tasked to validate the identity of the signer and of the role that the signer has within that MSP. Currently, two roles are supported: <strong>member</strong> and <strong>admin</strong>. Principals are described as <code>MSP</code>.<code>ROLE</code>, where <code>MSP</code> is the MSP ID that is required, and <code>ROLE</code> is either one of the two strings <code>member</code> and <code>admin</code>. Examples of valid principals are <code>&#39;Org0.admin&#39;</code> (any administrator of the <code>Org0</code> MSP) or <code>&#39;Org1.member&#39;</code> (any member of the <code>Org1</code> MSP).</p>
+<p>Fabric使用MSP来描述主体，MSP用于验证签名者的身份和签名者在MSP中的角色/权限。目前支持两种角色：<strong>member</strong>和<strong>admin</strong>。主体的描述形式是<code>MSP.ROLE</code>，其中<code>MSP</code>是MSP ID，<code>ROLE</code>是<strong>member</strong>或<strong>admin</strong>。比如一个有效的主体可表示为<code>&#39;Org0.admin&#39;</code>（MSP<code>Org0</code>的管理员）或<code>&#39;Org1.member&#39;</code>（MSP<code>Org1</code>的成员）。</p>
+<p>The syntax of the language is:</p>
+<p>CLI语法是：</p>
+<p><code>EXPR(E[, E...])</code></p>
+<p>where <code>EXPR</code> is either <code>AND</code> or <code>OR</code>, representing the two boolean expressions and <code>E</code> is either a principal (with the syntax described above) or another nested call to <code>EXPR</code>.</p>
+<p>其中<code>EXPR</code>是<code>AND</code>或<code>OR</code>，表示布尔表达式；<code>E</code>是上面语法所描述的主体或者是另一个嵌套进去的<code>EXPR</code>。</p>
+<p>For example: </p>
+<ul>
+<li><code>AND(&#39;Org1.member&#39;, &#39;Org2.member&#39;, &#39;Org3.member&#39;)</code> requests 1 signature from each of the three principals </li>
+<li><code>OR(&#39;Org1.member&#39;, &#39;Org2.member&#39;)</code> requests 1 signature from either one of the two principals </li>
+<li><code>OR(&#39;Org1.member&#39;, AND(&#39;Org2.member&#39;, &#39;Org3.member&#39;))</code> requests either one signature from a member of the <code>Org1</code> MSP or 1 signature from a member of the <code>Org2</code> MSP and 1 signature from a member of the <code>Org3</code> MSP.</li>
+</ul>
+<p>例如：</p>
+<ul>
+<li><code>AND(&#39;Org1.member&#39;, &#39;Org2.member&#39;, &#39;Org3.member&#39;)</code>表示需要三个主体共同签名背书</li>
+<li><code>OR(&#39;Org1.member&#39;, &#39;Org2.member&#39;)</code>表示需要两个主体之一的签名背书</li>
+<li><code>OR(&#39;Org1.member&#39;, AND(&#39;Org2.member&#39;, &#39;Org3.member&#39;))</code>表示需要<code>Org1</code>的签名背书或者<code>Org2</code>和<code>Org3</code>共同的签名背书</li>
+</ul>
+<h2 id="Specifying-endorsement-policies-for-a-chaincode-为chaincode指定背书策略"><a href="#Specifying-endorsement-policies-for-a-chaincode-为chaincode指定背书策略" class="headerlink" title="Specifying endorsement policies for a chaincode - 为chaincode指定背书策略"></a>Specifying endorsement policies for a chaincode - 为chaincode指定背书策略</h2><p>Using this language, a chaincode deployer can request that the endorsements for a chaincode be validated against the specified policy. NOTE - the default policy requires one signature from a member of the <code>DEFAULT</code> MSP). This is used if a policy is not specified in the CLI.</p>
+<p>部署Chaincode时可以指定背书策略。注意：如果没有指定背书策略就使用默认的背书策略，即需要MSP<code>DEFAULT</code>的一个成员的签名背书。</p>
+<p>The policy can be specified at deploy time using the <code>-P</code> switch, followed by the policy.For example:</p>
+<p>部署Chaincode时用<code>-P</code>指定背书策略，例如：</p>
+<pre><code>peer chaincode instantiate -C testchainid -n mycc -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 -c &apos;{&quot;Args&quot;:[&quot;init&quot;,&quot;a&quot;,&quot;100&quot;,&quot;b&quot;,&quot;200&quot;]}&apos; -P &quot;AND(&apos;Org1.member&apos;, &apos;Org2.member&apos;)&quot;
+</code></pre><p>This command deploys chaincode <code>mycc</code> on chain <code>testchainid</code> with the policy <code>AND(&#39;Org1.member&#39;, &#39;Org2.member&#39;)</code>.</p>
+<p>此命令会以背书策略<code>AND(&#39;Org1.member&#39;, &#39;Org2.member&#39;)</code>在链<code>testchainid</code>上部署chaincode<code>mycc</code>。</p>
+<h2 id="Future-enhancements-未来计划"><a href="#Future-enhancements-未来计划" class="headerlink" title="Future enhancements - 未来计划"></a>Future enhancements - 未来计划</h2><p>In this section we list future enhancements for endorsement policies: </p>
+<ul>
+<li>alongside the existing way of identifying principals by their relationship with an MSP, we plan to identify principals in terms of the <em>Organization Unit (OU)</em> expected in their certificates; this is useful to express policies where we request signatures from any identity displaying a valid certificate with an OU matching the one requested in the definition of the principal. </li>
+<li>instead of the syntax <code>AND(., .)</code> we plan to move to a more intuitive syntax <code>. AND .</code></li>
+<li>we plan to expose generalized threshold gates in the language as well alongside <code>AND</code> (which is the special <code>n</code>-out-of-<code>n</code> gate) and OR (which is the special <code>1</code>-out-of-<code>n</code> gate)</li>
+</ul>
+<p>本节列举了背书策略的未来计划增强功能：</p>
+<ul>
+<li>除了通过与MSP的关系确定principals身份的现有方式外，我们计划根据证书中的组织单位(OU)来标识principals；这样就可以请求与背书策略中定义的principal的OU相匹配（同一组织单位内）的任意实体的签名作为背书</li>
+<li>以更直观的语法<code>. AND .</code>取代语法<code>AND(., .)</code></li>
+<li>还计划将阈值放到<code>AND</code>（<code>n</code>-out-of-<code>n</code>）和 <code>OR</code> (<code>1</code>-out-of-<code>n</code>)的语法中</li>
+</ul>
+
+    </div>
+  </article>
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2019
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

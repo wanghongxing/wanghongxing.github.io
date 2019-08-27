@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="hyperledger fabric">
+
+
+
+
+  <meta name="keywords" content=", , wanghongxing">
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="wanghongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/fabric/sdk_node_zh.html">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> hyperledger fabric - wanghongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">wanghongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">wanghongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  <article class="post">
+    <div class="post-content">
+      <table>
+<thead>
+<tr>
+<th>原文</th>
+<th>作者</th>
+<th>审核修正</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://fabric-sdk-node.github.io" target="_blank" rel="noopener">原文</a></td>
+<td>Qingpeng Cai</td>
+<td>Dinghao Liu, Bei Wang</td>
+</tr>
+</tbody>
+</table>
+<p>The Hyperledger Fabric SDK for Node.js prvides a powerful API to interact with a Hyperledger Fabric v1.0 blockchain. The SDK is designed to be used in the Node.js JavaScript runtime.</p>
+<p>Hyperledger Fabric中的Node.js SDK提供了强大的API接口用于同Hyperledger Fabric v1.0 blockchain进行交互。该SDK被设计用于Node.js JavaScript的运行。</p>
+<p>##概述</p>
+<p>Hyperledger Fabric is the operating system of an enterprise-strength permissioned blockchain network. For a high-level overview of the fabric, visit <a href="http://hyperledger-fabric.readthedocs.io/en/latest/" target="_blank" rel="noopener">http://hyperledger-fabric.readthedocs.io/en/latest/</a>.</p>
+<p>Hyperledger Fabric是企业级许可的区块链网络的操作系统。对于高等级fabric的概述，请访问<a href="http://hyperledger-fabric.readthedocs.io/en/latest/" target="_blank" rel="noopener">http://hyperledger-fabric.readthedocs.io/en/latest/</a>.</p>
+<p>Applications can be developed to interact with the blockchain network on behalf of the users. APIs are available to:</p>
+<p>我们可以开发应用来帮助区块链网络中的代表用户进行交互。API可以用于：</p>
+<ul>
+<li>创建<a href="https://fabric-sdk-node.github.io/Channel.html#queryInfo" target="_blank" rel="noopener">通道</a>(create channels)</li>
+<li>请求<a href="https://fabric-sdk-node.github.io/" target="_blank" rel="noopener">节点</a>加入通道(ask peer nodes to join the channel)</li>
+<li>在节点中安装<a href="http://hyperledger-fabric.readthedocs.io/en/latest/fabric_model.html#chaincode" target="_blank" rel="noopener">链码</a>(install chaincodes in peers)</li>
+<li>在通道中实现链码实例化(instantiate chaincodes in a channel)</li>
+<li>通过调用链码来调用事务(invoke transactions by calling the chaincode)</li>
+<li>查询事务或区块的<a href="http://hyperledger-fabric.readthedocs.io/en/latest/fabric_model.html#ledger-features" target="_blank" rel="noopener">账本</a>(query the ledger for transactions or blocks)</li>
+</ul>
+<p>##Fabric的不同组成部分如何协调工作</p>
+<p>The Transaction Flow document provides an excellent description of the application/SDK, peers, and orderers working together to process transactions and producing blocks.</p>
+<p>该<a href="http://hyperledger-fabric.readthedocs.io/en/latest/txflow.html" target="_blank" rel="noopener">交易流程</a>文件提供一个关于应用程序/SDK，peer和orderer共同处理事务并产生区块的很好的描述。</p>
+<p>Security on the Fabric is enforced with digital signatures. All requests made to the fabric must be signed by users with appropriate enrollment certificates. For a user’s enrollment certificate to be considered valid on the Fabric, it must be signed by a trusted Certificate Authority (CA). Fabric supports any standard CAs. In addition, Fabric provides a CA server. See this overview.</p>
+<p>Fabric的安全是通过<code>数字签名</code>来实现的。在Fabric中的所有请求都必须具有有效注册证书的用户签名。对于在Fabric中被认为有效的注册证书，必须具有受信任的证书颁发机构(CA)签名。Fabric支持CA的所有标准。此外，Fabric还提供了一个CA服务器。请看这个<a href="http://hyperledger-fabric-ca.readthedocs.io/en/latest/users-guide.html#overview" target="_blank" rel="noopener">概述</a>。</p>
+<p>##Node.js SDK功能</p>
+<p>The Hyperledger Fabric SDK for Node.js is designed in an Object-Oriented programming style. Its modular construction enables application developers to plug in alternative implementations of key functions such as crypto suites, the state persistence store, and logging utility.</p>
+<p>Hyperledger Fabric中的Node.js SDK是根据面向对象的程序风格进行设计的。该模块化的结构是应用程序开发人员能够可选择的插入关键函数的实现，比如加密套件，持久性状态存储，日志记录等等。</p>
+<p>The SDK’s list of features include:</p>
+<p>该SDK的功能列表如下：</p>
+<p>· fabric-client:</p>
+<ul>
+<li><a href="https://fabric-sdk-node.github.io/Client.html#createChannel" target="_blank" rel="noopener">创建一个新的通道</a>(create a new channel)</li>
+<li><a href="https://fabric-sdk-node.github.io/Channel.html#joinChannel" target="_blank" rel="noopener">将通道信息发送给节点用于节点加入</a>(send channel information to a peer to join)</li>
+<li><a href="https://fabric-sdk-node.github.io/Client.html#installChaincode" target="_blank" rel="noopener">在节点上安装链码</a>(install chaincode on a peer)</li>
+<li>在通道中进行链码实例化，其中包括两步：<a href="https://fabric-sdk-node.github.io/Channel.html#sendInstantiateProposal" target="_blank" rel="noopener">提议</a>和<a href="https://fabric-sdk-node.github.io/Channel.html#sendTransaction" target="_blank" rel="noopener">交易</a>(instantiate chaincode in a channel, which involves two steps: propose and transact)</li>
+<li>提交交易，其中包括两步：<a href="https://fabric-sdk-node.github.io/Channel.html#sendInstantiateProposal" target="_blank" rel="noopener">提议</a>和<a href="https://fabric-sdk-node.github.io/Channel.html#sendTransaction" target="_blank" rel="noopener">交易</a>(submitting a transaction, which also involves two steps: propose and transact)</li>
+<li><a href="https://fabric-sdk-node.github.io/Channel.html#queryByChaincode" target="_blank" rel="noopener">查询链码的最新状态</a>(query a chaincode for the latest application state)</li>
+<li><p>多种查询功能(various query capabilities):</p>
+<ul>
+<li><a href="https://fabric-sdk-node.github.io/Channel.html#queryInfo" target="_blank" rel="noopener">查询通道长度</a>(channel height)<ul>
+<li><a href="https://fabric-sdk-node.github.io/Channel.html#queryBlock" target="_blank" rel="noopener">通过区块数字查询</a>(block-by-number),<a href="https://fabric-sdk-node.github.io/Channel.html#queryBlockByHash" target="_blank" rel="noopener">通过区块hash值查询</a>(block-by-hash)</li>
+<li><a href="https://fabric-sdk-node.github.io/Client.html#queryChannels" target="_blank" rel="noopener">查询一个节点所在的所有通道</a>(all channels that a peer is part of)</li>
+<li><a href="https://fabric-sdk-node.github.io/Client.html#queryInstalledChaincodes" target="_blank" rel="noopener">查询节点中安装的所有链码</a>(all installed chaincodes in a peer)</li>
+<li><a href="https://fabric-sdk-node.github.io/Channel.html#queryInstantiatedChaincodes" target="_blank" rel="noopener">查询通道中的所有实例化链码</a>(all instantiated chaincodes in a channel)</li>
+<li><a href="https://fabric-sdk-node.github.io/Channel.html#queryTransaction" target="_blank" rel="noopener">通过事务ID查询</a>(transaction-by-id)</li>
+<li><a href="https://fabric-sdk-node.github.io/Channel.html#getChannelConfig" target="_blank" rel="noopener">查询通道的配置数据</a>(channel configuration data)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>监控事件(monitoring events):</p>
+<ul>
+<li><a href="https://fabric-sdk-node.github.io/EventHub.html#connect" target="_blank" rel="noopener">连接一个节点的事件流</a>(connect to a peer’s event stream)<ul>
+<li>监听一个<a href="https://fabric-sdk-node.github.io/EventHub.html#registerBlockEvent" target="_blank" rel="noopener">区块的事件</a>(listen on block events)</li>
+<li>监听交易时间并且确定交易是否成功提交进行标记(listen on transactions events and find out if the transaction was successfully committed to the ledger or marked invalid)</li>
+<li>监听由链码产生的<a href="https://fabric-sdk-node.github.io/EventHub.html#registerChaincodeEvent" target="_blank" rel="noopener">自定义事件</a>(listen on custom events produced by chaincodes)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>序列化用户对象及其签名功能(serializable User object with signing capabilities)</p>
+</li>
+<li><p>多层覆盖式的分层配置设置(hierarchical configuration settings with multiple layers of overrides):文件(files), 环境变量(environment variable),程序参数(program arguments), 内存设置(in-memory settings)</p>
+</li>
+<li><p>使用内置的记录器(winston)进行日志记录并且被多种流行的日志记录器进行覆盖，包括 log4js 和 bunyan等等。logging utility with a built-in logger (winston) and can be overriden with a number of popular loggers including log4js and bunyan</p>
+</li>
+<li><p>可插式CryptoSuite 界面描述了与Fabric进行成功交互时需要的加密操作。其中包括两种实现：pluggable CryptoSuite interface describe the cryptographic operations required for successful interactions with the Fabric. Two implementations are provided out of box:</p>
+<ul>
+<li><a href="https://fabric-sdk-node.github.io/CryptoSuite_ECDSA_AES.html" target="_blank" rel="noopener">Software-based ECDSA</a><ul>
+<li><a href="https://fabric-sdk-node.github.io/CryptoSuite_PKCS11.html" target="_blank" rel="noopener">PKCS#11-compliant ECDSA</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>可插式状态存储界面，用于持续性状态缓存，比如用户。pluggable State Store interface for persisting state caches such as users</p>
+<pre><code>* [基于文件的存储](https://fabric-sdk-node.github.io/FileKeyValueStore.html)(File-based store)
+* [基于CouchDB的存储](https://fabric-sdk-node.github.io/CouchDBKeyValueStore.html)，与CouchDB数据库和IBM Cloudant兼容(CouchDB-base store which works with both CouchDB database and IBM Cloudant)
+</code></pre></li>
+<li><p>自定义的密钥存储用于所有基于软件的加密套件实现。customizable Crypto Key Store for any software-based cryptographic suite implementation</p>
+</li>
+<li>同时支持TLS和非TLS链接到peer和orderer，请参阅peer和orderer的超类。 supports both TLS (grpcs://) or non-TLS (grpc://) connections to peers and orderers, see Remote which is the superclass for peers and orderers</li>
+</ul>
+<p>· fabric-ca-client:</p>
+<ul>
+<li><a href="https://fabric-sdk-node.github.io/FabricCAServices.html#register" target="_blank" rel="noopener">注册</a>新用户(register a new user)</li>
+<li><a href="https://fabric-sdk-node.github.io/FabricCAServices.html#enroll" target="_blank" rel="noopener">登记</a>用户同时获得由Fabric CA签署的注册证书(enroll a user to obtain the enrollment certificate signed by the Fabric CA)</li>
+<li>通过注册ID<a href="https://fabric-sdk-node.github.io/FabricCAServices.html#revoke" target="_blank" rel="noopener">废除</a>已有用户或废除特定证书(evoke an existing user by enrollment ID or revoke a specific certificate)</li>
+<li><a href="https://fabric-sdk-node.github.io/FabricCAServices.html" target="_blank" rel="noopener">自定义的持久储存</a>(customizable persistence store)</li>
+</ul>
+<p>##API参考</p>
+<p>The SDK is made up of 3 top-level modules that can be accessed through the navigation menu Modules:</p>
+<p>SDK由3个顶级模块组成，可以通过导航菜单访问模块：</p>
+<ul>
+<li>api:可插式API，用于应用程序开发人员来通过SDK来提供有选择性关键界面的替代。对于每个接口，都有内置的默认实现。api: pluggable APIs for application developers to supply alternative implementations of key interfaces used by the SDK. For each interface there are built-in default implementations.</li>
+</ul>
+<ul>
+<li>fabric-client: 该模块提供API来进行同基于Hypreledger Fabric的区块链网络的交互，也就是同peer，orderer和事件流。fabric-client: this module provides APIs to interact with the core components of a Hypreledger Fabric-based blockchain network, namely the peers, orderers and event streams.</li>
+</ul>
+<ul>
+<li>fabric-ca-client:该模块提供能与包含成员管理资格的服务的可选组件(fabric-ca)进行交互的API。该工作具有<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">Commons Attribution 4.0 International License</a>。fabric-ca-client: this module provides APIs to interact with the optional component, fabric-ca, that contains services for membership management. Creative Commons License<br>This work is licensed under a Creative Commons Attribution 4.0 International License.</li>
+</ul>
+
+    </div>
+  </article>
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2019
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

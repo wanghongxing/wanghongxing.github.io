@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="hyperledger fabric glossary">
+
+
+
+
+  <meta name="keywords" content=", , wanghongxing">
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="wanghongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/fabric/glossary.html">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> hyperledger fabric glossary - wanghongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">wanghongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">wanghongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  <article class="post">
+    <div class="post-content">
+      <table>
+<thead>
+<tr>
+<th>原文</th>
+<th>作者</th>
+<th>审核修正</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://hyperledger-fabric.readthedocs.io/en/latest/glossary.html" target="_blank" rel="noopener">原文</a></td>
+<td>Linsheng Yu</td>
+<td>Baohua Yang</td>
+</tr>
+</tbody>
+</table>
+<p>Terminology is important, so that all Fabric users and developers agree on what we mean by each specific term. What is chaincode, for example. So we’ll point you there, whenever you want to reassure yourself. Of course, feel free to read the entire thing in one sitting if you like, it’s pretty enlightening!</p>
+<p>专业术语很重要，所以所有”Fabric”项目用户和开发人员同意我们所说的每个特定术语的含义，举个例子：如什么是链码，因此我们将引导你到术语说明，让你随时可以消除对术语理解的疑虑，当然，如果你愿意的话可以自由的阅读整个文档，非常有启发！</p>
+<h2 id="Anchor-Peer-锚节点"><a href="#Anchor-Peer-锚节点" class="headerlink" title="Anchor Peer - 锚节点"></a>Anchor Peer - 锚节点</h2><p>A peer node on a channel that all other peers can discover and communicate with. Each <a href="#Member">Member</a> on a channel has an anchor peer (or multiple anchor peers to prevent single point of failure), allowing for peers belonging to different Members to discover all existing peers on a channel.</p>
+<p>锚节点是通道中能被所有对等节点探测、并能与之进行通信的一种对等节点。通道中的每个成员都有一个（或多个，以防单点故障）锚节点，允许属于不同成员身份的节点来发现通道中存在的其它节点。</p>
+<h2 id="Block-区块"><a href="#Block-区块" class="headerlink" title="Block - 区块"></a>Block - 区块</h2><p>An ordered set of transactions that is cryptographically linked to the preceding block(s) on a channel.</p>
+<p>在一个通道上，（区块是）一组有序交易的集合。区块往往通过密码学手段（Hash 值）连接到前导区块。</p>
+<p><strong>Zhu Jiang：区块是一组有序的交易集合，在通道中经过加密（哈希加密）后与前序区块连接。</strong></p>
+<h2 id="Chain-链"><a href="#Chain-链" class="headerlink" title="Chain - 链"></a>Chain - 链</h2><p>The ledger’s chain is a transaction log structured as hash-linked blocks of transactions. Peers receive blocks of transactions from the ordering service, mark the block’s transactions as valid or invalid based on endorsement policies and concurrency violations, and append the block to the hash chain on the peer’s file system.</p>
+<p>chain就是block之间以hash连接为结构的交易日志。peer从order service接收交易block，并根据背书策略和并发冲突标记block上的交易是否有效，然后将该block追加到peer文件系统中的hash chain上。</p>
+<p>Zhu Jiang:账本的链是一个交易区块经过“哈希连接”结构化的交易日志。对等节点从排序服务收到交易区块，基于背书策略和并发冲突来标注区块的交易为有效或者无效状态，并且将区块追加到对等节点文件系统的哈希链中。</p>
+<h2 id="Chaincode-链码"><a href="#Chaincode-链码" class="headerlink" title="Chaincode - 链码"></a>Chaincode - 链码</h2><p>Chaincode is software, running on a ledger, to encode assets and the transaction instructions (business logic) for modifying the assets.</p>
+<p>链码是一个运行在账本上的软件，它可以对资产进行编码，其中的交易指令（或者叫业务逻辑）也可以用来修改资产。</p>
+<h2 id="Channel-通道"><a href="#Channel-通道" class="headerlink" title="Channel - 通道"></a>Channel - 通道</h2><p>A channel is a private blockchain overlay on a Fabric network, allowing for data isolation and confidentiality. A channel-specific ledger is shared across the peers in the channel, and transacting parties must be properly authenticated to a channel in order to interact with it. Channels are defined by a <a href="#Configuration-Block">Configuration-Block</a>.</p>
+<p>通道是构建在“Fabric”网络上的私有区块链，实现了数据的隔离和保密。通道特定的账本在通道中是与所有对等节点共享的，并且交易方必须通过该通道的正确验证才能与账本进行交互。通道是由一个“配置块”来定义的。</p>
+<h2 id="Commitment-提交"><a href="#Commitment-提交" class="headerlink" title="Commitment - 提交"></a>Commitment - 提交</h2><p>Each <a href="#Peer">Peer</a> on a channel validates ordered blocks of transactions and then commits (writes-appends) the blocks to its replica of the channel <a href="#Ledger">Ledger</a>. Peers also mark each transaction in each block as valid or invalid.</p>
+<p>一个通道中的每个对等节点都会验证交易的有序区块，然后将区块提交（写或追加）至该通道上账本的各个副本。对等节点也会标记每个区块中的每笔交易的状态是有效或者无效。</p>
+<h2 id="Concurrency-Control-Version-Check-并发控制版本检查（CCVC）"><a href="#Concurrency-Control-Version-Check-并发控制版本检查（CCVC）" class="headerlink" title="Concurrency Control Version Check - 并发控制版本检查（CCVC）"></a>Concurrency Control Version Check - 并发控制版本检查（CCVC）</h2><p>Concurrency Control Version Check is a method of keeping state in sync across peers on a channel. Peers execute transactions in parallel, and before commitment to the ledger, peers check that the data read at execution time has not changed. If the data read for the transaction has changed between execution time and commitment time, then a Concurrency Control Version Check violation has occurred, and the transaction is marked as invalid on the ledger and values are not updated in the state database.</p>
+<p>CCVC是保持通道中各对等节点间状态同步的一种方法。对等节点并行的执行交易，在交易提交至账本之前，对等节点会检查交易在执行期间读到的数据是否被修改。如果读取的数据在执行和提交之间被改变，就会引发CCVC冲突，该交易就会在账本中被标记为无效，而且值不会更新到状态数据库中。</p>
+<h2 id="Configuration-Block-配置区块"><a href="#Configuration-Block-配置区块" class="headerlink" title="Configuration Block - 配置区块"></a>Configuration Block - 配置区块</h2><p>Contains the configuration data defining members and policies for a system chain (ordering service) or channel. Any configuration modifications to a channel or overall network (e.g. a member leaving or joining) will result in a new configuration block being appended to the appropriate chain. This block will contain the contents of the genesis block, plus the delta.</p>
+<p>包含为系统链（排序服务）或通道定义成员和策略的配置数据。对某个通道或整个网络的配置修改（比如，成员离开或加入）都将导致生成一个新的配置区块并追加到适当的链上。这个配置区块会包含创始区块的内容加上增量。</p>
+<h2 id="Consensus-共识"><a href="#Consensus-共识" class="headerlink" title="Consensus - 共识"></a>Consensus - 共识</h2><p>A broader term overarching the entire transactional flow, which serves to generate an agreement on the order and to confirm the correctness of the set of transactions constituting a block.</p>
+<p>共识是贯穿整个交易流程的广义术语，其用于产生一个对于排序的同意书和确认构成区块的交易集的正确性。</p>
+<h2 id="Current-State-当前状态"><a href="#Current-State-当前状态" class="headerlink" title="Current State - 当前状态"></a>Current State - 当前状态</h2><p>The current state of the ledger represents the latest values for all keys ever included in its chain transaction log. Peers commit the latest values to ledger current state for each valid transaction included in a processed block. Since current state represents all latest key values known to the channel, it is sometimes referred to as World State. Chaincode executes transaction proposals against current state data.</p>
+<p>ledger的current state表示其chain交易log中所有key的最新值。peer会将处理过的block中的每个交易对应的修改value提交到ledger的current state，由于current state表示channel所知的所有最新的k-v，所以current state也被称为World State。Chaincode执行交易proposal就是针对的current state。</p>
+<h2 id="Dynamic-Membership-动态成员"><a href="#Dynamic-Membership-动态成员" class="headerlink" title="Dynamic Membership - 动态成员"></a>Dynamic Membership - 动态成员</h2><p>Fabric supports the addition-removal of members, peers, and ordering service nodes, without compromising the operationality of the overall network. Dynamic membership is critical when business relationships adjust and entities need to be added-removed for various reasons.</p>
+<p>Fabric支持动态添加-移除members、peers和ordering服务节点，而不会影响整个网络的操作性。当业务关系调整或因各种原因需添加-移除实体时，Dynamic Membership至关重要。</p>
+<h2 id="Endorsement-背书"><a href="#Endorsement-背书" class="headerlink" title="Endorsement - 背书"></a>Endorsement - 背书</h2><p>Refers to the process where specific peer nodes execute a transaction and return a <code>YES-NO</code> response to the client application that generated the transaction proposal. Chaincode applications have corresponding endorsement policies, in which the endorsing peers are specified.</p>
+<p>Endorsement 是指一个peer执行一个交易并返回<code>YES-NO</code>给生成交易proposal的client app 的过程。chaincode具有相应的endorsement policies，其中指定了endorsing peer。</p>
+<h2 id="Endorsement-policy-背书策略"><a href="#Endorsement-policy-背书策略" class="headerlink" title="Endorsement policy - 背书策略"></a>Endorsement policy - 背书策略</h2><p>Defines the peer nodes on a channel that must execute transactions attached to a specific chaincode application, and the required combination of responses (endorsements). A policy could require that a transaction be endorsed by a minimum number of endorsing peers, a minimum percentage of endorsing peers, or by all endorsing peers that are assigned to a specific chaincode application. Policies can be curated based on the application and the desired level of resilience against misbehavior (deliberate or not) by the endorsing peers. A distinct endorsement policy for install and instantiate transactions is also required.</p>
+<p>Endorsement policy定义了依赖于特定chaincode执行交易的channel上的peer和响应结果（endorsements）的必要组合条件（即返回Yes或No的条件）。Endorsement policy可指定对于某一chaincode，可以对交易背书的最小背书节点数或者最小背书节点百分比。背书策略由背书节点基于应用程序和对抵御不良行为的期望水平来组织管理。在install和instantiate Chaincode（deploy tx）时需要指定背书策略。</p>
+<h2 id="Fabric-ca"><a href="#Fabric-ca" class="headerlink" title="Fabric-ca"></a>Fabric-ca</h2><p>Fabric-ca is the default Certificate Authority component, which issues PKI-based certificates to network member organizations and their users. The CA issues one root certificate (rootCert) to each member, one enrollment certificate (eCert) to each authorized user, and a number of transaction certificates (tCerts) for each eCert.</p>
+<p>Fabric-ca是默认的证书管理组件，它向网络成员及其用户颁发基于PKI的证书。CA为每个成员颁发一个根证书（rootCert），为每个授权用户颁发一个注册证书（eCert），为每个注册证书颁发大量交易证书（tCerts）。</p>
+<h2 id="Genesis-Block-初始区块"><a href="#Genesis-Block-初始区块" class="headerlink" title="Genesis Block - 初始区块"></a>Genesis Block - 初始区块</h2><p>The configuration block that initializes a blockchain network or channel, and also serves as the first block on a chain.</p>
+<p>Genesis Block是初始化区块链网络或channel的配置区块，也是链上的第一个区块。</p>
+<h2 id="Gossip-Protocol-Gossip协议"><a href="#Gossip-Protocol-Gossip协议" class="headerlink" title="Gossip Protocol - Gossip协议"></a>Gossip Protocol - Gossip协议</h2><p>The gossip data dissemination protocol performs three functions: 1) manages peer discovery and channel membership; 2) disseminates ledger data across all peers on the channel; 3) syncs ledger state across all peers on the channel. Refer to the <a href="http:--hyperledger-fabric.readthedocs.io-en-latest-gossip.html" target="_blank" rel="noopener">Gossip</a> topic for more details.</p>
+<p>Gossip数据传输协议有三项功能：1）管理peer发现和channel成员；2）channel上的所有peer间广播账本数据；3）channel上的所有peer间同步账本数据。</p>
+<h2 id="Initialize-初始化"><a href="#Initialize-初始化" class="headerlink" title="Initialize - 初始化"></a>Initialize - 初始化</h2><p>A method to initialize a chaincode application.</p>
+<p>一个初始化chaincode程序的方法。</p>
+<h2 id="Install-安装"><a href="#Install-安装" class="headerlink" title="Install - 安装"></a>Install - 安装</h2><p>The process of placing a chaincode on a peer’s file system.</p>
+<p>将chaincode放到peer的文件系统的过程。<em>（译注：即将ChaincodeDeploymentSpec信息存到chaincodeInstallPath-chaincodeName.chainVersion文件中）</em></p>
+<h2 id="Instantiate-实例化"><a href="#Instantiate-实例化" class="headerlink" title="Instantiate - 实例化"></a>Instantiate - 实例化</h2><p>The process of starting a chaincode container.</p>
+<p>启动chaincode容器的过程。<em>（译注：在lccc中将ChaincodeData保存到state中，然后deploy Chaincode并执行Init方法）</em></p>
+<h2 id="Invoke-调用"><a href="#Invoke-调用" class="headerlink" title="Invoke - 调用"></a>Invoke - 调用</h2><p>Used to call chaincode functions. Invocations are captured as transaction proposals, which then pass through a modular flow of endorsement, ordering, validation, committal. The structure of invoke is a function and an array of arguments.</p>
+<p>用于调用chaincode内的函数。Chaincode invoke就是一个交易proposal，然后执行模块化的流程（背书、共识、 验证、 提交）。invoke的结构就是一个函数和一个参数数组。</p>
+<h2 id="Leading-Peer-主导节点"><a href="#Leading-Peer-主导节点" class="headerlink" title="Leading Peer - 主导节点"></a>Leading Peer - 主导节点</h2><p>Each <a href="#Member">Member</a> can own multiple peers on each channel that it subscribes to. One of these peers is serves as the leading peer for the channel, in order to communicate with the network ordering service on behalf of the member. The ordering service “delivers” blocks to the leading peer(s) on a channel, who then distribute them to other peers within the same member cluster.</p>
+<p>每一个Member在其订阅的channel上可以拥有多个peer，其中一个peer会作为channel的leading peer代表该Member与ordering service通信。ordering service将block传递给leading peer，该peer再将此block分发给同一member下的其他peer。</p>
+<h2 id="Ledger-账本"><a href="#Ledger-账本" class="headerlink" title="Ledger - 账本"></a>Ledger - 账本</h2><p>A ledger is a channel’s chain and current state data which is maintained by each peer on the channel.</p>
+<p>Ledger是个channel的chain和由channel中每个peer维护的world state。<em>（这个解释有点怪）</em></p>
+<h2 id="Member-成员"><a href="#Member-成员" class="headerlink" title="Member - 成员"></a>Member - 成员</h2><p>A legally separate entity that owns a unique root certificate for the network. Network components such as peer nodes and application clients will be linked to a member.</p>
+<p>拥有网络唯一根证书的合法独立实体。像peer节点和app client这样的网络组件会链接到一个Member。</p>
+<h2 id="Membership-Service-Provider-MSP"><a href="#Membership-Service-Provider-MSP" class="headerlink" title="Membership Service Provider - MSP"></a>Membership Service Provider - MSP</h2><p>The Membership Service Provider (MSP) refers to an abstract component of the system that provides credentials to clients, and peers for them to participate in a Hyperledger Fabric network. Clients use these credentials to authenticate their transactions, and peers use these credentials to authenticate transaction processing results (endorsements). While strongly connected to the transaction processing components of the systems, this interface aims to have membership services components defined, in such a way that alternate implementations of this can be smoothly plugged in without modifying the core of transaction processing components of the system.</p>
+<p>MSP是指为client和peer提供证书的系统抽象组件。Client用证书来认证他们的交易；peer用证书认证其交易背书。该接口与系统的交易处理组件密切相关，旨在使已定义的成员身份服务组件以这种方式顺利插入而不会修改系统的交易处理组件的核心。</p>
+<h2 id="Membership-Services-成员服务"><a href="#Membership-Services-成员服务" class="headerlink" title="Membership Services - 成员服务"></a>Membership Services - 成员服务</h2><p>Membership Services authenticates, authorizes, and manages identities on a permissioned blockchain network. The membership services code that runs in peers and orderers both authenticates and authorizes blockchain operations. It is a PKI-based implementation of the Membership Services Provider (MSP) abstraction.</p>
+<p>成员服务在许可的区块链网络上认证、授权和管理身份。在peer和order中运行的成员服务的代码都会认证和授权区块链操作。它是基于PKI的MSP实现。</p>
+<p>The <code>fabric-ca</code> component is an implementation of membership services to manage identities. In particular, it handles the issuance and revocation of enrollment certificates and transaction certificates.</p>
+<p><code>fabric-ca</code>组件实现了成员服务，来管理身份。特别的，它处理ECert和TCert的颁发和撤销。</p>
+<p>An enrollment certificate is a long-term identity credential; a transaction certificate is a short-term identity credential which is both anonymous and un-linkable.</p>
+<p>ECert是长期的身份凭证；TCert是短期的身份凭证，是匿名和不可链接的。</p>
+<h2 id="Ordering-Service-排序服务或共识服务"><a href="#Ordering-Service-排序服务或共识服务" class="headerlink" title="Ordering Service - 排序服务或共识服务"></a>Ordering Service - 排序服务或共识服务</h2><p>A defined collective of nodes that orders transactions into a block. The ordering service exists independent of the peer processes and orders transactions on a first-come-first-serve basis for all channel’s on the network. The ordering service is designed to support pluggable implementations beyond the out-of-the-box SOLO and Kafka varieties. The ordering service is a common binding for the overall network; it contains the cryptographic identity material tied to each <a href="#Member">Member</a>.</p>
+<p>将交易排序放入block的节点的集合。ordering service独立于peer流程之外，并以先到先得的方式为网络上所有的channel作交易排序。ordering service支持可插拔实现，目前默认实现了SOLO和Kafka。ordering service是整个网络的公用binding，包含与每个Member相关的加密材料。</p>
+<h2 id="Peer-节点"><a href="#Peer-节点" class="headerlink" title="Peer - 节点"></a>Peer - 节点</h2><p>A network entity that maintains a ledger and runs chaincode containers in order to perform read-write operations to the ledger. Peers are owned and maintained by members.</p>
+<p>一个网络实体，维护ledger并运行Chaincode容器来对ledger执行read-write操作。peer由Member拥有和维护。</p>
+<h2 id="Policy-策略"><a href="#Policy-策略" class="headerlink" title="Policy - 策略"></a>Policy - 策略</h2><p>There are policies for endorsement, validation, block committal, chaincode management and network-channel management.</p>
+<p>有背书策略，校验策略，区块提交策略，Chaincode管理策略和网络-通道管理策略。</p>
+<h2 id="Proposal-提案"><a href="#Proposal-提案" class="headerlink" title="Proposal - 提案"></a>Proposal - 提案</h2><p>A request for endorsement that is aimed at specific peers on a channel. Each proposal is either an instantiate or an invoke (read-write) request.</p>
+<p>一种针对channel中某peer的背书请求。每个proposal要么是Chaincode instantiate要么是Chaincode invoke。</p>
+<h2 id="Query-查询"><a href="#Query-查询" class="headerlink" title="Query - 查询"></a>Query - 查询</h2><p>A query requests the value of a key(s) against the current state.</p>
+<p>对于current state中某个key的value的查询请求。</p>
+<h2 id="Software-Development-Kit-SDK"><a href="#Software-Development-Kit-SDK" class="headerlink" title="Software Development Kit - SDK"></a>Software Development Kit - SDK</h2><p>The Hyperledger Fabric client SDK provides a structured environment of libraries for developers to write and test chaincode applications. The SDK is fully configurable and extensible through a standard interface. Components, including cryptographic algorithms for signatures, logging frameworks and state stores, are easily swapped in and out of the SDK. The SDK API uses protocol buffers over gRPC for transaction processing, membership services, node traversal and event handling applications to communicate across the fabric. The SDK comes in multiple flavors - Node.js, Java. and Python.</p>
+<p>SDK为开发人员提供了一个结构化的库环境，用于编写和测试链码应用程序。SDK完全可以通过标准接口实现配置和扩展，像签名的加密算法、日志框架和state存储这样的组件都可以轻松地实现替换。SDK API使用gRPC进行交易处理，成员服务、节点遍历以及事件处理都是据此与fabric通信。目前SDK支持Node.js、Java和Python。</p>
+<h2 id="State-Database-stateDB"><a href="#State-Database-stateDB" class="headerlink" title="State Database - stateDB"></a>State Database - stateDB</h2><p>Current state data is stored in a state database for efficient reads and queries from chaincode. These databases include levelDB and couchDB.</p>
+<p>为了从Chaincode中高效的读写，Current state 数据存储在stateDB中，包括levelDB和couchDB。</p>
+<h2 id="System-Chain-系统链"><a href="#System-Chain-系统链" class="headerlink" title="System Chain - 系统链"></a>System Chain - 系统链</h2><p>Contains a configuration block defining the network at a system level. The system chain lives within the ordering service, and similar to a channel, has an initial configuration containing information such as: MSP information, policies, and configuration details. Any change to the overall network (e.g. a new org joining or a new ordering node being added) will result in a new configuration block being added to the system chain.</p>
+<p>包含在系统级定义网络的配置区块。系统链存在于ordering service中，与channel类似，具有包含以下信息的初始配置：MSP信息、策略和信息配置。对整个网络的任何变化（例如新的Org加入或者添加新的Ordering节点）将导致新的配置区块被添加到系统链。</p>
+<p>The system chain can be thought of as the common binding for a channel or group of channels. For instance, a collection of financial institutions may form a consortium (represented through the system chain), and then proceed to create channels relative to their aligned and varying business agendas.</p>
+<p>系统链可看做是一个channel或一组channel的公用binding。例如，金融机构的集合可以形成一个财团（以system chain表示），然后根据其相同或不同的业务创建channel。</p>
+<h2 id="Transaction-交易"><a href="#Transaction-交易" class="headerlink" title="Transaction - 交易"></a>Transaction - 交易</h2><p>An invoke or instantiate operation. Invokes are requests to read-write data from the ledger. Instantiate is a request to start a chaincode container on a peer.</p>
+<p>Chaincode的invoke或instantiate操作。Invoke是从ledger中请求read-write set；Instantiate是请求在peer上启动Chaincode容器。</p>
+
+    </div>
+  </article>
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2019
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

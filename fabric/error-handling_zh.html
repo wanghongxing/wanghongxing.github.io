@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="hyperledger fabric error handling">
+
+
+
+
+  <meta name="keywords" content=", , wanghongxing">
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="wanghongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/fabric/error-handling_zh.html">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> hyperledger fabric error handling - wanghongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">wanghongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">wanghongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  <article class="post">
+    <div class="post-content">
+      <table>
+<thead>
+<tr>
+<th>原文</th>
+<th>作者</th>
+<th>审核修正</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://hyperledger-fabric.readthedocs.io/en/latest/error-handling.html" target="_blank" rel="noopener">原文</a></td>
+<td>Zhangjiong Xuan</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1-1-总体概览"><a href="#1-1-总体概览" class="headerlink" title="1.1. 总体概览"></a>1.1. 总体概览</h2><p>The Hyperledger Fabric error handling framework can be found in the source repository under common/errors. It defines a new type of error, CallStackError, to use in place of the standard error type provided by Go.</p>
+<p>Fabric的错误处理框架可以在Fabric代码仓库的common/errors目录下找到。它定义了一种新的错误类型，<code>CallStackError</code>,用于取代<code>Go</code>标准库中实现的错误类型。</p>
+<p>A CallStackError consists of the following:</p>
+<ul>
+<li>Component code - a name for the general area of the code that is generating the error. Component codes should consist of three uppercase letters. Numerics and special characters are not allowed. A set of component codes is defined in common/errors/codes.go</li>
+<li>Reason code - a short code to help identify the reason the error occurred. Reason codes should consist of three numeric values. Letters and special characters are not allowed. A set of reason codes is defined in common/error/codes.go</li>
+<li>Error code - the component code and reason code separated by a colon, e.g. MSP:404</li>
+<li>Error message - the text that describes the error. This is the same as the input provided to fmt.Errorf() and Errors.New(). If an error has been wrapped into the current error, its message will be appended.</li>
+<li>Callstack - the callstack at the time the error is created. If an error has been wrapped into the current error, its error message and callstack will be appended to retain the context of the wrapped error.</li>
+</ul>
+<p>一个<code>CallStackError</code>包含以下内容：</p>
+<ul>
+<li><code>Component code</code> - 一个生成错误信息的错误码的通用区域的组件名称。Component codes应该由3个大写字母组成。不允许出现数字和特殊字符。一系列component codes被定义在<code>common/errors/codes.go</code>文件中。</li>
+<li><code>Reason code</code> - 一个用于在错误出现时定位错误原因的较短的错误码。Reason codes应该由3位数字组成。不允许出现字母和特殊字符。一系列reason codes被定义在<code>common/errors/codes.go</code>文件中。</li>
+<li><code>Error code</code> - 由冒号分隔的component code和reason code组成的错误码，例如<code>MSP：404</code>。</li>
+<li><code>Error message</code> - 描述错误信息的文本。这与提供的<code>fmt.Errorf()</code>和<code>Errors.New()</code>类似。如果一个错误被包含到当前的错误中，那么它的错误消息将被附加。</li>
+<li><code>Callstack</code> - 错误出现时的调用堆栈。如果一个错误被包含在当前的错误中，那么它的错误消息和调用堆栈信息会被附加到被包含的错误的上下文中。</li>
+</ul>
+<p>The CallStackError interface exposes the following functions:</p>
+<ul>
+<li>Error() - returns the error message with callstack appended</li>
+<li>Message() - returns the error message (without callstack appended)</li>
+<li>GetComponentCode() - returns the 3-character component code</li>
+<li>GetReasonCode() - returns the 3-digit reason code</li>
+<li>GetErrorCode() - returns the error code, which is “component:reason”</li>
+<li>GetStack() - returns just the callstack</li>
+<li>WrapError(error) - wraps the provided error into the CallStackError</li>
+</ul>
+<p><code>Callstack</code>接口暴露了以下方法：</p>
+<ul>
+<li><code>Error()</code> - 返回一个带有调用堆栈的错误消息。</li>
+<li><code>Message()</code> - 返回一个错误消息。（不包含调用堆栈信息）。</li>
+<li><code>GetComponentCode()</code> - 返回由3个字母组成的组件代码。</li>
+<li><code>GetReasonCode()</code> - 返回由3个数字组成的错误原因代码。</li>
+<li><code>GetErrorCode()</code> - 返回错误代码，由”component:reason”组成。</li>
+<li><code>GetStack()</code> - 仅返回调用堆栈。</li>
+<li><code>WrapError(error)</code> - 将提供的错误包装进<code>CallStackError</code>。</li>
+</ul>
+<h2 id="1-2-使用说明"><a href="#1-2-使用说明" class="headerlink" title="1.2. 使用说明"></a>1.2. 使用说明</h2><p>The new error handling framework should be used in place of all calls to fmt.Errorf() or Errors.new(). Using this framework will provide error codes to check against as well as the option to generate a callstack that will be appended to the error message.</p>
+<p>应该使用新的错误处理框架来替换所有调用<code>fmt.Errorf()</code>或者<code>Errors.new()</code>的地方。用新的错误处理框架将提供错误代码以及将附加到错误消息的调用堆栈信息的选项。</p>
+<p>Using the framework is simple and will only require an easy tweak to your code.</p>
+<p>使用这个错误框架简单易用，只需要简单地调整你的代码。</p>
+<p>First, you’ll need to import github.com/hyperledger/fabric/common/errors into any file that uses this framework.</p>
+<p>首先，您需要将<code>github.com/hyperleger/fabric/common/errors</code>导入到使用此框架的任何文件中。</p>
+<p>Let’s take the following as an example from core/chaincode/chaincode_support.go:</p>
+<p>以<code>core/chaincode/chaincode_support.go</code>为例：<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line">err = fmt.Errorf(<span class="string">"Error starting container: %s"</span>, err)</span><br></pre></td></tr></table></figure></p>
+<p>For this error, we will simply call the constructor for Error and pass a component code, reason code, followed by the error message. At the end, we then call the WrapError() function, passing along the error itself.</p>
+<p>对于这个错误，我们将简单地调用Error的构造函数，并传递一个组件代码，原因代码，然后是错误消息。最后，我们调用<code>WrapError()</code>函数，传递错误本身。<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line">fmt.Errorf(<span class="string">"Error starting container: %s"</span>, err)</span><br></pre></td></tr></table></figure></p>
+<p>变成<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line">errors.ErrorWithCallstack(<span class="string">"CHA"</span>, <span class="string">"505"</span>, <span class="string">"Error starting container"</span>).WrapError(err)</span><br></pre></td></tr></table></figure></p>
+<p>You could also just leave the message as is without any problems:</p>
+<p>您也可以仅编写错误信息，也不会有任何问题：<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line">errors.ErrorWithCallstack(<span class="string">"CHA"</span>, <span class="string">"505"</span>, <span class="string">"Error starting container: %s"</span>, err)</span><br></pre></td></tr></table></figure></p>
+<p>With this usage you will be able to format the error message from the previous error into the new error, but will lose the ability to print the callstack (if the wrapped error is a CallStackError).</p>
+<p>如果使用这种方法，您将能够将上一个错误消息格式化成一个新的错误，但是将失去打印调用堆栈的能力（如果包装的错误是CallStack）。</p>
+<p>A second example to highlight a scenario that involves formatting directives for parameters other than errors, while still wrapping an error, is as follows:</p>
+<p>另一个凸显的例子涉及了格式化错误以外的参数指令，同时仍然包含了错误，如下所示：<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line">fmt.Errorf(<span class="string">"failed to get deployment payload %s - %s"</span>, canName, err)</span><br></pre></td></tr></table></figure></p>
+<p>变成<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line">errors.ErrorWithCallstack(<span class="string">"CHA"</span>, <span class="string">"506"</span>, <span class="string">"Failed to get deployment payload %s"</span>, canName).WrapError(err)</span><br></pre></td></tr></table></figure></p>
+<h2 id="1-3-显示错误消息"><a href="#1-3-显示错误消息" class="headerlink" title="1.3. 显示错误消息"></a>1.3. 显示错误消息</h2><p>Once the error has been created using the framework, displaying the error message is as simple as:</p>
+<p>一旦使用框架创建啦错误，显示错误消息将十分简单：<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line">logger.Errorf(err)</span><br></pre></td></tr></table></figure></p>
+<p>或者<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line">fmt.Println(err)</span><br></pre></td></tr></table></figure></p>
+<p>或者<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line">fmt.Printf(<span class="string">"%s\n"</span>,err)</span><br></pre></td></tr></table></figure></p>
+<p>来自<code>peer/common/common.go</code>的一个例子：<br><figure class="highlight go"><table><tr><td class="code"><pre><span class="line">errors.ErrorWithCallstack(<span class="string">"PER"</span>, <span class="string">"404"</span>, <span class="string">"Error trying to connect to local peer"</span>).WrapError(err)</span><br></pre></td></tr></table></figure></p>
+<p>将显示错误消息：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PER:404 - Error trying to connect to local peer</span><br><span class="line">Caused by: grpc: timed out when dialing</span><br></pre></td></tr></table></figure></p>
+<p>Note<br>The callstacks have not been displayed for this example for the sake of brevity.</p>
+<blockquote>
+<p>注意</p>
+<blockquote>
+<p>为了简洁起见，本示例尚未展示调用堆栈信息。</p>
+</blockquote>
+</blockquote>
+<h2 id="1-4-Hyperledger-Fabric中错误处理的一般准则"><a href="#1-4-Hyperledger-Fabric中错误处理的一般准则" class="headerlink" title="1.4. Hyperledger Fabric中错误处理的一般准则"></a>1.4. Hyperledger Fabric中错误处理的一般准则</h2><ul>
+<li>If it is some sort of best effort thing you are doing, you should log the error and ignore it.</li>
+<li>If you are servicing a user request, you should log the error and return it.</li>
+<li>If the error comes from elsewhere, you have the choice to wrap the error or not. Typically, it’s best to not wrap the error and simply return it as is. However, for certain cases where a utility function is called, wrapping the error with a new component and reason code can help an end user understand where the error is really occurring without inspecting the callstack.</li>
+<li><p>A panic should be handled within the same layer by throwing an internal error code/start a recovery process and should not be allowed to propagate to other packages.</p>
+</li>
+<li><p>如果这是你正在努力做的某种事情，你应该记录错误并忽略它。</p>
+</li>
+<li>如果你正在为用户请求提供服务，则应该记录错误并返回。</li>
+<li>如果错误来自其它地方，你可以选择包装错误。通常，最好不要包装错误，让它原样返回。然而，对于工具函数调用的某些情况，使用component code和reason code来包装可以帮助用户在不检查调用堆栈的情况下了解正真发生错误的位置。</li>
+<li>一个panic 应该在同一层通过抛出内部错误代码/启动一个恢复进程来处理，而且不允许传播到其他软件包。</li>
+</ul>
+
+    </div>
+  </article>
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2019
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

@@ -1,89 +1,211 @@
 <!DOCTYPE html>
-<html>
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="utf-8">
-  
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="Hyperledger Fabric Glossary">
+
+
+
+
+  <meta name="keywords" content="fabric, blockchain, wanghongxing">
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="wanghongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/2019/04/21/Hyperledger-Fabric-02-Glossary/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
 
   
-  <title>Hyperledger Fabric Glossary | wanghongxing</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Terminology is important, so that all Fabric users and developers agree on what we mean by each specific term. What is chaincode, for example. So we’ll point you there, whenever you want to reassure y">
-<meta name="keywords" content="fabric,blockchain">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Hyperledger Fabric Glossary">
-<meta property="og:url" content="http://wanghongxing.github.io/2019/04/21/Hyperledger-Fabric-02-Glossary/index.html">
-<meta property="og:site_name" content="wanghongxing">
-<meta property="og:description" content="Terminology is important, so that all Fabric users and developers agree on what we mean by each specific term. What is chaincode, for example. So we’ll point you there, whenever you want to reassure y">
-<meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2019-04-21T03:27:54.875Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hyperledger Fabric Glossary">
-<meta name="twitter:description" content="Terminology is important, so that all Fabric users and developers agree on what we mean by each specific term. What is chaincode, for example. So we’ll point you there, whenever you want to reassure y">
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> Hyperledger Fabric Glossary - wanghongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">wanghongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">wanghongxing</a>
+</div>
+
+<nav class="site-navbar">
   
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-</html>
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">wanghongxing</a>
-      </h1>
+    <ul id="menu" class="menu">
       
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">首页</a>
-        
-          <a class="main-nav-link" href="/archives">归档</a>
-        
-          <a class="main-nav-link" href="/about">我</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://wanghongxing.github.io"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-Hyperledger-Fabric-02-Glossary" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/21/Hyperledger-Fabric-02-Glossary/" class="article-date">
-  <time datetime="2019-04-21T03:07:11.000Z" itemprop="datePublished">2019-04-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
   
-    <h1 class="article-title" itemprop="name">
-      Hyperledger Fabric Glossary
-    </h1>
-  
+</nav>
 
       </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Hyperledger Fabric Glossary
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-04-21
+        </span>
+        
+        
+      </div>
+    </header>
+
     
-    <div class="article-entry" itemprop="articleBody">
+    
+
+
+    <div class="post-content">
       
         <p>Terminology is important, so that all Fabric users and developers agree on what we mean by each specific term. What is chaincode, for example. So we’ll point you there, whenever you want to reassure yourself. Of course, feel free to read the entire thing in one sitting if you like, it’s pretty enlightening!</p>
 <p>专业术语很重要，所以所有”Fabric”项目用户和开发人员同意我们所说的每个特定术语的含义，举个例子：如什么是链码，因此我们将引导你到术语说明，让你随时可以消除对术语理解的疑虑，当然，如果你愿意的话可以自由的阅读整个文档，非常有启发！</p>
@@ -200,138 +322,179 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://wanghongxing.github.io/2019/04/21/Hyperledger-Fabric-02-Glossary/" data-id="cjvre44od0017mxy92300kp43" class="article-share-link">Share</a>
+
+    
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blockchain/">blockchain</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fabric/">fabric</a></li></ul>
 
-    </footer>
-  </div>
-  
+
+
+      
+      
     
-<nav id="article-nav">
-  
-  
-    <a href="/2019/04/21/Hyperledger-Fabric-03-Key-Concepts/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hyperledger Fabric Key Concepts</div>
-    </a>
-  
-</nav>
 
-  
-</article>
-
-</section>
+    
+      <footer class="post-footer">
         
-          <aside id="sidebar">
-  
+          <div class="post-tags">
+            
+              <a href="/tags/fabric/">fabric</a>
+            
+              <a href="/tags/blockchain/">blockchain</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/fabric/">fabric</a></li></ul>
-    </div>
-  </div>
-
-
-  
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blockchain/">blockchain</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fabric/">fabric</a></li></ul>
-    </div>
-  </div>
-
-
-  
+      <a class="next" href="/2019/04/21/Hyperledger-Fabric-03-Key-Concepts/">
+        <span class="next-text nav-default">Hyperledger Fabric Key Concepts</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/blockchain/" style="font-size: 10px;">blockchain</a> <a href="/tags/fabric/" style="font-size: 10px;">fabric</a>
-    </div>
-  </div>
+  </nav>
 
-  
+
+      </footer>
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li></ul>
-    </div>
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
   </div>
 
 
-  
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
+      
         
-          <li>
-            <a href="/2019/04/21/Hyperledger-Fabric-02-Glossary/">Hyperledger Fabric Glossary</a>
-          </li>
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
         
-          <li>
-            <a href="/2019/04/21/Hyperledger-Fabric-03-Key-Concepts/">Hyperledger Fabric Key Concepts</a>
-          </li>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
         
-          <li>
-            <a href="/2019/04/21/Hyperledger-Fabric-01-Introduction/">Hyperledger Fabric 介绍（Introduction）</a>
-          </li>
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
         
-          <li>
-            <a href="/2018/12/05/python-学画图/">python 学画图</a>
-          </li>
-        
-          <li>
-            <a href="/2018/12/01/learn-febric-02-Building-Your-First-Network/">learn febric 02 Building Your First Network</a>
-          </li>
-        
-      </ul>
-    </div>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
   </div>
 
-  
-</aside>
-        
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2019
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2019 wanghongxing<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">首页</a>
-  
-    <a href="/archives" class="mobile-nav-link">归档</a>
-  
-    <a href="/about" class="mobile-nav-link">我</a>
-  
-</nav>
+
     
+  
+  
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
+  
 
 
 
-  </div>
-</body>
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
 </html>

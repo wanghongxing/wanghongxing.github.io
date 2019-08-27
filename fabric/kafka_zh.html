@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="hyperledger fabric">
+
+
+
+
+  <meta name="keywords" content=", , wanghongxing">
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="wanghongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/fabric/kafka_zh.html">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> hyperledger fabric - wanghongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">wanghongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">wanghongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  <article class="post">
+    <div class="post-content">
+      <table>
+<thead>
+<tr>
+<th>原文</th>
+<th>作者</th>
+<th>审核修正</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://hyperledger-fabric.readthedocs.io/en/latest/kafka.html" target="_blank" rel="noopener">原文</a></td>
+<td>Shaoxi Qiu</td>
+</tr>
+</tbody>
+</table>
+<h2 id="须知（Caveat-emptor）"><a href="#须知（Caveat-emptor）" class="headerlink" title="须知（Caveat emptor）"></a>须知（Caveat emptor）</h2><p>This document assumes that the reader generally knows how to set up a Kafka<br>cluster and a ZooKeeper ensemble. The purpose of this guide is to identify the<br>steps you need to take so as to have a set of Hyperledger Fabric ordering<br>service nodes (OSNs) use your Kafka cluster and provide an ordering service to<br>your blockchain network.</p>
+<p>该文档假设读者已经基本了解如何去搭建Kafka集群和ZooKeeper集群。本文档的目的是确定您使用Kafka集群搭建一套Hyperledger Fabric排序服务节点集(OSNs)以及为你的区块链网络提供排序服务所需要采取的步骤。</p>
+<h2 id="概览（Big-picture）"><a href="#概览（Big-picture）" class="headerlink" title="概览（Big picture）"></a>概览（Big picture）</h2><p>Each channel maps to a separate single-partition topic in Kafka. </p>
+<p>每一个通道(channel)在Kafka中被映射到一个单独的单分区(partition)类别(topic)。(译者注：通常每个Topic包含一个或多个Partition，此处每个Topic只包含一个Partition)</p>
+<p>When an OSN receives transactions via the <code>Broadcast</code> RPC, it checks to make sure<br>that the broadcasting client has permissions to write on the channel, then<br>relays (i.e. produces) those transactions to the appropriate partition in Kafka.</p>
+<p>当排序节点通过RPC<code>广播</code>(<code>Broadcast</code>)接收到交易时，它会检查广播交易的客户端是否有权限去修改通道(channel)数据，然后反馈（即产生）这些交易到Kafka的适当分区(partition)中。</p>
+<p>This partition is also consumed by the OSN which groups the received<br>transactions into blocks locally, persists them in its local ledger, and serves<br>them to receiving clients via the <code>Deliver</code> RPC. </p>
+<p>该分区也被排序节点所消费(consume)，排序节点将接收到的交易分组写入到本地区块，将其保留在本地账本中，并通过<code>Deliver</code> RPC提供给需要接收的客户端。</p>
+<p>For low-level details, refer<br>to <code>the document that describes how we came to this design
+&lt;https://docs.google.com/document/d/1vNMaM7XhOlu9tB_10dKnlrhy5d7b1u8lSY8a-kVjCO4/edit&gt;</code>_<br>– Figure 8 is a schematic representation of the process described above.</p>
+<p>更多详细的信息，请参考<code>the document that describes how we came to this design
+&lt;https://docs.google.com/document/d/1vNMaM7XhOlu9tB_10dKnlrhy5d7b1u8lSY8a-kVjCO4/edit&gt;</code>_<br>– 图8是上述过程的示意图。</p>
+<h2 id="步骤（Steps）"><a href="#步骤（Steps）" class="headerlink" title="步骤（Steps）"></a>步骤（Steps）</h2><p>Let <code>K</code> and <code>Z</code> be the number of nodes in the Kafka cluster and the<br>ZooKeeper ensemble respectively:</p>
+<p>设定变量 <code>K</code> 和 <code>Z</code> 分别是Kafka集群和ZooKeeper集群的节点数量：</p>
+<p>i. At a minimum, <code>K</code> should be set to 4. (As we will explain in Step 4 below,<br>this is the minimum number of nodes necessary in order to exhibit crash fault<br>tolerance, i.e. with 4 brokers, you can have 1 broker go down, all channels will<br>continue to be writeable and readable, and new channels can be created.)</p>
+<p>i. <code>K</code>的最小值需要是4。(我们将在步骤4中解释，这是实现 故障容错(crash fault tolerance) 所需要的最小数值，也就是说，<br>4个节点可以容许1个节点宕机，所有的通道能够继续读写且可以创建通道。)(译者：Kafka节点被称为broker)</p>
+<p>ii. <code>Z</code> will either be 3, 5, or 7. It has to be an odd number to avoid<br>split-brain scenarios, and larger than 1 in order to avoid single point of<br>failures. Anything beyond 7 ZooKeeper servers is considered an overkill.</p>
+<p>ii. <code>Z</code>可以是3、5或者7。它必须是一个奇数来避免分裂(split-brain)情景，大于1以避免单点故障。<br>超过7个ZooKeeper服务器则被认为是多余的。</p>
+<p>Proceed as follows:</p>
+<p>请按照以下步骤进行:</p>
+<ol>
+<li><p>Orderers: <strong>Encode the Kafka-related information in the network’s genesis<br>block.</strong> If you are using <code>configtxgen</code>, edit <code>configtx.yaml</code> – or pick a<br>preset profile for the system channel’s genesis block –  so that:</p>
+<p>Orderers: <strong>Kafka 相关信息被写在网络的初始区块中.</strong> 如果你使用 <code>configtxgen</code> 工具, 编辑 <code>configtx.yaml</code> 文件– 或者挑一个现成的系统通道的初始区块配置文件 –  其中:</p>
+<pre><code>a. ``Orderer.OrdererType`` is set to ``kafka``.
+
+a. ``Orderer.OrdererType`` 字段被设置为 ``kafka``.
+
+b. ``Orderer.Kafka.Brokers`` contains the address of *at least two* of the
+Kafka brokers in your cluster in ``IP:port`` notation. The list does not
+need to be exhaustive. (These are your seed brokers.)
+
+b. ``Orderer.Kafka.Brokers`` 字段包含 *至少两个* Kafka集群中的节点``IP:port`` 样式的地址。这个列表没有必要详尽无遗(这些是你的 seed brokers.)
+</code></pre></li>
+<li><p>Orderers: <strong>Set the maximum block size.</strong> Each block will have at most<br><code>Orderer.AbsoluteMaxBytes</code> bytes (not including headers), a value that you can<br>set in <code>configtx.yaml</code>. Let the value you pick here be <code>A</code> and make note of<br>it – it will affect how you configure your Kafka brokers in Step 4.</p>
+<p>Orderers: <strong>设置区块最大容量.</strong> 每一个区块最多只能有 <code>Orderer.AbsoluteMaxBytes</code> bytes的容量(不含区块头信息), 这是一个你可以修改的值，存放在 <code>configtx.yaml</code> 配置文件中. 假设此处你设置的数值为<code>A</code>,将此数字记下来 – 这会影响你在步骤4中对于Kafka brokers 的配置.</p>
+</li>
+<li><p>Orderers: <strong>Create the genesis block.</strong> Use <code>configtxgen</code>. The settings you<br>picked in Steps 1 and 2 above are system-wide settings, i.e. they apply across<br>the network for all the OSNs. Make note of the genesis block’s location.</p>
+<p>Orderers:  使用 <code>configtxgen</code> 工具 <strong>创建初始区块.</strong> 在步骤1和2中的设置是全局的设置, 也就是说这些设置的生效范围是网络中所有的排序节点. 记录下初始区块的位置. </p>
+</li>
+<li><p>Kafka cluster: <strong>Configure your Kafka brokers appropriately.</strong> Ensure that<br>every Kafka broker has these keys configured:</p>
+<p>Kafka 集群: <strong>适当配置你的Kafka集群.</strong> 确保每一个Kafka节点都配置了以下的值:</p>
+<p> a. <code>unclean.leader.election.enable = false</code> – Data consistency is key in<br> a blockchain environment. We cannot have a channel leader chosen outside of<br> the in-sync replica set, or we run the risk of overwriting the offsets that<br> the previous leader produced, and –as a result– rewrite the blockchain<br> that the orderers produce.</p>
+<p> a. <code>unclean.leader.election.enable = false</code> – 数据一致性是区块链环境的关键. 我们不能选择不在同步副本集中的channel leader, 也不能冒风险去覆盖前一leader所产生的偏移量, 那样的结果就是重写orderers所产生的区块链数据.</p>
+<p> b.  <code>min.insync.replicas = M</code> – Where you pick a value <code>M</code> such that<br> 1 &lt; M &lt; N (see <code>default.replication.factor</code> below). Data is considered<br> committed when it is written to at least <code>M</code> replicas (which are then<br> considered in-sync and belong to the in-sync replica set, or ISR). In any<br> other case, the write operation returns an error. Then:</p>
+<p> b.  <code>min.insync.replicas = M</code> –  <code>M</code> 的值需要满足<br> 1 &lt; M &lt; N (N的值参考后面的 <code>default.replication.factor</code>). 数据被认为是完成提交当它被写入到至少 <code>M</code> 个副本中(也就是说它被认为是同步的,然后被写入到同步副本集中,也成为ISR). 其他情况, 写入操作返回错误信息. 然后: </p>
+<pre><code>i. If up to N-M replicas -- out of the N that the channel data is
+written to -- become unavailable, operations proceed normally.
+i. 如果有 N-M 个副本不可访问, 操作将正常进行.
+ii. If more replicas become unavailable, Kafka cannot maintain an ISR
+set of M, so it stops accepting writes. Reads work without issues.
+The channel becomes writeable again when M replicas get in-sync.
+ii. 如果更多副本不可访问, Kafka 不能位置数量 M 的同步副本集(ISR), 所以它会停止接受写入操作. 读操作可以正常运行.
+当M个副本重新同步后,通道就可以再次变为可写入状态.
+</code></pre></li>
+</ol>
+<pre><code>c. ``default.replication.factor = N`` -- Where you pick a value ``N`` such
+that N &lt; K. A replication factor of ``N`` means that each channel will have
+its data replicated to ``N`` brokers. These are the candidates for the ISR
+set of a channel. As we noted in the ``min.insync.replicas section`` above,
+not all of these brokers have to be available all the time. ``N`` should be
+set *strictly smaller* to ``K`` because channel creations cannot go forward
+if less than ``N`` brokers are up. So if you set N = K, a single broker
+going down means that no new channels can be created on the blockchain
+network -- the crash fault tolerance of the ordering service is
+non-existent.
+
+c. ``default.replication.factor = N`` -- 选择一个 ``N`` 的数值满足 N &lt; K (Kafak集群数量). 参数 ``N`` 表示每个channel 的数据会复制到 ``N`` 个 broker 中. 这些是 channel 同步副本集的候选. 正如前面 ``min.insync.replicas`` 部分所说的, 不是所有broker都需要是随时可用的. ``N`` 值需要设置为绝对小于 ``K`` , 因为channel的创建需要不少于 ``N`` 个broker是启动的. 所以如果设置 N = K , 一个 broker 宕机就意味着区块链网络不能再创建channel. 那么故障容错的排序服务也就不存在了.
+
+
+d. ``message.max.bytes`` and ``replica.fetch.max.bytes`` should be set to a
+value larger than ``A``, the value you picked in
+``Orderer.AbsoluteMaxBytes`` in Step 2 above. Add some buffer to account for
+headers -- 1 MiB is more than enough. The following condition applies:
+
+d. ``message.max.bytes`` 和 ``replica.fetch.max.bytes`` 的值需要大于 ``A``, 就是在步骤2中选取的 ``Orderer.AbsoluteMaxBytes`` 的值. 再为区块头增加一些余量 -- 1 MiB 就足够了. 需要满足以下条件:
+
+::
+
+    Orderer.AbsoluteMaxBytes &lt; replica.fetch.max.bytes &lt;= message.max.bytes
+
+(For completeness, we note that ``message.max.bytes`` should be strictly
+smaller to ``socket.request.max.bytes`` which is set by default to 100 MiB.
+If you wish to have blocks larger than 100 MiB you will need to edit the
+hard-coded value in ``brokerConfig.Producer.MaxMessageBytes`` in
+``fabric/orderer/kafka/config.go`` and rebuild the binary from source.
+This is not advisable.)
+
+(补充, 我们注意到 ``message.max.bytes`` 需要严格小于 ``socket.request.max.bytes`` , 这个值默认是100Mib. 如果你希望区块大于100MiB, 你需要去修改硬代码中的变量 ``brokerConfig.Producer.MaxMessageBytes`` , 代码位置是 ``fabric/orderer/kafka/config.go`` , 再重新编译代码, 不建议这么做.)
+
+e. ``log.retention.ms = -1``. Until the ordering service adds
+support for pruning of the Kafka logs, you should disable time-based
+retention and prevent segments from expiring. (Size-based retention -- see
+``log.retention.bytes`` -- is disabled by default in Kafka at the time of
+this writing, so there&apos;s no need to set it explicitly.)
+
+e. ``log.retention.ms = -1``. 直到排序服务增加了对于 Kafka 日志分割(pruning)的支持之前, 应该禁用基于时间分割的方式以避免单个日志文件到期分段. (基于文件大小的分割方式 -- 看参数 ``log.retention.bytes`` -- 在本文书写时, 在 Kafka 中是默认被禁用的, 所以这个值没有必要指定地很明确. )
+
+Based on what we&apos;ve described above, the minimum allowed values for ``M``
+and ``N`` are 2 and 3 respectively. This configuration allows for the
+creation of new channels to go forward, and for all channels to continue to
+be writeable.
+
+基于上文所描述的, ``M`` 和 ``N`` 的最小值分别为 2 和 3 . 这个配置可以创建 channel 并让所有 channel 都是随时可以写入的.
+</code></pre><ol start="5">
+<li><p>Orderers: <strong>Point each OSN to the genesis block.</strong> Edit<br><code>General.GenesisFile</code> in <code>orderer.yaml</code> so that it points to the genesis<br>block created in Step 3 above. (While at it, ensure all other keys in that YAML<br>file are set appropriately.)</p>
+<p>Orderers: <strong>将所有排序节点指向初始区块.</strong> 编辑 <code>orderer.yaml</code> 文件中的参数 <code>General.GenesisFile</code> 使其指向步骤3中所创建的初始区块. (同时, 确保YAML文件中所有其他参数都是正确的.)</p>
+</li>
+<li><p>Orderers: <strong>Adjust polling intervals and timeouts.</strong> (Optional step.)<br>Orderers: <strong>调整轮询间隔和超时时间.</strong> (可选步骤.)</p>
+<p> a. The <code>Kafka.Retry</code> section in the <code>orderer.yaml</code> file allows you to<br> adjust the frequency of the metadata/producer/consumer requests, as well as<br> the socket timeouts. (These are all settings you would expect to see in a<br> Kafka producer or consumer.)</p>
+<p> a.  <code>orderer.yaml</code> 文件中的 <code>Kafka.Retry</code> 区域让你能够调整  metadata/producer/consumer 请求的频率以及socket的超时时间. (这些应该就是所有在 kafka 的生产者和消费者 中你需要的设置)</p>
+<p> b. Additionally, when a new channel is created, or when an existing channel<br> is reloaded (in case of a just-restarted orderer), the orderer interacts<br> with the Kafka cluster in the following ways:</p>
+<p> b. 另外, 当一个 channel 被创建, 或当一个现有的 channel 被重新读取(刚启动 orderer 的情况), orderer 通过以下方式和 Kafka 集群进行交互. </p>
+<pre><code>a. It creates a Kafka producer (writer) for the Kafka partition that
+corresponds to the channel.
+
+a. 为 channel 对应的 Kafka 分区 创建一个 Kafka 生产者.
+
+b. It uses that producer to post a no-op ``CONNECT`` message to that
+partition.
+
+b. 通过生产者向这个分区发一个空的连接信息.
+
+c. It creates a Kafka consumer (reader) for that partition.
+
+c. 为这个分区创建一个 Kafka 消费者. 
+
+If any of these steps fail, you can adjust the frequency with which they
+are repeated. Specifically they will be re-attempted every
+``Kafka.Retry.ShortInterval`` for a total of ``Kafka.Retry.ShortTotal``,
+and then every ``Kafka.Retry.LongInterval`` for a total of
+``Kafka.Retry.LongTotal`` until they succeed. Note that the orderer will
+be unable to write to or read from a channel until all of the steps
+above have been completed successfully.
+
+如果任意步骤出错, 你可以调整其重复的频率. 
+这些步骤会在每一个 Kafka.Retry.ShortInterval 指定的时间间隔后进行重试 Kafka.Retry.ShortTotal 次, 
+再以 Kafka.Retry.LongInterval 规定的时间间隔重试 Kafka.Retry.LongTotal 次直到成功. 
+需要注意的是 orderer 不能读写该 channel 的数据直到所有上述步骤都成功执行.
+</code></pre></li>
+<li><p><strong>Set up the OSNs and Kafka cluster so that they communicate over SSL.</strong><br>(Optional step, but highly recommended.) Refer to <code>the Confluent guide
+&lt;http://docs.confluent.io/2.0.0/kafka/ssl.html&gt;</code>_ for the Kafka cluster side of<br>the equation, and set the keys under <code>Kafka.TLS</code> in <code>orderer.yaml</code> on every<br>OSN accordingly.</p>
+<p><strong>将排序节点和 Kafka 集群间设置为通过 SSL 通讯.</strong><br>(可选步骤,强烈推荐) 参考 <code>the Confluent guide
+&lt;http://docs.confluent.io/2.0.0/kafka/ssl.html&gt;</code>_ 文档中关于 Kafka 集群的设置, 来设置每个排序节点 <code>orderer.yaml</code> 文件中  <code>Kafka.TLS</code> 部分的内容.</p>
+</li>
+<li><p><strong>Bring up the nodes in the following order: ZooKeeper ensemble, Kafka<br>cluster, ordering service nodes.</strong></p>
+<p><strong>启动节点请按照以下顺序: ZooKeeper 集群, Kafka 集群, 排序节点</strong></p>
+</li>
+</ol>
+<h2 id="其他注意事项（Additional-considerations）"><a href="#其他注意事项（Additional-considerations）" class="headerlink" title="其他注意事项（Additional considerations）"></a>其他注意事项（Additional considerations）</h2><ol>
+<li><p><strong>Preferred message size.</strong> In Step 2 above (see <code>Steps</code>_ section) you can<br>also set the preferred size of blocks by setting the<br><code>Orderer.Batchsize.PreferredMaxBytes</code> key. Kafka offers higher throughput when<br>dealing with relatively small messages; aim for a value no bigger than 1 MiB.</p>
+<p><strong>首选的消息大小.</strong> 在上面的步骤2中, 你也能通过参数 <code>Orderer.Batchsize.PreferredMaxBytes</code> 设置首选的区块大小.<br>Kafka 处理相对较小的信息有更高的吞吐量; 针对小于 1 MiB 大小的值.</p>
+</li>
+<li><p><strong>Using environment variables to override settings.</strong> You can override a<br>Kafka broker or a ZooKeeper server’s settings by using environment variables.<br>Replace the dots of the configuration key with underscores –<br>e.g. <code>KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE=false</code> will allow you to override<br>the default value of <code>unclean.leader.election.enable</code>. The same applies to the<br>OSNs for their <em>local</em> configuration, i.e. what can be set in <code>orderer.yaml</code>.<br>For example <code>ORDERER_KAFKA_RETRY_SHORTINTERVAL=1s</code> allows you to override the<br>default value for <code>Orderer.Kafka.Retry.ShortInterval</code>.</p>
+<p><strong>使用环境变量重写设置.</strong> 你能够通过设置环境变量来重写 Kafka 节点和 Zookeeper 服务器的设置. 替换配置参数中的 点 为 下划线 – 例如 <code>KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE=false</code> 环境变量重写配置参数 <code>unclean.leader.election.enable</code>. 环境变量重写同样适用于排序节点的<em>本地</em>配置, 即 <code>orderer.yaml</code> 中所能设置的. 例如 <code>ORDERER_KAFKA_RETRY_SHORTINTERVAL=1s</code> 环境变量可以重写本地配置文件中的 <code>Orderer.Kafka.Retry.ShortInterval</code>.</p>
+</li>
+</ol>
+<h2 id="Supported-Kafka-versions-and-upgrading"><a href="#Supported-Kafka-versions-and-upgrading" class="headerlink" title="Supported Kafka versions and upgrading"></a>Supported Kafka versions and upgrading</h2><h2 id="支持的-Kafka-版本和升级"><a href="#支持的-Kafka-版本和升级" class="headerlink" title="支持的 Kafka 版本和升级"></a>支持的 Kafka 版本和升级</h2><p>Supported Kafka versions for v1 are <code>0.9</code> and <code>0.10</code>. (Hyperledger Fabric<br>uses the <code>sarama client library &lt;https://github.com/Shopify/sarama&gt;</code>_<br>and vendors a version of it that supports Kafka 0.9 and 0.10.)</p>
+<p>Fabric V1 支持的 Kafka 版本是 <code>0.9</code> 和 <code>0.10</code>. (Hyperledger Fabric 使用代码库: <code>sarama client library &lt;https://github.com/Shopify/sarama&gt;</code>_ 支持的 Kafka 版本是 <code>0.9</code> 和 <code>0.10</code>)</p>
+<p>Out of the box the Kafka version defaults to <code>0.9.0.1</code>. If you wish to use a<br>different supported version, specify a supported version using the<br><code>Kafka.Version</code> key in <code>orderer.yaml</code>.</p>
+<p>默认的 Kafka 版本是 <code>0.9.0.1</code>. 如果你使用其他支持的版本, 修改 <code>orderer.yaml</code> 文件中的参数 <code>Kafka.Version</code>.</p>
+<p>The current supported Kafka versions are:</p>
+<p>目前支持的 Kafka 版本是:</p>
+<ul>
+<li><code>Version: 0.9.0.1</code></li>
+<li><code>Version: 0.10.0.0</code></li>
+<li><code>Version: 0.10.0.1</code></li>
+<li><code>Version: 0.10.1.0</code></li>
+</ul>
+<h2 id="调试（Debugging）"><a href="#调试（Debugging）" class="headerlink" title="调试（Debugging）"></a>调试（Debugging）</h2><p>Set <code>General.LogLevel</code> to <code>DEBUG</code> and <code>Kafka.Verbose</code> in <code>orderer.yaml</code><br>to <code>true</code>.</p>
+<p>设置 <code>orderer.yaml</code> 文件中 <code>General.LogLevel</code> 为 <code>DEBUG</code> 和 <code>Kafka.Verbose</code> 为 <code>true</code>.</p>
+<h2 id="例子（Example）"><a href="#例子（Example）" class="headerlink" title="例子（Example）"></a>例子（Example）</h2><p>Sample Docker Compose configuration files inline with the recommended settings<br>above can be found under the <code>fabric/bddtests</code> directory. Look for<br><code>dc-orderer-kafka-base.yml</code> and <code>dc-orderer-kafka.yml</code>.</p>
+<p>包含了推荐的设置的Docker Compose 配置文件示例能够在 <code>fabric/bddtests</code> 目录中找到. 包括 <code>dc-orderer-kafka-base.yml</code> 文件和 <code>dc-orderer-kafka.yml</code> 文件.</p>
+<p>.. Licensed under Creative Commons Attribution 4.0 International License<br>   <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">https://creativecommons.org/licenses/by/4.0/</a></p>
+
+    </div>
+  </article>
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2019
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

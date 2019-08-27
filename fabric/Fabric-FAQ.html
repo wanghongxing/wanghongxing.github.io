@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="hyperledger fabric faq">
+
+
+
+
+  <meta name="keywords" content=", , wanghongxing">
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="wanghongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/fabric/Fabric-FAQ.html">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> hyperledger fabric faq - wanghongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">wanghongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">wanghongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  <article class="post">
+    <div class="post-content">
+      <table>
+<thead>
+<tr>
+<th>原文</th>
+<th>作者</th>
+<th>审核修正</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://hyperledger-fabric.readthedocs.io/en/latest/Fabric-FAQ.html" target="_blank" rel="noopener">原文</a></td>
+<td>Shaoxi Qiu</td>
+</tr>
+</tbody>
+</table>
+<h1 id="Hyperledger-Fabric-FAQHyperledger-Fabric-答疑"><a href="#Hyperledger-Fabric-FAQHyperledger-Fabric-答疑" class="headerlink" title="Hyperledger Fabric FAQHyperledger Fabric 答疑"></a>Hyperledger Fabric FAQ<br>Hyperledger Fabric 答疑</h1><h2 id="Endorsement背书"><a href="#Endorsement背书" class="headerlink" title="Endorsement背书"></a>Endorsement<br>背书</h2><p><strong>Endorsement architecture</strong>:</p>
+<p><strong>背书操作架构</strong>:</p>
+<p>Q. How many peers in the network need to endorse a transaction?</p>
+<p>问题：多少个网络中的节点需要对交易进行背书？</p>
+<p>A. The number of peers required to endorse a transaction is driven by the endorsement<br>policy that is specified at chaincode deployment time.</p>
+<p>答案：需要对交易进行背书操作的节点数量由背书策略决定，背书策略在链码部署的时候指定。</p>
+<p>Q. Does an application client need to connect to all peers?</p>
+<p>问题：应用客户端需要连接到所有节点吗？</p>
+<p>A. Clients only need to connect to as many peers as are required by the<br>endorsement policy for the chaincode.</p>
+<p>答案：客户端只需要连接到链码对应的背书策略所要求的足够多的节点。</p>
+<h2 id="Security-amp-Access-Control安全和权限控制"><a href="#Security-amp-Access-Control安全和权限控制" class="headerlink" title="Security &amp; Access Control安全和权限控制"></a>Security &amp; Access Control<br>安全和权限控制</h2><p><strong>Data Privacy and Access Control</strong>:</p>
+<p><strong>数据隐私和权限控制</strong>:</p>
+<p>Q. How do I ensure data privacy?</p>
+<p>问题：我如何能够保证数据的隐私？</p>
+<p>A. There are various aspects to data privacy.<br>First, you can segregate your network into channels, where each channel<br>represents a subset of participants that are authorized to see the data<br>for the chaincodes that are deployed to that channel.<br>Second, within a channel you can restrict the input data to chaincode to the<br>set of endorsers only, by using visibility settings. The visibility setting<br>will determine whether input and output chaincode data is included in the<br>submitted transaction,  versus just output data.<br>Third, you can hash or encrypt the data before calling chaincode. If you hash<br>the data then you will need to provide a means to share the source data.<br>If you encrypt the data then you will need to provide a means to share the<br>decryption keys.<br>Fourth, you can restrict data access to certain roles in your organization, by<br>building access control into the chaincode logic.<br>Fifth, ledger data at rest can be encrypted via file system encryption on<br>the peer, and data in-transit is encrypted via TLS.</p>
+<p>答案：数据隐私包括几个方面。</p>
+<p>第一、你可以将你的网络拆分为多个通道，每个通道代表参与者的子集，这些参与者有权访问该通道所部署的链码所包含的数据。</p>
+<p>第二、通过通道你可以限制链码的输入数据只对背书节点可见。可见性设置将决定链码的输入输出数据是否包含在提交交易中，可以只包含输出数据。</p>
+<p>第三、你能在调用链码前对数据进行哈希操作或者加密。如果对数据进行哈希操作，你需要提供获取原数据的方式。如果对数据进行加密，你需要提供获取密钥的方式。</p>
+<p>第四、你可以通过链码中的访问控制逻辑限制数据访问权限，只有机构中特定的角色可以访问。</p>
+<p>第五、节点中的账本数据可以通过文件系统进行加密，节点间数据传输通过TLS进行加密。</p>
+<p>Q. Do the orderers see the transaction data?</p>
+<p>问题：排序节点能否看到交易数据？</p>
+<p>A. No, the orderers only order transactions, they do not open the transactions.<br>If you do not want the data to go through the orderers at all, and you are only<br>concerned about the input data, then you can use visibility settings. The<br>visibility setting will determine whether input and output chaincode data is<br>included in the submitted transaction,  versus just output data. Therefore,<br>the input data can be private to the endorsers only.<br>If you do not want the orderers to see chaincode output, then you can hash or<br>encrypt the data before calling chaincode. If you hash the data then you will<br>need to provide a meansto share the source data. If you encrypt the data then<br>you will need to provide a means to share the decryption keys.</p>
+<p>答案：不能，排序节点只是排序交易，不能解析交易。如果你只关心输入数据，不希望经过排序节点，你可以使用可见性设置。可见性设置将决定链码的输入输出数据是否包含在提交交易中，可以只包含输出数据，这样只有背书节点能看到输入数据。如果你不希望排序节点看到交易输出数据，你能在调用链码前对数据进行哈希操作或者加密。如果对数据进行哈希操作，你需要提供获取原数据的方式。如果对数据进行加密，你需要提供获取密钥的方式。</p>
+<h2 id="Application-side-Programming-Model应用端编程模型"><a href="#Application-side-Programming-Model应用端编程模型" class="headerlink" title="Application-side Programming Model应用端编程模型"></a>Application-side Programming Model<br>应用端编程模型</h2><p><strong>Transaction execution result</strong>:</p>
+<p><strong>交易执行结果</strong>:</p>
+<p>Q. How do application clients know the outcome of a transaction?</p>
+<p>问题：应用客户端如何知道交易的输出？</p>
+<p>A. The transaction simulation results are returned to the client by the<br>endorser in the proposal response.  If there are multiple endorsers, the<br>client can check that the responses are all the same, and submit the results<br>and endorsements for ordering and commitment. Ultimately the committing peers<br>will validate or invalidate the transaction, and the client becomes<br>aware of the outcome via an event, that the SDK makes available to the<br>application client.</p>
+<p>答案：背书节点会返回提案模拟交易的结果。如果有多个背书节点，客户端能检查返回结果是否相同后再提交交易结果以及排序和生效所需要的背书。最终，生效节点会验证交易是否合法，客户端通过SDK提供的事件通知方式接收交易结果。</p>
+<p><strong>Ledger queries</strong>:</p>
+<p><strong>账本查询</strong>:</p>
+<p>Q. How do I query the ledger data?</p>
+<p>问题：如何查询账本数据？</p>
+<p>A. Within chaincode you can query based on keys. Keys can be queried by range,<br>and composite keys can be modeled to enable equivalence queries against multiple<br>parameters. For example a composite key of (owner,asset_id) can be used to<br>query all assets owned by a certain entity. These key-based queries can be used<br>for read-only queries against the ledger, as well as in transactions that<br>update the ledger.</p>
+<p>If you model asset data as JSON in chaincode and use CouchDB as the state<br>database, you can also perform complex rich queries against the chaincode<br>data values, using the CouchDB JSON query language within chaincode. The<br>application client can perform read-only queries, but these responses are<br>not typically submitted as part of transactions to the ordering service.</p>
+<p>答案：通过链码可以通过键值查询数据。可以对键值进行范围查询，复合主键可以允许查询出部分键值相同的值，例如由 (owner,asset_id) 组成的复合主键可以用来查询特定实体所拥有的所有asset。</p>
+<p>Q. How do I query the historical data to understand data provenance?</p>
+<p>问题：如何查询数据历史来理解数据出处？</p>
+<p>A. The chaincode API <code>GetHistoryForKey()</code> will return history of<br>values for a key.</p>
+<p>答案： 链码中API  <code>GetHistoryForKey()</code> 会返回键值对应的数据历史。</p>
+<p>Q. How to guarantee the query result is correct, especially when the peer being<br>queried may be recovering and catching up on block processing?</p>
+<p>问题：如何保证查询结果是正确的，特别是当查询的节点可能正处在恢复和获取最新区块的过程中？</p>
+<p>A. The client can query multiple peers, compare their block heights, compare<br>their query results, and favor the peers at the higher block heights.</p>
+<p>答案：客户端可以查询多个节点，比较他们的区块高度查询结果，选用区块高度最高的结果。</p>
+<h2 id="Chaincode-Smart-Contracts-and-Digital-Assets-链码（智能合约和数字资产）"><a href="#Chaincode-Smart-Contracts-and-Digital-Assets-链码（智能合约和数字资产）" class="headerlink" title="Chaincode (Smart Contracts and Digital Assets)链码（智能合约和数字资产）"></a>Chaincode (Smart Contracts and Digital Assets)<br>链码（智能合约和数字资产）</h2><p>Q. Does Hyperledger Fabric support smart contract logic?</p>
+<p>问题：Hyperledger Fabric 是否支持智能合约逻辑？</p>
+<p>A. Yes. We call this feature :ref:<code>chaincode</code>. It is our interpretation of the<br>smart contract method/algorithm, with additional features.</p>
+<p>A chaincode is programmatic code deployed on the network, where it is<br>executed and validated by chain validators together during the consensus<br>process. Developers can use chaincodes to develop business contracts,<br>asset definitions, and collectively-managed decentralized applications.</p>
+<p>答案：是的，我们称这个功能为 :ref:<code>chaincode</code>. 这是我们对带有附加功能的智能合同方法/算法的理解。</p>
+<p>链码是部署在网络中的程序代码，通过共识流程被链的验证者共同执行并验证。开发者能使用链码来开发商业合同、资产定义和集体管理的去中心化应用。</p>
+<p>Q. How do I create a business contract?</p>
+<p>问题：如何创建商业合同？</p>
+<p>A. There are generally two ways to develop business contracts: the first way is<br>to code individual contracts into standalone instances of chaincode; the<br>second way, and probably the more efficient way, is to use chaincode to<br>create decentralized applications that manage the life cycle of one or<br>multiple types of business contracts, and let end users instantiate<br>instances of contracts within these applications.</p>
+<p>答案：通常有两种方法来开发商业合同：第一个方法是开发单独的合同在独立的链码实例;第二个也是最有效的方法是使用链码创建去中心化的应用来管理一种或多种类型的商业合同的生命周期，并让终端用户实例化带有这些应用的合同实例。</p>
+<p>Q. How do I create assets?</p>
+<p>如何创建资产？</p>
+<p>A. Users can use chaincode (for business rules) and membership service (for digital tokens) to<br>design assets, as well as the logic that manages them.</p>
+<p>There are two popular approaches to defining assets in most blockchain<br>solutions: the stateless UTXO model, where account balances are encoded<br>into past transaction records; and the account model, where account<br>balances are kept in state storage space on the ledger.</p>
+<p>Each approach carries its own benefits and drawbacks. This blockchain<br>technology does not advocate either one over the other. Instead, one of our<br>first requirements was to ensure that both approaches can be easily<br>implemented.</p>
+<p>答案：用户可以使用链码（在商业规则方面）和成员管理服务（在数字密钥方面）来设计资产和资产管理逻辑。</p>
+<p>区块链解决方案中有两种流行的方法来设计资产：无状态的UTXO模型，账户余额是过去交易记录中没有使用的交易输出的合计;另一种是账户模型，账户余额被存储在账本中的状态值中。</p>
+<p>每一个方法都有好处和弊端。本区块链技术对两种方法没有倾向。我们最初的要求就是确保两个方法都能够被容易实现。</p>
+<p>Q. Which languages are supported for writing chaincode?</p>
+<p>问题：链码支持哪些语言？</p>
+<p>A. Chaincode can be written in any programming language and executed in<br>containers.  The first fully supported chaincode language is Golang.</p>
+<p>Support for additional languages and the development of a templating language<br>have been discussed, and more details will be released in the near future.</p>
+<p>It is also possible to build Hyperledger Fabric applications using<br><a href="https://hyperledger.github.io/composer/" target="_blank" rel="noopener">Hyperledger Composer</a>.</p>
+<p>答案：链码可以使用任何编程语言编写并在容器内执行。第一个全功能支持的语言是Golang。</p>
+<p>对其他语言的支持和模板语言的开发正在被讨论，更多细节会在近期发布。</p>
+<p>还可以通过<a href="https://hyperledger.github.io/composer/" target="_blank" rel="noopener">Hyperledger Composer</a>来构建Hyperledger Fabric应用。</p>
+<p>Q. Does the Hyperledger Fabric have native currency?</p>
+<p>问题：Hyperledger Fabric是否有原生的货币？</p>
+<p>A. No. However, if you really need a native currency for your chain network,<br>you can develop your own native currency with chaincode. One common attribute<br>of native currency is that some amount will get transacted (the chaincode<br>defining that currency will get called) every time a transaction is processed<br>on its chain.</p>
+<p>答案：没有。然而，如果你的区块链网络确实需要原生的货币，你可以使用链码来开发货币。原生货币的一个基本的属性是一些数量会被转移（定义货币的链码会被调用）当每次链上交易被执行。</p>
+<h2 id="Differences-in-Most-Recent-Releases最近版本的区别"><a href="#Differences-in-Most-Recent-Releases最近版本的区别" class="headerlink" title="Differences in Most Recent Releases最近版本的区别"></a>Differences in Most Recent Releases<br>最近版本的区别</h2><p>Q. As part of the v1.0.0 release, what are the highlight differences between v0.6 and v1.0?</p>
+<p>问题：V0.6版本和V1.0版本的最大区别是什么？</p>
+<p>A. The differences between any subsequent releases are provided together with the<br><a href="http://hyperledger-fabric.readthedocs.io/en/latest/releases.html" target="_blank" rel="noopener">Release Notes</a>.<br>Since Fabric is a pluggable modular framework, you can refer to the <a href="https://wiki.hyperleger.org/projects/fabric/design-docs" target="_blank" rel="noopener">design-docs</a> for further information of these difference.</p>
+<p>答案：任何后续版本的差异都在<a href="http://hyperledger-fabric.readthedocs.io/en/latest/releases.html" target="_blank" rel="noopener">版本说明</a>中展现。因为Fabric是一个模块可替换的框架，你可以参考<a href="https://wiki.hyperleger.org/projects/fabric/design-docs" target="_blank" rel="noopener">设计文档</a>获取更多差异信息。</p>
+<p>Q. Where to get help for the technical questions not answered above?</p>
+<p>问题：哪里可以获得上文中没被解答的技术问题的帮助？</p>
+<p>A. Please use <a href="https://stackoverflow.com/questions/tagged/hyperledger" target="_blank" rel="noopener">StackOverflow</a>.</p>
+<p>答案：请使用 <a href="https://stackoverflow.com/questions/tagged/hyperledger" target="_blank" rel="noopener">StackOverflow</a>.</p>
+<p>.. Licensed under Creative Commons Attribution 4.0 International License</p>
+<p>.. 本文通过Creative Commons Attribution 4.0 International License协议进行授权</p>
+<p>   <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">https://creativecommons.org/licenses/by/4.0/</a></p>
+
+    </div>
+  </article>
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2019
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="hyperledger fabric">
+
+
+
+
+  <meta name="keywords" content=", , wanghongxing">
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="wanghongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/fabric/read-write-set.html">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> hyperledger fabric - wanghongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">wanghongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">wanghongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  <article class="post">
+    <div class="post-content">
+      <table>
+<thead>
+<tr>
+<th>原文</th>
+<th>作者</th>
+<th>审核修正</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://hyperledger-fabric.readthedocs.io/en/latest/readwrite.html" target="_blank" rel="noopener">原文</a></td>
+<td>Linsheng Yu</td>
+<td>Dijun Liu</td>
+</tr>
+</tbody>
+</table>
+<h2 id="交易模拟和read-write-set"><a href="#交易模拟和read-write-set" class="headerlink" title="交易模拟和read-write set"></a>交易模拟和read-write set</h2><p>在背书节点上的交易模拟期间会产生一个交易的read-write set。<code>read set</code>包含在模拟期间交易读取到的唯一key及对应version。<code>write set</code>交易改写的唯一key（可能与<code>read set</code>中的key重叠）及对应的新value。如果交易的更新操作是删除一个key，则在<code>write set</code>为该key设置一个delete标记。</p>
+<p>此外，如果交易中对一个key改写多次，则只保留最后的修改值。如果交易中读取一个key的值，即使交易在读取之前更新了该key的值，读取到的也会是之前提交过的而不是刚更新的。换句话说，不能读取到同一交易中修改的值。</p>
+<p>如前所述，key的version只记录在<code>read set</code>；<code>write set</code>只包含key及对应新value。</p>
+<p>对于<code>read set</code>的version的实现有很多种方案，最基本要求就是为key生成一个非重复标识符。例如用递增的序号作为version。在目前的代码实现中我们使用了blockchain height作为version方案，就是用交易的height作为该交易所修改的key的version。交易height由一个结构表示（见下面Height struc），其中TxNum表示这个tx在block中的height（译注：也就是交易在区块中的顺序）。该方案相较于递增序号有很多优点–主要是这样的version可以很好地利用到诸如statedb、交易模拟和校验这些模块中。</p>
+<p>此外，如果模拟交易中执行了批量查询（range query），批量查询结果会被放到read-write set中的<code>query-info</code>。</p>
+<pre><code>// 译注
+
+// read-write set 结构
+type TxReadWriteSet struct {
+    NsRWs []*NsReadWriteSet
+}
+type NsReadWriteSet struct {
+    NameSpace        string
+    Reads            []*KVRead
+    Writes           []*KVWrite
+    RangeQueriesInfo []*RangeQueryInfo
+}
+type RangeQueryInfo struct {
+    StartKey     string
+    EndKey       string
+    ItrExhausted bool
+    Results      []*KVRead
+    ResultHash   *MerkleSummary
+}
+type MerkleSummary struct {
+    MaxDegree      int
+    MaxLevel       MerkleTreeLevel
+    MaxLevelHashes []Hash
+}
+type MerkleTreeLevel int
+type Hash []byte
+
+// read set 结构
+type KVRead struct {
+    Key     string
+    Version *Height
+}
+type Height struct {
+    BlockNum uint64
+    TxNum    uint64
+}
+
+// write set 结构
+type KVWrite struct {
+    Key      string
+    IsDelete bool
+    Value    []byte
+}
+</code></pre><p>下面是一个假设的交易模拟生成的read-write set示例，简单起见，示例中使用了递增序号作为version。</p>
+<pre><code>&lt;TxReadWriteSet&gt;
+  &lt;NsReadWriteSet name=&quot;chaincode1&quot;&gt;
+    &lt;read-set&gt;
+      &lt;read key=&quot;K1&quot;, version=&quot;1&quot;&gt;
+      &lt;read key=&quot;K2&quot;, version=&quot;1&quot;&gt;
+    &lt;/read-set&gt;
+    &lt;write-set&gt;
+      &lt;write key=&quot;K1&quot;, value=&quot;V1&quot;&gt;
+      &lt;write key=&quot;K3&quot;, value=&quot;V2&quot;&gt;
+      &lt;write key=&quot;K4&quot;, isDelete=&quot;true&quot;&gt;
+    &lt;/write-set&gt;
+  &lt;/NsReadWriteSet&gt;
+&lt;TxReadWriteSet&gt;
+</code></pre><h2 id="使用read-write-set-验证交易和更新worldState"><a href="#使用read-write-set-验证交易和更新worldState" class="headerlink" title="使用read-write set 验证交易和更新worldState"></a>使用read-write set 验证交易和更新worldState</h2><p>提交节点（committer）利用<code>read set</code>部分校验交易的有效性；用<code>write set</code>部分更新key的version和value。</p>
+<p>在验证阶段，如果<code>read set</code>中每个key的version都与stateDB中对应worldState（假设所有之前的有效交易，包括同一个block中的交易，都已经提交完成，即已更新ledger）的version相匹配，则认为此交易有效。</p>
+<p>如果read-write set中包含<code>query-info</code>，则还要对此执行额外的校验。该校验确保在此批量查询的结果范围内没有key被增删改。换句话说，如果在验证阶段重新执行该批量查询（模拟期间执行的交易）应该产生与模拟交易期间相同的结果。此校验确保交易在提交时出现幻读会被认为无效。注意，这个幻读保护仅限于Chaincode的<code>GetStateByRange</code>和<code>GetStateByPartialCompositeKey</code>两个方法<strong><em>（译注：此处文档上提到的是<code>GetStateByRange</code>和<code>GetQueryResult</code>两个方法，但在代码里的注释却不是这样，此处以代码为准。详见fabric/examples/chaincode/go/marbles02/marbles_chaincode.go）</em></strong>。而其他批量查询方法（如：<code>GetQueryResult</code>）会有幻读风险，因此这种查询应该只用于不会被提交到ordering的<code>只读交易</code>，除非app能保证交易模拟和交易验证提交两阶段之间结果集稳定。</p>
+<p>如果交易验证通过，committer就会用<code>write set</code>更新worldState。在更新阶段，<code>write set</code>中的每个key在worldState中对应的value都会被更新，然后worldState中这些key的version也会随着更新。</p>
+<h2 id="交易模拟与交易验证-示例"><a href="#交易模拟与交易验证-示例" class="headerlink" title="交易模拟与交易验证 示例"></a>交易模拟与交易验证 示例</h2><p>本节通过示例场景帮助理解read-write set。存在一个key设为<code>k</code>，在worldState中由元组<code>(k,var,val)</code>表示，其中<code>ver</code>是<code>k</code>的最新的version，<code>val</code>是<code>k</code>的value。</p>
+<p>现在有五个交易，分别是<code>T1,T2,T3,T4,T5</code>，这五个交易的模拟过程是针对相同的worldSate快照，下面的代码片段显示了模拟交易的worldState快照以及每个交易执行读写的顺序。</p>
+<pre><code>World state: (k1,1,v1), (k2,1,v2), (k3,1,v3), (k4,1,v4), (k5,1,v5)
+T1 -&gt; Write(k1, v1&apos;), Write(k2, v2&apos;)
+T2 -&gt; Read(k1), Write(k3, v3&apos;)
+T3 -&gt; Write(k2, v2&apos;&apos;)
+T4 -&gt; Write(k2, v2&apos;&apos;&apos;), read(k2)
+T5 -&gt; Write(k6, v6&apos;), read(k5)
+</code></pre><p>假设这些交易的顺序是T1,…T5（可能在同一个block或者不同block）</p>
+<ol>
+<li><code>T1</code>验证成功，因为它没有read操作。之后在worldState中的<code>k1</code>和<code>k2</code>会被更新成<code>(k1,2,v1&#39;), (k2,2,v2&#39;)</code></li>
+<li><code>T2</code>验证失败，因为它读取的<code>k1</code>在之前的交易<code>T1</code>中被修改了<strong>（译注：需要特别注意一个前提，即这五个交易的模拟过程是对于相同的worldState快照，而且T2又有write操作，所以T2会进入commit阶段进行验证，这样T2的k1.ver=1，T1完成后实际的k1.ver=2了，然后T2在commit校验是就会失败。也就是上文提到的一个交易的模拟和提交期间，某key的值被修改。。。<em>但是有个疑问，正常使用中应该会经常出现T1、T2这种顺序的情况，难道会经常发生交易校验失败？？如果如此，那对于用户来说岂不很难用?暂有此疑，有待研究</em>）</strong></li>
+<li><code>T3</code>验证成功，因为它没有read操作。之后在worldState中的<code>k2</code>会被更新成<code>(k2,3,v2&#39;&#39;)</code></li>
+<li><code>T4</code>验证失败，因为它读取的<code>k2</code>在之前的交易<code>T1</code>中被修改了</li>
+<li><code>T5</code>验证成功，因为它读取的<code>k5</code>没有在之前的任何交易中修改</li>
+</ol>
+<p><strong>译注：</strong></p>
+<p>原文示例交易需要进一步阐述</p>
+<ol>
+<li><p>交易中，示例里面忽略了在读取key的时候，是需要带有这个key的版本信息的。</p>
+</li>
+<li><p>值得注意的是，T1…T5在同一个区块和不同区块的处理方式不同。</p>
+<ul>
+<li>如果读取的key在此区块前面的交易中已经有update，则直接置此交易为失效</li>
+<li>如果读取的key在本区块前面的交易没有做update，则需要判断state中的版本和commit的版本是否一致，如果不一致，则置为失效交易</li>
+</ul>
+<p>为了尽量避免失效交易，application和chaincode需要进行精心设计，避免同一个资产交易信息尝试在一个区块上进行update操作。如果避免不到，可以适度重试交易。</p>
+</li>
+</ol>
+<p><strong>注意：</strong> 交易不支持多read-write set</p>
+
+    </div>
+  </article>
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2019
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="hyperledger fabric channel update">
+
+
+
+
+  <meta name="keywords" content=", , wanghongxing">
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="wanghongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/fabric/channel_update_zh.html">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> hyperledger fabric channel update - wanghongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">wanghongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">wanghongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  <article class="post">
+    <div class="post-content">
+      <table>
+<thead>
+<tr>
+<th>原文</th>
+<th>作者</th>
+<th>审核修正</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://hyperledger-fabric.readthedocs.io/en/latest/channel_update.html" target="_blank" rel="noopener">原文</a></td>
+<td>Weibing Wang</td>
+</tr>
+</tbody>
+</table>
+<h2 id="重新配置第一个网络"><a href="#重新配置第一个网络" class="headerlink" title="重新配置第一个网络"></a>重新配置第一个网络</h2><blockquote>
+<p>注意</p>
+<blockquote>
+<p>本章的这些步骤在docker镜像<code>1.1.0-preview</code>版本(tag)和相关工具中已经验证过。确保你已经下载了适合的镜像版本和二进制包，或者你从比Fabric“1.1.0-preview”标签更新的分支上构建的二进制包。  </p>
+</blockquote>
+</blockquote>
+<p>本章是<a href="https://hyperledgercn.github.io/hyperledgerDocs/build_network_zh/" target="_blank" rel="noopener">构建第一个fabric网络</a>的后续，会演示增加一个新组织<code>Org3</code>到自动生成的应用信道<code>mychannel</code>。它假定你已经对<a href="https://github.com/wbwangk/wbwangk.github.io/wiki/Hyperledger#%E5%90%AF%E5%8A%A8%E9%A6%96%E4%B8%AA%E7%BD%91%E7%BB%9Cfirst-network" target="_blank" rel="noopener">BYFN</a>示范很懂了，包括会使用工具<code>cryptogen</code>和<code>configtxgen</code>。  </p>
+<p>这篇文章仅聚焦于集成一个新组织，然而用同样的方法可以更新其他信道配置（如更新修改规则、改变批大小等）。示范的操作是组织管理员职责，而不是链码或应用开发者职责。</p>
+<blockquote>
+<p>注意</p>
+<blockquote>
+<p>确保已经安装了必要的Fabric镜像和实用程序，并且自动化脚本<code>byfn.sh</code>在继续操作前在你的计算机上运行没有报错。即将到来的步骤依赖于生成的网络和工件。如果尚未配置机器，请参阅<a href="http://hyperledger-fabric.readthedocs.io/en/latest/prereqs.html" target="_blank" rel="noopener">前提条件</a>和<a href="http://hyperledger-fabric.readthedocs.io/en/latest/samples.html" target="_blank" rel="noopener">Hyperledger Fabric示范</a>文档。提供的命令还假定Fabric实用程序存在于<code>fabric-samples</code>目录下的<code>bin</code>根目录中。如果已将这些二进制文件路径导出到了PATH变量中，则可以相应地修改这些命令，而不必传递绝对路径。  </p>
+</blockquote>
+</blockquote>
+<h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><p>下面的操作将位于<code>fabric-samples</code>的子目录<code>first-network</code>中。更换到这个目录。你可以打开自己喜欢的终端窗口，如git-bash。  </p>
+<p>首先，使用<code>byfn.sh</code>脚本来进行清理工作。这个命令会杀死活动的docker容器和删除之前生成的加密材料。需要说明的是，为了执行重新配置任务并不一定要停止Fabric网络，然而为了这个教程的目的，我们需要一个已知的初始状态。因此让我们执行下列命令清理之前的环境：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./byfn.sh -m down</span><br></pre></td></tr></table></figure></p>
+<p>现在重新生成默认BYFN工件：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./byfn.sh -m generate</span><br></pre></td></tr></table></figure></p>
+<p>通过执行CLI容器中脚本启动网络：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./byfn.sh -m up</span><br></pre></td></tr></table></figure></p>
+<p>在另一个终端窗口中，切换到<code>org3-artifacts</code>子目录。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> org3-artifacts</span><br></pre></td></tr></table></figure></p>
+<p>当前目录下有兴趣的文件有两个<code>org3-crypto.yaml</code>和<code>configtx.yaml</code>。首先，为org3生成加密材料：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">../../bin/cryptogen generate --config=./org3-crypto.yaml</span><br></pre></td></tr></table></figure></p>
+<p>上述命令会读取新的加密yaml文件<code>org3-crypto.yaml</code>，利用<code>cryptogen</code>工具为Org3中间CA生成密钥和证书，并且有两个peer绑定到这个新组织。与BYFN实现一起，这个加密材料输出到一个新生成的<code>crypto-config</code>目录中。  </p>
+<p>现在使用<code>configtxgen</code>工具输出JSON格式的Org3相关配置材料。作为开始的命令，告诉工具从当前目录下读取<code>configtx.yaml</code>。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> FABRIC_CFG_PATH=<span class="variable">$PWD</span> &amp;&amp; ../../bin/configtxgen -printOrg Org3MSP &gt; ../channel-artifacts/org3.json</span><br></pre></td></tr></table></figure></p>
+<p>上面的命令会创建一个JSON文件<code>org3.json</code>，并把它输出到<code>first-network</code>目录的子目录<code>channel-artifacts</code>下面。这个文件包含了为Org3定义的修改策略，以及三个base64格式的重要证书：管理员用户证书、CA根证书和TLS根证书。在下面的步骤中，我们将附加这个JSON对象到信道配置中。  </p>
+<p>我们最后一项准备工作是将Orderer组织MSP材料搬移到Org3的<code>crypto-config</code>目录中。特别是，我们关注Orderer的TLS根证书，这将允许Org3实体和网络的orderer节点之间的安全通信。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ../ &amp;&amp; cp -r crypto-config/ordererOrganizations org3-artifacts/crypto-config/</span><br></pre></td></tr></table></figure></p>
+<p>现在，我们准备好重新配置了。</p>
+<h3 id="启动configtxlator服务器"><a href="#启动configtxlator服务器" class="headerlink" title="启动configtxlator服务器"></a>启动configtxlator服务器</h3><p>更新过程使用配置转换工具<code>configtxlator</code>。这个工具提供了一个纯无状态REST API，不依赖SDK，使Hyperledger Fabric网络的配置工作简单化。这个工具可以很容易地转换不同表现/格式的等价数据。例如，在工具操作的一种模式中，该工具可以将二进制protobuf格式转换到人类可读的JSON文本格式，反之亦然。此外，该工具可以根据两组不同的配置交易之间的差异来计算配置更新。  </p>
+<p>首先，用docker exec命令进入CLI容器。回想一下，这个容器已经安装了BYFN<code>crypto-config</code>库，使我们能够访问两个原来的peer组织和Orderer组织的MSP材料。引导身份是Org1管理员用户，这意味着我们想要代表Org2行事的任何步骤都需要导出MSP特定的环境变量。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it cli bash</span><br></pre></td></tr></table></figure></p>
+<p>在默认设置下，CLI容器会在10000秒后退出。如果容器退出了，确保在继续前重新启动它。首先，检查你的容器状态：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker ps -a</span><br></pre></td></tr></table></figure></p>
+<p>如果必要，重新启动CLI:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker start cli</span><br></pre></td></tr></table></figure></p>
+<p>现在在容器中安装<code>jq</code>工具。这个工具允许我们与<code>configtxlator</code>工具返回的JSON对象进行脚本交互：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Press `y` when prompted by the command</span></span><br><span class="line">apt update &amp;&amp; apt install jq</span><br></pre></td></tr></table></figure></p>
+<p>启动<code>configtxlator</code>REST服务器(最后的<code>&amp;</code>符号使键盘输入不锁住)：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Press enter twice</span></span><br><span class="line">configtxlator start &amp;</span><br></pre></td></tr></table></figure></p>
+<p>设置URL:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">CONFIGTXLATOR_URL=http://127.0.0.1:7059</span><br></pre></td></tr></table></figure></p>
+<p>导出<code>ORDERER_CA`</code>CHANNEL_NAME`变量：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem  &amp;&amp; <span class="built_in">export</span> CHANNEL_NAME=mychannel</span><br></pre></td></tr></table></figure></p>
+<p>检查一下确保环境变量设置正确：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$ORDERER_CA</span> &amp;&amp; <span class="built_in">echo</span> <span class="variable">$CHANNEL_NAME</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意</p>
+<blockquote>
+<p>如果你重启了CLI容器，你需要重启REST服务器和重新导出三个环境变量<code>CONFIGTXLATOR_URL</code>、<code>ORDERER_CA</code>和<code>CHANNEL_NAME</code>。jq的安装会持久化，不用重新安装它。*</p>
+</blockquote>
+</blockquote>
+<h3 id="形成更新对象和重新配置信道"><a href="#形成更新对象和重新配置信道" class="headerlink" title="形成更新对象和重新配置信道"></a>形成更新对象和重新配置信道</h3><p>现在我们在CLI容器中有了一个运行中的REST服务器，并且我们导出了两个关键环境变量<code>ORDERER_CA</code>和<code>CHANNEL_NAME</code>。让我们提取信道<code>mychannel</code>最新配置区块。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">peer channel fetch config config_block.pb -o orderer.example.com:7050 -c <span class="variable">$CHANNEL_NAME</span> --tls --cafile <span class="variable">$ORDERER_CA</span></span><br></pre></td></tr></table></figure></p>
+<p>上面的命令对生成的二进制protobuf格式信道配置块取了一个名称<code>config_block.pb</code>。请注意，你可以修改返回的protobuf和JSON对象的命名约定，但是你应该遵循一种方法，以便于进行简单直观的识别。  </p>
+<p>当你发出<code>peer channel fetch</code>命令的时候，终端上会显示一些输出。日志中的最后一行很有趣：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">2017-11-07 17:17:57.383 UTC [channelCmd] readBlock -&gt; DEBU 011 Received block: 2</span><br></pre></td></tr></table></figure></p>
+<p>这是告诉我们<code>mychannel</code>的最新配置区块是区块2，<strong>不是</strong>创世区块。默认情况下，<code>peer channel fetch config</code>命令返回目标信道的最新配置区块，在本例中是2号区块。当BYFN场景运行时，内嵌脚本执行了两个对信道的附加配置更新。也就是，通过两个信道更新交易定义了两个组织<code>Org1</code>和<code>Org2</code>的锚peer。象这样，我们有了如下配置序列：区块0，创世区块；区块1，Org1锚peer更新；区块2，Org2锚peer更新。  </p>
+<p>现在我们将使用<code>configtxlator</code>服务器将这个信道配置区块解码为人类可以读写的JSON格式。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -X POST --data-binary @config_block.pb <span class="string">"<span class="variable">$CONFIGTXLATOR_URL</span>/protolator/decode/common.Block"</span> | jq . &gt; config_block.json</span><br></pre></td></tr></table></figure></p>
+<p>我们将编码输出命名为<code>confg_block.json</code>。（再次，你可以使用自己的命名习惯来操作此步骤。）如果你在CLI容器发出<code>ls</code>命令，你可以看到两个对象：二进制protobuff格式的信道配置文件<code>config_block.pb</code>和JSON格式对象<code>config_block.json</code>。  </p>
+<p>现在我们需要确定<code>config_block.json</code>对象的范围，并去掉所有的封装包装。我们不关心标题、元数据、创建者签名等，但关心交易中的配置定义。我们通过<code>jq</code>工具实现这一点：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">jq .data.data[0].payload.data.config config_block.json &gt; config.json</span><br></pre></td></tr></table></figure></p>
+<p>这给了我们一个修整过的JSON对象<code>config.json</code>，这是我们修改配置的基础。我们将再次使用<code>jq</code>工具将Org3配置定义<code>org3.json</code>附加到信道的应用组字段，并命名输出为<code>updated_config.json</code>。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">jq -s <span class="string">'.[0] * &#123;"channel_group":&#123;"groups":&#123;"Application":&#123;"groups": &#123;"Org3MSP":.[1]&#125;&#125;&#125;&#125;&#125;'</span> config.json ./channel-artifacts/org3.json &gt;&amp; updated_config.json</span><br></pre></td></tr></table></figure></p>
+<p>现在，在CLI容器中我们有了两个JSON文件<code>config.json</code>和<code>updated_config.json</code>。初始文件仅包含Org1和Org2的材料，而“updated config”文件中包含了全部3个组织(Orgs)。此时，只需重新编码这两个JSON文件并计算增量即可。  </p>
+<p>首先，编码<code>config.json</code>为<code>config.pb</code>：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -X POST --data-binary @config.json <span class="string">"<span class="variable">$CONFIGTXLATOR_URL</span>/protolator/encode/common.Config"</span> &gt; config.pb</span><br></pre></td></tr></table></figure></p>
+<p>其次，编码<code>updated_config.json</code>为<code>updated_config.pb</code>：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -X POST --data-binary @updated_config.json <span class="string">"<span class="variable">$CONFIGTXLATOR_URL</span>/protolator/encode/common.Config"</span> &gt; updated_config.pb</span><br></pre></td></tr></table></figure></p>
+<p>现在，使用<code>configtxlator</code>服务器来计算两个配置proto之间的增量。这个命令会输出一个新的protobuf二进制文件<code>Org3_update.pb</code>：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -X POST -F channel=<span class="variable">$CHANNEL_NAME</span> -F <span class="string">"original=@config.pb"</span> -F <span class="string">"updated=@updated_config.pb"</span> <span class="string">"<span class="variable">$&#123;CONFIGTXLATOR_URL&#125;</span>/configtxlator/compute/update-from-configs"</span> &gt; org3_update.pb</span><br></pre></td></tr></table></figure></p>
+<p>这个新proto<code>org3_update.pb</code>包含了Org3定义和指向Org1和Org2材料的高级指针。我们能够放弃大量的Org1和Org2的MSP材料和修改策略信息，因为这些数据已经存在于信道的创世区块中。因此，我们只需要两个配置的增量信息。  </p>
+<p>在递交信道更新前，我们需要执行几个最后的步骤。首先，让我们解码这个对象到可编辑的JSON格式<code>org3_update.json</code>:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -X POST --data-binary @org3_update.pb <span class="string">"<span class="variable">$CONFIGTXLATOR_URL</span>/protolator/decode/common.ConfigUpdate"</span> | jq . &gt; org3_update.json</span><br></pre></td></tr></table></figure></p>
+<p>现在，我们有了一个解码的更新文件<code>org3_update.json</code>，这个文件我们需要包装进一个信封消息中。这一步骤给回我们之前剥掉的标题字段。我们命名这个文件为<code>org3_update_in_envelope.json</code>：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'&#123;"payload":&#123;"header":&#123;"channel_header":&#123;"channel_id":"mychannel", "type":2&#125;&#125;,"data":&#123;"config_update":'</span>$(cat org3_update.json)<span class="string">'&#125;&#125;&#125;'</span> | jq . &gt; org3_update_in_envelope.json</span><br></pre></td></tr></table></figure></p>
+<p>使用我们正确构建的JSON文件<code>org3_update_in_envelope.json</code>，我们将最后一次利用<code>configtxlator</code>这个工具，并将这个对象转换为Fabric需要的完全成熟的proto格式。我们将命名我们的最终更新对象为<code>org3_update_in_envelope.pb</code>：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -X POST --data-binary @org3_update_in_envelope.json <span class="string">"<span class="variable">$CONFIGTXLATOR_URL</span>/protolator/encode/common.Envelope"</span> &gt; org3_update_in_envelope.pb</span><br></pre></td></tr></table></figure></p>
+<p>几乎完成！我们现在的CLI容器中有了一个protobuf二进制文件<code>org3_update_in_envelope.pb</code>，然而在可以成功递交这个更新前，我们需要必要的Admin用户签名。我们信道的更新策略(mod_policy)被设置成默认的“MAJORITY”(多数)，这意味着我们需要来自两个初始组织Org1和Org2的管理员签署这个更新。如果我们没有获得这两个签名，则排序服务会因无法满足策略而拒绝这个交易。首先，我们用Org1的Admin签署这个更新proto。记住CLI容器是用Org1 MSP材料引导的，所以我们只需要简单地发送<code>peer channel signconfigtx</code>命令：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">peer channel signconfigtx -f org3_update_in_envelope.pb</span><br></pre></td></tr></table></figure></p>
+<p>最后一步是切换CLI容器的身份为Org2的Admin用户。我们通过导出对应Org2 MSP的4个环境变量做到这一点。  </p>
+<blockquote>
+<p>注意</p>
+<blockquote>
+<p>下面的演示不能反映真实世界的操作。单个容器永远不应该装载这个网络的加密材料。相反，更新对象需要安全地通过“带外”(out-of-band)传递给Org2管理员进行检查和批准。  </p>
+</blockquote>
+</blockquote>
+<p>导出Org2的环境变量：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># you can issue all of these commands at once</span></span><br><span class="line"><span class="built_in">export</span> CORE_PEER_LOCALMSPID=<span class="string">"Org2MSP"</span></span><br><span class="line"><span class="built_in">export</span> CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt</span><br><span class="line"><span class="built_in">export</span> CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp</span><br><span class="line"><span class="built_in">export</span> CORE_PEER_ADDRESS=peer0.org2.example.com:7051</span><br></pre></td></tr></table></figure></p>
+<p>最后我们发出<code>peer channel update</code>命令。Org2管理员签名会附加到这个呼叫，所以不需要手工再次签署这个proto：  </p>
+<blockquote>
+<p>注意</p>
+<blockquote>
+<p>即将到来的对排序服务的呼叫会经历一系列系统签名和策略检查。因此，你会发现浏览和查看排序节点的日志很有用。从另一个终端shell，发送<code>docker logs -f orderer.example.com</code>命令来显示它们。 </p>
+</blockquote>
+</blockquote>
+<p>发送更新呼叫：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">peer channel update -f org3_update_in_envelope.pb -c <span class="variable">$CHANNEL_NAME</span> -o orderer.example.com:7050 --tls --cafile <span class="variable">$ORDERER_CA</span></span><br></pre></td></tr></table></figure></p>
+<p>如果更新成功，您应该看到类似于以下内容的消息摘要指示：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">2017-11-07 21:50:17.435 UTC [msp/identity] Sign -&gt; DEBU 00f Sign: digest: 3207B24E40DE2FAB87A2E42BC004FEAA1E6FDCA42977CB78C64F05A88E556ABA</span><br></pre></td></tr></table></figure></p>
+<p>成功的信道更新呼叫返回了一个新的区块，区块5，到信道中的所有peer。区块0-2是初始信道配置，区块3-4是实例化和对链码<code>mycc</code>的调用。同样的，区块5作为最新的信道配置将Org3定义到了信道上。  </p>
+<p>查看容器<code>peer0.org1.example.com</code>的日志：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker logs -f peer0.org1.example.com</span><br></pre></td></tr></table></figure></p>
+<p>你看到的详细输出反应了确认检查和对peer状态数据库的更新(关于信道的当前配置)。你还可以看到我们配置交易的提交：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">2017-11-15 15:41:05.000 UTC [kvledger] CommitWithPvtData -&gt; DEBU 774 Channel [mychannel]: Committing block [5] to storage</span><br></pre></td></tr></table></figure></p>
+<p>如果您想查看新配置区块的内容，请按照演示过程获取并解码新配置区块。让我们继续…  </p>
+<h3 id="将Org3加入信道"><a href="#将Org3加入信道" class="headerlink" title="将Org3加入信道"></a>将Org3加入信道</h3><p>在这时，信道配置已经更新到包含了我们的新组织<code>Org3</code>，这意味着此成员的peer可以成功加入这个信道。  </p>
+<p>首先，让我们启动包含Org3 peer和Org3特定CLI的容器。从<code>first-network</code>目录启动Org3 docker compose：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker-compose -f docker-compose-org3.yaml up -d</span><br></pre></td></tr></table></figure></p>
+<p>这个新compose文件已经被配置为可以桥接我们的初始网络，因此两个peer和CLI容器可以解析已经存在的peer(指Org1和Org2的)和排序节点。三个新容器运行后，exec进入Org3特定CLI容器：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it Org3cli bash</span><br></pre></td></tr></table></figure></p>
+<p>就像我们在初始CLI容器中做的那样，导出两个关键环境变量<code>ORDERER_CA</code>和<code>CHANNEL_NAME</code>：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem &amp;&amp; <span class="built_in">export</span> CHANNEL_NAME=mychannel</span><br></pre></td></tr></table></figure></p>
+<p>检查一下确保下面的变量已经被良好地设置：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$ORDERER_CA</span> &amp;&amp; <span class="built_in">echo</span> <span class="variable">$CHANNEL_NAME</span></span><br></pre></td></tr></table></figure></p>
+<p>现在让我们发送呼叫到排序服务，请求<code>mychannel</code>的创世区块。由于我们成功的信道更新，订购服务可以验证附加到此呼叫的签名。如果Org3尚未成功添加到信道配置中，则排序服务会拒绝此请求。  </p>
+<blockquote>
+<p>注意</p>
+<blockquote>
+<p>再次，你会发现这很有用：浏览排序节点的日志查看签名和验证逻辑和策略检查。  </p>
+</blockquote>
+</blockquote>
+<p>使用<code>peer channel fetch</code>命令获取这个区块：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">peer channel fetch 0 mychannel.block -o orderer.example.com:7050 -c <span class="variable">$CHANNEL_NAME</span> --tls --cafile <span class="variable">$ORDERER_CA</span></span><br></pre></td></tr></table></figure></p>
+<p>注意，我们发送了一个<code>0</code>来指定我们要获取的信道账本上的第一个区块（即创世区块）。如果我们简单地发送<code>peer channel fetch config</code>命令，则我们会接收到区块5，即定义Org3的更新配置。然而，我们不能在一个下游区块开始账本，反而需要加入区块0。  </p>
+<p>发送<code>peer channel join</code>命令，并传入创世区块<code>mychannel.block</code>：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">peer channel join -b mychannel.block</span><br></pre></td></tr></table></figure></p>
+<p>如果你想为Org3加入第二个peer，就导出TLS和ADDRESS变量并重新发出<code>peer channel join</code>命令：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3.example.com/peers/peer1.org3.example.com/tls/ca.crt &amp;&amp; <span class="built_in">export</span> CORE_PEER_ADDRESS=peer1.org3.example.com:7051</span><br><span class="line">peer channel join -b mychannel.block</span><br></pre></td></tr></table></figure></p>
+<h3 id="升级和调用"><a href="#升级和调用" class="headerlink" title="升级和调用"></a>升级和调用</h3><p>拼图的最后一块是增加链码版本和更新背书策略以便包含Org3。留在Org3 CLI容器中并安装链码。由于我们知道升级即将到来，因此我们可以跳过安装链码版本1的徒劳行为。我们只关心Org3将成为背书策略的一部分的新版本，因此我们将直接跳转到版本2：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">peer chaincode install -n mycc -v 2.0 -p github.com/chaincode/chaincode_example02/go/</span><br></pre></td></tr></table></figure></p>
+<p>如果你想在Org3的第二个peer上安装链码，修改相应环境变量和重新发送命令。请注意，第二个安装不是强制的，因为您只需要在背书peer或以其他方式与账本接口的peer（即仅查询）上安装链接代码。这种peer上将仍然运行确认逻辑和作为提交者，但没有运行链码的容器。  </p>
+<p>现在跳回到原始CLI容器，并在Org1和Org2 peer上安装新版本链码。我们是用Org2管理员身份递交的信道更新呼叫，所以容器仍以<code>peer0.org2</code>的身份运行：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">peer chaincode install -n mycc -v 2.0 -p github.com/chaincode/chaincode_example02/go/</span><br></pre></td></tr></table></figure></p>
+<p>切换到<code>peer0.org1</code>身份：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export CORE_PEER_LOCALMSPID=&quot;Org1MSP&quot;</span><br><span class="line">export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt</span><br><span class="line">export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp</span><br><span class="line">export CORE_PEER_ADDRESS=peer0.org1.example.com:7051</span><br></pre></td></tr></table></figure></p>
+<p>并重新安装：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">peer chaincode install -n mycc -v 2.0 -p github.com/chaincode/chaincode_example02/go/</span><br></pre></td></tr></table></figure></p>
+<p>现在，我们准备好升级链码。这里没有修改底层源码，我们只是简单地把Org3加入到信道<code>mychannel</code>的链码<code>mycc</code>的背书策略。  </p>
+<blockquote>
+<p>注意</p>
+<blockquote>
+<p>任何满足链码实例化策略的身份都可以发出升级呼叫。在默认情况下，这些身份是信道管理员。  </p>
+</blockquote>
+</blockquote>
+<p>发送呼叫：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">peer chaincode upgrade -o orderer.example.com:7050 --tls <span class="variable">$CORE_PEER_TLS_ENABLED</span> --cafile <span class="variable">$ORDERER_CA</span> -C <span class="variable">$CHANNEL_NAME</span> -n mycc -v 2.0 -c <span class="string">'&#123;"Args":["init","a","90","b","210"]&#125;'</span> -P <span class="string">"OR ('Org1MSP.member','Org2MSP.member','Org3MSP.member')"</span></span><br></pre></td></tr></table></figure></p>
+<p>你可以看到在上面的命令中，我们通过<code>v</code>标志指定了新版本。你还可以看到背书策略被更新到<code>-P &quot;OR (&#39;Org1MSP.member&#39;,&#39;Org2MSP.member&#39;,&#39;Org3MSP.member&#39;)&quot;</code>，准确地反映了策略增加了Org3。（上述背书策略的含义是三个组织的任何一个签名都可以。）令人感兴趣的最后一项是我们用<code>c</code>标志指定的构造函数请求。与实例化调用一样，链式代码升级需要使用<code>init</code>方法。如果你的链码需要传参数进<code>init</code>方法，那么你需要提供适当的键值对来重新初始化状态。这不是推荐的做法，因为升级提交者可以任意改写世界状态。相反，请考虑编辑源代码以删除参数依赖项，或者从实例化时不需要参数的链码开始。  </p>
+<p>升级呼叫将增加一个新的区块（区块6）到信道账本，并允许Org3 peer在背书阶段执行交易。跳回到Org3 CLI容器，并发出一个对<code>a</code>值的查询。这将需要一些时间，因为链码镜像需要为目标peer构建，并且容器需要启动：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">peer chaincode query -C <span class="variable">$CHANNEL_NAME</span> -n mycc -c <span class="string">'&#123;"Args":["query","a"]&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>我们会看到一个响应:<code>Query Result: 90</code>。  </p>
+<p>现在发送一个调用，从<code>a</code>移动<code>10</code>个数量到<code>b</code>：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">peer chaincode invoke -o orderer.example.com:7050  --tls <span class="variable">$CORE_PEER_TLS_ENABLED</span> --cafile <span class="variable">$ORDERER_CA</span> -C <span class="variable">$CHANNEL_NAME</span> -n mycc -c <span class="string">'&#123;"Args":["invoke","a","b","10"]&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>最后查询一下<code>a</code>的值：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">peer chaincode query -C <span class="variable">$CHANNEL_NAME</span> -n mycc -c <span class="string">'&#123;"Args":["query","a"]&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>你会看到一个响应：<code>Query Result: 80</code>，这准确反映了这个链码的世界状态的改变。  </p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>重新配置过程的确涉及很多，但是各个步骤都有一个合理的方法。最终目标是形成以protobuf二进制格式表示的增量交易对象，然后收集必要数量的管理员签名，使得重新配置交易处理完成信道的修改策略。<code>configtxlator</code>和<code>jq</code>工具，与日益增长<code>peer channel</code>命令一起，为我们提供了完成这项任务所需的功能。</p>
+
+    </div>
+  </article>
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2019
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

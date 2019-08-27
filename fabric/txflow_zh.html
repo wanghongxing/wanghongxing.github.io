@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="hyperledger fabric">
+
+
+
+
+  <meta name="keywords" content=", , wanghongxing">
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="wanghongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/fabric/txflow_zh.html">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> hyperledger fabric - wanghongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">wanghongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">wanghongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  <article class="post">
+    <div class="post-content">
+      <table>
+<thead>
+<tr>
+<th>原文</th>
+<th>作者</th>
+<th>审核修正</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://hyperledger-fabric.readthedocs.io/en/latest/txflow.html" target="_blank" rel="noopener">原文</a></td>
+<td>Yueling Liang</td>
+</tr>
+</tbody>
+</table>
+<p>This document outlines the transactional mechanics that take place during a standard asset exchange. The scenario includes two clients, A and B, who are buying and selling radishes. They each have a peer on the network through which they send their transactions and interact with the ledger.</p>
+<p>本文概述了资产交易过程中的事务机制。该场景包含客户A和B，在进行萝卜买卖。他们各自有一个网络节点，通过节点他们发送交易并和账本进行交互。</p>
+<p><img src="img/step0.png" alt=""></p>
+<h2 id="假设"><a href="#假设" class="headerlink" title="假设"></a>假设</h2><p>(Assumptions)</p>
+<p>This flow assumes that a chann<a href="http://el" target="_blank" rel="noopener">http://el</a> is set up and running. The application user has registered and enrolled with the organization’s certificate authority (CA) and received back necessary cryptographic material, which is used to authenticate to the network.</p>
+<p>该流程假设通道已建立并正常运行。用户已注册并使用组织认证授权（CA）登记，同时获得必要的加密材料来进行网络验证。</p>
+<p>The chaincode (containing a set of key value pairs representing the initial state of the radish market) is installed on the peers and instantiated on the channel. The chaincode contains logic defining a set of transaction instructions and the agreed upon price for a radish. An endorsement policy has also been set for this chaincode, stating that both peerA and peerB must endorse any transaction.</p>
+<p>链码（包含一组代表萝卜市场初始状态的键值对）被安装在节点上并在通道上进行实例化。链码包含定义交易指令集合的逻辑和达成一致的萝卜价格。设置一项针对链码的背书策略，表明节点A和B都必须对任何交易进行背书。</p>
+<p><img src="img/step1.png" alt=""></p>
+<h2 id="1-客户A发起交易"><a href="#1-客户A发起交易" class="headerlink" title="1. 客户A发起交易"></a>1. 客户A发起交易</h2><p>(Client A initiates a transaction)</p>
+<p>What’s happening? - Client A is sending a request to purchase radishes. The request targets peerA and peerB, who are respectively representative of Client A and Client B. The endorsement policy states that both peers must endorse any transaction, therefore the request goes to peerA and peerB.</p>
+<p>发生了什么？- 客户A发出萝卜购买请求。请求目标节点A和B，分别代表客户A和B。背书策略表明两个节点必须为任何交易进行背书，因而请求被发送到节点A和B。</p>
+<p>Next, the transaction proposal is constructed. An application leveraging a supported SDK (node, java, python) utilizes one of the available API’s which generates a transaction proposal. The proposal is a request to invoke a chaincode function so that data can be read and/or written to the ledger (i.e. write new key value pairs for the assets). The SDK serves as a shim to package the transaction proposal into the properly architected format (protocol buffer over gRPC) and takes the user’s cryptographic credentials to produce a unique signature for this transaction proposal.</p>
+<p>接下来构建交易提案。一个以可用SDK（node, java, python）为支撑的应用利用有效的API来生成交易提案。这项提案作为调用链码功能的请求来完成数据到账本的读取和/或写入（即为资产写入新的键值对）。SDK有两个作用：把交易提案包装成合适架构格式的库（基于gRPC的协议缓冲）；使用用户的加密证书来创建交易提案的唯一签名。</p>
+<p><img src="img/step2.png" alt=""></p>
+<h2 id="2-背书节点验证签名-amp-执行交易"><a href="#2-背书节点验证签名-amp-执行交易" class="headerlink" title="2. 背书节点验证签名&amp;执行交易"></a>2. 背书节点验证签名&amp;执行交易</h2><p>(Endorsing peers verify signature &amp; execute the transaction)</p>
+<p>The endorsing peers verify the signature (using MSP) and determine if the submitter is properly authorized to perform the proposed operation (using the channel’s ACL). The endorsing peers take the transaction proposal arguments as inputs and execute them against the current state database to produce transaction results including a response value, read set, and write set. No updates are made to the ledger at this point. The set of these values, along with the endorsing peer’s signature and a YES/NO endorsement statement is passed back as a “proposal response” to the SDK which parses the payload for the application to consume.<br>{The MSP is a local process running on the peers which allows them to verify transaction<br>requests arriving from clients and to sign transaction results(endorsements). The ACL (Access Control List) is defined at channel creation time, and determines which peers and end users are permitted to perform certain actions.}</p>
+<p>背书节点使用MSP验证签名并确定请求者是否被合理授权进行提案的操作（使用通道ACL）。背书节点以交易提案凭证为输入，基于当前状态的数据库执行来生成交易结果，输出包括反馈值、读取集合和写入集合。截止现在账本还未进行更新。这些值的集合，背书节点的签名以及是/否的背书声明一同作为“提案反馈”被传输回到SDK，SDK对应用消耗的载荷进行解析。<br>{MSP是在节点上运行的一个本地流程，该流程允许节点验证客户的交易请求和签订交易结果（背书）。ACL（权限控制清单）在通道创建时定义，决定哪些节点和用户被授权进行指定操作。}</p>
+<p><img src="img/step3.png" alt=""></p>
+<h2 id="3-审查提案反馈"><a href="#3-审查提案反馈" class="headerlink" title="3. 审查提案反馈"></a>3. 审查提案反馈</h2><p>(Proposal responses are inspected)</p>
+<p>The application verifies the endorsing peer signatures and compares the proposal responses (link to glossary term which will contain a representation of the payload) to determine if the proposal responses are the same and if the specified endorsement policy has been fulfilled (i.e. did peerA and peerB both endorse). The architecture is such that even if an application chooses not to inspect responses or otherwise forwards an unendorsed transaction, the policy will still be enforced by peers and upheld at the commit validation phase.<br>应用对背书节点签名进行验证，比较提案反馈（链接到包含载荷代理的术语条款）来决定是否一致，指定的背书策略是否被执行（即节点A和B都进行了背书）。这种架构可以保证即使一个应用选择不进行反馈审查或者转发了没有背书的交易，背书策略依然会被节点执行并在验证提交阶段维持。</p>
+<p><img src="images/step4.png" alt=""></p>
+<h2 id="4-客户组合交易背书"><a href="#4-客户组合交易背书" class="headerlink" title="4. 客户组合交易背书"></a>4. 客户组合交易背书</h2><p>(Client assembles endorsements into a transaction)</p>
+<p>The application “broadcasts” the transaction proposal and response within a “transaction message” to the Ordering Service. The transaction will contain the read/write sets, the endorsing peers signatures and the Channel ID. The Ordering Service does not read the transaction details, it simply receives transactions from all channels in the network, orders them chronologically by channel, and creates blocks of transactions per channel.</p>
+<p>应用对交易提案进行广播，以“交易信息”对订购服务实现反馈。交易包含读/写集合，背书节点签名和通道ID。订购服务不读取交易细节，只是从网络中所有通道接收交易，根据每个通道按时间顺序调用，创建每个通道的交易区块。</p>
+<p><img src="img/step5.png" alt=""></p>
+<h2 id="5-交易验证和提交"><a href="#5-交易验证和提交" class="headerlink" title="5. 交易验证和提交"></a>5. 交易验证和提交</h2><p>(Transaction is validated and committed)</p>
+<p>The blocks of transactions are “delivered” to all peers on the channel. The transactions within the block are validated to ensure endorsement policy is fulfilled and to ensure that there have been no changes to ledger state for read set variables since the read set was generated by the transaction execution. Transactions in the block are tagged as being valid or invalid.</p>
+<p>交易区块被发布到通道中的所有节点。区块中的交易被验证来确保背书策略被执行并且账本的读取集合变量没有发生变化，因为读取集合是执行交易生成的。区块中的交易被标记为有效或无效。</p>
+<p><img src="img/step6.png" alt=""></p>
+<h2 id="6-账本更新"><a href="#6-账本更新" class="headerlink" title="6. 账本更新"></a>6. 账本更新</h2><p>(Ledger updated)</p>
+<p>Each peer appends the block to the channel’s chain, and for each valid transaction the write sets are committed to current state database. An event is emitted, to notify the client application that the transaction (invocation) has been immutably appended to the chain, as well as notification of whether the transaction was validated or invalidated.</p>
+<p>每个节点都把区块追加到通道的链中，对每项有效交易，写入集合被提交到当前状态的数据库。发出事务通知客户端应用，交易（调用）被永久追加到链中以及交易是有效或者无效的。</p>
+<p>Note: See the Chaincode Swimlanes diagram to better understand the server side flow and the protobuffers.<br>注意：参照链码泳道图以获得服务端流程和协议缓冲的更好理解。</p>
+
+    </div>
+  </article>
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2019
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

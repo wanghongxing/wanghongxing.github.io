@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="hyperledger fabric">
+
+
+
+
+  <meta name="keywords" content=", , wanghongxing">
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="wanghongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/fabric/write_first_app_zh.html">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> hyperledger fabric - wanghongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">wanghongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">wanghongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  <article class="post">
+    <div class="post-content">
+      <table>
+<thead>
+<tr>
+<th>原文</th>
+<th>作者</th>
+<th>审核修正</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://hyperledger-fabric.readthedocs.io/en/latest/write_first_app.html" target="_blank" rel="noopener">原文</a></td>
+<td>Qiang Sheng</td>
+</tr>
+</tbody>
+</table>
+<p>#编写第一个应用(Writing Your First Application)<br>The goal of this document is to show the tasks and provide a baseline for writing your first application against a Hyperledger Fabric network.</p>
+<p>本文档将会指引您基于Hyperledger Fabric网络编写第一个应用程序。</p>
+<p>At the most basic level, applications on a blockchain network are what enable users to <strong>query</strong> a ledger (asking for specific records it contains), or to <strong>update</strong> it (adding records to it).</p>
+<p>最基本的，区块链网络应用程序需要提供给用户<strong>查询</strong>账本（包含特定记录）以及<strong>更新</strong>账本（添加记录）的功能。</p>
+<p>Our application, composed in Javascript, leverages the Node.js SDK to interact with the network (where our ledger exists). This tutorial will guide you through the three steps involved in writing your first application.</p>
+<p>我们的应用程序基于Javascript，通过Node.js SDK与（账本所在的）网络进行交互。本教程将通过三步来指导您编写您的第一个应用程序。</p>
+<blockquote>
+<p><strong>1. Starting a test Hyperledger Fabric blockchain network.</strong> We need some basic components in our network in order to query and update the ledger. These components – a peer node, ordering node and Certificate Authority – serve as the backbone of our network; we’ll also have a CLI container used for a few administrative commands. A single script will download and launch this test network.</p>
+</blockquote>
+<blockquote>
+<p><strong>1. 启动一个Hyperledger Fabric区块链测试网络。</strong> 在我们的网络中，我们需要一些最基本的组件来查询和更新账本。这些组件 —— peer节点、ordering节点以及证书管理 —— 是我们网络的基础。而CLI容器则用来发送一些管理命令。有个简单的脚本将下载并启动这个测试网络。</p>
+</blockquote>
+<blockquote>
+<p><strong>2. Learning the parameters of the sample smart contract our app will use.</strong> Our smart contracts contain various functions that allow us to interact with the ledger in different ways. For example, we can read data holistically or on a more granular level.</p>
+</blockquote>
+<blockquote>
+<p><strong>2. 学习应用程序中所用到的智能合约例子的参数。</strong> 智能合约包含的各种功能让我们可以用多种方式和账本进行交互。如，我们可以读取整体的数据或者某一部分详尽的数据。</p>
+</blockquote>
+<blockquote>
+<p><strong>3. Developing the application to be able to query and update records.</strong> We provide two sample applications – one for querying the ledger and another for updating it. Our apps will use the SDK APIs to interact with the network and ultimately call these functions.</p>
+</blockquote>
+<blockquote>
+<p><strong>3. 开发能够查询以及更新记录的应用程序。</strong> 我们提供两个程序例子 —— 一个用于查询账本，另一个用户更新账本。我们的程序将使用SDK APIs来和网络进行交互，并最终调用这些功能。</p>
+</blockquote>
+<p>After completing this tutorial, you should have a basic understanding of how an application, using the Hyperledger Fabric SDK for Node.js, is programmed in conjunction with a smart contract to interact with the ledger on a Hyperledger Fabric network.</p>
+<p>完成本教程之后，您应该会基本了解一个使用Hyperledger Fabric Node.js SDK并带有智能合约的应用程序，是如何与Hyperledger Fabric网络中的账本进行交互的。</p>
+<p>First, let’s launch our test network…</p>
+<p>首先，让我们启动测试网络…</p>
+<p>###下载测试网络（Getting a Test Network）<br>Visit the <a href="http://hyperledger-fabric.readthedocs.io/en/latest/prereqs.html" target="_blank" rel="noopener">Prerequisites</a> page and ensure you have the necessary dependencies installed on your machine.</p>
+<p>请先访问<a href="http://hyperledger-fabric.readthedocs.io/en/latest/prereqs.html" target="_blank" rel="noopener">Prerequisites</a>网页并确保您的计算机上已经安装了必需的依赖项。</p>
+<p>Now determine a working directory where you want to clone the fabric-samples repo. Issue the clone command and change into the <code>fabcar</code> subdirectory</p>
+<p>选择clone fabric-samples的工作目录，运行clone命令，并进入<code>fabcar</code>子目录</p>
+<pre><code>git clone https://github.com/hyperledger/fabric-samples.git
+cd fabric-samples/fabcar
+</code></pre><p>This subdirectory – <code>fabcar</code>– contains the scripts and application code to run the sample app. Issue an <code>ls</code> from this directory. You should see the following:</p>
+<p>这个子目录 - <code>fabcar</code> - 包含运行示例程序的脚本以及程序代码。在该目录运行<code>ls</code>命令，您应该会看到以下内容：</p>
+<pre><code>chaincode    invoke.js       network         package.json    query.js        startFabric.sh
+</code></pre><p>Now use the <code>startFabric.sh</code> script to launch the network.</p>
+<p>现在调用<code>startFabric.sh</code>来启动网络。</p>
+<p>Note</p>
+<p>The following command downloads and extracts the Hyperledger Fabric Docker images, so it will take a few minutes to complete.</p>
+<p>请注意：下面命令将会下载并解压Hyperledger Fabric Docker images，因此需要几分钟时间来完成。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./startFabric.sh</span><br></pre></td></tr></table></figure></p>
+<p>For the sake of brevity, we won’t delve into the details of what’s happening with this command. Here’s a quick synopsis:</p>
+<p>为了简洁起见，我们不会深入了解这个命令的具体细节。下面是一个关于这个命令的快速简要说明：</p>
+<ul>
+<li>launches a peer node, ordering node, Certificate Authority and CLI container</li>
+<li>creates a channel and joins the peer to the channel</li>
+<li>installs smart contract (i.e. chaincode) onto the peer’s file system and instantiates said chaincode on the channel; instantiate starts a chaincode container</li>
+<li><p>calls the <code>initLedger</code> function to populate the channel ledger with 10 unique cars</p>
+</li>
+<li><p>启动peer节点、Ordering节点、证书颁发机构以及CLI容器</p>
+</li>
+<li>创建一个通道，并将peer加入该通道</li>
+<li>将智能合约（即链码）安装到peer节点的文件系统上，并在通道上实例化该链码；实例化会启动链码容器</li>
+<li>调用<code>initLedger</code>功能来向通道账本写入10个不同的汽车</li>
+</ul>
+<p>Note</p>
+<p>These operations will typically be done by an organizational or peer admin. The script uses the CLI to execute these commands, however there is support in the SDK as well. Refer to the <a href="https://github.com/hyperledger/fabric-sdk-node" target="_blank" rel="noopener">Hyperledger Fabric Node SDK repo</a> for example scripts.</p>
+<p>请注意：这些操作通常由组织或者peer的管理员来完成。这个脚本使用CLI容器来执行这些命令，但SDK中也有支持。具体请参阅<a href="https://github.com/hyperledger/fabric-sdk-node" target="_blank" rel="noopener">Hyperledger Fabric Node SDK repo</a>中的示例脚本。</p>
+<p>Issue a <code>docker ps</code> command to reveal the processes started by the <code>startFabric.sh</code> script. You can learn more about the details and mechanics of these operations in the <a href="http://hyperledger-fabric.readthedocs.io/en/latest/build_network.html" target="_blank" rel="noopener">Building Your First Network</a> section. Here we’ll just focus on the application. The following picture provides a simplistic representation of how the application interacts with the Hyperledger Fabric network.</p>
+<p>发送<code>docker ps</code>命令可以显示<code>startFabric.sh</code>脚本启动的进程。您可以在<a href="http://hyperledger-fabric.readthedocs.io/en/latest/build_network.html" target="_blank" rel="noopener">Building Your First Network</a>部分了解有关这些操作的详细信息和机制。在这里，我们专注于应用程序。下图简单描述了一个应用程序与Hyperledger Fabric网络交互的过程。</p>
+<p><img src="img/firstapp0.png" alt=""></p>
+<p>Alright, now that you’ve got a sample network and some code, let’s take a look at how the different pieces fit together.</p>
+<p>好了，现在我们有了简单的网络以及一些代码，现在看看他们是怎么一起工作的。</p>
+<p>###应用程序如何与网络进行交互(How Applications Interact with the Network)<br>Applications use <strong>APIs</strong> to invoke smart contracts (referred to as “chaincode”). These smart contracts are hosted in the network and identified by name and version. For example, our chaincode container is titled - <code>dev-peer0.org1.example.com-fabcar-1.0</code> - where the name is <code>fabcar</code>, the version is <code>1.0</code> and the peer it is running against is <code>dev-peer0.org1.example.com</code>.</p>
+<p>应用程序使用<strong>APIs</strong>来调用智能合约(即“链码”)。这些智能合同托管在网络中，并通过名称和版本进行标识。例如，标示为<code>dev-peer0.org1.example.com-fabcar-1.0</code>的容器，其名称是<code>fabcar</code>，版本号是<code>1.0</code>，运行peer是<code>dev-peer0.org1.example.com</code>。</p>
+<p>APIs are accessible with a software development kit (SDK). For purposes of this exercise, we’ll be using the <a href="https://fabric-sdk-node.github.io/" target="_blank" rel="noopener">Hyperledger Fabric Node SDK</a> though there is also a Java SDK and CLI that can be used to develop applications.</p>
+<p>API可通过软件开发工具包（SDK）访问。在本练习中，我们将使用<a href="https://fabric-sdk-node.github.io/" target="_blank" rel="noopener">Hyperledger Fabric Node SDK</a>，除此以外，Fabric还提供了Java SDK和CLI用于开发应用程序。</p>
+<p>###查询账本(Querying the Ledger)<br>Queries are how you read data from the ledger. You can query for the value of a single key, multiple keys, or – if the ledger is written in a rich data storage format like JSON – perform complex searches against it (looking for all assets that contain certain keywords, for example).</p>
+<p>查询是指如何从账本中读取数据。您可以查询单个或者多个键的值，如果账本是以类似于JSON这样的数据存储格式写入的，则可以执行更复杂的搜索（如查找包含某些关键字的所有资产）。</p>
+<p><img src="img/firstapp1.png" alt=""><br>As we said earlier, our sample network has an active chaincode container and a ledger that has been primed with 10 different cars. We also have some sample Javascript code - <code>query.js</code> - in the <code>fabcar</code> directory that can be used to query the ledger for details on the cars.</p>
+<p>正如我们前面所说，我们的示例网络有一个活跃的链码容器和一个已经包含10种不同汽车的账本。我们还有一些示例Javascript代码，我们可以使用<code>fabcar</code>目录中的<code>query.js</code>来查询账本中关于车的详细信息。</p>
+<p>Before we take a look at how that app works, we need to install the SDK node modules in order for our program to function. From your <code>fabcar</code> directory, issue the following:</p>
+<p>在我们查看该应用程序的工作原理之前，我们需要安装SDK模块才能让程序运行。在<code>fabcar</code>目录中，运行下面的命令：</p>
+<pre><code>npm install
+</code></pre><p>Note</p>
+<p>You will issue all subsequent commands from the <code>fabcar</code> directory.</p>
+<p>请注意：后续命令也都是在<code>fabcar</code>目录中运行。<br>Now we can run our javascript programs. First, let’s run our <code>query.js</code> program to return a listing of all the cars on the ledger. A function that will query all the cars, <code>queryAllCars</code>, is pre-loaded in the app, so we can simply run the program as is:</p>
+<p>现在我们可以运行JavaScript程序。首先，运行<code>query.js</code> 程序，返回账本上所有汽车列表。应用程序中预先加载了一个<code>queryAllCars</code>函数，用于查询所有车辆，因此我们可以简单地运行程序：</p>
+<pre><code>node query.js
+</code></pre><p>It should return something like this:</p>
+<p>返回应如下：</p>
+<pre><code>Query result count =  1
+Response is  [{&quot;Key&quot;:&quot;CAR0&quot;, &quot;Record&quot;:{&quot;colour&quot;:&quot;blue&quot;,&quot;make&quot;:&quot;Toyota&quot;,&quot;model&quot;:&quot;Prius&quot;,&quot;owner&quot;:&quot;Tomoko&quot;}},
+{&quot;Key&quot;:&quot;CAR1&quot;,   &quot;Record&quot;:{&quot;colour&quot;:&quot;red&quot;,&quot;make&quot;:&quot;Ford&quot;,&quot;model&quot;:&quot;Mustang&quot;,&quot;owner&quot;:&quot;Brad&quot;}},
+{&quot;Key&quot;:&quot;CAR2&quot;, &quot;Record&quot;:{&quot;colour&quot;:&quot;green&quot;,&quot;make&quot;:&quot;Hyundai&quot;,&quot;model&quot;:&quot;Tucson&quot;,&quot;owner&quot;:&quot;Jin Soo&quot;}},
+{&quot;Key&quot;:&quot;CAR3&quot;, &quot;Record&quot;:{&quot;colour&quot;:&quot;yellow&quot;,&quot;make&quot;:&quot;Volkswagen&quot;,&quot;model&quot;:&quot;Passat&quot;,&quot;owner&quot;:&quot;Max&quot;}},
+{&quot;Key&quot;:&quot;CAR4&quot;, &quot;Record&quot;:{&quot;colour&quot;:&quot;black&quot;,&quot;make&quot;:&quot;Tesla&quot;,&quot;model&quot;:&quot;S&quot;,&quot;owner&quot;:&quot;Adriana&quot;}},
+{&quot;Key&quot;:&quot;CAR5&quot;, &quot;Record&quot;:{&quot;colour&quot;:&quot;purple&quot;,&quot;make&quot;:&quot;Peugeot&quot;,&quot;model&quot;:&quot;205&quot;,&quot;owner&quot;:&quot;Michel&quot;}},
+{&quot;Key&quot;:&quot;CAR6&quot;, &quot;Record&quot;:{&quot;colour&quot;:&quot;white&quot;,&quot;make&quot;:&quot;Chery&quot;,&quot;model&quot;:&quot;S22L&quot;,&quot;owner&quot;:&quot;Aarav&quot;}},
+{&quot;Key&quot;:&quot;CAR7&quot;, &quot;Record&quot;:{&quot;colour&quot;:&quot;violet&quot;,&quot;make&quot;:&quot;Fiat&quot;,&quot;model&quot;:&quot;Punto&quot;,&quot;owner&quot;:&quot;Pari&quot;}},
+{&quot;Key&quot;:&quot;CAR8&quot;, &quot;Record&quot;:{&quot;colour&quot;:&quot;indigo&quot;,&quot;make&quot;:&quot;Tata&quot;,&quot;model&quot;:&quot;Nano&quot;,&quot;owner&quot;:&quot;Valeria&quot;}},
+{&quot;Key&quot;:&quot;CAR9&quot;, &quot;Record&quot;:{&quot;colour&quot;:&quot;brown&quot;,&quot;make&quot;:&quot;Holden&quot;,&quot;model&quot;:&quot;Barina&quot;,&quot;owner&quot;:&quot;Shotaro&quot;}}]
+</code></pre><p>These are the 10 cars. A black Tesla Model S owned by Adriana, a red Ford Mustang owned by Brad, a violet Fiat Punto owned by someone named Pari, and so on. The ledger is key/value based and in our implementation the key is <code>CAR0</code> through <code>CAR9</code>. This will become particularly important in a moment.</p>
+<p>这里有10辆车，一辆属于Adriana的黑色Tesla Model S、一辆属于Brad的红色Ford Mustang、一辆属于Pari的紫罗兰色Fiat Punto等等。账本是基于Key/Value    的，在这里，关键字是从<code>CAR0</code>到<code>CAR9</code>。这一点特别重要。</p>
+<p>Now let’s see what it looks like under the hood (if you’ll forgive the pun). Use an editor (e.g. atom or visual studio) and open the <code>query.js</code> program.</p>
+<p>现在让我们来看看代码内容。使用编辑器（例如atom或visual studio）打开<code>query.js</code>程序。</p>
+<p>The inital section of the application defines certain variables such as chaincode ID, channel name and network endpoints:</p>
+<p>应用程序的初始部分定义了变量，如链码，通道名称和网络端点：</p>
+<pre><code>var options = {
+    wallet_path : path.join(__dirname, &apos;./network/creds&apos;),
+    user_id: &apos;PeerAdmin&apos;,
+    channel_id: &apos;mychannel&apos;,
+    chaincode_id: &apos;fabcar&apos;,
+    network_url: &apos;grpc://localhost:7051&apos;,
+</code></pre><p>This is the chunk where we construct our query:</p>
+<p>这是构建查询的代码块：</p>
+<pre><code>// queryCar - requires 1 argument, ex: args: [&apos;CAR4&apos;],
+// queryAllCars - requires no arguments , ex: args: [&apos;&apos;],
+const request = {
+    chaincodeId: options.chaincode_id,
+    txId: transaction_id,
+    fcn: &apos;queryAllCars&apos;,
+    args: [&apos;&apos;]
+</code></pre><p>We define the <code>chaincode_id</code> variable as <code>fabcar</code> – allowing us to target this specific chaincode – and then call the <code>queryAllCars</code> function defined within that chaincode.</p>
+<p>我们将<code>chaincode_id</code>变量赋值为<code>fabcar</code>- 这让我们定位到这个特定的链码 - 然后调用该链码中定义的<code>queryAllCars</code>函数。</p>
+<p>When we issued the <code>node query.js</code> command earlier, this specific function was called to query the ledger. However, this isn’t the only function that we can pass.</p>
+<p>在前面，我们发出<code>node query.js</code>命令时，会调用了特定函数来查询账本。但是，这不是我们能够使用的唯一功能。</p>
+<p>To take a look at the others, navigate to the <code>chaincode</code> subdirectory and open <code>fabcar.go</code> in your editor. You’ll see that we have the following functions available to call - <code>initLedger</code>, <code>queryCar</code>, <code>queryAllCars</code>, <code>createCar</code> and <code>changeCarOwner</code>. Let’s take a closer look at the <code>queryAllCars</code> function to see how it interacts with the ledger.</p>
+<p>要查看其他，请转至到<code>chaincode</code>子目录并在编辑器中打开<code>fabcar.go</code>。你会看到，我们可以调用下面的函数- <code>initLedger</code>、<code>queryCar</code>、<code>queryAllCars</code>、<code>createCar</code>和<code>changeCarOwner</code>。让我们仔细看看<code>queryAllCars</code>函数是如何与账本进行交互的。</p>
+<pre><code>func (s *SmartContract) queryAllCars(APIstub shim.ChaincodeStubInterface) sc.Response {
+
+    startKey := &quot;CAR0&quot;
+    endKey := &quot;CAR999&quot;
+
+    resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
+</code></pre><p>The function uses the shim interface function <code>GetStateByRange</code> to return ledger data between the args of <code>startKey</code> and <code>endKey</code>. Those keys are defined as <code>CAR0</code> and <code>CAR999</code> respectively. Therefore, we could theoretically create 1,000 cars (assuming the keys are tagged properly) and a <code>queryAllCars</code> would reveal every one.</p>
+<p>该函数调用shim接口函数<code>GetStateByRange</code>来返回参数在<code>startKey</code>和<code>endKey</code>间的账本数据。这两个键值分别定义为<code>CAR0</code>和<code>CAR999</code>。因此，我们理论上可以创建1,000辆汽车（假设Keys都被正确使用），<code>queryAllCars</code>函数将会显示出每一辆汽车的信息。</p>
+<p>Below is a representation of how an app would call different functions in chaincode.</p>
+<p>下图演示了一个应用程序如何在链码中调用不同功能。</p>
+<p><img src="img/firstapp2.png" alt=""><br>We can see our <code>queryAllCars</code> function up there, as well as one called <code>createCar</code> that will allow us to update the ledger and ultimately append a new block to the chain. But first, let’s do another query.</p>
+<p>我们可以看到我们用过的<code>queryAllCars</code>函数，还有一个叫做<code>createCar</code>，这个函数可以让我们更新账本，并最终在链上增加一个新区块。但首先，让我们做另外一个查询。</p>
+<p>Go back to the <code>query.js</code> program and edit the constructor request to query a specific car. We’ll do this by changing the function from <code>queryAllCars</code> to <code>queryCar</code> and passing a specific “Key” to the args parameter. Let’s use <code>CAR4</code> here. So our edited <code>query.js</code> program should now contain the following:</p>
+<p>现在我们返回<code>query.js</code>程序并编辑请求构造函数以查询特定的车辆。为达此目的，我们将函数<code>queryAllCars</code>更改为<code>queryCar</code>并将特定的“Key” 传递给args参数。在这里，我们使用<code>CAR4</code>。 所以我们编辑后的<code>query.js</code>程序现在应该包含以下内容：</p>
+<pre><code>const request = {
+    chaincodeId: options.chaincode_id,
+    txId: transaction_id,
+    fcn: &apos;queryCar&apos;,
+    args: [&apos;CAR4&apos;]
+</code></pre><p>Save the program and navigate back to your <code>fabcar</code> directory. Now run the program again:</p>
+<p>保存程序并返回<code>fabcar</code>目录。现在再次运行程序：</p>
+<pre><code>node query.js
+</code></pre><p>You should see the following:</p>
+<p>您应该看到以下内容：</p>
+<pre><code>{&quot;colour&quot;:&quot;black&quot;,&quot;make&quot;:&quot;Tesla&quot;,&quot;model&quot;:&quot;S&quot;,&quot;owner&quot;:&quot;Adriana&quot;}
+</code></pre><p>So we’ve gone from querying all cars to querying just one, Adriana’s black Tesla Model S. Using the <code>queryCar</code> function, we can query against any key (e.g. <code>CAR0</code>) and get whatever make, model, color, and owner correspond to that car.</p>
+<p>这样，我们就从查询所有车变成了只查询一辆车：Adriana的黑色Tesla Model S。使用<code>queryCar</code>函数，我们可以查询任意关键字（例如<code>CAR0</code>），并获得与该车相对应的制造厂商、型号、颜色和所有者。<br>Great. Now you should be comfortable with the basic query functions in the chaincode, and the handful of parameters in the query program. Time to update the ledger…</p>
+<p>很好，现在您应该比较熟悉该链码的基本查询功能以及带参数的查询功能了。现在是时候更新账本了…</p>
+<p>###更新账本(Updating the Ledger)<br>Now that we’ve done a few ledger queries and added a bit of code, we’re ready to update the ledger. There are a lot of potential updates we could make, but let’s just create a new car for starters.</p>
+<p>我们已经完成了几个分类帐查询并添加了一些代码，现在更新账本。我们可以做很多更新动作，首先让我们为新手创建一辆新车。</p>
+<p>Ledger updates start with an application generating a transaction proposal. Just like query, a request is constructed to identify the channel ID, function, and specific smart contract to target for the transaction. The program then calls the <code>channel.SendTransactionProposal</code> API to send the transaction proposal to the peer(s) for endorsement.</p>
+<p>账本更新是从生成交易提案的应用程序开始的。就像查询一样，我们将会构造一个请求，用来识别要进行交易的通道ID、函数以及智能合约。该程序然后调用<code>channel.SendTransactionProposal</code>API将交易建议发送给peer(s)进行认证。</p>
+<p>The network (i.e. endorsing peer) returns a proposal response, which the application uses to build and sign a transaction request. This request is sent to the ordering service by calling the <code>channel.sendTransaction</code> API. The ordering service will bundle the transaction into a block and then “deliver” the block to all peers on a channel for validation. (In our case we have only the single endorsing peer.)</p>
+<p>网络（即endorsing peer）返回一个提案答复，应用程序以此来创建和签署交易请求。该请求通过调用<code>channel.sendTransaction</code> API发送到排序服务器。排序服务器将把交易打包进区块，然后将区块“发送”到通道上的所有peers进行认证。（在我们的例子中，我们只有一个endorsing peer。）</p>
+<p>Finally the application uses the <code>eh.setPeerAddr</code> API to connect to the peer’s event listener port, and calls <code>eh.registerTxEvent</code> to register events associated with a specific transaction ID. This API allows the application to know the fate of a transaction (i.e. successfully committed or unsuccessful). Think of it as a notification mechanism.</p>
+<p>最后，应用程序使用<code>eh.setPeerAddr</code> API连接到peer的事务监听端口，并调用<code>eh.registerTxEvent</code>注册与特定交易ID相关联的事务。该API使得应用程序获得事务的结果（即成功提交或不成功）。把它当作一个通知机制。</p>
+<p>Note</p>
+<p>We don’t go into depth here on a transaction’s lifecycle. Consult the <a href="http://hyperledger-fabric.readthedocs.io/en/latest/txflow.html" target="_blank" rel="noopener">Transaction Flow</a> documentation for lower level details on how a transaction is ultimately committed to the ledger.</p>
+<p>请注意：这里我们不深入讨论交易细节。有关交易如何最终提交给账本的详细信息，请参阅<a href="http://hyperledger-fabric.readthedocs.io/en/latest/txflow.html" target="_blank" rel="noopener">交易流程</a>文档。</p>
+<p>The goal with our initial invoke is to simply create a new asset (car in this case). We have a separate javascript program - <code>invoke.js</code> - that we will use for these transactions. Just like query, use an editor to open the program and navigate to the codeblock where we construct our invocation:</p>
+<p>我们初始调用的目标是简单地创建一个新的资产（这里为汽车）。我们有一个独立的用于这些交易的JavaScript程序 - <code>invoke.js</code>。就像查询一样，使用编辑器打开程序并转到构建调用的代码块：</p>
+<pre><code>// createCar - requires 5 args, ex: args: [&apos;CAR11&apos;, &apos;Honda&apos;, &apos;Accord&apos;, &apos;Black&apos;, &apos;Tom&apos;],
+// changeCarOwner - requires 2 args , ex: args: [&apos;CAR10&apos;, &apos;Barry&apos;],
+// send proposal to endorser
+var request = {
+    targets: targets,
+    chaincodeId: options.chaincode_id,
+    fcn: &apos;&apos;,
+    args: [&apos;&apos;],
+    chainId: options.channel_id,
+    txId: tx_id
+</code></pre><p>You’ll see that we can call one of two functions - <code>createCar</code> or <code>changeCarOwner</code>. Let’s create a red Chevy Volt and give it to an owner named Nick. We’re up to <code>CAR9</code> on our ledger, so we’ll use <code>CAR10</code> as the identifying key here. The updated codeblock should look like this:</p>
+<p>我们可以调用函数<code>createCar</code>或者<code>changeCarOwner</code>。首先我们创建一个红色的Chevy Volt，并把它归属于Nick。在账本中我们的Key值已经用到了<code>CAR9</code> ，所以这里我们将使用<code>CAR10</code>。更新代码块如下：</p>
+<pre><code>var request = {
+    targets: targets,
+    chaincodeId: options.chaincode_id,
+    fcn: &apos;createCar&apos;,
+    args: [&apos;CAR10&apos;, &apos;Chevy&apos;, &apos;Volt&apos;, &apos;Red&apos;, &apos;Nick&apos;],
+    chainId: options.channel_id,
+    txId: tx_id
+</code></pre><p>Save it and run the program:</p>
+<p>保存并运行程序：</p>
+<pre><code>node invoke.js
+</code></pre><p>There will be some output in the terminal about Proposal Response and Transaction ID. However, all we’re concerned with is this message:</p>
+<p>终端将会输出一些提案响应和交易ID。但是，我们关心的是这个：</p>
+<pre><code>The transaction has been committed on peer localhost:7053
+</code></pre><p>The peer emits this event notification, and our application receives it thanks to our <code>eh.registerTxEvent</code> API. So now if we go back to our <code>query.js</code> program and call the <code>queryCar</code> function against an arg of <code>CAR10</code>, we should see the following:</p>
+<p>peer发出此事务通知，我们的应用程序通过 <code>eh.registerTxEvent</code>API接收到该通知。现在，如果我们回到<code>query.js</code>程序并调用带有<code>CAR10</code>参数的<code>queryCar</code>函数，将会看到：</p>
+<pre><code>Response is  {&quot;colour&quot;:&quot;Red&quot;,&quot;make&quot;:&quot;Chevy&quot;,&quot;model&quot;:&quot;Volt&quot;,&quot;owner&quot;:&quot;Nick&quot;}
+</code></pre><p>Finally, let’s call our last function - <code>changeCarOwner</code>. Nick is feeling generous and he wants to give his Chevy Volt to a man named Barry. So, we simply edit <code>invoke.js</code> to reflect the following:</p>
+<p>最后，我们来调用最后一个函数<code>changeCarOwner</code>。Nick很慷慨，他想把他的Chevy Volt送给Barry。所以，我们简单编辑<code>invoke.js</code> 如下：</p>
+<pre><code>var request = {
+    targets: targets,
+    chaincodeId: options.chaincode_id,
+    fcn: &apos;changeCarOwner&apos;,
+    args: [&apos;CAR10&apos;, &apos;Barry&apos;],
+    chainId: options.channel_id,
+    txId: tx_id
+</code></pre><p>Execute the program again - <code>node invoke.js</code> - and then run the query app one final time. We are still querying against <code>CAR10</code>, so we should see:</p>
+<p>再次运行<code>node invoke.js</code>，之后再运行查询程序，我们仍然是使用<code>CAR10</code>作为参数查询，将会看到如下结果：</p>
+<pre><code>Response is  {&quot;colour&quot;:&quot;Red&quot;,&quot;make&quot;:&quot;Chevy&quot;,&quot;model&quot;:&quot;Volt&quot;,&quot;owner&quot;:&quot;Barry&quot;}
+</code></pre><p>###其他资源(Additional Resources)<br>The <a href="https://github.com/hyperledger/fabric-sdk-node" target="_blank" rel="noopener">Hyperledger Fabric Node SDK repo</a> is an excellent resource for deeper documentation and sample code. You can also consult the Hyperledger Fabric community and component experts on <a href="https://chat.hyperledger.org/home" target="_blank" rel="noopener">Hyperledger Rocket Chat</a>.</p>
+<p>在<a href="https://github.com/hyperledger/fabric-sdk-node" target="_blank" rel="noopener">Hyperledger Fabric Node SDK repo</a>可以找到更多的说明文档以及代码例子。您也可以在<a href="https://chat.hyperledger.org/home" target="_blank" rel="noopener">Hyperledger Rocket Chat</a>上咨询Hyperledger Fabric社区专家。</p>
+
+    </div>
+  </article>
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2019
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>
