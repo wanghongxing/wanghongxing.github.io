@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="hyperledger fabric configtx 配置交易">
+
+
+
+
+  <meta name="keywords" content="fabric, blockchain, hongxing">
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="hongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/2019/04/21/configtx_zh/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> hyperledger fabric configtx 配置交易 - hongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">hongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          hyperledger fabric configtx 配置交易
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-04-21
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/fabric/">fabric</a>
+            
+          </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Anatomy-of-a-configuration-配置剖析"><span class="toc-text">Anatomy of a configuration / 配置剖析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Configuration-updates-更新配置"><span class="toc-text">Configuration updates / 更新配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Permitted-configuration-groups-and-values-组和值得配置许可"><span class="toc-text">Permitted configuration groups and values / 组和值得配置许可</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Orderer-system-channel-configuration-Order-channel-配置"><span class="toc-text">Orderer system channel configuration / Order channel 配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Application-channel-configuration-APP-channel-配置"><span class="toc-text">Application channel configuration / APP channel 配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Channel-creation-创建channel"><span class="toc-text">Channel creation / 创建channel</span></a></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <p> <a href="http://hyperledger-fabric.readthedocs.io/en/latest/configtx.html" target="_blank" rel="noopener">原文</a>  </p>
+<p>Shared configuration for a Hyperledger Fabric blockchain network is stored in a collection configuration transactions, one per channel. Each configuration transaction is usually referred to by the shorter name <strong><em>configtx</em></strong>.</p>
+<p>Hyperledger Fabric 区块链网络的共享配置存储在每个channel的配置交易集合中。配置交易简称<strong><em>configtx</em></strong>。</p>
+<p>Channel configuration has the following important properties:</p>
+<p>Channel配置有以下重要特性：</p>
+<ol>
+<li><p><strong>版本 Versioned</strong>：All elements of the configuration have an associated version which is advanced with every modification. Further, every committed configuration receives a sequence number.</p>
+<p> 配置中的所有项都有一个相关联的版本，每次修改都会有个更高的版本。此外每个提交的配置都会有个序列号。</p>
+</li>
+<li><p><strong>许可 Permissioned</strong>：Anyone with a copy of the previous configtx (and no additional info) may verify the validity of a new config based on these policies.</p>
+<p> 配置中的所有项都有一个相关联的策略，该策略控制该元素是否可修改。任何有前一个configtx（无需额外信息）的“人”，都可基于这些策略验证新配置的有效性。</p>
+</li>
+<li><p><strong>分层 Hierarchical</strong>：A root configuration group contains sub-groups, and each group of the hierarchy has associated values and policies. These policies can take advantage of the hierarchy to derive policies at one level from policies of lower levels.</p>
+<p> 根配置组包含子组，每个分层组具有相关的值和策略。这些策略可以利用分层结构从较低级别的策略中导出。</p>
+</li>
+</ol>
+<h2 id="Anatomy-of-a-configuration-配置剖析"><a href="#Anatomy-of-a-configuration-配置剖析" class="headerlink" title="Anatomy of a configuration / 配置剖析"></a>Anatomy of a configuration / 配置剖析</h2><p>Configuration is stored as a transaction of type <code>HeaderType_CONFIG</code> in a block with no other transactions. These blocks are referred to as <strong><em>Configuration Blocks</em></strong>, the first of which is referred to as the <strong><em>Genesis Block</em></strong>.</p>
+<p>配置作为一种<code>HeaderType_CONFIG</code>类型的交易单独存储在一个block中（也就是说这个block不再包含其他交易），这个block被称为<strong><em>配置区块</em></strong>，其中的第一个称为 <strong><em>创世区块</em></strong>。</p>
+<p>The proto structures for configuration are stored in <code>fabric/protos/common/configtx.proto</code>. The Envelope of type <code>HeaderType_CONFIG</code> encodes a <code>ConfigEnvelope</code> message as the <code>Payload</code> <code>data</code> field. The proto for <code>ConfigEnvelope</code> is defined as follows:</p>
+<p>配置的数据结构在文件<code>fabric/protos/common/configtx.proto</code>中，编码后的<code>ConfigEnvelope</code>信息作为<code>HeaderType_CONFIG</code>类型的<code>Envelope</code>中<code>Payload</code>的<code>Data</code>字段值。<em>（译注：Envelope.payload.Header.channel_header.type= HeaderType_CONFIG，Envelope.payload.data = []byte(ConfigEnvelope)）</em><code>ConfigEnvelope</code>定义如下：</p>
+<pre><code>message ConfigEnvelope {
+    Config config = 1;        // A marshaled Config structure
+    Envelope last_update = 2; // The last CONFIG_UPDATE message which generated this current configuration
+                              // Note that CONFIG_UPDATE has a Payload.Data of a Marshaled ConfigUpdate
+}
+</code></pre><p>The <code>last_update</code> field is defined below in the Updates to configuration section, but is only necessary when validating the configuration, not reading it. Instead, the currently committed configuration is stored in the <code>config</code> field, containing a <code>Config</code> message.</p>
+<p><code>last_update</code>字段在下面的“更新配置”一节定义，该字段只用于验证配置，而不会读他。当前提交的配置存储在<code>config</code>字段，是一个<code>Config</code>信息。</p>
+<pre><code>// Config represents the config for a particular channel
+message Config {
+    uint64 sequence = 1;
+    ConfigGroup channel_group = 2;
+}
+</code></pre><p>The <code>sequence</code> number is incremented by one for each committed configuration. The <code>channel_group</code> field is the root group which contains the configuration. The <code>ConfigGroup</code> structure is recursively defined, and builds a tree of groups, each of which contains values and policies. It is defined as follows:</p>
+<p>其中<code>sequence</code>字段是每次提交配置递增的数字；<code>channel_group</code>字段是包含该配置的根组。<code>ConfigGroup</code>结构是递归定义的，构建了一个组树，其中每个组都包含值和策略。其结构如下：</p>
+<pre><code>// ConfigGroup is the hierarchical data structure for holding config
+message ConfigGroup {
+    uint64 version = 1;
+    map&lt;string,ConfigGroup&gt; groups = 2;
+    map&lt;string,ConfigValue&gt; values = 3;
+    map&lt;string,ConfigPolicy&gt; policies = 4;
+    string mod_policy = 5;
+}
+</code></pre><p>Because <code>ConfigGroup</code> is a recursive structure, consider an example hierarchical arrangement of <code>ConfigGroup</code>s (expressed for clarity in golang notation).</p>
+<p><code>ConfigGroup</code>是递归结构，此处给出一个用golang表示的分层排列的示例：</p>
+<pre><code>// 假设定义了以下group
+var root, child1, child2, grandChild1, grandChild2, grandChild3 *ConfigGroup
+
+// Set the following values
+root.Groups[&quot;child1&quot;] = child1
+root.Groups[&quot;child2&quot;] = child2
+child1.Groups[&quot;grandChild1&quot;] = grandChild1
+child2.Groups[&quot;grandChild2&quot;] = grandChild2
+child2.Groups[&quot;grandChild3&quot;] = grandChild3
+
+// The resulting config structure of groups looks like:
+// root:
+//     child1:
+//         grandChild1
+//     child2:
+//         grandChild2
+//         grandChild3
+</code></pre><p>Each group defines a level in the config hierarchy, and each group has an associated set of values (indexed by string key) and policies (also indexed by string key).</p>
+<p>每个组都定义了一个分层结构中的级别，且每个组都有一个相关的值集（以string为key）和策略（以string为key）。</p>
+<p>Values are defined by:</p>
+<p>值定义：</p>
+<pre><code>// ConfigValue represents an individual piece of config data
+message ConfigValue {
+    uint64 version = 1;
+    bytes value = 2;
+    string mod_policy = 3;
+}
+</code></pre><p>Policies are defined by:<br>策略定义：</p>
+<pre><code>message ConfigPolicy {
+    uint64 version = 1;
+    Policy policy = 2;
+    string mod_policy = 3;
+}
+</code></pre><p>Note that Values, Policies, and Groups all have a <code>version</code> and a <code>mod_policy</code>.</p>
+<p>注意，ConfigGroup、ConfigValue、ConfigPolicy都有<code>version</code>和<code>mod_policy</code>字段。</p>
+<p>The <code>ersion</code> of an element is incremented each time that element is modified. The <code>mod_policy</code> is used to govern the required signatures to modify that element. </p>
+<p>每次修改元素时，其<code>version</code>递增，<code>mod_policy</code>用于管理修改该元素所需的签名。</p>
+<p>For Groups, modification is adding or removing elements to the Values, Policies, or Groups maps (or changing the <code>mod_policy</code>). For Values and Policies, modification is changing the Value and Policy fields respectively (or changing the mod_policy). </p>
+<p>对于Groups，修改就是添加或删除Values、Policies、或Groups中的元素（或者是改变<code>mod_policy</code>）<em>（译注，其实就是<code>ConfigGroup</code>中除<code>version</code>字段外其他字段的变化）</em>；对于Values和Policies，修改就是改变<code>value</code>或<code>policy</code>字段（或者改变<code>mod_policy</code>）。</p>
+<p>Each element’s <code>mod_policy</code> is evaluated in the context of the current level of the config.</p>
+<p>每个元素的<code>mod_policy</code>都只在当前配置级别(level)中有效。</p>
+<p>Consider the following example mod policies defined at <code>Channel.Groups[&quot;Application&quot;]</code> (Here, we use the golang map reference syntax, so <code>Channel.Groups[&quot;Application&quot;].Policies[&quot;policy1&quot;]</code> refers to the base <code>Channel</code> group’s <code>Application</code> group’s <code>Policies</code> map’s <code>policy1</code> policy.)</p>
+<p>下面是一个定义在<code>Channel.Groups[&quot;Application&quot;]</code>中的策略的示例（这里用的是golang语法，因此<code>Channel.Groups[&quot;Application&quot;].Policies[&quot;policy1&quot;]</code>表示根组<code>Channel</code>的子组<code>Application</code>的<code>Policies</code>里的<code>policy1</code>对应的策略）</p>
+<ul>
+<li><code>policy1</code>对应<code>Channel.Groups[&quot;Application&quot;].Policies[&quot;policy1&quot;]</code></li>
+<li><code>Org1/policy2</code>对应<code>Channel.Groups[&quot;Application&quot;].Groups[&quot;Org1&quot;].Policies[&quot;policy2&quot;]</code></li>
+<li><code>/Channel/policy3</code>对应<code>Channel.Policies[&quot;policy3&quot;]</code></li>
+</ul>
+<p>Note that if a <code>mod_policy</code> references a policy which does not exist, the item cannot be modified.</p>
+<p>注意，如果<code>mod_policy</code>引用了一个不存在的策略，那么该元素不可修改。</p>
+<h2 id="Configuration-updates-更新配置"><a href="#Configuration-updates-更新配置" class="headerlink" title="Configuration updates / 更新配置"></a>Configuration updates / 更新配置</h2><p>Configuration updates are submitted as an <code>Envelope</code> message of type <code>HeaderType_CONFIG_UPDATE</code>. The <code>Payload</code> <code>data</code> of the transaction is a marshaled <code>ConfigUpdateEnvelope</code>. The <code>ConfigUpdateEnvelope</code> is defined as follows:</p>
+<p>更新配置是提交一个<code>HeaderType_CONFIG_UPDATE</code>类型的<code>Envelope</code>消息，交易的<code>Payload.data</code>字段是序列化的<code>ConfigUpdateEnvelope</code>，其定义如下：</p>
+<pre><code>message ConfigUpdateEnvelope {
+    bytes config_update = 1;                 // A marshaled ConfigUpdate structure
+    repeated ConfigSignature signatures = 2; // Signatures over the config_update
+}
+</code></pre><p>The <code>signatures</code> field contains the set of signatures which authorizes the config update. Its message definition is:</p>
+<p>其中<code>signatures</code>字段包含了授权更新配置的签名集，定义如下：</p>
+<pre><code>message ConfigSignature {
+    bytes signature_header = 1; // A marshaled SignatureHeader
+    bytes signature = 2;        // Signature over the concatenation signatureHeader bytes and config bytes
+}
+</code></pre><p>The <code>signature_header</code> is as defined for standard transactions, while the signature is over the concatenation of the <code>signature_header</code> bytes and the <code>config_update</code> bytes from the <code>ConfigUpdateEnvelope</code> message.</p>
+<p><code>signature_header</code>如标准交易所定义，而签名则是<code>signature_header</code>字节和<code>ConfigUpdateEnvelope</code>中的<code>config_update</code>字节的拼接。</p>
+<p>The <code>ConfigUpdateEnvelope</code> <code>config_update</code> bytes are a marshaled <code>ConfigUpdate</code> message which is defined as follows:</p>
+<p><code>ConfigUpdateEnvelope</code>中的<code>config_update</code>字段是序列化的<code>ConfigUpdate</code>，其定义为：</p>
+<pre><code>message ConfigUpdate {
+    string channel_id = 1;     // Which channel this config update is for
+    ConfigGroup read_set = 2;  // ReadSet explicitly lists the portion of the config which was read, this should be sparse with only Version set
+    ConfigGroup write_set = 3; // WriteSet lists the portion of the config which was written, this should included updated Versions
+}
+</code></pre><p>The <code>channel_id</code> is the channel ID the update is bound for, this is necessary to scope the signatures which support this reconfiguration.</p>
+<p>其中<code>channel_id</code>是配置更新所对应的channel ID，该字段是必要，因为它界定了支持本次配置更新的所需的签名范围。</p>
+<p>The <code>read_set</code> specifies a subset of the existing configuration, specified sparsely where only the <code>version</code> field is set and no other fields must be populated. The particular <code>ConfigValue</code> <code>value</code> or <code>ConfigPolicy</code> <code>policy</code> fields should never be set in the <code>read_set</code>. The <code>ConfigGroup</code> may have a subset of its map fields populated, so as to reference an element deeper in the config tree. For instance, to include the <code>Application</code> group in the <code>read_set</code>, its parent (the <code>Channel</code> group) must also be included in the read set, but, the <code>Channel</code> group does not need to populate all of the keys, such as the <code>Orderer</code> <code>group</code> key, or any of the <code>values</code> or <code>policies</code> keys.</p>
+<p><code>read_set</code>是现有配置的一个子集，其中仅含<code>version</code>字段，<code>ConfigValue.value</code>和<code>ConfigPolicy.policy</code>等其他字段不包含在<code>read_set</code>中。<code>ConfigGroup</code>会map字段组成的子集，以便引用配置树的深层元素。例如，为使<code>Application</code>group包含到<code>read_set</code>，它的上层（<code>Channel</code>group）也必须包含到<code>read_set</code>中，但不必将<code>Channel</code>group中所有的key都包括进去，比如<code>Orderer`</code>group<code>或者任何</code>values<code>或</code>policies`。</p>
+<p>The <code>write_set</code> specifies the pieces of configuration which are modified. Because of the hierarchical nature of the configuration, a write to an element deep in the hierarchy must contain the higher level elements in its <code>write_set</code> as well. However, for any element in the <code>write_set</code> which is also specified in the <code>read_set</code> at the same version, the element should be specified sparsely, just as in the <code>read_set</code>.</p>
+<p><code>write_set</code>指定了要被修改的那部分配置。由于配置的分层特性，修改深层元素就必须在<code>write_set</code>中包含其上层元素。<code>write_set</code>中的任意元素都会在<code>read_set</code>中指定相同版本的该元素。</p>
+<p>For example, given the configuration:</p>
+<p>例如，给出如下配置：</p>
+<pre><code>Channel: (version 0)
+    Orderer (version 0)
+    Appplication (version 3)
+       Org1 (version 2)
+</code></pre><p>To submit a configuration update which modifies <code>Org1</code>, the <code>read_set</code> would be:</p>
+<p>修改<code>Org1</code>提交的<code>read_set</code>应为：</p>
+<pre><code>Channel: (version 0)
+    Application: (version 3)
+</code></pre><p>and the write_set would be</p>
+<p>对应的<code>write_set</code>应是：</p>
+<pre><code>Channel: (version 0)
+    Application: (version 3)
+        Org1 (version 3)
+</code></pre><p>When the <code>CONFIG_UPDATE</code> is received, the orderer computes the resulting <code>CONFIG</code> by doing the following:</p>
+<p>接收到<code>CONFIG_UPDATE</code>后，orderer会通过以下步骤计算<code>CONFIG</code>结果：</p>
+<ol>
+<li><p>Verifies the <code>channel_id</code> and <code>read_set</code>. All elements in the <code>read_set</code> must exist at the given versions.</p>
+<p> 校验<code>channel_id</code>和<code>read_set</code>，<code>read_set</code>中所有元素必须存在对应的版本。</p>
+</li>
+<li><p>Computes the update set by collecting all elements in the <code>write_set</code> which do not appear at the same version in the <code>read_set</code>.</p>
+<p> 收集<code>read_set</code>与<code>write_set</code>中版本不一致的元素，计算更新集。</p>
+</li>
+<li><p>Verifies that each element in the update set increments the version number of the element update by exactly 1.</p>
+<p> 校验更新集中的元素的版本号是否递增1</p>
+</li>
+<li><p>Verifies that the signature set attached to the <code>ConfigUpdateEnvelope</code> satisfies the <code>mod_policy</code> for each element in the update set.</p>
+<p> 校验更新集中每个元素，<code>ConfigUpdateEnvelope</code>的签名满足<code>mod_policy</code>。</p>
+</li>
+<li><p>Computes a new complete version of the config by applying the update set to the current config.</p>
+<p> 通过将更新集应用于当前配置，计算该配置的完整新版本</p>
+</li>
+<li><p>Writes the new config into a <code>ConfigEnvelope</code> which includes the <code>CONFIG_UPDATE</code> as the <code>last_update</code> field and the new config encoded in the <code>config</code> field, along with the incremented <code>sequence</code> value.</p>
+<p>将新配置写成<code>ConfigEnvelope</code>作为<code>CONFIG_UPDATE</code>赋给<code>last_update</code>字段，新的配置赋给<code>config</code>字段，<code>sequence</code>字段自增。</p>
+</li>
+<li><p>Writes the new <code>ConfigEnvelope</code> into a <code>Envelope</code> of type <code>CONFIG</code>, and ultimately writes this as the sole transaction in a new configuration block.</p>
+<p> 将<code>ConfigEnvelope</code>写成<code>CONFIG</code>类型的<code>Envelope</code>，最终将此作为唯一交易写入配置区块。、</p>
+</li>
+</ol>
+<p>When the peer (or any other receiver for <code>Deliver</code>) receives this configuration block, it should verify that the config was appropriately validated by applying the last_update message to the current config and verifying that the orderer-computed <code>config</code> field contains the correct new configuration.</p>
+<p>当peer（或者任意其他接收<code>Deliver</code>者）接收到这个配置区块后，就会通过将<code>last_update</code>信息应用到当前配置并校验orderer计算的<code>config</code>字段是否包含正确的新配置，来验证该配置是否被正确校验。</p>
+<h2 id="Permitted-configuration-groups-and-values-组和值得配置许可"><a href="#Permitted-configuration-groups-and-values-组和值得配置许可" class="headerlink" title="Permitted configuration groups and values / 组和值得配置许可"></a>Permitted configuration groups and values / 组和值得配置许可</h2><p>Any valid configuration is a subset of the following configuration. Here we use the notation <code>peer.&lt;MSG&gt;</code> to define a <code>ConfigValue</code> whose <code>value</code> field is a marshaled proto message of name <code>&lt;MSG&gt;</code> defined in <code>fabric/protos/peer/configuration.proto</code>. The notations <code>common.&lt;MSG&gt;</code>, <code>msp.&lt;MSG&gt;</code>, and <code>orderer.&lt;MSG&gt;</code> correspond similarly, but with their messages defined in <code>fabric/protos/common/configuration.proto</code>, <code>fabric/protos/msp/mspconfig.proto</code>, and <code>fabric/protos/orderer/configuration.proto</code> respectively.</p>
+<p>有效的配置都是下面配置的子集。在此，用<code>peer.&lt;MSG&gt;</code>表示一个<code>ConfigValue</code>，其<code>value</code>字段是称为<code>&lt;MSG&gt;</code>的序列化后的信息，定义在<code>fabric/protos/peer/configuration.proto</code>。<code>common.&lt;MSG&gt;</code>，<code>msp.&lt;MSG&gt;</code>和<code>orderer.&lt;MSG&gt;</code>分别定义在<code>fabric/protos/common/configuration.proto</code>，<code>fabric/protos/msp/mspconfig.proto</code>和<code>fabric/protos/orderer/configuration.proto</code>。</p>
+<p>Note, that the keys <code></code> and <code></code> represent arbitrary names, and indicate an element which may be repeated with different names.</p>
+<p>注意，下面的<code></code> 和 <code></code>是任意的名字，表示可以重复使用不同名称的元素。</p>
+<pre><code>&amp;ConfigGroup{
+    Groups: map&lt;string, *ConfigGroup&gt; {
+        &quot;Application&quot;:&amp;ConfigGroup{
+            Groups:map&lt;String, *ConfigGroup&gt; {
+                {{org_name}}:&amp;ConfigGroup{
+                    Values:map&lt;string, *ConfigValue&gt;{
+                        &quot;MSP&quot;:msp.MSPConfig,
+                        &quot;AnchorPeers&quot;:peer.AnchorPeers,
+                    },
+                },
+            },
+        },
+        &quot;Orderer&quot;:&amp;ConfigGroup{
+            Groups:map&lt;String, *ConfigGroup&gt; {
+                {{org_name}}:&amp;ConfigGroup{
+                    Values:map&lt;string, *ConfigValue&gt;{
+                        &quot;MSP&quot;:msp.MSPConfig,
+                    },
+                },
+            },
+
+            Values:map&lt;string, *ConfigValue&gt; {
+                &quot;ConsensusType&quot;:orderer.ConsensusType,
+                &quot;BatchSize&quot;:orderer.BatchSize,
+                &quot;BatchTimeout&quot;:orderer.BatchTimeout,
+                &quot;KafkaBrokers&quot;:orderer.KafkaBrokers,
+            },
+        },
+        &quot;Consortiums&quot;:&amp;ConfigGroup{
+            Groups:map&lt;String, *ConfigGroup&gt; {
+                {{consortium_name}}:&amp;ConfigGroup{
+                    Groups:map&lt;string, *ConfigGroup&gt; {
+                        {{org_name}}:&amp;ConfigGroup{
+                            Values:map&lt;string, *ConfigValue&gt;{
+                                &quot;MSP&quot;:msp.MSPConfig,
+                            },
+                        },
+                    },
+                    Values:map&lt;string, *ConfigValue&gt; {
+                        &quot;ChannelCreationPolicy&quot;:common.Policy,
+                    }
+                },
+            },
+        },
+    },
+
+    Values: map&lt;string, *ConfigValue&gt; {
+        &quot;HashingAlgorithm&quot;:common.HashingAlgorithm,
+        &quot;BlockHashingDataStructure&quot;:common.BlockDataHashingStructure,
+        &quot;Consortium&quot;:common.Consortium,
+        &quot;OrdererAddresses&quot;:common.OrdererAddresses,
+    },
+}
+</code></pre><h2 id="Orderer-system-channel-configuration-Order-channel-配置"><a href="#Orderer-system-channel-configuration-Order-channel-配置" class="headerlink" title="Orderer system channel configuration / Order channel 配置"></a>Orderer system channel configuration / Order channel 配置</h2><p>The ordering system channel needs to define ordering parameters, and consortiums for creating channels. There must be exactly one ordering system channel for an ordering service, and it is the first channel to be created (or more accurately bootstrapped). It is recommended never to define an Application section inside of the ordering system channel genesis configuration, but may be done for testing. Note that any member with read access to the ordering system channel may see all channel creations, so this channel’s access should be restricted.</p>
+<p>ordering系统channel定义了创建channel的ordering参数和consortiums。ordering service必须有一个ordering系统channel，这是被创建的第一个channel。建议不要在ordering系统channel初始配置中定义application部分，但是测试是可以这么做。注意，任何对ordering系统channel有读权限的成员都可以查看所有channel创建，因此channel的访问应受限制。</p>
+<p>The ordering parameters are defined as the following subset of config:</p>
+<p>ordering参数定义如下：</p>
+<pre><code>&amp;ConfigGroup{
+    Groups: map&lt;string, *ConfigGroup&gt; {
+        &quot;Orderer&quot;:&amp;ConfigGroup{
+            Groups:map&lt;String, *ConfigGroup&gt; {
+                {{org_name}}:&amp;ConfigGroup{
+                    Values:map&lt;string, *ConfigValue&gt;{
+                        &quot;MSP&quot;:msp.MSPConfig,
+                    },
+                },
+            },
+
+            Values:map&lt;string, *ConfigValue&gt; {
+                &quot;ConsensusType&quot;:orderer.ConsensusType,
+                &quot;BatchSize&quot;:orderer.BatchSize,
+                &quot;BatchTimeout&quot;:orderer.BatchTimeout,
+                &quot;KafkaBrokers&quot;:orderer.KafkaBrokers,
+            },
+        },
+    },
+</code></pre><p>Each organization participating in ordering has a group element under the <code>Orderer</code> group. This group defines a single parameter <code>MSP</code> which contains the cryptographic identity information for that organization. The <code>Values</code> of the <code>Orderer</code> group determine how the ordering nodes function. They exist per channel, so <code>orderer.BatchTimeout</code> for instance may be specified differently on one channel than another.</p>
+<p>ordering中的每个组织都在<code>Orderer</code>组下有一个组元素，这个组定义了一个<code>MSP</code>参数，这个参数包含该组织的加密身份信息。<code>Orderer</code>组中的<code>Values</code>决定了ordering节点的功能。他们存在于每个channel中，所以像<code>orderer.BatchTimeout</code>就可在不同channel中指定不同值。</p>
+<p>At startup, the orderer is faced with a filesystem which contains information for many channels. The orderer identifies the system channel by identifying the channel with the consortiums group defined. The consortiums group has the following structure.</p>
+<p>启动时，orderer面对含有很多channel信息的文件系统，orderer通过识别带有consortiums组定义的channel来标识系统channel。consortiums组结构如下。</p>
+<pre><code>&amp;ConfigGroup{
+    Groups: map&lt;string, *ConfigGroup&gt; {
+        &quot;Consortiums&quot;:&amp;ConfigGroup{
+            Groups:map&lt;String, *ConfigGroup&gt; {
+                {{consortium_name}}:&amp;ConfigGroup{
+                    Groups:map&lt;string, *ConfigGroup&gt; {
+                        {{org_name}}:&amp;ConfigGroup{
+                            Values:map&lt;string, *ConfigValue&gt;{
+                                &quot;MSP&quot;:msp.MSPConfig,
+                            },
+                        },
+                    },
+                    Values:map&lt;string, *ConfigValue&gt; {
+                        &quot;ChannelCreationPolicy&quot;:common.Policy,
+                    }
+                },
+            },
+        },
+    },
+},
+</code></pre><p>Note that each consortium defines a set of members, just like the organizational members for the ordering orgs. Each consortium also defines a <code>ChannelCreationPolicy</code>. This is a policy which is applied to authorize channel creation requests. Typically, this value will be set to an <code>ImplicitMetaPolicy</code> requiring that the new members of the channel sign to authorize the channel creation. More details about channel creation follow later in this document.</p>
+<p>注意，每个consortium定义一组成员，就行ordering组织的组织成员一样。每个consortium也都定义了一个<code>ChannelCreationPolicy</code>，它是一种应用于授权channel创建请求的策略，通常这个值设为<code>ImplicitMetaPolicy</code>，要求channel的新成员签名授权channel创建。有关channel创建更信息的内容，请参阅文档后面的内容。</p>
+<h2 id="Application-channel-configuration-APP-channel-配置"><a href="#Application-channel-configuration-APP-channel-配置" class="headerlink" title="Application channel configuration / APP channel 配置"></a>Application channel configuration / APP channel 配置</h2><p>Application configuration is for channels which are designed for application type transactions. It is defined as follows:</p>
+<p>应用程序配置用于为应用类型交易设计的channel。其定义如下：</p>
+<pre><code>&amp;ConfigGroup{
+    Groups: map&lt;string, *ConfigGroup&gt; {
+        &quot;Application&quot;:&amp;ConfigGroup{
+            Groups:map&lt;String, *ConfigGroup&gt; {
+                {{org_name}}:&amp;ConfigGroup{
+                    Values:map&lt;string, *ConfigValue&gt;{
+                        &quot;MSP&quot;:msp.MSPConfig,
+                        &quot;AnchorPeers&quot;:peer.AnchorPeers,
+                    },
+                },
+            },
+        },
+    },
+}
+</code></pre><p>Just like with the <code>Orderer</code> section, each organization is encoded as a group. However, instead of only encoding the <code>MSP</code> identity information, each org additionally encodes a list of <code>AnchorPeers</code>. This list allows the peers of different organizations to contact each other for peer gossip networking.</p>
+<p>就像<code>Orderer</code>部分，每个组织被编码为一个组。然而，app channel不仅有<code>MSP</code>身份信息，每个组织都附加了一个<code>AnchorPeers</code>列表。这个列表允许不同组织的节点彼此联系。</p>
+<p>The application channel encodes a copy of the orderer orgs and consensus options to allow for deterministic updating of these parameters, so the same <code>Orderer</code> section from the orderer system channel configuration is included. However from an application perspective this may be largely ignored.</p>
+<p>应用程序channel通过对orderer组织和共识选项的编码，以允许对这些参数进行确定性更新，因此包含了orderer系统channel配置的相同<code>Orderer</code>部分。但从应用角度看，这会在很大程度上被忽略。</p>
+<h2 id="Channel-creation-创建channel"><a href="#Channel-creation-创建channel" class="headerlink" title="Channel creation / 创建channel"></a>Channel creation / 创建channel</h2><p>When the orderer receives a <code>CONFIG_UPDATE</code> for a channel which does not exist, the orderer assumes that this must be a channel creation request and performs the following.</p>
+<p>当Orderer 接收到对一个不存在的channel的<code>CONFIG_UPDATE</code>信息时，orderer就会假设这是个创建channel的请求并执行以下操作：</p>
+<ol>
+<li><p>The orderer identifies the consortium which the channel creation request is to be performed for. It does this by looking at the <code>Consortium</code> value of the top level group.</p>
+<p> 通过查看高层组中的<code>Consortium</code>值，orderer标识所要执行创建channel请求的consortium<strong><em>（译注：这个词暂时不知翻译成什么好）</em></strong>。</p>
+</li>
+<li><p>The orderer verifies that the organizations included in the <code>Application</code> group are a subset of the organizations included in the corresponding consortium and that the <code>ApplicationGroup</code> is set to <code>version</code> <code>1</code>.</p>
+<p> orderer验证Application组中的组织是对应的consortium中组织的一部分，并验证<code>ApplicationGroup</code>的版本是1。</p>
+</li>
+<li><p>The orderer verifies that if the consortium has members, that the new channel also has application members (creation consortiums and channels with no members is useful for testing only).</p>
+<p> orderer验证consortium是否有成员，新的channel也会有application成员（创建没有成员的consortiums和channel只用于测试）。</p>
+</li>
+<li><p>The orderer creates a template configuration by taking the <code>Orderer</code> group from the ordering system channel, and creating an <code>Application</code> group with the newly specified members and specifying its <code>mod_policy</code> to be the <code>ChannelCreationPolicy</code> as specified in the consortium config. Note that the policy is evaluated in the context of the new configuration, so a policy requiring <code>ALL</code> members, would require signatures from all the new channel members, not all the members of the consortium.</p>
+<p> orderer从ordering系统channel取得<code>Orderer</code>组，并创建一个包含新指定成员的<code>Application</code>组，并将其<code>mod_policy</code>指定为在consortium config中指定的<code>ChannelCreationPolicy</code>，从而创建一个模板配置。注意，这个策略（mod_policy）是基于新配置的上下文的，因此需要所有成员的策略就是要需要新channel中所有成员的签名，而不是consortium中的所有成员。</p>
+</li>
+<li><p>The orderer then applies the <code>CONFIG_UPDATE</code> as an update to this template configuration. Because the <code>CONFIG_UPDATE</code> applies modifications to the <code>Application</code> group (its <code>version</code> is 1), the config code validates these updates against the <code>ChannelCreationPolicy</code>. If the channel creation contains any other modifications, such as to an individual org’s anchor peers, the corresponding mod policy for the element will be invoked.</p>
+<p> orderer用<code>CONFIG_UPDATE</code>更新这个模板配置。因为<code>CONFIG_UPDATE</code>用于<code>Application</code>组（其版本是1）的修改，所以配置码根据<code>ChannelCreationPolicy</code>验证这些更新。如果channel创建包含任何其它修改，例如修改单个组织的锚节点，则调用该元素的相应mod策略。</p>
+</li>
+<li><p>The new <code>CONFIG</code> transaction with the new channel config is wrapped and sent for ordering on the ordering system channel. After ordering, the channel is created.</p>
+<p> 带有新channel配置的<code>CONFIG</code>交易被包装并通过order系统channel发送到ordering，ordering之后channel就创建完成。</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/fabric/">fabric</a>
+            
+              <a href="/tags/blockchain/">blockchain</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2019/04/21/configtxgen_zh/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">hyperledger fabric configtxgen</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2019/04/21/channel_update_zh/">
+        <span class="next-text nav-default">hyperledger fabric channel update 重新配置第一个网络</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2019
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

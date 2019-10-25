@@ -121,15 +121,6 @@
         </li>
       </a>
     
-      <a href="/tags">
-        <li class="mobile-menu-item">
-          
-          
-            标签
-          
-        </li>
-      </a>
-    
       <a href="/about">
         <li class="mobile-menu-item">
           
@@ -170,15 +161,6 @@
         </li>
       
         <li class="menu-item">
-          <a class="menu-item-link" href="/tags">
-            
-            
-              标签
-            
-          </a>
-        </li>
-      
-        <li class="menu-item">
           <a class="menu-item-link" href="/about">
             
             
@@ -206,7 +188,305 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2019/04/21/channels_zh/">hyperledger fabric channel</a>
+          <a class="post-link" href="/2019/10/25/chaincode-develop/">chaincode develop</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-10-25
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <h2 id="Chaincode-API"><a href="#Chaincode-API" class="headerlink" title="Chaincode API"></a>Chaincode API</h2><p>Every chaincode program must implement the <strong>Chaincode interface</strong> whose methods are called in response to received transactions. In particular the <code>Init</code> method is called when a chaincode receives an <code>instantiate</code> or <code>upgrade</code> transaction so that the chaincode may perform any necessary initialization, including initialization of application state. The <code>Invoke</code> method is called in response to receiving an <code>invoke</code> transaction to process transaction proposals.</p>
+<p>每个chaincode程序都必须实现 <strong>chiancode接口</strong> ，接口中的方法会在响应传来的交易时被调用。特别地，<code>Init</code>（初始化）方法会在chaincode接收到<code>instantiate</code>（实例化）或者<code>upgrade</code>(升级)交易时被调用，进而使得chaincode顺利执行必要的初始化操作，包括初始化应用的状态；<code>Invoke</code>（调用）方法会在响应<code>invoke</code>（调用）交易时被调用以执行交易。</p>
+<p>The other interface in the chaincode “shim” APIs is the <strong>ChaincodeStubInterface</strong> which is used to access and modify the ledger, and to make invocations between chaincodes.</p>
+<p>其他chaincode shim APIs中的接口被称为<strong>chaincode存根接口</strong>，用于访问及修改账本，并实现chaincode之间的互相调用。</p>
+<p>In this tutorial, we will demonstrate the use of these APIs by implementing a simple chaincode application that manages simple “assets”.</p>
+<p>在本篇指南中，我们会通过实现一个能管理简单“资产”的chaincode应用范例来演示这些接口的使用方法。</p>
+<h2 id="简单的资产管理Chaincode"><a href="#简单的资产管理Chaincode" class="headerlink" title="简单的资产管理Chaincode"></a>简单的资产管理Chaincode</h2><p>Our application is a basic sample chaincode to create assets (key-value pairs) on the ledger.</p>
+<p>我们的应用是一个在账本上创建资产（键值对）的基本范例。</p>
+<h3 id="选择一个代码存放位置"><a href="#选择一个代码存放位置" class="headerlink" title="选择一个代码存放位置"></a>选择一个代码存放位置</h3><p>If you haven’t been doing programming in Go, you may want to make sure that you have <strong>Go Programming Language</strong> installed and your system properly configured.</p>
+<p>如果您之前还未编写过Go程序，那么您也许需要先确保 <strong>Go程序设计语言</strong> 在您的系统中已经被正确配置。</p>
+<p>Now, you will want to create a directory for your chaincode application as a child directory of <code>$GOPATH/src/</code>.</p>
+<p>现在，您需要为chaincode应用创建一个位于<code>$GOPATH/src/</code>目录下的子目录。</p>
+<p>To keep things simple, let’s use the following command:</p>
+<p>简单起见，我们使用如下指令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir -p $GOPATH/src/sacc &amp;&amp; cd $GOPATH/src/sacc</span><br></pre></td></tr></table></figure>
+<p>Now, let’s create the source file that we’ll fill in with code:</p>
+<p>现在，输入以下指令来创建程序的源文件吧！</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">touch sacc.go</span><br></pre></td></tr></table></figure>
+<h3 id="内务处理"><a href="#内务处理" class="headerlink" title="内务处理"></a>内务处理</h3><p>First, let’s start with some housekeeping. As with every chaincode, it implements the <strong>Chaincode interface</strong> in particular, <code>Init</code> and <code>Invoke</code> functions. So, let’s add the go import statements for the necessary dependencies for our chaincode. We’ll import the chaincode shim package and the <strong>peer protobuf package</strong>.</p>
+<p>首先， 我们先进行内务处理。对于每一个chaincode，它都会实现预定义的<strong>chaincode接口</strong>，特别是<code>Init</code>和<code>Invoke</code>函数接口。所以我们首先为我们的chaincode引入必要的依赖。我们将在此引入chaincode shim package和<strong>peer protobuf package</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">    &quot;github.com/hyperledger/fabric/core/chaincode/shim&quot;</span><br><span class="line">    &quot;github.com/hyperledger/fabric/protos/peer&quot;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="初始化Chaincode"><a href="#初始化Chaincode" class="headerlink" title="初始化Chaincode"></a>初始化Chaincode</h3><p>接下来，我们将实现<code>Init</code>函数。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// Init is called during chaincode instantiation to initialize any data.</span><br><span class="line">func (t *SimpleAsset) Init(stub shim.ChaincodeStubInterface) peer.Response &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>*注意:</strong></p>
+<p><em>Note that chaincode upgrade also calls this function. When writing a chaincode that will upgrade an existing one, make sure to modify the Init function appropriately. In particular, provide an empty “Init” method if there’s no “migration” or nothing to be initialized as part of the upgrade.</em></p>
+<p><em>值得留意的是chaincode升级同样会调用该函数。当我们编写的chaincode会升级现有chaincode时，需要确保适当修正Init函数。特别地，如果没有“迁移”操作或其他需要在升级中初始化的东西，那么就提供一个空的“Init”方法。</em></p>
+<p>Next, we’ll retrieve the arguments to the <code>Init</code> call using the <em>ChaincodeStubInterface.GetStringArgs</em>function and check for validity. In our case, we are expecting a key-value pair.</p>
+<p>下面，我们将调用<em>ChaincodeStubInterface.GetStringArgs</em>函数来获取<code>Init</code>所需的参数，并进行有效性检查。在我们的例子中，我们希望传入参数是一组键值对。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// Init is called during chaincode instantiation to initialize any</span><br><span class="line">// data. Note that chaincode upgrade also calls this function to reset</span><br><span class="line">// or to migrate data, so be careful to avoid a scenario where you</span><br><span class="line">// inadvertently clobber your ledger’s data!</span><br><span class="line">func (t *SimpleAsset) Init(stub shim.ChaincodeStubInterface) peer.Response &#123;</span><br><span class="line">  // Get the args from the transaction proposal</span><br><span class="line">  args := stub.GetStringArgs()</span><br><span class="line">  if len(args) != 2 &#123;</span><br><span class="line">    return shim.Error(&quot;Incorrect arguments. Expecting a key and a value&quot;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Next, now that we have established that the call is valid, we’ll store the initial state in the ledger. To do this, we will call <em>ChaincodeStubInterface</em>.PutState with the key and value passed in as the arguments. Assuming all went well, return a peer.Response object that indicates the initialization was a success.</p>
+<p>接下来，既然我们已经确定调用有效，那么我们就将初始状态放心地存入账本。为了实现该目标，我们将调用<em>ChaincodeStubInterface</em>并以键值为参数传入。如果一切正常，那么我们会收到表明初始化成功的peer.Response返回对象。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// Init is called during chaincode instantiation to initialize any</span><br><span class="line">// data. Note that chaincode upgrade also calls this function to reset</span><br><span class="line">// or to migrate data, so be careful to avoid a scenario where you</span><br><span class="line">// inadvertently clobber your ledger’s data!</span><br><span class="line">func (t *SimpleAsset) Init(stub shim.ChaincodeStubInterface) peer.Response &#123;</span><br><span class="line">  // Get the args from the transaction proposal</span><br><span class="line">  args := stub.GetStringArgs()</span><br><span class="line">  if len(args) != 2 &#123;</span><br><span class="line">    return shim.Error(&quot;Incorrect arguments. Expecting a key and a value&quot;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Set up any variables or assets here by calling stub.PutState()</span><br><span class="line"></span><br><span class="line">  // We store the key and the value on the ledger</span><br><span class="line">  err := stub.PutState(args[0], []byte(args[1]))</span><br><span class="line">  if err != nil &#123;</span><br><span class="line">    return shim.Error(fmt.Sprintf(&quot;Failed to create asset: %s&quot;, args[0]))</span><br><span class="line">  &#125;</span><br><span class="line">  return shim.Success(nil)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="调用Chaincode"><a href="#调用Chaincode" class="headerlink" title="调用Chaincode"></a>调用Chaincode</h3><p>First, let’s add the <code>Invoke</code> function’s signature.</p>
+<p>首先，添加<code>Invoke</code>函数签名。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// Invoke is called per transaction on the chaincode. Each transaction is</span><br><span class="line">// either a &apos;get&apos; or a &apos;set&apos; on the asset created by Init function. The &apos;set&apos;</span><br><span class="line">// method may create a new asset by specifying a new key-value pair.</span><br><span class="line">func (t *SimpleAsset) Invoke(stub shim.ChaincodeStubInterface) peer.Response &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>As with the <code>Init</code> function above, we need to extract the arguments from the <code>ChaincodeStubInterface</code>. The <code>Invoke</code> function’s arguments will be the name of the chaincode application function to invoke. In our case, our application will simply have two functions: <code>set</code> and <code>get</code>, that allow the value of an asset to be set or its current state to be retrieved. We first call <em>ChaincodeStubInterface.GetFunctionAndParameters</em> to extract the function name and the parameters to that chaincode application function.</p>
+<p>就如上述<code>Init</code>函数一样，我们需要调用<code>ChaincodeStubInterface</code>来获取参数。<code>Invoke</code>函数所需的传入参数正是应用想要调用的chaincode的名称。在我们的例子中，我们的应用只有两个简单的功能函数：<code>set</code>和<code>get</code>;前者允许对资产的数值进行设定;后者允许获取当前资产的状态。我们先调用<em>ChaincodeStubInterface.GetFunctionAndParameters</em>来获取chaincode应用所需的函数名与参数。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// Invoke is called per transaction on the chaincode. Each transaction is</span><br><span class="line">// either a &apos;get&apos; or a &apos;set&apos; on the asset created by Init function. The Set</span><br><span class="line">// method may create a new asset by specifying a new key-value pair.</span><br><span class="line">func (t *SimpleAsset) Invoke(stub shim.ChaincodeStubInterface) peer.Response &#123;</span><br><span class="line">    // Extract the function and args from the transaction proposal</span><br><span class="line">    fn, args := stub.GetFunctionAndParameters()</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Next, we’ll validate the function name as being either <code>set</code> or <code>get</code>, and invoke those chaincode application functions, returning an appropriate response via the <code>shim.Success</code> or <code>shim.Error</code>functions that will serialize the response into a gRPC protobuf message.</p>
+<p>下面，我们将使<code>set</code>与<code>get</code>这两个函数名正式生效，并调用这些chaincode应用函数，经由<code>shim.Success</code>或<code>shim.Error</code>函数返回一个合理的响应。这两个<code>shim</code>成员函数可以将响应序列化为gRPC protobuf消息。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// Invoke is called per transaction on the chaincode. Each transaction is</span><br><span class="line">// either a &apos;get&apos; or a &apos;set&apos; on the asset created by Init function. The Set</span><br><span class="line">// method may create a new asset by specifying a new key-value pair.</span><br><span class="line">func (t *SimpleAsset) Invoke(stub shim.ChaincodeStubInterface) peer.Response &#123;</span><br><span class="line">    // Extract the function and args from the transaction proposal</span><br><span class="line">    fn, args := stub.GetFunctionAndParameters()</span><br><span class="line"></span><br><span class="line">    var result string</span><br><span class="line">    var err error</span><br><span class="line">    if fn == &quot;set&quot; &#123;</span><br><span class="line">            result, err = set(stub, args)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">            result, err = get(stub, args)</span><br><span class="line">    &#125;</span><br><span class="line">    if err != nil &#123;</span><br><span class="line">            return shim.Error(err.Error())</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Return the result as success payload</span><br><span class="line">    return shim.Success([]byte(result))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="实现Chaincode应用"><a href="#实现Chaincode应用" class="headerlink" title="实现Chaincode应用"></a>实现Chaincode应用</h3><p>As noted, our chaincode application implements two functions that can be invoked via the <code>Invoke</code>function. Let’s implement those functions now. Note that as we mentioned above, to access the ledger’s state, we will leverage the <em>ChaincodeStubInterface.PutState</em> and <em>ChaincodeStubInterface.GetState</em> functions of the chaincode shim API.</p>
+<p>如上文所述，我们的chaincode应用实现了两个函数，并可以被<code>Invoke</code>函数调用。下面我们就来真正实现这些函数。注意，就像上文一样，我们调用chaincode shim API中的<em>ChaincodeStubInterface.PutState</em>和<em>ChaincodeStubInterface.GetState</em>函数来访问账本。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// Set stores the asset (both key and value) on the ledger. If the key exists,</span><br><span class="line">// it will override the value with the new one</span><br><span class="line">func set(stub shim.ChaincodeStubInterface, args []string) (string, error) &#123;</span><br><span class="line">    if len(args) != 2 &#123;</span><br><span class="line">            return &quot;&quot;, fmt.Errorf(&quot;Incorrect arguments. Expecting a key and a value&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    err := stub.PutState(args[0], []byte(args[1]))</span><br><span class="line">    if err != nil &#123;</span><br><span class="line">            return &quot;&quot;, fmt.Errorf(&quot;Failed to set asset: %s&quot;, args[0])</span><br><span class="line">    &#125;</span><br><span class="line">    return args[1], nil</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Get returns the value of the specified asset key</span><br><span class="line">func get(stub shim.ChaincodeStubInterface, args []string) (string, error) &#123;</span><br><span class="line">    if len(args) != 1 &#123;</span><br><span class="line">            return &quot;&quot;, fmt.Errorf(&quot;Incorrect arguments. Expecting a key&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    value, err := stub.GetState(args[0])</span><br><span class="line">    if err != nil &#123;</span><br><span class="line">            return &quot;&quot;, fmt.Errorf(&quot;Failed to get asset: %s with error: %s&quot;, args[0], err)</span><br><span class="line">    &#125;</span><br><span class="line">    if value == nil &#123;</span><br><span class="line">            return &quot;&quot;, fmt.Errorf(&quot;Asset not found: %s&quot;, args[0])</span><br><span class="line">    &#125;</span><br><span class="line">    return string(value), nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="整合全部代码"><a href="#整合全部代码" class="headerlink" title="整合全部代码"></a>整合全部代码</h3><p>Finally, we need to add the <code>main</code> function, which will call the <em>shim.Start</em> function. Here’s the whole chaincode program source.</p>
+<p>终于到了写<code>main</code>函数的最后关头，它将调用<em>shim.Start</em>函数。下面是包含整个chaincode程序的代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">    &quot;github.com/hyperledger/fabric/core/chaincode/shim&quot;</span><br><span class="line">    &quot;github.com/hyperledger/fabric/protos/peer&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">// SimpleAsset implements a simple chaincode to manage an asset</span><br><span class="line">type SimpleAsset struct &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Init is called during chaincode instantiation to initialize any</span><br><span class="line">// data. Note that chaincode upgrade also calls this function to reset</span><br><span class="line">// or to migrate data.</span><br><span class="line">func (t *SimpleAsset) Init(stub shim.ChaincodeStubInterface) peer.Response &#123;</span><br><span class="line">    // Get the args from the transaction proposal</span><br><span class="line">    args := stub.GetStringArgs()</span><br><span class="line">    if len(args) != 2 &#123;</span><br><span class="line">            return shim.Error(&quot;Incorrect arguments. Expecting a key and a value&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Set up any variables or assets here by calling stub.PutState()</span><br><span class="line"></span><br><span class="line">    // We store the key and the value on the ledger</span><br><span class="line">    err := stub.PutState(args[0], []byte(args[1]))</span><br><span class="line">    if err != nil &#123;</span><br><span class="line">            return shim.Error(fmt.Sprintf(&quot;Failed to create asset: %s&quot;, args[0]))</span><br><span class="line">    &#125;</span><br><span class="line">    return shim.Success(nil)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Invoke is called per transaction on the chaincode. Each transaction is</span><br><span class="line">// either a &apos;get&apos; or a &apos;set&apos; on the asset created by Init function. The Set</span><br><span class="line">// method may create a new asset by specifying a new key-value pair.</span><br><span class="line">func (t *SimpleAsset) Invoke(stub shim.ChaincodeStubInterface) peer.Response &#123;</span><br><span class="line">    // Extract the function and args from the transaction proposal</span><br><span class="line">    fn, args := stub.GetFunctionAndParameters()</span><br><span class="line"></span><br><span class="line">    var result string</span><br><span class="line">    var err error</span><br><span class="line">    if fn == &quot;set&quot; &#123;</span><br><span class="line">            result, err = set(stub, args)</span><br><span class="line">    &#125; else &#123; // assume &apos;get&apos; even if fn is nil</span><br><span class="line">            result, err = get(stub, args)</span><br><span class="line">    &#125;</span><br><span class="line">    if err != nil &#123;</span><br><span class="line">            return shim.Error(err.Error())</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Return the result as success payload</span><br><span class="line">    return shim.Success([]byte(result))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Set stores the asset (both key and value) on the ledger. If the key exists,</span><br><span class="line">// it will override the value with the new one</span><br><span class="line">func set(stub shim.ChaincodeStubInterface, args []string) (string, error) &#123;</span><br><span class="line">    if len(args) != 2 &#123;</span><br><span class="line">            return &quot;&quot;, fmt.Errorf(&quot;Incorrect arguments. Expecting a key and a value&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    err := stub.PutState(args[0], []byte(args[1]))</span><br><span class="line">    if err != nil &#123;</span><br><span class="line">            return &quot;&quot;, fmt.Errorf(&quot;Failed to set asset: %s&quot;, args[0])</span><br><span class="line">    &#125;</span><br><span class="line">    return args[1], nil</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Get returns the value of the specified asset key</span><br><span class="line">func get(stub shim.ChaincodeStubInterface, args []string) (string, error) &#123;</span><br><span class="line">    if len(args) != 1 &#123;</span><br><span class="line">            return &quot;&quot;, fmt.Errorf(&quot;Incorrect arguments. Expecting a key&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    value, err := stub.GetState(args[0])</span><br><span class="line">    if err != nil &#123;</span><br><span class="line">            return &quot;&quot;, fmt.Errorf(&quot;Failed to get asset: %s with error: %s&quot;, args[0], err)</span><br><span class="line">    &#125;</span><br><span class="line">    if value == nil &#123;</span><br><span class="line">            return &quot;&quot;, fmt.Errorf(&quot;Asset not found: %s&quot;, args[0])</span><br><span class="line">    &#125;</span><br><span class="line">    return string(value), nil</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// main function starts up the chaincode in the container during instantiate</span><br><span class="line">func main() &#123;</span><br><span class="line">    if err := shim.Start(new(SimpleAsset)); err != nil &#123;</span><br><span class="line">            fmt.Printf(&quot;Error starting SimpleAsset chaincode: %s&quot;, err)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="编译Chaincode"><a href="#编译Chaincode" class="headerlink" title="编译Chaincode"></a>编译Chaincode</h3><p>现在来编译你的chaincode吧！</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">go get -u --tags nopkcs11 github.com/hyperledger/fabric/core/chaincode/shim</span><br><span class="line">go build --tags nopkcs11</span><br></pre></td></tr></table></figure>
+<p>Assuming there are no errors, now we can proceed to the next step, testing your chaincode.</p>
+<p>如果没有报错，那么我们就可以进行下一步：测试chaincode。</p>
+<h3 id="在开发模者式下测试"><a href="#在开发模者式下测试" class="headerlink" title="在开发模者式下测试"></a>在开发模者式下测试</h3><p>Normally chaincodes are started and maintained by peer. However in “dev mode”, chaincode is built and started by the user. This mode is useful during chaincode development phase for rapid code/build/run/debug cycle turnaround.</p>
+<p>通常，chaincode由peer节点启动并维护。不过，在“开发者模式”下，chaincode可以由用户创建并启动。当用户处于以快速编码/构建/运行/调试的循环周期为主的chaincode开发阶段时，该模式十分有用。</p>
+<p>We start “dev mode” by leveraging pre-generated orderer and channel artifacts for a sample dev network. As such, the user can immediately jump into the process of compiling chaincode and driving calls.</p>
+<p>我们借助构建自带区块链样例网络时已经预先生成好的order和channel来启动“开发者模式”。这样，用户可以立即编译chaincode并调用函数。</p>
+<h2 id="安装Hyperledger-Fabric样例"><a href="#安装Hyperledger-Fabric样例" class="headerlink" title="安装Hyperledger Fabric样例"></a>安装Hyperledger Fabric样例</h2><p>If you haven’t already done so, please install the <strong>Hyperledger Fabric Samples</strong>.</p>
+<p>如果您之前还没有进行过这一步，请先安装 <strong>Hyperledger Fabric Sample</strong></p>
+<p>Navigate to the <code>chaincode-docker-devmode</code> directory of the <code>fabric-samples</code> clone:</p>
+<p>下面进入到安装好的<code>fabric-samples</code>下的<code>chaincode-docker-devmode</code>目录。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd chaincode-docker-devmode</span><br></pre></td></tr></table></figure>
+<h2 id="下载Docker镜像"><a href="#下载Docker镜像" class="headerlink" title="下载Docker镜像"></a>下载Docker镜像</h2><p>We need four Docker images in order for “dev mode” to run against the supplied docker compose script. If you installed the <code>fabric-samples</code> repo clone and followed the instructions to download-platform-specific-binaries, then you should have the necessary Docker images installed locally.</p>
+<p>跟据下载样例中自带的docker构建脚本，我们需要四个Docker镜像来确保“开发者模式”成功运行。如果您已经安装了<code>fabric-samples</code>克隆仓库，并按照指示下载了platform-specific-binaries，那么你的本地理应早已安装好了所需的Docker镜像。</p>
+<p><strong>*注意:</strong></p>
+<p><em>If you choose to manually pull the images then you must retag them as latest.</em></p>
+<p><em>如果您选择手动拉取镜像，那么您务必将其重新标记为latest。</em></p>
+<p>Issue a <code>docker images</code> command to reveal your local Docker Registry. You should see something similar to following:</p>
+<p>输入<code>docker images</code>指令可以方便地查询本地的Docker镜像列表。您应该会看到类似下面的内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker images</span><br><span class="line">REPOSITORY                     TAG                                  IMAGE ID            CREATED             SIZE</span><br><span class="line">hyperledger/fabric-tools       latest                               e09f38f8928d        4 hours ago         1.32 GB</span><br><span class="line">hyperledger/fabric-tools       x86_64-1.0.0                         e09f38f8928d        4 hours ago         1.32 GB</span><br><span class="line">hyperledger/fabric-orderer     latest                               0df93ba35a25        4 hours ago         179 MB</span><br><span class="line">hyperledger/fabric-orderer     x86_64-1.0.0                         0df93ba35a25        4 hours ago         179 MB</span><br><span class="line">hyperledger/fabric-peer        latest                               533aec3f5a01        4 hours ago         182 MB</span><br><span class="line">hyperledger/fabric-peer        x86_64-1.0.0                         533aec3f5a01        4 hours ago         182 MB</span><br><span class="line">hyperledger/fabric-ccenv       latest                               4b70698a71d3        4 hours ago         1.29 GB</span><br><span class="line">hyperledger/fabric-ccenv       x86_64-1.0.0                         4b70698a71d3        4 hours ago         1.29 GB</span><br></pre></td></tr></table></figure>
+<p><strong>*注意:</strong></p>
+<p><em>If you retrieved the images through the download-platform-specific-binaries, then you will see additional images listed. However, we are only concerned with these four.</em></p>
+<p><em>如果您通过download-platform-specific-binaries来获取镜像，那么您将会看到更多的镜像资源列表。不过这里我们只关心以上四个。</em></p>
+<p>Now open three terminals and navigate to your <code>chaincode-docker-devmode</code> directory in each.</p>
+<p>现在请在<code>chaincode-docker-devmode</code>目录下面打开三个独立的终端。</p>
+<h2 id="1号终端"><a href="#1号终端" class="headerlink" title="1号终端"></a>1号终端</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker-compose -f docker-compose-simple.yaml up</span><br></pre></td></tr></table></figure>
+<p>The above starts the network with the <code>SingleSampleMSPSolo</code> orderer profile and launches the peer in “dev mode”. It also launches two additional containers - one for the chaincode environment and a CLI to interact with the chaincode. The commands for create and join channel are embedded in the CLI container, so we can jump immediately to the chaincode calls.</p>
+<p>上述指令启动了一个带有<code>SingleSampleMSPSolo</code>orderer profile的网络，并将节点在“开发者模式”下启动。它还启动了另外两个容器：一个包含chaincode运行环境;另一个是CLI命令行，可与chaincode进行交互。创建并加入channel（管道）的指令内嵌于CLI容器中，所以我们下面马上跳转到chaincode调用部分。</p>
+<h2 id="2号终端"><a href="#2号终端" class="headerlink" title="2号终端"></a>2号终端</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker exec -it chaincode bash</span><br></pre></td></tr></table></figure>
+<p>执行完上述指令后，您应该会看到如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@d2629980e76b:/opt/gopath/src/chaincode#</span><br></pre></td></tr></table></figure>
+<p>（此时您已经进入chaincode容器）下面编译您的chaincode:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd sacc</span><br><span class="line">go build</span><br></pre></td></tr></table></figure>
+<p>现在运行chaincode：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CORE_PEER_ADDRESS=peer:7051 CORE_CHAINCODE_ID_NAME=mycc:0 ./sacc</span><br></pre></td></tr></table></figure>
+<p>The chaincode is started with peer and chaincode logs indicating successful registration with the peer. Note that at this stage the chaincode is not associated with any channel. This is done in subsequent steps using the <code>instantiate</code> command.</p>
+<p>chaincode被peer节点启动，chaincode日志表明peer节点成功注册。注意：现阶段chaincode还没有与任何channel关联。这会在接下来使用<code>instantiate</code>指令后实现。</p>
+<h2 id="3号终端"><a href="#3号终端" class="headerlink" title="3号终端"></a>3号终端</h2><p>Even though you are in <code>--peer-chaincodedev</code> mode, you still have to install the chaincode so the life-cycle system chaincode can go through its checks normally. This requirement may be removed in future when in <code>--peer-chaincodedev</code> mode.</p>
+<p>即便您处于<code>--peer-chaincodedev</code>模式，安装chaincode这一步仍必不可少，这样生命周期系统chaincode才能正常进行检查。也许这一步会在日后的<code>--peer-chaincodedev</code>模式中省去。</p>
+<p>We’ll leverage the CLI container to drive these calls.</p>
+<p>下面我们将进入CLI容器进行chaincode调用。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker exec -it cli bash</span><br><span class="line">peer chaincode install -p chaincodedev/chaincode/sacc -n mycc -v 0</span><br><span class="line">peer chaincode instantiate -n mycc -v 0 -c &apos;&#123;&quot;Args&quot;:[&quot;a&quot;,&quot;10&quot;]&#125;&apos; -C myc</span><br></pre></td></tr></table></figure>
+<p>现在我们执行一次将a的值设为20的调用：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">peer chaincode invoke -n mycc -c &apos;&#123;&quot;Args&quot;:[&quot;set&quot;, &quot;a&quot;, &quot;20&quot;]&#125;&apos; -C myc</span><br></pre></td></tr></table></figure>
+<p>最后查询a的值，我们会看到20。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">peer chaincode query -n mycc -c &apos;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;a&quot;]&#125;&apos; -C myc</span><br></pre></td></tr></table></figure>
+<h2 id="测试新的chaincode"><a href="#测试新的chaincode" class="headerlink" title="测试新的chaincode"></a>测试新的chaincode</h2><p>By default, we mount only <code>sacc</code>. However, you can easily test different chaincodes by adding them to the <code>chaincode</code> subdirectory and relaunching your network. At this point they will be accessible in your <code>chaincode</code> container.</p>
+<p>虽然我们只实现了<code>sacc</code>，不过您可以通过将不同的chaincode添加到<code>chaincode</code>子目录下重启网络来轻松地测试它们。重启它们将可在<code>chaincode</code>容器中被访问。</p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2019/10/25/chaincode_operation/">ChainCode 操作手册 </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-10-25
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <h2 id="什么是Chaincode？"><a href="#什么是Chaincode？" class="headerlink" title="什么是Chaincode？"></a>什么是Chaincode？</h2><p>Chaincode是一段由Go语言编写（支持其他编程语言，如Java），并能实现预定义接口的程序。Chaincode运行在一个受保护的Docker容器当中，与背书节点的运行互相隔离。Chaincode可通过应用提交的交易对账本状态初始化并进行管理。</p>
+<p>一段chaincode通常处理由网络中的成员一致认可的业务逻辑，故我们很可能用“智能合约”来代指chaincode。一段chiancode创建的（账本）状态是与其他chaincode互相隔离的，故而不能被其他chaincode直接访问。不过，如果是在相同的网络中，一段chiancode在获取相应许可后则可以调用其他chiancode来访问它的账本。</p>
+<h2 id="Chaincode生命周期"><a href="#Chaincode生命周期" class="headerlink" title="Chaincode生命周期"></a>Chaincode生命周期</h2><p>Hyperledger Fabric API让我们可以与区块链网络中的各种节点（peer节点、orderer节点、MSP节点）进行交互，同时我们还能在背书节点上安装、实例化及升级chaincode。Hyperledger Fabric特定语言的SDK工具将Hyperledger Fabric API的细节抽象了出来，便利了应用的开发过程;当然它也能用于管理chaincode生命周期。除此之外，Hyperledger Fabric API可以直接由CLI（命令行）访问，这正是本文接下来要做的。</p>
+<p>我们提供了四个管理chaincode生命周期的命令：package, install, instantiate,upgrade。</p>
+<h2 id="打包（Packaging）"><a href="#打包（Packaging）" class="headerlink" title="打包（Packaging）"></a>打包（Packaging）</h2><p>chaincode包具体包含以下三个部分：</p>
+<ul>
+<li>chaincode本身，其由<code>ChaincodeDeploymentSpec</code>或CDS定义。CDS根据代码及一些其他属性（名称，版本等）来定义chaincode。</li>
+<li>一个可选的实例化策略，该策略可被 <strong>背书策略</strong> 描述。</li>
+<li>一组表示chaincode所有权的签名。</li>
+</ul>
+<p>channel上chaincode实例化交易的创建者可被chaincode的实例化策略验证。</p>
+<h3 id="创建包"><a href="#创建包" class="headerlink" title="创建包"></a>创建包</h3><p>打包chaincode有两种方式。第一种是当你想要让chaincode有多个所有者的时候，此时就需要让chaincode包被多个所有者签名。这种情况下需要我们创建一个被签名的chaincode包（<code>SignedCDS</code>），这个包依次被每个所有者签名。</p>
+<p>另一种就比较简单了，这是当你要建立只有一个节点的签名的时候（该节点执行<code>install</code>交易）。</p>
+<p>我们先来看看更复杂的情况。当然，如果您对多用户的情况不感兴趣，您可以直接跳到后面的安装chaincode部分。</p>
+<p>要创建一个签名过的chaincode包，请用下面的指令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">peer chaincode package -n mycc -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 -v 0 -s -S -i "AND('OrgA.admin')" ccpack.out</span><br></pre></td></tr></table></figure>
+<p><code>-s</code>选项创建了一个可被多个所有者签名的包，而非简单地创建一个CDS。如果使用<code>-s</code>，那么当其他所有者要签名的时候，<code>-S</code>也必须同时使用。否则，该过程将创建一个仅包含实例化策略的签名chaincode包（SignedCDS）。</p>
+<p><code>-S</code>选项可以使在<code>core.yaml</code>文件中被<code>localMspid</code>相关属性值定义好的MSP对包进行签名。</p>
+<p><code>-S</code>选项是可选的。不过，如果我们创建了一个没有签名的包，那么它就不能被任何其他所有者用<code>signpackage</code>指令进行签名。</p>
+<p><code>-i</code>选项也是可选的，它允许我们为chaincode指定实例化策略。实例化策略与背书策略格式相同，它指明谁可以实例化chaincode。在上面的例子中，只有OrgA的管理员才有资格实例化chaincode。如果没有提供任何策略，那么系统会采用默认策略，该策略只允许peer节点MSP的管理员去实例化chaincode。</p>
+<h3 id="包的签名"><a href="#包的签名" class="headerlink" title="包的签名"></a>包的签名</h3><p>一个在创建时就被签名的chaincode包可以交给其他所有者进行检查与签名。具体的工作流程支持带外对chaincode包签名。</p>
+<p><strong>ChaincodeDeploymentSpec</strong> 可以选择被全部所有者签名并创建一个 <strong>SignedChaincodeDeploymentSpec</strong>（SignedCDS），SignedCDS包含三个部分：</p>
+<ul>
+<li>CDS包含chaincode的源码、名称与版本</li>
+<li>一个chaincode实例化策略，其表示为背书策略</li>
+<li>chaincode所有者的列表，由Endorsement定义</li>
+</ul>
+<p><strong>注意:</strong></p>
+<p><em>注意，当chaincode在某些channel上实例化时，背书策略在带外定义，并提供合适的MSP。如果没有明确实例化策略，那么默认的策略是channel的任意管理员（执行实例化）</em></p>
+<p>每个（chaincode的）所有者通过将ChaincodeDeploymentSpec与其本人的身份信息（证书）结合并对组合结果签名来认证ChaincodeDeploymentSpec。</p>
+<p>一个chaincode所有者可以对一个之前创建好的带签名的包进行签名，具体使用如下指令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">peer chaincode signpackage ccpack.out signedccpack.out</span><br></pre></td></tr></table></figure>
+<p>指令中的<code>ccpack.out</code>和<code>signedccpack.out</code>分别是输入与输出包。<code>signedccpack.out</code>则包含一个用本地MSP对包进行的附加签名。</p>
+<h3 id="安装chaincode"><a href="#安装chaincode" class="headerlink" title="安装chaincode"></a>安装chaincode</h3><p><code>install</code>交易的过程会将chaincode的源码以一种被称为<code>ChaincodeDeploymentSpec</code>（CDS）的规定格式打包，并把它安装在一个将要运行该chaincode的peer节点上。</p>
+<p><strong>注意:</strong></p>
+<p><em>请务必在一条channel上每一个要运行你chaincode的背书节点上安装你的chaincode</em></p>
+<p>如果只是简单地给<code>install</code> API一个<code>ChaincodeDeploymentSpec</code>，它将使用默认实例化策略并添加一个空的所有者列表。</p>
+<p><strong>注意:</strong></p>
+<p><em>Chaincode应该仅仅被安装于chaincode所有者的背书节点上，以使该chaincode逻辑对整个网络的其他成员保密。其他没有chaincode的成员将无权成为chaincode影响下的交易的认证节点（endorser）。也就是说，他们不能执行chaincode。不过，他们仍可以验证交易并提交到账本上。</em></p>
+<p>下面安装chaincode。此时会发送一条 <strong>SignedProposal</strong> 到<code>生命周期系统chaincode</code> (LSCC)，该chaincode在<strong>系统chaincode</strong>部分会仔细描述。举个例子，使用CLI安装<strong>简单的账本管理chaincode</strong>章节的sacc chaincode样例时，命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">peer chaincode install -n asset_mgmt -v 1.0 -p sacc</span><br></pre></td></tr></table></figure>
+<p>在CLI内部会为sacc创建SignedChaincodeDeploymentSpec，并将其发送到本地peer节点。这些节点会调用LSCC上的<code>Install</code>方法。上述的<code>-p</code>选项指明chaincode的路径，其必须在用户的<code>GOPATH</code>目录下（比如<code>$GOPATH/src/sacc</code>）。完整的命令选项详见<strong>CLI</strong>部分。</p>
+<p>注意：为了在peer节点上安装（chaincode），SignedProposal的签名必须来自peer节点本地MSP的管理员中的一位。</p>
+<h3 id="实例化chaincode"><a href="#实例化chaincode" class="headerlink" title="实例化chaincode"></a>实例化chaincode</h3><p>实例化交易会调用<code>生命周期系统chaincode</code> (LSCC)来在一个channel上创建并初始化一段chaincode。下面是一个chaincode-channel绑定的具体过程：一段chaincode可能会与任意数量的channel绑定并在每个channel上独立运行。换句话说，chaincode在多少个channel上安装并实例化并没有什么影响，对于每个提交交易的channel，其状态都是独立而互不影响的。</p>
+<p>一个<code>实例化</code>交易的创建者必须符合在SignedCDS中chaincode的实例化策略，且必须充当channel的写入器（这会成为channel创建配置的一部分）。这对于channel的安全至关重要，因为这样可以防止恶意实体在未绑定的channel上部署chaincode，也能防止间谍成员在未绑定的channel上执行chaincode。</p>
+<p>举个例子，我们提到过默认的实例化策略是任何channel MSP的管理员（可以执行），所以chaincode创建者要实例化交易，其本人必须是channel管理员的一员。当交易提议到达背书成员时，它会验证创建者的签名是否符合实例化策略。在交易被提交到账本之前的交易验证阶段，以上操作还会再来一遍。</p>
+<p>实例化交易的过程还会为channel上的chaincode建立背书策略。背书策略描述了交易的相关认证要求，以使得交易能被channel中的成员认可。</p>
+<p>例如，使用CLI去实例化上一章的sacc chaincode并初始化<code>john</code>的状态为<code>0</code>，指令具体如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">peer chaincode instantiate -n sacc -v 1.0 -c '&#123;"Args":["john","0"]&#125;' -P "OR ('Org1.member','Org2.member')"</span><br></pre></td></tr></table></figure>
+<p><strong>注意:</strong></p>
+<p><em>注意，上述背书策略（CLI使用波兰表示法）向Org1或Org2的成员询问所有sacc处理的交易。也就是说，为确保交易有效，Org1或Org2必须为调用<strong>sacc</strong>的结果签名。</em></p>
+<p>在成功实例化后，channel上的chaincode就进入激活状态，并时刻准备执行任何<strong>ENDORSER_TRANSACTION</strong>类型的交易提议。交易会在到达背书节点的同时被处理。</p>
+<h3 id="升级chaincode"><a href="#升级chaincode" class="headerlink" title="升级chaincode"></a>升级chaincode</h3><p>一段chaincode可以通过更改它的版本（SignedCDS的一部分）来随时进行更新。至于SignedCDS的其他部分，比如所有者及实例化策略，都是可选的。不过，chaincode的名称必须一致，否则它会被当做完全不同的另一段chaincode。</p>
+<p>在升级之前，chaincode的新版本必须安装在需要它的背书节点上。升级是一个类似于实例化交易的交易，它会将新版本的chaincode与channel绑定。其他与旧版本绑定的channel则仍旧运行旧版本的chaincode。换句话说，<code>升级</code>交易只会一次影响一个提交它的channel。</p>
+<p><strong>注意:</strong></p>
+<p><em>注意：由于多个版本的chaincode可能同时运行，所以升级过程不会自动移除旧版本，用户必须亲自处理。</em></p>
+<p><code>升级</code>交易与<code>实例化</code>交易有一处微妙的区别：<code>升级</code>交易采用当前的chaincode实例化策略进行检查，而非比对新的策略（如果指定了的话）。这是为了确保只有当前实例化策略指定的已有成员才能升级chaincode。</p>
+<p><strong>注意:</strong></p>
+<p><em>注意：在升级过程中，chaincode的Init函数会被调用以执行数据相关的操作，或者重新初始化数据；所以要多加小心避免在升级chaincode时重设状态信息。</em></p>
+<h3 id="CLI"><a href="#CLI" class="headerlink" title="CLI"></a>CLI</h3><p><strong>注意:</strong></p>
+<p><em>我们正在评估为 Hyperledger Fabric peer的二进制文件拆分特定平台二进制文件的需求。不过目前，您可以在一个正在运行的docker容器中方便地调用指令。</em></p>
+<p>下面我们将一览现在可用的CLI指令，请在一个运行<code>fabric-peer</code>的Docker容器中执行以下指令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -it hyperledger/fabric-peer bash</span><br><span class="line"><span class="meta">#</span><span class="bash"> peer chaincode --<span class="built_in">help</span></span></span><br></pre></td></tr></table></figure>
+<p>我们将看到如下输出：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Usage:</span><br><span class="line">  peer chaincode [command]</span><br><span class="line"></span><br><span class="line">Available Commands:</span><br><span class="line">  install     Package the specified chaincode into a deployment spec and save it on the peer’s path.</span><br><span class="line">  instantiate Deploy the specified chaincode to the network.</span><br><span class="line">  invoke      Invoke the specified chaincode.</span><br><span class="line">  package     Package the specified chaincode into a deployment spec.</span><br><span class="line">  query       Query using the specified chaincode.</span><br><span class="line">  signpackage Sign the specified chaincode package</span><br><span class="line">  upgrade     Upgrade chaincode.</span><br><span class="line"></span><br><span class="line">Flags:</span><br><span class="line">      --cafile string     Path to file containing PEM-encoded trusted certificate(s) for the ordering endpoint</span><br><span class="line">  -C, --chainID string    The chain on which this command should be executed (default "testchainid")</span><br><span class="line">  -c, --ctor string       Constructor message for the chaincode in JSON format (default "&#123;&#125;")</span><br><span class="line">  -E, --escc string       The name of the endorsement system chaincode to be used for this chaincode</span><br><span class="line">  -l, --lang string       Language the chaincode is written in (default "golang")</span><br><span class="line">  -n, --name string       Name of the chaincode</span><br><span class="line">  -o, --orderer string    Ordering service endpoint</span><br><span class="line">  -p, --path string       Path to chaincode</span><br><span class="line">  -P, --policy string     The endorsement policy associated to this chaincode</span><br><span class="line">  -t, --tid string        Name of a custom ID generation algorithm (hashing and decoding) e.g. sha256base64</span><br><span class="line">      --tls               Use TLS when communicating with the orderer endpoint</span><br><span class="line">  -u, --username string   Username for chaincode operations when security is enabled</span><br><span class="line">  -v, --version string    Version of the chaincode specified in install/instantiate/upgrade commands</span><br><span class="line">  -V, --vscc string       The name of the verification system chaincode to be used for this chaincode</span><br><span class="line"></span><br><span class="line">Global Flags:</span><br><span class="line">      --logging-level string       Default logging level and overrides, see core.yaml for full syntax</span><br><span class="line">      --test.coverprofile string   Done (default "coverage.cov")</span><br><span class="line"></span><br><span class="line">Use "peer chaincode [command] --help" for more information about a command.</span><br></pre></td></tr></table></figure>
+<p>为方便在脚本应用程序里使用，<code>peer</code>指令失败时总会返回一个非0值。</p>
+<p>chaincode的指令示例如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">peer chaincode install -n mycc -v 0 -p path/to/my/chaincode/v0</span><br><span class="line">peer chaincode instantiate -n mycc -v 0 -c '&#123;"Args":["a", "b", "c"]&#125;' -C mychannel</span><br><span class="line">peer chaincode install -n mycc -v 1 -p path/to/my/chaincode/v1</span><br><span class="line">peer chaincode upgrade -n mycc -v 1 -c '&#123;"Args":["d", "e", "f"]&#125;' -C mychannel</span><br><span class="line">peer chaincode query -C mychannel -n mycc -c '&#123;"Args":["query","e"]&#125;'</span><br><span class="line">peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C mychannel -n mycc -c '&#123;"Args":["invoke","a","b","10"]&#125;'</span><br></pre></td></tr></table></figure>
+<h3 id="系统chaincode"><a href="#系统chaincode" class="headerlink" title="系统chaincode"></a>系统chaincode</h3><p>系统chaincode与普通chaincode的编程模型相同，只不过它运行于peer节点内而非一个隔离的容器中。因此，系统chaincode在节点内构建且不遵循上文描述的chaincode生命周期。特别地，<strong>安装</strong>，<strong>实例化</strong>，<strong>升级</strong>这三项操作不适用于系统chaincode。</p>
+<p>系统chaincode的目的是削减peer节点和chaincode之间的gRPC通讯成本，并兼顾管理的灵活性。例如：一个系统chaincode只能通过peer节点的二进制文件升级。同时，系统chaincode只能以一组编译好的特定的参数进行注册，且不具有背书策略相关功能。</p>
+<p>系统chaincode在Hyperledger Fabric中用于实现一些系统行为，故它们可以被系统开发者适当替换或更改。</p>
+<p>以下是系统chaincode的列表：</p>
+<ul>
+<li>LSCC：生命周期系统chaincode处理上述生命周期相关的功能</li>
+<li>CSCC：配置系统chaincode处理peer侧channel的配置</li>
+<li>QSCC：查询系统chaincode提供账本查询API，比如获取区块及交易等</li>
+<li>ESCC：背书系统chaincode通过对交易响应进行签名来处理背书过程</li>
+<li>VSCC：验证系统chaincode处理交易的验证，包括检查背书策略以及多版本并发控制</li>
+</ul>
+<p>替换或更改这些系统chaincode一定要万分小心，尤其是LSCC, ESCC 和 VSCC，因为它们处于主交易执行路径中。值得注意的是，VSCC在一个区块被提交到账本之前进行验证，故所有channel中的peer节点得出相同的验证结果以避免账本分叉（不确定因素）就很重要了。所以当VSCC被更改或替换时就要特别小心了。</p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2019/08/27/Fabric-configtx/">Fabric configtx</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-08-27
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>configtx.yaml 文件 定义了组织、order创世块 profile、通道profile。<br>通过order创世块profile可以生成order的创世块，也就是整个网络的创世块，其中定义了联盟成元组织。<br>通过通道profile 定义了联盟的通道profile，通过这个profile可以生成创建通道的tx，以及每个组织的anchor成员的tx。<br>所谓的tx就是通过tx来提交一个操作，比如：<br>创建通道的tx可以提交给order创建一个通道；好像后续可以update更新什么的。<br>组织成员anchor的tx，可以定义一个组织的anchor成员。</p>
+<p>创建通道的时候提交tx，会生成一个通道的创世块，缺省文件名就是通道名称.block；<br>其它节点加入通道需要使用通道的创世块。</p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2019/04/21/channels_zh/">hyperledger fabric channel 通道</a>
         
       </h1>
 
@@ -264,7 +544,446 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2019/04/21/channel_update_zh/">hyperledger fabric channel update</a>
+          <a class="post-link" href="/2019/04/21/configtxgen_zh/">hyperledger fabric configtxgen</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-04-21
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/fabric/">fabric</a>
+            
+          </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p> <a href="http://hyperledger-fabric.readthedocs.io/en/latest/configtxgen.html" target="_blank" rel="noopener">原文</a>  </p>
+<p>This document describe the usage for the configtxgen utility for manipulating Hyperledger Fabric channel configuration.</p>
+<p>本文档描述了<code>configtxgen</code>工具的用法，该工具用来操作超级账本Fabric的通道配置。</p>
+<p>For now, the tool is primarily focused on generating the genesis block for bootstrapping the orderer, but it is intended to be enhanced in the future for generating new channel configurations as well as reconfiguring existing channels.</p>
+<p>目前，该工具主要侧重于生成引导共识节点的创世纪块，但是将来预计增加生成新通道的配置以及重新配置已有的通道。</p>
+<h2 id="Configuration-Profiles-配置文件"><a href="#Configuration-Profiles-配置文件" class="headerlink" title="Configuration Profiles - 配置文件"></a>Configuration Profiles - 配置文件</h2><p>The configuration parameters supplied to the configtxgen tool are primarily provided by the configtx.yaml file. This file is located at fabric/sampleconfig/configtx.yaml in the fabric.git repository.</p>
+<p>configtxgen工具的配置参数主要由<code>configtx.yaml</code>文件提供。在fabric库中，配置文件在<code>fabric/sampleconfig/configtx.yaml</code>。</p>
+<p>This configuration file is split primarily into three pieces.</p>
+<p>此配置文件主要分为三部分。</p>
+<p>1.The Profiles section. By default, this section includes some sample configurations which can be used for development or testing scenarios, and refer to crypto material present in the fabric.git tree. These profiles can make a good starting point for construction a real deployment profile. The configtxgen tool allows you to specify the profile it is operating under by passing the -profile flag. Profiles may explicitly declare all configuration, but usually inherit configuration from the defaults in (3) below.</p>
+<p>1.<code>Profiles</code>部分。默认情况下，这部分包含一些用于开发或测试场景的示例配置，这些配置涉及fabric目录中加密部分。这些配置能为构建一个真正开发配置做一个良好开始。<code>configtxgen</code>工具允许你通过<code>-profile</code>标签来指定配置文件。<code>Profiles</code>部分可以显式声明所有配置，但是通常都是从一下（3）默认配置中继承。</p>
+<p>2.The Organizations section. By default, this section includes a single reference to the sampleconfig MSP definition. For production deployments, the sample organization should be removed, and the MSP definitions of the network members should be referenced and defined instead. Each element in the Organizations section should be tagged with an anchor label such as &amp;orgName which will allow the definition to be referenced in the Profiles sections.</p>
+<p>2.<code>Organizations</code>部分。默认情况下，这部分包含实力配置MSP定义的单一引用。对于生产部署，应该删除示例配置，并应引用和定义网络成员的MSP定义。<code>Organizations</code>部分每一个元素都必须带有锚标签，如<code>&amp;orgName</code>，这些标签在<code>Profiles</code>部分引用。</p>
+<p>3.The default sections. There are default sections for Orderer and Application configuration, these include attributes like BatchTimeout and are generally used as the base inherited values for the profiles.</p>
+<p>3.默认部分。此部分包括共识和应用部分的默认配置，包括一些属性配置，如<code>BatchTimeout</code>和一般用作继承的基础值。</p>
+<p>This configuration file may be edited, or, individual properties may be overridden by setting environment variables, such as CONFIGTX_ORDERER_ORDERERTYPE=kafka. Note that the Profiles element and profile name do not need to be specified.</p>
+<p>这个配置文件可以被编辑，或者通过设置环境变量来重写属性值，如<code>CONFIGTX_ORDERER_ORDERERTYPE=kafka</code>。注意，不需要指定配置文件元素和配置文件名称。</p>
+<h2 id="Bootstrapping-the-orderer-引导共识"><a href="#Bootstrapping-the-orderer-引导共识" class="headerlink" title="Bootstrapping the orderer - 引导共识"></a>Bootstrapping the orderer - 引导共识</h2><p>After creating a configuration profile as desired, simply invoke</p>
+<p>创建配置文件后，简单调用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">configtxgen -profile &lt;profile_name&gt;</span><br></pre></td></tr></table></figure>
+<p>This will produce a genesis.block file in the current directory. You may optionally specify another filename by passing in the -path parameter, or, you may skip the writing of the file by passing the dryRun parameter if you simply wish to test parsing of the file.</p>
+<p>这会在当前文件目录下生成<code>genesis.block</code>。你也可以通过<code>-path</code>参数指定其他文件名。如果你只希望测试这个文件，可以通过<code>dryRun</code>参数来跳过创建文件。</p>
+<p>Then, to utilize this genesis block, before starting the orderer, simply specify ORDERER_GENERAL_GENESISMETHOD=file and ORDERER_GENERAL_GENESISFILE=$PWD/genesis.block or modify the orderer.yaml file to encode these values.</p>
+<p>然后为了使用生成的创世快，在启动orderer之前，简单的通过指定<code>ORDERER_GENERAL_GENESISMETHOD=file</code> 和<code>ORDERER_GENERAL_GENESISFILE=$PWD/genesis.block</code> 或者修改<code>orderer.yaml</code>文件编辑这些属性值。</p>
+<h2 id="Creating-a-channel-创建通道"><a href="#Creating-a-channel-创建通道" class="headerlink" title="Creating a channel - 创建通道"></a>Creating a channel - 创建通道</h2><p>The tool can also output a channel creation tx by executing</p>
+<p>此工具同样可以创建通道交易通过执行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">configtxgen -profile &lt;profile_name&gt; -channelID &lt;channel_name&gt; -outputCreateChannelTx &lt;tx_filename&gt;</span><br></pre></td></tr></table></figure>
+<p>This will output a marshaled Envelope message which may be sent to broadcast to create a channel.</p>
+<p>这将输出一个<code>Envelope</code>消息，用来发送广播来创建通道。</p>
+<h2 id="Reviewing-a-configuration-检查配置"><a href="#Reviewing-a-configuration-检查配置" class="headerlink" title="Reviewing a configuration - 检查配置"></a>Reviewing a configuration - 检查配置</h2><p>In addition to creating configuration, the configtxgen tool is also capable of inspecting configuration.</p>
+<p>除了创建配置，<code>configtxgen</code>工具同样提供检查配置的功能。</p>
+<p>It supports inspecting both configuration blocks, and configuration transactions. You may use the inspect flags -inspectBlock and -inspectChannelCreateTx respectively with the path to a file to inspect to output a human readable (JSON) representation of the configuration.</p>
+<p>它支持检查配置块和配置交易。你可以用检查标签<code>-inspectBlock</code> 和 <code>-inspectChannelCreateTx</code> 分别指定文件路径来输出可读的（JSON）配置。</p>
+<p>You may even wish to combine the inspection with generation. For example:</p>
+<p>你甚至可能希望将创建与检查相结合。例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ build/bin/configtxgen -channelID foo -outputBlock foo.block -inspectBlock foo.block</span><br><span class="line">2017/03/01 21:24:24 Loading configuration</span><br><span class="line">2017/03/01 21:24:24 Checking for configtx.yaml at:</span><br><span class="line">2017/03/01 21:24:24 Checking for configtx.yaml at:</span><br><span class="line">2017/03/01 21:24:24 Checking for configtx.yaml at: /home/yellickj/go/src/github.com/hyperledger/fabric/common/configtx/tool</span><br><span class="line">2017/03/01 21:24:24 map[orderer:map[BatchSize:map[MaxMessageCount:10 AbsoluteMaxBytes:99 MB PreferredMaxBytes:512 KB] Kafka:map[Brokers:[127.0.0.1:9092]] Organizations:&lt;nil&gt; OrdererType:solo Addresses:[127.0.0.1:7050] BatchTimeout:10s] application:map[Organizations:&lt;nil&gt;] profiles:map[SampleInsecureSolo:map[Orderer:map[BatchTimeout:10s BatchSize:map[MaxMessageCount:10 AbsoluteMaxBytes:99 MB PreferredMaxBytes:512 KB] Kafka:map[Brokers:[127.0.0.1:9092]] Organizations:&lt;nil&gt; OrdererType:solo Addresses:[127.0.0.1:7050]] Application:map[Organizations:&lt;nil&gt;]] SampleInsecureKafka:map[Orderer:map[Addresses:[127.0.0.1:7050] BatchTimeout:10s BatchSize:map[AbsoluteMaxBytes:99 MB PreferredMaxBytes:512 KB MaxMessageCount:10] Kafka:map[Brokers:[127.0.0.1:9092]] Organizations:&lt;nil&gt; OrdererType:kafka] Application:map[Organizations:&lt;nil&gt;]] SampleSingleMSPSolo:map[Orderer:map[OrdererType:solo Addresses:[127.0.0.1:7050] BatchTimeout:10s BatchSize:map[MaxMessageCount:10 AbsoluteMaxBytes:99 MB PreferredMaxBytes:512 KB] Kafka:map[Brokers:[127.0.0.1:9092]] Organizations:[map[Name:SampleOrg ID:DEFAULT MSPDir:msp BCCSP:map[Default:SW SW:map[Hash:SHA3 Security:256 FileKeyStore:map[KeyStore:&lt;nil&gt;]]] AnchorPeers:[map[Host:127.0.0.1 Port:7051]]]]] Application:map[Organizations:[map[Name:SampleOrg ID:DEFAULT MSPDir:msp BCCSP:map[Default:SW SW:map[Hash:SHA3 Security:256 FileKeyStore:map[KeyStore:&lt;nil&gt;]]] AnchorPeers:[map[Port:7051 Host:127.0.0.1]]]]]]] organizations:[map[Name:SampleOrg ID:DEFAULT MSPDir:msp BCCSP:map[Default:SW SW:map[Hash:SHA3 Security:256 FileKeyStore:map[KeyStore:&lt;nil&gt;]]] AnchorPeers:[map[Host:127.0.0.1 Port:7051]]]]]</span><br><span class="line">2017/03/01 21:24:24 Generating genesis block</span><br><span class="line">2017/03/01 21:24:24 Writing genesis block</span><br><span class="line">2017/03/01 21:24:24 Inspecting block</span><br><span class="line">2017/03/01 21:24:24 Parsing genesis block</span><br><span class="line">Config for channel: foo</span><br><span class="line">&#123;</span><br><span class="line">    &quot;&quot;: &#123;</span><br><span class="line">        &quot;Values&quot;: &#123;&#125;,</span><br><span class="line">        &quot;Groups&quot;: &#123;</span><br><span class="line">            &quot;/Channel&quot;: &#123;</span><br><span class="line">                &quot;Values&quot;: &#123;</span><br><span class="line">                    &quot;HashingAlgorithm&quot;: &#123;</span><br><span class="line">                        &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                        &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                        &quot;Value&quot;: &#123;</span><br><span class="line">                            &quot;name&quot;: &quot;SHA256&quot;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    &quot;BlockDataHashingStructure&quot;: &#123;</span><br><span class="line">                        &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                        &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                        &quot;Value&quot;: &#123;</span><br><span class="line">                            &quot;width&quot;: 4294967295</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    &quot;OrdererAddresses&quot;: &#123;</span><br><span class="line">                        &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                        &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                        &quot;Value&quot;: &#123;</span><br><span class="line">                            &quot;addresses&quot;: [</span><br><span class="line">                                &quot;127.0.0.1:7050&quot;</span><br><span class="line">                            ]</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">                &quot;Groups&quot;: &#123;</span><br><span class="line">                    &quot;/Channel/Orderer&quot;: &#123;</span><br><span class="line">                        &quot;Values&quot;: &#123;</span><br><span class="line">                            &quot;ChainCreationPolicyNames&quot;: &#123;</span><br><span class="line">                                &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                                &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                                &quot;Value&quot;: &#123;</span><br><span class="line">                                    &quot;names&quot;: [</span><br><span class="line">                                        &quot;AcceptAllPolicy&quot;</span><br><span class="line">                                    ]</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;,</span><br><span class="line">                            &quot;ConsensusType&quot;: &#123;</span><br><span class="line">                                &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                                &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                                &quot;Value&quot;: &#123;</span><br><span class="line">                                    &quot;type&quot;: &quot;solo&quot;</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;,</span><br><span class="line">                            &quot;BatchSize&quot;: &#123;</span><br><span class="line">                                &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                                &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                                &quot;Value&quot;: &#123;</span><br><span class="line">                                    &quot;maxMessageCount&quot;: 10,</span><br><span class="line">                                    &quot;absoluteMaxBytes&quot;: 103809024,</span><br><span class="line">                                    &quot;preferredMaxBytes&quot;: 524288</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;,</span><br><span class="line">                            &quot;BatchTimeout&quot;: &#123;</span><br><span class="line">                                &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                                &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                                &quot;Value&quot;: &#123;</span><br><span class="line">                                    &quot;timeout&quot;: &quot;10s&quot;</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;,</span><br><span class="line">                            &quot;IngressPolicyNames&quot;: &#123;</span><br><span class="line">                                &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                                &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                                &quot;Value&quot;: &#123;</span><br><span class="line">                                    &quot;names&quot;: [</span><br><span class="line">                                        &quot;AcceptAllPolicy&quot;</span><br><span class="line">                                    ]</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;,</span><br><span class="line">                            &quot;EgressPolicyNames&quot;: &#123;</span><br><span class="line">                                &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                                &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                                &quot;Value&quot;: &#123;</span><br><span class="line">                                    &quot;names&quot;: [</span><br><span class="line">                                        &quot;AcceptAllPolicy&quot;</span><br><span class="line">                                    ]</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;,</span><br><span class="line">                        &quot;Groups&quot;: &#123;&#125;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    &quot;/Channel/Application&quot;: &#123;</span><br><span class="line">                        &quot;Values&quot;: &#123;&#125;,</span><br><span class="line">                        &quot;Groups&quot;: &#123;&#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2019/04/21/configtx_zh/">hyperledger fabric configtx 配置交易</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-04-21
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/fabric/">fabric</a>
+            
+          </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p> <a href="http://hyperledger-fabric.readthedocs.io/en/latest/configtx.html" target="_blank" rel="noopener">原文</a>  </p>
+<p>Shared configuration for a Hyperledger Fabric blockchain network is stored in a collection configuration transactions, one per channel. Each configuration transaction is usually referred to by the shorter name <strong><em>configtx</em></strong>.</p>
+<p>Hyperledger Fabric 区块链网络的共享配置存储在每个channel的配置交易集合中。配置交易简称<strong><em>configtx</em></strong>。</p>
+<p>Channel configuration has the following important properties:</p>
+<p>Channel配置有以下重要特性：</p>
+<ol>
+<li><p><strong>版本 Versioned</strong>：All elements of the configuration have an associated version which is advanced with every modification. Further, every committed configuration receives a sequence number.</p>
+<p> 配置中的所有项都有一个相关联的版本，每次修改都会有个更高的版本。此外每个提交的配置都会有个序列号。</p>
+</li>
+<li><p><strong>许可 Permissioned</strong>：Anyone with a copy of the previous configtx (and no additional info) may verify the validity of a new config based on these policies.</p>
+<p> 配置中的所有项都有一个相关联的策略，该策略控制该元素是否可修改。任何有前一个configtx（无需额外信息）的“人”，都可基于这些策略验证新配置的有效性。</p>
+</li>
+<li><p><strong>分层 Hierarchical</strong>：A root configuration group contains sub-groups, and each group of the hierarchy has associated values and policies. These policies can take advantage of the hierarchy to derive policies at one level from policies of lower levels.</p>
+<p> 根配置组包含子组，每个分层组具有相关的值和策略。这些策略可以利用分层结构从较低级别的策略中导出。</p>
+</li>
+</ol>
+<h2 id="Anatomy-of-a-configuration-配置剖析"><a href="#Anatomy-of-a-configuration-配置剖析" class="headerlink" title="Anatomy of a configuration / 配置剖析"></a>Anatomy of a configuration / 配置剖析</h2><p>Configuration is stored as a transaction of type <code>HeaderType_CONFIG</code> in a block with no other transactions. These blocks are referred to as <strong><em>Configuration Blocks</em></strong>, the first of which is referred to as the <strong><em>Genesis Block</em></strong>.</p>
+<p>配置作为一种<code>HeaderType_CONFIG</code>类型的交易单独存储在一个block中（也就是说这个block不再包含其他交易），这个block被称为<strong><em>配置区块</em></strong>，其中的第一个称为 <strong><em>创世区块</em></strong>。</p>
+<p>The proto structures for configuration are stored in <code>fabric/protos/common/configtx.proto</code>. The Envelope of type <code>HeaderType_CONFIG</code> encodes a <code>ConfigEnvelope</code> message as the <code>Payload</code> <code>data</code> field. The proto for <code>ConfigEnvelope</code> is defined as follows:</p>
+<p>配置的数据结构在文件<code>fabric/protos/common/configtx.proto</code>中，编码后的<code>ConfigEnvelope</code>信息作为<code>HeaderType_CONFIG</code>类型的<code>Envelope</code>中<code>Payload</code>的<code>Data</code>字段值。<em>（译注：Envelope.payload.Header.channel_header.type= HeaderType_CONFIG，Envelope.payload.data = []byte(ConfigEnvelope)）</em><code>ConfigEnvelope</code>定义如下：</p>
+<pre><code>message ConfigEnvelope {
+    Config config = 1;        // A marshaled Config structure
+    Envelope last_update = 2; // The last CONFIG_UPDATE message which generated this current configuration
+                              // Note that CONFIG_UPDATE has a Payload.Data of a Marshaled ConfigUpdate
+}
+</code></pre><p>The <code>last_update</code> field is defined below in the Updates to configuration section, but is only necessary when validating the configuration, not reading it. Instead, the currently committed configuration is stored in the <code>config</code> field, containing a <code>Config</code> message.</p>
+<p><code>last_update</code>字段在下面的“更新配置”一节定义，该字段只用于验证配置，而不会读他。当前提交的配置存储在<code>config</code>字段，是一个<code>Config</code>信息。</p>
+<pre><code>// Config represents the config for a particular channel
+message Config {
+    uint64 sequence = 1;
+    ConfigGroup channel_group = 2;
+}
+</code></pre><p>The <code>sequence</code> number is incremented by one for each committed configuration. The <code>channel_group</code> field is the root group which contains the configuration. The <code>ConfigGroup</code> structure is recursively defined, and builds a tree of groups, each of which contains values and policies. It is defined as follows:</p>
+<p>其中<code>sequence</code>字段是每次提交配置递增的数字；<code>channel_group</code>字段是包含该配置的根组。<code>ConfigGroup</code>结构是递归定义的，构建了一个组树，其中每个组都包含值和策略。其结构如下：</p>
+<pre><code>// ConfigGroup is the hierarchical data structure for holding config
+message ConfigGroup {
+    uint64 version = 1;
+    map&lt;string,ConfigGroup&gt; groups = 2;
+    map&lt;string,ConfigValue&gt; values = 3;
+    map&lt;string,ConfigPolicy&gt; policies = 4;
+    string mod_policy = 5;
+}
+</code></pre><p>Because <code>ConfigGroup</code> is a recursive structure, consider an example hierarchical arrangement of <code>ConfigGroup</code>s (expressed for clarity in golang notation).</p>
+<p><code>ConfigGroup</code>是递归结构，此处给出一个用golang表示的分层排列的示例：</p>
+<pre><code>// 假设定义了以下group
+var root, child1, child2, grandChild1, grandChild2, grandChild3 *ConfigGroup
+
+// Set the following values
+root.Groups[&quot;child1&quot;] = child1
+root.Groups[&quot;child2&quot;] = child2
+child1.Groups[&quot;grandChild1&quot;] = grandChild1
+child2.Groups[&quot;grandChild2&quot;] = grandChild2
+child2.Groups[&quot;grandChild3&quot;] = grandChild3
+
+// The resulting config structure of groups looks like:
+// root:
+//     child1:
+//         grandChild1
+//     child2:
+//         grandChild2
+//         grandChild3
+</code></pre><p>Each group defines a level in the config hierarchy, and each group has an associated set of values (indexed by string key) and policies (also indexed by string key).</p>
+<p>每个组都定义了一个分层结构中的级别，且每个组都有一个相关的值集（以string为key）和策略（以string为key）。</p>
+<p>Values are defined by:</p>
+<p>值定义：</p>
+<pre><code>// ConfigValue represents an individual piece of config data
+message ConfigValue {
+    uint64 version = 1;
+    bytes value = 2;
+    string mod_policy = 3;
+}
+</code></pre><p>Policies are defined by:<br>策略定义：</p>
+<pre><code>message ConfigPolicy {
+    uint64 version = 1;
+    Policy policy = 2;
+    string mod_policy = 3;
+}
+</code></pre><p>Note that Values, Policies, and Groups all have a <code>version</code> and a <code>mod_policy</code>.</p>
+<p>注意，ConfigGroup、ConfigValue、ConfigPolicy都有<code>version</code>和<code>mod_policy</code>字段。</p>
+<p>The <code>ersion</code> of an element is incremented each time that element is modified. The <code>mod_policy</code> is used to govern the required signatures to modify that element. </p>
+<p>每次修改元素时，其<code>version</code>递增，<code>mod_policy</code>用于管理修改该元素所需的签名。</p>
+<p>For Groups, modification is adding or removing elements to the Values, Policies, or Groups maps (or changing the <code>mod_policy</code>). For Values and Policies, modification is changing the Value and Policy fields respectively (or changing the mod_policy). </p>
+<p>对于Groups，修改就是添加或删除Values、Policies、或Groups中的元素（或者是改变<code>mod_policy</code>）<em>（译注，其实就是<code>ConfigGroup</code>中除<code>version</code>字段外其他字段的变化）</em>；对于Values和Policies，修改就是改变<code>value</code>或<code>policy</code>字段（或者改变<code>mod_policy</code>）。</p>
+<p>Each element’s <code>mod_policy</code> is evaluated in the context of the current level of the config.</p>
+<p>每个元素的<code>mod_policy</code>都只在当前配置级别(level)中有效。</p>
+<p>Consider the following example mod policies defined at <code>Channel.Groups[&quot;Application&quot;]</code> (Here, we use the golang map reference syntax, so <code>Channel.Groups[&quot;Application&quot;].Policies[&quot;policy1&quot;]</code> refers to the base <code>Channel</code> group’s <code>Application</code> group’s <code>Policies</code> map’s <code>policy1</code> policy.)</p>
+<p>下面是一个定义在<code>Channel.Groups[&quot;Application&quot;]</code>中的策略的示例（这里用的是golang语法，因此<code>Channel.Groups[&quot;Application&quot;].Policies[&quot;policy1&quot;]</code>表示根组<code>Channel</code>的子组<code>Application</code>的<code>Policies</code>里的<code>policy1</code>对应的策略）</p>
+<ul>
+<li><code>policy1</code>对应<code>Channel.Groups[&quot;Application&quot;].Policies[&quot;policy1&quot;]</code></li>
+<li><code>Org1/policy2</code>对应<code>Channel.Groups[&quot;Application&quot;].Groups[&quot;Org1&quot;].Policies[&quot;policy2&quot;]</code></li>
+<li><code>/Channel/policy3</code>对应<code>Channel.Policies[&quot;policy3&quot;]</code></li>
+</ul>
+<p>Note that if a <code>mod_policy</code> references a policy which does not exist, the item cannot be modified.</p>
+<p>注意，如果<code>mod_policy</code>引用了一个不存在的策略，那么该元素不可修改。</p>
+<h2 id="Configuration-updates-更新配置"><a href="#Configuration-updates-更新配置" class="headerlink" title="Configuration updates / 更新配置"></a>Configuration updates / 更新配置</h2><p>Configuration updates are submitted as an <code>Envelope</code> message of type <code>HeaderType_CONFIG_UPDATE</code>. The <code>Payload</code> <code>data</code> of the transaction is a marshaled <code>ConfigUpdateEnvelope</code>. The <code>ConfigUpdateEnvelope</code> is defined as follows:</p>
+<p>更新配置是提交一个<code>HeaderType_CONFIG_UPDATE</code>类型的<code>Envelope</code>消息，交易的<code>Payload.data</code>字段是序列化的<code>ConfigUpdateEnvelope</code>，其定义如下：</p>
+<pre><code>message ConfigUpdateEnvelope {
+    bytes config_update = 1;                 // A marshaled ConfigUpdate structure
+    repeated ConfigSignature signatures = 2; // Signatures over the config_update
+}
+</code></pre><p>The <code>signatures</code> field contains the set of signatures which authorizes the config update. Its message definition is:</p>
+<p>其中<code>signatures</code>字段包含了授权更新配置的签名集，定义如下：</p>
+<pre><code>message ConfigSignature {
+    bytes signature_header = 1; // A marshaled SignatureHeader
+    bytes signature = 2;        // Signature over the concatenation signatureHeader bytes and config bytes
+}
+</code></pre><p>The <code>signature_header</code> is as defined for standard transactions, while the signature is over the concatenation of the <code>signature_header</code> bytes and the <code>config_update</code> bytes from the <code>ConfigUpdateEnvelope</code> message.</p>
+<p><code>signature_header</code>如标准交易所定义，而签名则是<code>signature_header</code>字节和<code>ConfigUpdateEnvelope</code>中的<code>config_update</code>字节的拼接。</p>
+<p>The <code>ConfigUpdateEnvelope</code> <code>config_update</code> bytes are a marshaled <code>ConfigUpdate</code> message which is defined as follows:</p>
+<p><code>ConfigUpdateEnvelope</code>中的<code>config_update</code>字段是序列化的<code>ConfigUpdate</code>，其定义为：</p>
+<pre><code>message ConfigUpdate {
+    string channel_id = 1;     // Which channel this config update is for
+    ConfigGroup read_set = 2;  // ReadSet explicitly lists the portion of the config which was read, this should be sparse with only Version set
+    ConfigGroup write_set = 3; // WriteSet lists the portion of the config which was written, this should included updated Versions
+}
+</code></pre><p>The <code>channel_id</code> is the channel ID the update is bound for, this is necessary to scope the signatures which support this reconfiguration.</p>
+<p>其中<code>channel_id</code>是配置更新所对应的channel ID，该字段是必要，因为它界定了支持本次配置更新的所需的签名范围。</p>
+<p>The <code>read_set</code> specifies a subset of the existing configuration, specified sparsely where only the <code>version</code> field is set and no other fields must be populated. The particular <code>ConfigValue</code> <code>value</code> or <code>ConfigPolicy</code> <code>policy</code> fields should never be set in the <code>read_set</code>. The <code>ConfigGroup</code> may have a subset of its map fields populated, so as to reference an element deeper in the config tree. For instance, to include the <code>Application</code> group in the <code>read_set</code>, its parent (the <code>Channel</code> group) must also be included in the read set, but, the <code>Channel</code> group does not need to populate all of the keys, such as the <code>Orderer</code> <code>group</code> key, or any of the <code>values</code> or <code>policies</code> keys.</p>
+<p><code>read_set</code>是现有配置的一个子集，其中仅含<code>version</code>字段，<code>ConfigValue.value</code>和<code>ConfigPolicy.policy</code>等其他字段不包含在<code>read_set</code>中。<code>ConfigGroup</code>会map字段组成的子集，以便引用配置树的深层元素。例如，为使<code>Application</code>group包含到<code>read_set</code>，它的上层（<code>Channel</code>group）也必须包含到<code>read_set</code>中，但不必将<code>Channel</code>group中所有的key都包括进去，比如<code>Orderer`</code>group<code>或者任何</code>values<code>或</code>policies`。</p>
+<p>The <code>write_set</code> specifies the pieces of configuration which are modified. Because of the hierarchical nature of the configuration, a write to an element deep in the hierarchy must contain the higher level elements in its <code>write_set</code> as well. However, for any element in the <code>write_set</code> which is also specified in the <code>read_set</code> at the same version, the element should be specified sparsely, just as in the <code>read_set</code>.</p>
+<p><code>write_set</code>指定了要被修改的那部分配置。由于配置的分层特性，修改深层元素就必须在<code>write_set</code>中包含其上层元素。<code>write_set</code>中的任意元素都会在<code>read_set</code>中指定相同版本的该元素。</p>
+<p>For example, given the configuration:</p>
+<p>例如，给出如下配置：</p>
+<pre><code>Channel: (version 0)
+    Orderer (version 0)
+    Appplication (version 3)
+       Org1 (version 2)
+</code></pre><p>To submit a configuration update which modifies <code>Org1</code>, the <code>read_set</code> would be:</p>
+<p>修改<code>Org1</code>提交的<code>read_set</code>应为：</p>
+<pre><code>Channel: (version 0)
+    Application: (version 3)
+</code></pre><p>and the write_set would be</p>
+<p>对应的<code>write_set</code>应是：</p>
+<pre><code>Channel: (version 0)
+    Application: (version 3)
+        Org1 (version 3)
+</code></pre><p>When the <code>CONFIG_UPDATE</code> is received, the orderer computes the resulting <code>CONFIG</code> by doing the following:</p>
+<p>接收到<code>CONFIG_UPDATE</code>后，orderer会通过以下步骤计算<code>CONFIG</code>结果：</p>
+<ol>
+<li><p>Verifies the <code>channel_id</code> and <code>read_set</code>. All elements in the <code>read_set</code> must exist at the given versions.</p>
+<p> 校验<code>channel_id</code>和<code>read_set</code>，<code>read_set</code>中所有元素必须存在对应的版本。</p>
+</li>
+<li><p>Computes the update set by collecting all elements in the <code>write_set</code> which do not appear at the same version in the <code>read_set</code>.</p>
+<p> 收集<code>read_set</code>与<code>write_set</code>中版本不一致的元素，计算更新集。</p>
+</li>
+<li><p>Verifies that each element in the update set increments the version number of the element update by exactly 1.</p>
+<p> 校验更新集中的元素的版本号是否递增1</p>
+</li>
+<li><p>Verifies that the signature set attached to the <code>ConfigUpdateEnvelope</code> satisfies the <code>mod_policy</code> for each element in the update set.</p>
+<p> 校验更新集中每个元素，<code>ConfigUpdateEnvelope</code>的签名满足<code>mod_policy</code>。</p>
+</li>
+<li><p>Computes a new complete version of the config by applying the update set to the current config.</p>
+<p> 通过将更新集应用于当前配置，计算该配置的完整新版本</p>
+</li>
+<li><p>Writes the new config into a <code>ConfigEnvelope</code> which includes the <code>CONFIG_UPDATE</code> as the <code>last_update</code> field and the new config encoded in the <code>config</code> field, along with the incremented <code>sequence</code> value.</p>
+<p>将新配置写成<code>ConfigEnvelope</code>作为<code>CONFIG_UPDATE</code>赋给<code>last_update</code>字段，新的配置赋给<code>config</code>字段，<code>sequence</code>字段自增。</p>
+</li>
+<li><p>Writes the new <code>ConfigEnvelope</code> into a <code>Envelope</code> of type <code>CONFIG</code>, and ultimately writes this as the sole transaction in a new configuration block.</p>
+<p> 将<code>ConfigEnvelope</code>写成<code>CONFIG</code>类型的<code>Envelope</code>，最终将此作为唯一交易写入配置区块。、</p>
+</li>
+</ol>
+<p>When the peer (or any other receiver for <code>Deliver</code>) receives this configuration block, it should verify that the config was appropriately validated by applying the last_update message to the current config and verifying that the orderer-computed <code>config</code> field contains the correct new configuration.</p>
+<p>当peer（或者任意其他接收<code>Deliver</code>者）接收到这个配置区块后，就会通过将<code>last_update</code>信息应用到当前配置并校验orderer计算的<code>config</code>字段是否包含正确的新配置，来验证该配置是否被正确校验。</p>
+<h2 id="Permitted-configuration-groups-and-values-组和值得配置许可"><a href="#Permitted-configuration-groups-and-values-组和值得配置许可" class="headerlink" title="Permitted configuration groups and values / 组和值得配置许可"></a>Permitted configuration groups and values / 组和值得配置许可</h2><p>Any valid configuration is a subset of the following configuration. Here we use the notation <code>peer.&lt;MSG&gt;</code> to define a <code>ConfigValue</code> whose <code>value</code> field is a marshaled proto message of name <code>&lt;MSG&gt;</code> defined in <code>fabric/protos/peer/configuration.proto</code>. The notations <code>common.&lt;MSG&gt;</code>, <code>msp.&lt;MSG&gt;</code>, and <code>orderer.&lt;MSG&gt;</code> correspond similarly, but with their messages defined in <code>fabric/protos/common/configuration.proto</code>, <code>fabric/protos/msp/mspconfig.proto</code>, and <code>fabric/protos/orderer/configuration.proto</code> respectively.</p>
+<p>有效的配置都是下面配置的子集。在此，用<code>peer.&lt;MSG&gt;</code>表示一个<code>ConfigValue</code>，其<code>value</code>字段是称为<code>&lt;MSG&gt;</code>的序列化后的信息，定义在<code>fabric/protos/peer/configuration.proto</code>。<code>common.&lt;MSG&gt;</code>，<code>msp.&lt;MSG&gt;</code>和<code>orderer.&lt;MSG&gt;</code>分别定义在<code>fabric/protos/common/configuration.proto</code>，<code>fabric/protos/msp/mspconfig.proto</code>和<code>fabric/protos/orderer/configuration.proto</code>。</p>
+<p>Note, that the keys <code></code> and <code></code> represent arbitrary names, and indicate an element which may be repeated with different names.</p>
+<p>注意，下面的<code></code> 和 <code></code>是任意的名字，表示可以重复使用不同名称的元素。</p>
+<pre><code>&amp;ConfigGroup{
+    Groups: map&lt;string, *ConfigGroup&gt; {
+        &quot;Application&quot;:&amp;ConfigGroup{
+            Groups:map&lt;String, *ConfigGroup&gt; {
+                {{org_name}}:&amp;ConfigGroup{
+                    Values:map&lt;string, *ConfigValue&gt;{
+                        &quot;MSP&quot;:msp.MSPConfig,
+                        &quot;AnchorPeers&quot;:peer.AnchorPeers,
+                    },
+                },
+            },
+        },
+        &quot;Orderer&quot;:&amp;ConfigGroup{
+            Groups:map&lt;String, *ConfigGroup&gt; {
+                {{org_name}}:&amp;ConfigGroup{
+                    Values:map&lt;string, *ConfigValue&gt;{
+                        &quot;MSP&quot;:msp.MSPConfig,
+                    },
+                },
+            },
+
+            Values:map&lt;string, *ConfigValue&gt; {
+                &quot;ConsensusType&quot;:orderer.ConsensusType,
+                &quot;BatchSize&quot;:orderer.BatchSize,
+                &quot;BatchTimeout&quot;:orderer.BatchTimeout,
+                &quot;KafkaBrokers&quot;:orderer.KafkaBrokers,
+            },
+        },
+        &quot;Consortiums&quot;:&amp;ConfigGroup{
+            Groups:map&lt;String, *ConfigGroup&gt; {
+                {{consortium_name}}:&amp;ConfigGroup{
+                    Groups:map&lt;string, *ConfigGroup&gt; {
+                        {{org_name}}:&amp;ConfigGroup{
+                            Values:map&lt;string, *ConfigValue&gt;{
+                                &quot;MSP&quot;:msp.MSPConfig,
+                            },
+                        },
+                    },
+                    Values:map&lt;string, *ConfigValue&gt; {
+                        &quot;ChannelCreationPolicy&quot;:common.Policy,
+                    }
+                },
+            },
+        },
+    },
+
+    Values: map&lt;string, *ConfigValue&gt; {
+        &quot;HashingAlgorithm&quot;:common.HashingAlgorithm,
+        &quot;BlockHashingDataStructure&quot;:common.BlockDataHashingStructure,
+        &quot;Consortium&quot;:common.Consortium,
+        &quot;OrdererAddresses&quot;:common.OrdererAddresses,
+    },
+}
+</code></pre><h2 id="Orderer-system-channel-configuration-Order-channel-配置"><a href="#Orderer-system-channel-configuration-Order-channel-配置" class="headerlink" title="Orderer system channel configuration / Order channel 配置"></a>Orderer system channel configuration / Order channel 配置</h2><p>The ordering system channel needs to define ordering parameters, and consortiums for creating channels. There must be exactly one ordering system channel for an ordering service, and it is the first channel to be created (or more accurately bootstrapped). It is recommended never to define an Application section inside of the ordering system channel genesis configuration, but may be done for testing. Note that any member with read access to the ordering system channel may see all channel creations, so this channel’s access should be restricted.</p>
+<p>ordering系统channel定义了创建channel的ordering参数和consortiums。ordering service必须有一个ordering系统channel，这是被创建的第一个channel。建议不要在ordering系统channel初始配置中定义application部分，但是测试是可以这么做。注意，任何对ordering系统channel有读权限的成员都可以查看所有channel创建，因此channel的访问应受限制。</p>
+<p>The ordering parameters are defined as the following subset of config:</p>
+<p>ordering参数定义如下：</p>
+<pre><code>&amp;ConfigGroup{
+    Groups: map&lt;string, *ConfigGroup&gt; {
+        &quot;Orderer&quot;:&amp;ConfigGroup{
+            Groups:map&lt;String, *ConfigGroup&gt; {
+                {{org_name}}:&amp;ConfigGroup{
+                    Values:map&lt;string, *ConfigValue&gt;{
+                        &quot;MSP&quot;:msp.MSPConfig,
+                    },
+                },
+            },
+
+            Values:map&lt;string, *ConfigValue&gt; {
+                &quot;ConsensusType&quot;:orderer.ConsensusType,
+                &quot;BatchSize&quot;:orderer.BatchSize,
+                &quot;BatchTimeout&quot;:orderer.BatchTimeout,
+                &quot;KafkaBrokers&quot;:orderer.KafkaBrokers,
+            },
+        },
+    },
+</code></pre><p>Each organization participating in ordering has a group element under the <code>Orderer</code> group. This group defines a single parameter <code>MSP</code> which contains the cryptographic identity information for that organization. The <code>Values</code> of the <code>Orderer</code> group determine how the ordering nodes function. They exist per channel, so <code>orderer.BatchTimeout</code> for instance may be specified differently on one channel than another.</p>
+<p>ordering中的每个组织都在<code>Orderer</code>组下有一个组元素，这个组定义了一个<code>MSP</code>参数，这个参数包含该组织的加密身份信息。<code>Orderer</code>组中的<code>Values</code>决定了ordering节点的功能。他们存在于每个channel中，所以像<code>orderer.BatchTimeout</code>就可在不同channel中指定不同值。</p>
+<p>At startup, the orderer is faced with a filesystem which contains information for many channels. The orderer identifies the system channel by identifying the channel with the consortiums group defined. The consortiums group has the following structure.</p>
+<p>启动时，orderer面对含有很多channel信息的文件系统，orderer通过识别带有consortiums组定义的channel来标识系统channel。consortiums组结构如下。</p>
+<pre><code>&amp;ConfigGroup{
+    Groups: map&lt;string, *ConfigGroup&gt; {
+        &quot;Consortiums&quot;:&amp;ConfigGroup{
+            Groups:map&lt;String, *ConfigGroup&gt; {
+                {{consortium_name}}:&amp;ConfigGroup{
+                    Groups:map&lt;string, *ConfigGroup&gt; {
+                        {{org_name}}:&amp;ConfigGroup{
+                            Values:map&lt;string, *ConfigValue&gt;{
+                                &quot;MSP&quot;:msp.MSPConfig,
+                            },
+                        },
+                    },
+                    Values:map&lt;string, *ConfigValue&gt; {
+                        &quot;ChannelCreationPolicy&quot;:common.Policy,
+                    }
+                },
+            },
+        },
+    },
+},
+</code></pre><p>Note that each consortium defines a set of members, just like the organizational members for the ordering orgs. Each consortium also defines a <code>ChannelCreationPolicy</code>. This is a policy which is applied to authorize channel creation requests. Typically, this value will be set to an <code>ImplicitMetaPolicy</code> requiring that the new members of the channel sign to authorize the channel creation. More details about channel creation follow later in this document.</p>
+<p>注意，每个consortium定义一组成员，就行ordering组织的组织成员一样。每个consortium也都定义了一个<code>ChannelCreationPolicy</code>，它是一种应用于授权channel创建请求的策略，通常这个值设为<code>ImplicitMetaPolicy</code>，要求channel的新成员签名授权channel创建。有关channel创建更信息的内容，请参阅文档后面的内容。</p>
+<h2 id="Application-channel-configuration-APP-channel-配置"><a href="#Application-channel-configuration-APP-channel-配置" class="headerlink" title="Application channel configuration / APP channel 配置"></a>Application channel configuration / APP channel 配置</h2><p>Application configuration is for channels which are designed for application type transactions. It is defined as follows:</p>
+<p>应用程序配置用于为应用类型交易设计的channel。其定义如下：</p>
+<pre><code>&amp;ConfigGroup{
+    Groups: map&lt;string, *ConfigGroup&gt; {
+        &quot;Application&quot;:&amp;ConfigGroup{
+            Groups:map&lt;String, *ConfigGroup&gt; {
+                {{org_name}}:&amp;ConfigGroup{
+                    Values:map&lt;string, *ConfigValue&gt;{
+                        &quot;MSP&quot;:msp.MSPConfig,
+                        &quot;AnchorPeers&quot;:peer.AnchorPeers,
+                    },
+                },
+            },
+        },
+    },
+}
+</code></pre><p>Just like with the <code>Orderer</code> section, each organization is encoded as a group. However, instead of only encoding the <code>MSP</code> identity information, each org additionally encodes a list of <code>AnchorPeers</code>. This list allows the peers of different organizations to contact each other for peer gossip networking.</p>
+<p>就像<code>Orderer</code>部分，每个组织被编码为一个组。然而，app channel不仅有<code>MSP</code>身份信息，每个组织都附加了一个<code>AnchorPeers</code>列表。这个列表允许不同组织的节点彼此联系。</p>
+<p>The application channel encodes a copy of the orderer orgs and consensus options to allow for deterministic updating of these parameters, so the same <code>Orderer</code> section from the orderer system channel configuration is included. However from an application perspective this may be largely ignored.</p>
+<p>应用程序channel通过对orderer组织和共识选项的编码，以允许对这些参数进行确定性更新，因此包含了orderer系统channel配置的相同<code>Orderer</code>部分。但从应用角度看，这会在很大程度上被忽略。</p>
+<h2 id="Channel-creation-创建channel"><a href="#Channel-creation-创建channel" class="headerlink" title="Channel creation / 创建channel"></a>Channel creation / 创建channel</h2><p>When the orderer receives a <code>CONFIG_UPDATE</code> for a channel which does not exist, the orderer assumes that this must be a channel creation request and performs the following.</p>
+<p>当Orderer 接收到对一个不存在的channel的<code>CONFIG_UPDATE</code>信息时，orderer就会假设这是个创建channel的请求并执行以下操作：</p>
+<ol>
+<li><p>The orderer identifies the consortium which the channel creation request is to be performed for. It does this by looking at the <code>Consortium</code> value of the top level group.</p>
+<p> 通过查看高层组中的<code>Consortium</code>值，orderer标识所要执行创建channel请求的consortium<strong><em>（译注：这个词暂时不知翻译成什么好）</em></strong>。</p>
+</li>
+<li><p>The orderer verifies that the organizations included in the <code>Application</code> group are a subset of the organizations included in the corresponding consortium and that the <code>ApplicationGroup</code> is set to <code>version</code> <code>1</code>.</p>
+<p> orderer验证Application组中的组织是对应的consortium中组织的一部分，并验证<code>ApplicationGroup</code>的版本是1。</p>
+</li>
+<li><p>The orderer verifies that if the consortium has members, that the new channel also has application members (creation consortiums and channels with no members is useful for testing only).</p>
+<p> orderer验证consortium是否有成员，新的channel也会有application成员（创建没有成员的consortiums和channel只用于测试）。</p>
+</li>
+<li><p>The orderer creates a template configuration by taking the <code>Orderer</code> group from the ordering system channel, and creating an <code>Application</code> group with the newly specified members and specifying its <code>mod_policy</code> to be the <code>ChannelCreationPolicy</code> as specified in the consortium config. Note that the policy is evaluated in the context of the new configuration, so a policy requiring <code>ALL</code> members, would require signatures from all the new channel members, not all the members of the consortium.</p>
+<p> orderer从ordering系统channel取得<code>Orderer</code>组，并创建一个包含新指定成员的<code>Application</code>组，并将其<code>mod_policy</code>指定为在consortium config中指定的<code>ChannelCreationPolicy</code>，从而创建一个模板配置。注意，这个策略（mod_policy）是基于新配置的上下文的，因此需要所有成员的策略就是要需要新channel中所有成员的签名，而不是consortium中的所有成员。</p>
+</li>
+<li><p>The orderer then applies the <code>CONFIG_UPDATE</code> as an update to this template configuration. Because the <code>CONFIG_UPDATE</code> applies modifications to the <code>Application</code> group (its <code>version</code> is 1), the config code validates these updates against the <code>ChannelCreationPolicy</code>. If the channel creation contains any other modifications, such as to an individual org’s anchor peers, the corresponding mod policy for the element will be invoked.</p>
+<p> orderer用<code>CONFIG_UPDATE</code>更新这个模板配置。因为<code>CONFIG_UPDATE</code>用于<code>Application</code>组（其版本是1）的修改，所以配置码根据<code>ChannelCreationPolicy</code>验证这些更新。如果channel创建包含任何其它修改，例如修改单个组织的锚节点，则调用该元素的相应mod策略。</p>
+</li>
+<li><p>The new <code>CONFIG</code> transaction with the new channel config is wrapped and sent for ordering on the ordering system channel. After ordering, the channel is created.</p>
+<p> 带有新channel配置的<code>CONFIG</code>交易被包装并通过order系统channel发送到ordering，ordering之后channel就创建完成。</p>
+</li>
+</ol>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2019/04/21/channel_update_zh/">hyperledger fabric channel update 重新配置第一个网络</a>
         
       </h1>
 
@@ -758,365 +1477,6 @@
 <p>More importantly, Hyperledger Fabric is the most active of the (currently) ten Hyperledger projects. The community building around the platform is growing steadily, and the innovation delivered with each successive release far out-paces any of the other enterprise blockchain platforms.<br>更重要的是，Hyperledger Fabric是（当前）十个Hyperledger项目中最活跃的。 围绕平台的社区建设正在稳步增长，各个持续版本提供的创新远远超过任何其他企业级区块链平台。</p>
 <p>感谢 (Acknowledgement)</p>
 <p>The preceding is derived from the peer reviewed “Hyperledger Fabric: A Distributed Operating System for Permissioned Blockchains” - Elli Androulaki, Artem Barger, Vita Bortnikov, Christian Cachin, Konstantinos Christidis, Angelo De Caro, David Enyeart, Christopher Ferris, Gennady Laventman, Yacov Manevich, Srinivasan Muralidharan, Chet Murthy, Binh Nguyen, Manish Sethi, Gari Singh, Keith Smith, Alessandro Sorniotti, Chrysoula Stathakopoulou, Marko Vukolic, Sharon Weed Cocco, Jason Yellick<br>前述的内容都来自同行评审“Hyperledger Fabric：一个要许可的区块链分布式操作系统” </p>
-
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/12/05/python-学画图/">python 学画图</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-12-05
-        </span>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-
-        
-          <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip install numpy</span><br><span class="line">pip install scipy</span><br><span class="line">sudo apt-get install python-matplotlib</span><br></pre></td></tr></table></figure>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/12/01/learn-febric-02-Building-Your-First-Network/">learn febric 02 Building Your First Network</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-12-01
-        </span>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-
-        
-          <p>参照官网：<br><a href="https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html" target="_blank" rel="noopener">https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html</a></p>
-<p> We provide a fully annotated script - byfn.sh - that leverages these Docker images to quickly bootstrap a Hyperledger Fabric network comprised of 4 peers representing two different organizations, and an orderer node. It will also launch a container to run a scripted execution that will join peers to a channel, deploy and instantiate chaincode and drive execution of transactions against the deployed chaincode.</p>
-<p>就是说这个脚本会启动四个 peer，代表两个组织、一个 orderer 节点。它会启动一个容器，容器会执行一个脚本：把 peer 连接到 channel， 部署并实例化链码，然后针对部署的链码发起交易的执行。</p>
-<p>If you choose not to supply a channel name, then the script will use a default name of mychannel. The CLI timeout parameter (specified with the -t flag) is an optional value; if you choose not to set it, then the CLI will give up on query requests made after the default setting of 10 seconds.</p>
-<p>不提供 -c channel 名字，缺省创建mychannel</p>
-<ul>
-<li>Generate Network Artifacts 创建第一个网络</li>
-</ul>
-<p>执行<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">./byfn.sh generate</span><br></pre></td></tr></table></figure></p>
-<p>瞬间执行了好多东西，不知道干啥了</p>
-<p>This first step generates all of the certificates and keys for our various network entities, the genesis block used to bootstrap the ordering service, and a collection of configuration transactions required to configure a Channel.<br>应该是创建了：所有网络实体的证书、密钥，启动ordering 服务的创世块，以及一系列配置Channel所需要的交易配置信息？？</p>
-<ul>
-<li>Bring Up the Network<br>把这个网络跑起来<br>Next, you can bring the network up with one of the following commands:<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">./byfn.sh up</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>这个命令会编译Golang链码镜像，然后运行相应的容器。</p>
-<p>The logs will continue from there. This will launch all of the containers, and then drive a complete end-to-end application scenario. </p>
-<p>注意：<br>只能同时启动一个，除非你把当前的删掉并重新创建网络<br>Do not run both of these commands. Only one language can be tried unless you bring down and recreate the network between.</p>
-<p>The above command will compile Golang chaincode images and spin up the corresponding containers. Go is the default chaincode language, however there is also support for Node.js and Java chaincode. If you’d like to run through this tutorial with node chaincode, pass the following command instead:<br>Go是缺省链码开发语言，其实还支持nodejs java, 如果愿意可以加上 -l node 执行nodejs的链码镜像<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># we use the -l flag to specify the chaincode language</span><br><span class="line"># forgoing the -l flag will default to Golang</span><br><span class="line">./byfn.sh up -l java</span><br><span class="line"></span><br><span class="line">./byfn.sh up -l node</span><br></pre></td></tr></table></figure></p>
-<p>跑完后有这么多docker<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CONTAINER ID        IMAGE                                                                                                  COMMAND                  CREATED             STATUS              PORTS                                              NAMES</span><br><span class="line">0ce3814812fd        dev-peer1.org2.example.com-mycc-1.0-26c2ef32838554aac4f7ad6f100aca865e87959c9a126e86d764c8d01f8346ab   &quot;chaincode -peer.add…&quot;   6 minutes ago       Up 7 minutes                                                           dev-peer1.org2.example.com-mycc-1.0</span><br><span class="line">3d53d2a05872        dev-peer0.org1.example.com-mycc-1.0-384f11f484b9302df90b453200cfb25174305fce8f53f4e94d45ee3b6cab0ce9   &quot;chaincode -peer.add…&quot;   7 minutes ago       Up 7 minutes                                                           dev-peer0.org1.example.com-mycc-1.0</span><br><span class="line">72a9c0727267        dev-peer0.org2.example.com-mycc-1.0-15b571b3ce849066b7ec74497da3b27e54e0df1345daff3951b94245ce09c42b   &quot;chaincode -peer.add…&quot;   8 minutes ago       Up 8 minutes                                                           dev-peer0.org2.example.com-mycc-1.0</span><br><span class="line">b045f65f36f4        hyperledger/fabric-tools:latest                                                                        &quot;/bin/bash&quot;              9 minutes ago       Up 9 minutes                                                           cli</span><br><span class="line">84f8c3649564        hyperledger/fabric-peer:latest                                                                         &quot;peer node start&quot;        9 minutes ago       Up 9 minutes        0.0.0.0:9051-&gt;7051/tcp, 0.0.0.0:9053-&gt;7053/tcp     peer0.org2.example.com</span><br><span class="line">ddd5b3942165        hyperledger/fabric-peer:latest                                                                         &quot;peer node start&quot;        9 minutes ago       Up 9 minutes        0.0.0.0:10051-&gt;7051/tcp, 0.0.0.0:10053-&gt;7053/tcp   peer1.org2.example.com</span><br><span class="line">81b3285302bf        hyperledger/fabric-peer:latest                                                                         &quot;peer node start&quot;        9 minutes ago       Up 9 minutes        0.0.0.0:8051-&gt;7051/tcp, 0.0.0.0:8053-&gt;7053/tcp     peer1.org1.example.com</span><br><span class="line">86ebd0fc4588        hyperledger/fabric-orderer:latest                                                                      &quot;orderer&quot;                9 minutes ago       Up 9 minutes        0.0.0.0:7050-&gt;7050/tcp                             orderer.example.com</span><br><span class="line">8b48b3ab2880        hyperledger/fabric-peer:latest                                                                         &quot;peer node start&quot;        9 minutes ago       Up 9 minutes        0.0.0.0:7051-&gt;7051/tcp, 0.0.0.0:7053-&gt;7053/tcp     peer0.org1.example.com</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>停止（或者删除）网络 Bring Down the Network<br>Finally, let’s bring it all down so we can explore the network setup one step at a time. The following will kill your containers, remove the crypto material and four artifacts, and delete the chaincode images from your Docker Registry:<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">./byfn.sh down</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>执行了，啥都删了，那些容器都没有了</p>
-<p>If you’d like to learn more about the underlying tooling and bootstrap mechanics, continue reading. In these next sections we’ll walk through the various steps and requirements to build a fully-functional Hyperledger Fabric network.</p>
-<p>继续阅读，可以学习更多的底层工具、启动引导技术。下面我们走一遍各种方法、需求来创建一个全功能的超级账本网络</p>
-<p>The manual steps outlined below assume that the FABRIC_LOGGING_SPEC in the cli container is set to DEBUG. You can set this by modifying the docker-compose-cli.yaml file in the first-network directory. e.g.<br>后面要把cli 容器设置成 Debug 模式<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cli:</span><br><span class="line">  container_name: cli</span><br><span class="line">  image: hyperledger/fabric-tools:$IMAGE_TAG</span><br><span class="line">  tty: true</span><br><span class="line">  stdin_open: true</span><br><span class="line">  environment:</span><br><span class="line">    - GOPATH=/opt/gopath</span><br><span class="line">    - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock</span><br><span class="line">    - FABRIC_LOGGING_SPEC=DEBUG</span><br><span class="line">    #- FABRIC_LOGGING_SPEC=INFO</span><br></pre></td></tr></table></figure></p>
-<p>我没有找到 FABRIC_LOGGING_SPEC ，看到只有<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#- CORE_LOGGING_LEVEL=DEBUG</span><br><span class="line">- CORE_LOGGING_LEVEL=INFO</span><br></pre></td></tr></table></figure></p>
-<p>但我仍然添加了 FABRIC_LOGGING_SPEC=DEBUG</p>
-<h2 id="加密生成器-Crypto-Generator"><a href="#加密生成器-Crypto-Generator" class="headerlink" title="加密生成器 Crypto Generator"></a>加密生成器 Crypto Generator</h2><p>We will use the cryptogen tool to generate the cryptographic material (x509 certs and signing keys) for our various network entities. These certificates are representative of identities, and they allow for sign/verify authentication to take place as our entities communicate and transact.<br>我们用它生成各种网络实体需要的加密素材（就是证书、密钥）。这些证书是身份的代表：他们用来在实体间通讯和交易的时候做加密/认证。</p>
-<h3 id="加密是怎么工作的-How-does-it-work"><a href="#加密是怎么工作的-How-does-it-work" class="headerlink" title="加密是怎么工作的 How does it work?"></a>加密是怎么工作的 How does it work?</h3><p>Cryptogen consumes a file - crypto-config.yaml - that contains the network topology and allows us to generate a set of certificates and keys for both the Organizations and the components that belong to those Organizations. Each Organization is provisioned a unique root certificate (ca-cert) that binds specific components (peers and orderers) to that Org. By assigning each Organization a unique CA certificate, we are mimicking a typical network where a participating Member would use its own Certificate Authority. Transactions and communications within Hyperledger Fabric are signed by an entity’s private key (keystore), and then verified by means of a public key (signcerts).<br>cryptogen 使用 crypto-config.yml 做配置文件，配置文件中包含了网络拓扑，让我们能为两个组织和他们的组织成员生成一系列证书和密钥。<br>每个组织有一个自己的唯一根证书，根证书绑定组织成员（peers orderers）。<br>由于每个组织一个唯一的CA证书，我们就模拟了一个典型的网络，参与的成员必须使用他们自己组织的CA （证书授权）。<br>超级账本上的交易和通讯采用实体的私钥来签名，并用他自己的公钥校验。</p>
-<p>orderer 名字从配置文件里根据 Specs/Hostname 及 Domain 来确定<br>The naming convention for a network entity is as follows - “{ {.Hostname} }.{ {.Domain} }”. So using our ordering node as a reference point, we are left with an ordering node named - orderer.example.com that is tied to an MSP ID of Orderer. This file contains extensive documentation on the definitions and syntax. You can also refer to the Membership Service Providers (MSP) documentation for a deeper dive on MSP.</p>
-<p>After we run the cryptogen tool, the generated certificates and keys will be saved to a folder titled crypto-config.</p>
-<h2 id="交易配置生成器-Configuration-Transaction-Generator"><a href="#交易配置生成器-Configuration-Transaction-Generator" class="headerlink" title="交易配置生成器 Configuration Transaction Generator"></a>交易配置生成器 Configuration Transaction Generator</h2><p>configtxgen 用来创建四个配置<br>The configtxgen tool is used to create four configuration artifacts:</p>
-<ul>
-<li>orderer 【genesis block】 创世块</li>
-<li>channel 【configuration transaction channel】配置交易（还是交易配置）</li>
-<li>and two 【anchor peer transactions】 - one for each Peer Org. 这个看不懂</li>
-</ul>
-<p>没看懂后面两个<br>The orderer block is the Genesis Block for the ordering service, and the channel configuration transaction file is broadcast to the orderer at Channel creation time. The anchor peer transactions, as the name might suggest, specify each Org’s Anchor Peer on this channel.</p>
-<h3 id="交易配置生成器是怎么工作的-How-does-it-work"><a href="#交易配置生成器是怎么工作的-How-does-it-work" class="headerlink" title="交易配置生成器是怎么工作的 How does it work?"></a>交易配置生成器是怎么工作的 How does it work?</h3><p>这玩意使用 configtx.yaml 作为配置文件，定义了网络中的成员定义。<br>包括三个成员：一个 Orderer 组织，两个 Peer 组织。<br>每个管理并维护连个 peer 节点。<br>这个文件还定义了一个 “联盟” SampleConsortium, 包括两个 Peer 组织<br>Configtxgen consumes a file - configtx.yaml - that contains the definitions for the sample network. There are three members - one Orderer Org (OrdererOrg) and two Peer Orgs (Org1 &amp; Org2) each managing and maintaining two peer nodes. This file also specifies a consortium - SampleConsortium - consisting of our two Peer Orgs. Pay specific attention to the “Profiles” section at the top of this file. You will notice that we have two unique headers. One for the orderer genesis block - TwoOrgsOrdererGenesis - and one for our channel - TwoOrgsChannel.</p>
-<p>These headers are important, as we will pass them in as arguments when we create our artifacts.</p>
-<p><em>Note</em><br>sample联盟是在系统级定义的，然后再 channel 级别引用。 Channels 是联盟的一个概念，所有联盟必须在广义网络范围内定义。<br>这里还有连个值得注意的规范，第一就是为每个组织定义了 anchor peers；第二个就是制定了每个组织的 MSP directory，就是为每个组织 <em>在创世块中</em> 保存根证书。这样，每个网络实体跟 ordering service 通讯都可以用它的数字签名校验了。</p>
-<p>Notice that our SampleConsortium is defined in the system-level profile and then referenced by our channel-level profile. Channels exist within the purview of a consortium, and all consortia must be defined in the scope of the network at large.<br>This file also contains two additional specifications that are worth noting. Firstly, we specify the anchor peers for each Peer Org (peer0.org1.example.com &amp; peer0.org2.example.com). Secondly, we point to the location of the MSP directory for each member, in turn allowing us to store the root certificates for each Org in the orderer genesis block. This is a critical concept. Now any network entity communicating with the ordering service can have its digital signature verified.</p>
-<h2 id="运行工具-Run-the-tools"><a href="#运行工具-Run-the-tools" class="headerlink" title="运行工具 Run the tools"></a>运行工具 Run the tools</h2><p>既可以手动执行来生成证书和各种配置。当然也可以是这使用 byfn.sh 完成这些任务<br>You can manually generate the certificates/keys and the various configuration artifacts using the configtxgen and cryptogen commands. Alternately, you could try to adapt the byfn.sh script to accomplish your objectives.</p>
-<h2 id="手动创建-Manually-generate-the-artifacts"><a href="#手动创建-Manually-generate-the-artifacts" class="headerlink" title="手动创建 Manually generate the artifacts"></a>手动创建 Manually generate the artifacts</h2><p>其实可以参考 byfn.sh 脚本中的 generateCerts 来生成证书，方便期间还是在这里做个说明<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">../bin/cryptogen generate --config=./crypto-config.yaml</span><br></pre></td></tr></table></figure></p>
-<p>结果就是<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">org1.example.com</span><br><span class="line">org2.example.com</span><br></pre></td></tr></table></figure></p>
-<p>证书就生成到 crypto-config 目录，在 first-network/crypto-config<br>生成的目录结构基本和配置文件的目录结构差不多。</p>
-<p>下面，我们告诉 configtxgen 到哪里去找 configtx.yaml<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export FABRIC_CFG_PATH=$PWD</span><br></pre></td></tr></table></figure></p>
-<p>然后，执行  configtxgen 来创建 orderer 创世块:<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">configtxgen -profile TwoOrgsOrdererGenesis -channelID byfn-sys-channel -outputBlock ./channel-artifacts/genesis.block</span><br></pre></td></tr></table></figure></p>
-<p>输出<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2018-12-01 22:29:19.647 CST [common/tools/configtxgen] main -&gt; INFO 001 Loading configuration</span><br><span class="line">2018-12-01 22:29:19.683 CST [common/tools/configtxgen] doOutputBlock -&gt; INFO 002 Generating genesis block</span><br><span class="line">2018-12-01 22:29:19.685 CST [common/tools/configtxgen] doOutputBlock -&gt; INFO 003 Writing genesis block</span><br><span class="line"></span><br><span class="line">#看看结果</span><br><span class="line">ll channel-artifacts</span><br><span class="line">-rw-r--r--   1 whx  staff  12770 12  1 22:29 genesis.block</span><br></pre></td></tr></table></figure></p>
-<h2 id="创建-一个-Channel-Configuration-Transaction"><a href="#创建-一个-Channel-Configuration-Transaction" class="headerlink" title="创建 一个 Channel Configuration Transaction"></a>创建 一个 Channel Configuration Transaction</h2><p>下面创建 channel transaction artifact.<br>确保替换 $CHANNEL_NAME 或者设置 CHANNEL_NAME 为环境变量:</p>
-<h1 id="The-channel-tx-artifact-contains-the-definitions-for-our-sample-channel"><a href="#The-channel-tx-artifact-contains-the-definitions-for-our-sample-channel" class="headerlink" title="The channel.tx artifact contains the definitions for our sample channel"></a>The channel.tx artifact contains the definitions for our sample channel</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export CHANNEL_NAME=mychannel  </span><br><span class="line">configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME</span><br></pre></td></tr></table></figure>
-<p>输出<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2018-12-01 22:34:48.777 CST [common/tools/configtxgen] main -&gt; INFO 001 Loading configuration</span><br><span class="line">2018-12-01 22:34:48.808 CST [common/tools/configtxgen] doOutputChannelCreateTx -&gt; INFO 002 Generating new channel configtx</span><br><span class="line">2018-12-01 22:34:48.812 CST [common/tools/configtxgen] doOutputChannelCreateTx -&gt; INFO 003 Writing new channel tx</span><br><span class="line"></span><br><span class="line">#看下结果</span><br><span class="line">ll channel-artifacts</span><br><span class="line">-rw-r--r--   1 whx  staff    346 12  1 22:34 channel.tx</span><br><span class="line">-rw-r--r--   1 whx  staff  12770 12  1 22:29 genesis.block</span><br></pre></td></tr></table></figure></p>
-<p>下面，我们定义 网络中组织1的 anchor peer<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org1MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org1MSP</span><br><span class="line"></span><br><span class="line">2018-12-01 22:39:15.789 CST [common/tools/configtxgen] main -&gt; INFO 001 Loading configuration</span><br><span class="line">2018-12-01 22:39:15.831 CST [common/tools/configtxgen] doOutputAnchorPeersUpdate -&gt; INFO 002 Generating anchor peer update</span><br><span class="line">2018-12-01 22:39:15.831 CST [common/tools/configtxgen] doOutputAnchorPeersUpdate -&gt; INFO 003 Writing anchor peer update</span><br></pre></td></tr></table></figure></p>
-<p>紧接着就是组织2</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org2MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org2MSP</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2018-12-01 22:39:24.500 CST [common/tools/configtxgen] main -&gt; INFO 001 Loading configuration</span><br><span class="line">2018-12-01 22:39:24.535 CST [common/tools/configtxgen] doOutputAnchorPeersUpdate -&gt; INFO 002 Generating anchor peer update</span><br><span class="line">2018-12-01 22:39:24.535 CST [common/tools/configtxgen] doOutputAnchorPeersUpdate -&gt; INFO 003 Writing anchor peer update</span><br></pre></td></tr></table></figure>
-<p>看看生成的内容<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ll channel-artifacts</span><br><span class="line">-rw-r--r--   1 whx  staff    284 12  1 22:39 Org1MSPanchors.tx</span><br><span class="line">-rw-r--r--   1 whx  staff    284 12  1 22:39 Org2MSPanchors.tx</span><br><span class="line">-rw-r--r--   1 whx  staff    346 12  1 22:34 channel.tx</span><br><span class="line">-rw-r--r--   1 whx  staff  12770 12  1 22:29 genesis.block</span><br></pre></td></tr></table></figure></p>
-<h2 id="启动网络-Start-the-network"><a href="#启动网络-Start-the-network" class="headerlink" title="启动网络 Start the network"></a>启动网络 Start the network</h2><p>We will leverage a script to spin up our network. The docker-compose file references the images that we have previously downloaded, and bootstraps the orderer with our previously generated genesis.block.</p>
-<p>为了剖析每一步的功能，我们一步步通过命令行手动执行。<br>受限我们启动网络<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker-compose -f docker-compose-cli.yaml up -d</span><br><span class="line"></span><br><span class="line">Creating network &quot;net_byfn&quot; with the default driver</span><br><span class="line">Creating volume &quot;net_orderer.example.com&quot; with default driver</span><br><span class="line">Creating volume &quot;net_peer0.org1.example.com&quot; with default driver</span><br><span class="line">Creating volume &quot;net_peer1.org1.example.com&quot; with default driver</span><br><span class="line">Creating volume &quot;net_peer0.org2.example.com&quot; with default driver</span><br><span class="line">Creating volume &quot;net_peer1.org2.example.com&quot; with default driver</span><br><span class="line">Creating orderer.example.com    ... done</span><br><span class="line">Creating peer1.org1.example.com ... done</span><br><span class="line">Creating peer0.org2.example.com ... done</span><br><span class="line">Creating peer0.org1.example.com ... done</span><br><span class="line">Creating peer1.org2.example.com ... done</span><br><span class="line">Creating cli                    ... done</span><br></pre></td></tr></table></figure></p>
-<p>起了 orderer 和 四个 peers<br>如果想看看网络实时日志，就不要加 -d 参数。If you let the logs stream, 就打开第二个 terminal 执行 CLI calls .</p>
-<h2 id="环境变量-Environment-variables"><a href="#环境变量-Environment-variables" class="headerlink" title="环境变量 Environment variables"></a>环境变量 Environment variables</h2><p>下面的 CLI 命令是针对 peer0.org1.example.com 的, 我们需要设定如下四个环境变量用来执行我们的命令。<br>这些变量会带入 CLI 容器, 因为我们操作的时候不用管就行。<br>但是如果想要对不同的 peers 执行命令，就需要修改这四个环境变量<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Environment variables for PEER0</span><br><span class="line"></span><br><span class="line">CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp</span><br><span class="line">CORE_PEER_ADDRESS=peer0.org1.example.com:7051</span><br><span class="line">CORE_PEER_LOCALMSPID=&quot;Org1MSP&quot;</span><br><span class="line">CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt</span><br></pre></td></tr></table></figure></p>
-<h2 id="创建、加入-Channel-Create-amp-Join-Channel"><a href="#创建、加入-Channel-Create-amp-Join-Channel" class="headerlink" title="创建、加入 Channel Create &amp; Join Channel"></a>创建、加入 Channel Create &amp; Join Channel</h2><p>回顾前面使用 configtxgen 创建 channel configuration transaction 。<br>通过使用 configtx.xml 中相同或者不同的 profiles ，我们可以重复创建更多的 channel configuration transactions。<br>然后就可以重复上面介绍的方法在网络中创建其它的channel。<br>我们将使用 docker exec 命令进入 CLI 容器<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker exec -it cli bash</span><br><span class="line"></span><br><span class="line">root@6248103d0d59:/opt/gopath/src/github.com/hyperledger/fabric/peer#</span><br></pre></td></tr></table></figure></p>
-<p>下一步，我们想要把我们前面创建的 channel configuration transaction artifact 发送给 orderer ，作为创建 channel 的请求。<br>我们用 -c 来设置 channel name<br>-f 设置  channel configuration transaction 这里是 channel.tx<br>你可以用你自己的名字<br> with the -f flag. In this case it is channel.tx, however you can mount your own configuration transaction with a different name. Once again we will set the CHANNEL_NAME environment variable within our CLI container so that we don’t have to explicitly pass this argument. Channel names must be all lower case, less than 250 characters long and match the regular expression [a-z][a-z0-9.-]*.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export CHANNEL_NAME=mychannel</span><br><span class="line"></span><br><span class="line"># the channel.tx file is mounted in the channel-artifacts directory within your CLI container</span><br><span class="line"># as a result, we pass the full path for the file</span><br><span class="line"># we also pass the path for the orderer ca-cert in order to verify the TLS handshake</span><br><span class="line"># be sure to export or replace the $CHANNEL_NAME variable appropriately</span><br><span class="line"></span><br><span class="line">peer channel create -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem</span><br><span class="line"></span><br><span class="line">2018-12-02 00:44:23.818 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2018-12-02 00:44:23.887 UTC [cli/common] readBlock -&gt; INFO 002 Received block: 0</span><br><span class="line"></span><br><span class="line">ll</span><br><span class="line">drwxr-xr-x  7 root root   224 Dec  1 14:39 channel-artifacts/</span><br><span class="line">drwxr-xr-x  4 root root   128 Dec  1 14:24 crypto/</span><br><span class="line">-rw-r--r--  1 root root 15778 Dec  2 00:44 mychannel.block</span><br><span class="line">drwxr-xr-x 10 root root   320 Nov 30 06:27 scripts/</span><br></pre></td></tr></table></figure></p>
-<p>这时候当前目录多了一个文件 mychannel.block<br>这就是一个创世块，用来连接 channel 的。</p>
-<p>接下来我们把 peer0.org1.example.com 接入到 channel.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># By default, this joins ``peer0.org1.example.com`` only</span><br><span class="line"># the &lt;channel-ID.block&gt; was returned by the previous command</span><br><span class="line"># if you have not modified the channel name, you will join with mychannel.block</span><br><span class="line"># if you have created a different channel name, then pass in the appropriately named block</span><br><span class="line"></span><br><span class="line"> peer channel join -b mychannel.block</span><br><span class="line"></span><br><span class="line"> 2018-12-02 00:50:39.672 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2018-12-02 00:50:39.748 UTC [channelCmd] executeJoin -&gt; INFO 002 Successfully submitted proposal to join channel</span><br></pre></td></tr></table></figure></p>
-<p>修改上面的环境变量，可以把其它几个peer 连接到 channel 上。</p>
-<p>我们暂时只把 peer0.org2.example.com 接入 channel ，这样我们就可以更新channel 的  anchor peer definitions .<br>命令如下:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp CORE_PEER_ADDRESS=peer0.org2.example.com:7051 CORE_PEER_LOCALMSPID=&quot;Org2MSP&quot; CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt peer channel join -b mychannel.block</span><br><span class="line">#其实就是在一行中把环境变量直接设置好，带入peer 命令中，分开就是</span><br><span class="line"></span><br><span class="line">export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp </span><br><span class="line"></span><br><span class="line">export CORE_PEER_ADDRESS=peer0.org2.example.com:7051 </span><br><span class="line"></span><br><span class="line">export CORE_PEER_LOCALMSPID=&quot;Org2MSP&quot; </span><br><span class="line"></span><br><span class="line">export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt </span><br><span class="line"></span><br><span class="line">peer channel join -b mychannel.block</span><br><span class="line"></span><br><span class="line"># 结果</span><br><span class="line">2018-12-02 01:00:42.483 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2018-12-02 01:00:42.549 UTC [channelCmd] executeJoin -&gt; INFO 002 Successfully submitted proposal to join channel</span><br></pre></td></tr></table></figure>
-<p>第二个就不用再创建channel了，因为第一个已经创建了，直接使用第一次返回的 mychannel.block 来加入就行了</p>
-<h2 id="更新-anchor-peers"><a href="#更新-anchor-peers" class="headerlink" title="更新 anchor peers"></a>更新 anchor peers</h2><p>anchor peers 是啥意思？没太搞明白<br>channel The following commands are channel updates and they will propagate to the definition of the channel. In essence, we adding additional configuration information on top of the channel’s genesis block. Note that we are not modifying the genesis block, but simply adding deltas into the chain that will define the anchor peers.</p>
-<p>更新 channel definition ，定义 Org1 的 anchor peer 为 peer0.org1.example.com:<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/Org1MSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem</span><br><span class="line"></span><br><span class="line">2018-12-02 02:32:20.264 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2018-12-02 02:32:20.298 UTC [channelCmd] update -&gt; INFO 002 Successfully submitted channel update</span><br></pre></td></tr></table></figure></p>
-<p>然后更新 Org2 的 anchor peer for 为 peer0.org2.example.com. 这次得带着环境变量<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp CORE_PEER_ADDRESS=peer0.org2.example.com:7051 CORE_PEER_LOCALMSPID=&quot;Org2MSP&quot; CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/Org2MSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem</span><br><span class="line"></span><br><span class="line">2018-12-02 02:33:43.892 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2018-12-02 02:33:43.925 UTC [channelCmd] update -&gt; INFO 002 Successfully submitted channel update</span><br></pre></td></tr></table></figure></p>
-<h2 id="安装并实例化-Chaincode-Install-amp-Instantiate-Chaincode"><a href="#安装并实例化-Chaincode-Install-amp-Instantiate-Chaincode" class="headerlink" title="安装并实例化 Chaincode  Install &amp; Instantiate Chaincode"></a>安装并实例化 Chaincode  Install &amp; Instantiate Chaincode</h2><p>应用程序通过 Chaincode 跟账本的区块链交互，因此我们必须在每个 peer 上安装 Chaincode，Chaincode 会执行并且为我们的交易背书，然后在 channel上实例化 chaincode<br>Applications interact with the blockchain ledger through chaincode. As such we need to install the chaincode on every peer that will execute and endorse our transactions, and then instantiate the chaincode on the channel.</p>
-<p>我们首先在四个 peer 节点中的一个安装  Go, Node.js or Java chaincode 例子。<br>这些命令把特殊的源代码添加到 peer 的文件系统中。<br><em>注意</em></p>
-<p>一个Chinacode 名字只能安装一个版本。peer 文件系统中以 chinacode 名字和版本的方式保存源代码;<br>它是语言无关的。实例化的 Chaincode 容器会反应那个语言安装在 peer 中 。</p>
-<p>Golang<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># this installs the Go chaincode. For go chaincode -p takes the relative path from $GOPATH/src</span><br><span class="line">peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/chaincode_example02/go/</span><br><span class="line">2018-12-02 02:46:15.195 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 001 Using default escc</span><br><span class="line">2018-12-02 02:46:15.196 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 002 Using default vscc</span><br><span class="line">2018-12-02 02:46:15.527 UTC [chaincodeCmd] install -&gt; INFO 003 Installed remotely response:&lt;status:200 payload:&quot;OK&quot; &gt;</span><br></pre></td></tr></table></figure></p>
-<p>也需要在 org2 中安装,如果不安装，后面 invoke 提示失败<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 环境变量</span><br><span class="line">CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp CORE_PEER_ADDRESS=peer0.org2.example.com:7051 CORE_PEER_LOCALMSPID=&quot;Org2MSP&quot; CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/chaincode_example02/go/</span><br><span class="line"></span><br><span class="line">2018-12-02 04:32:29.371 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 001 Using default escc</span><br><span class="line">2018-12-02 04:32:29.371 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 002 Using default vscc</span><br><span class="line">2018-12-02 04:32:29.767 UTC [chaincodeCmd] install -&gt; INFO 003 Installed remotely response:&lt;status:200 payload:&quot;OK&quot; &gt;</span><br></pre></td></tr></table></figure></p>
-<p>Nodejs<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># this installs the Node.js chaincode</span><br><span class="line"># make note of the -l flag to indicate &quot;node&quot; chaincode</span><br><span class="line"># for node chaincode -p takes the absolute path to the node.js chaincode</span><br><span class="line">peer chaincode install -n mycc -v 1.0 -l node -p /opt/gopath/src/github.com/chaincode/chaincode_example02/node/</span><br><span class="line"></span><br><span class="line">2018-12-02 02:46:39.551 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 001 Using default escc</span><br><span class="line">2018-12-02 02:46:39.551 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 002 Using default vscc</span><br><span class="line">2018-12-02 02:46:39.571 UTC [chaincodeCmd] install -&gt; INFO 003 Installed remotely response:&lt;status:500 message:&quot;error installing chaincode code mycc:1.0(chaincode /var/hyperledger/production/chaincodes/mycc.1.0 exists)&quot; &gt; payload:&quot;\n b\300\260V&apos;\311\254\013\376\213L\261\235\207\267ia=\340\020\242kh\266\327D\034\354\230\362\014p\022y\032o\010\364\003\022jerror installing chaincode code mycc:1.0(chaincode /var/hyperledger/production/chaincodes/mycc.1.0 exists)\&quot;\006\022\004lscc&quot;</span><br></pre></td></tr></table></figure></p>
-<p>因为已经安装了 go 语言版本，所以安装nodejs版本的提示出错</p>
-<p>Java<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># make note of the -l flag to indicate &quot;java&quot; chaincode</span><br><span class="line"># for java chaincode -p takes the absolute path to the java chaincode</span><br><span class="line">peer chaincode install -n mycc -v 1.0 -l java -p /opt/gopath/src/github.com/chaincode/chaincode_example02/java/</span><br><span class="line"></span><br><span class="line">2018-12-02 02:49:28.758 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 001 Using default escc</span><br><span class="line">2018-12-02 02:49:28.758 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 002 Using default vscc</span><br><span class="line">2018-12-02 02:49:28.809 UTC [chaincodeCmd] install -&gt; INFO 003 Installed remotely response:&lt;status:500 message:&quot;error installing chaincode code mycc:1.0(chaincode /var/hyperledger/production/chaincodes/mycc.1.0 exists)&quot; &gt; payload:&quot;\n \026&apos;\027\260\334\016\371\006x`\237\354P\374\337\017$&#125;\320\261\353\335\234&#125;t\317\241\324Q\263Q\300\022y\032o\010\364\003\022jerror installing chaincode code mycc:1.0(chaincode /var/hyperledger/production/chaincodes/mycc.1.0 exists)\&quot;\006\022\004lscc&quot;</span><br></pre></td></tr></table></figure></p>
-<p>同样，安装java版本的也出错了</p>
-<p>接着，在网络中实例化 chaincode，这将会在网络中初始化 chaincode，设置 chaincode的背书策略，然后为目标 peer 启动一个 chaincode 容器 。<br>注意 -P 参数，这是我们的策略，它指定这个交易背书的 chaincode 验证策略级别<br>下面的命令中可以看到我们的策略是 -P “AND (‘Org1MSP.peer’,’Org2MSP.peer’)”.<br>这意味着这个背书需要 Org1 和 Org2 同时确认。如果我们用了“OR”，就只需要其中一个确认就可以。</p>
-<h3 id="Golang"><a href="#Golang" class="headerlink" title="Golang"></a>Golang</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># be sure to replace the $CHANNEL_NAME environment variable if you have not exported it</span><br><span class="line"># if you did not install your chaincode with a name of mycc, then modify that argument as well</span><br><span class="line"></span><br><span class="line">peer chaincode instantiate -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc -v 1.0 -c &apos;&#123;&quot;Args&quot;:[&quot;init&quot;,&quot;a&quot;, &quot;100&quot;, &quot;b&quot;,&quot;200&quot;]&#125;&apos; -P &quot;AND (&apos;Org1MSP.peer&apos;,&apos;Org2MSP.peer&apos;)&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2018-12-02 02:57:35.533 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 001 Using default escc</span><br><span class="line">2018-12-02 02:57:35.533 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 002 Using default vscc</span><br></pre></td></tr></table></figure>
-<p>##Node.js</p>
-<p> 注意<br>实例化Nodejs chaincode 需要点时间，这个命令不是挂起了，而是他要安装 fabric-shim 层，这个image需要编译<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># be sure to replace the $CHANNEL_NAME environment variable if you have not exported it</span><br><span class="line"># if you did not install your chaincode with a name of mycc, then modify that argument as well</span><br><span class="line"># notice that we must pass the -l flag after the chaincode name to identify the language</span><br><span class="line"></span><br><span class="line">peer chaincode instantiate -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc -l node -v 1.0 -c &apos;&#123;&quot;Args&quot;:[&quot;init&quot;,&quot;a&quot;, &quot;100&quot;, &quot;b&quot;,&quot;200&quot;]&#125;&apos; -P &quot;AND (&apos;Org1MSP.peer&apos;,&apos;Org2MSP.peer&apos;)&quot;</span><br></pre></td></tr></table></figure></p>
-<h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><p>注意<br>这个也需要点时间，因为它需要编译 chaincode 并且下载带有 java 环境的 docker 容器<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">peer chaincode instantiate -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc -l java -v 1.0 -c &apos;&#123;&quot;Args&quot;:[&quot;init&quot;,&quot;a&quot;, &quot;100&quot;, &quot;b&quot;,&quot;200&quot;]&#125;&apos; -P &quot;AND (&apos;Org1MSP.peer&apos;,&apos;Org2MSP.peer&apos;)&quot;</span><br></pre></td></tr></table></figure></p>
-<p>如果你想其它的 peers 跟账本交互，就需要把他们加入到 channel 中，然后在相应的 peer 文件系统中安装同样名字、版本、语言的 chaincode。每个 peer 在于 chaincode 交互前将会启动一个 chaincode 容器。<br>再一次，我们要知道的事实： nodejs 镜像编译起来较慢<br>只要 chaincode 在 channel 中实例化了，我们就可以忘记 l flag。我们只需要传入 channel id 和 chaincode 名字</p>
-<h2 id="查询-Query"><a href="#查询-Query" class="headerlink" title="查询 Query"></a>查询 Query</h2><p>我们来查询一下 a 的值，以确认 chaincode 已经正常实例化、状态数据库也 populated(密布、分步、同步)<br>Let’s query for the value of a to make sure the chaincode was properly instantiated and the state DB was populated. The syntax for query is as follows:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># be sure to set the -C and -n flags appropriately</span><br><span class="line">peer chaincode query -C $CHANNEL_NAME -n mycc -c &apos;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;a&quot;]&#125;&apos;</span><br><span class="line"></span><br><span class="line">100</span><br><span class="line"></span><br><span class="line">peer chaincode query -C $CHANNEL_NAME -n mycc -c &apos;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;b&quot;]&#125;&apos;</span><br><span class="line"></span><br><span class="line">200</span><br></pre></td></tr></table></figure>
-<h2 id="Invoke"><a href="#Invoke" class="headerlink" title="Invoke"></a>Invoke</h2><p>从 a 转移 10 到 b，交易会产生一个新的 block ，然后更新状态数据库<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># be sure to set the -C and -n flags appropriately</span><br><span class="line"></span><br><span class="line">peer chaincode invoke -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c &apos;&#123;&quot;Args&quot;:[&quot;invoke&quot;,&quot;a&quot;,&quot;b&quot;,&quot;10&quot;]&#125;&apos;</span><br><span class="line"></span><br><span class="line"># 提示出错了</span><br><span class="line">Error: could not assemble transaction: ProposalResponsePayloads do not match - proposal response: version:1 response:&lt;status:200 &gt; payload:&quot;\n \343\340\037+\317\374\235L\312NCb\0066!j\234\334\263\255Q?ivn\271G\374\006`\247A\022Y\nE\022\024\n\004lscc\022\014\n\n\n\004mycc\022\002\010\003\022-\n\004mycc\022%\n\007\n\001a\022\002\010\003\n\007\n\001b\022\002\010\003\032\007\n\001a\032\00290\032\010\n\001b\032\003210\032\003\010\310\001\&quot;\013\022\004mycc\032\0031.0&quot; endorsement:&lt;endorser:&quot;\n\007Org1MSP\022\252\006-----BEGIN CERTIFICATE-----\nMIICKDCCAc6gAwIBAgIQBJEnZPvyJFY+mpVRXW5JdTAKBggqhkjOPQQDAjBzMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UEAxMTY2Eu\nb3JnMS5leGFtcGxlLmNvbTAeFw0xODEyMDExNDE5MDBaFw0yODExMjgxNDE5MDBa\nMGoxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T\nYW4gRnJhbmNpc2NvMQ0wCwYDVQQLEwRwZWVyMR8wHQYDVQQDExZwZWVyMC5vcmcx\nLmV4YW1wbGUuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEDvZGZr/QfQz4\nzcevok8uwRC9uKrOBsvPzu6XNKyskxD3r+S0GGw4F/5plNJYH2fwWwdE/Lp630g2\ntu0BSFW6IaNNMEswDgYDVR0PAQH/BAQDAgeAMAwGA1UdEwEB/wQCMAAwKwYDVR0j\nBCQwIoAgIidiMO1ijvL6iOrMvOLhe4ymOnTA6HaIplyPBHJTYvwwCgYIKoZIzj0E\nAwIDSAAwRQIhAI8yVRt8eOG2wzKWfNDc7kAIFVFApmDODCa3E20UWL97AiBZ3ddq\ndc64M/vUnn0EvLmHTfTA+ioOLLeeVHu6Vyz+SA==\n-----END CERTIFICATE-----\n&quot; signature:&quot;0E\002!\000\322\372\375I\276\365\257\333\007\240\345(\367\t\264/\304%\344h\347P\021&#123;\334\357N\037\311\363\226z\002 &amp;\346\336]\207J\217\321\024&amp;!\031\337&#123;\023\203P\031\243\256uj\333&apos;\374\366*D\222\341\231\320&quot; &gt;</span><br></pre></td></tr></table></figure></p>
-<p>然后检查估计是需要在 Org2 上安装 Chaincode,就安装了一下</p>
-<p>重新执行<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">peer chaincode invoke -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c &apos;&#123;&quot;Args&quot;:[&quot;invoke&quot;,&quot;a&quot;,&quot;b&quot;,&quot;10&quot;]&#125;&apos;</span><br><span class="line"></span><br><span class="line">2018-12-02 04:35:50.056 UTC [chaincodeCmd] chaincodeInvokeOrQuery -&gt; INFO 001 Chaincode invoke successful. result: status:200</span><br></pre></td></tr></table></figure></p>
-<p>然后再次查询<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">peer chaincode query -C $CHANNEL_NAME -n mycc -c &apos;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;a&quot;]&#125;&apos;</span><br><span class="line">90</span><br></pre></td></tr></table></figure></p>
-<p>这就执行成功了个<br>然后本着测试的精神继续玩，<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 再转 a=&gt;b 2 </span><br><span class="line">peer chaincode invoke -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c &apos;&#123;&quot;Args&quot;:[&quot;invoke&quot;,&quot;a&quot;,&quot;b&quot;,&quot;2&quot;]&#125;&apos;</span><br><span class="line"></span><br><span class="line">2018-12-02 04:38:16.449 UTC [chaincodeCmd] chaincodeInvokeOrQuery -&gt; INFO 001 Chaincode invoke successful. result: status:200</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">peer chaincode query -C $CHANNEL_NAME -n mycc -c &apos;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;a&quot;]&#125;&apos;</span><br><span class="line">88</span><br><span class="line"></span><br><span class="line"># b=&gt;a 3</span><br><span class="line">peer chaincode invoke -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c &apos;&#123;&quot;Args&quot;:[&quot;invoke&quot;,&quot;b&quot;,&quot;a&quot;,&quot;3&quot;]&#125;&apos;</span><br><span class="line">2018-12-02 04:40:04.542 UTC [chaincodeCmd] chaincodeInvokeOrQuery -&gt; INFO 001 Chaincode invoke successful. result: status:200</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">peer chaincode query -C $CHANNEL_NAME -n mycc -c &apos;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;a&quot;]&#125;&apos;</span><br><span class="line">91</span><br></pre></td></tr></table></figure></p>
-<p>完美</p>
-<h2 id="这到底都干了些什么-What’s-happening-behind-the-scenes"><a href="#这到底都干了些什么-What’s-happening-behind-the-scenes" class="headerlink" title="这到底都干了些什么 What’s happening behind the scenes?"></a>这到底都干了些什么 What’s happening behind the scenes?</h2><p>注意：</p>
-<p>These steps describe the scenario in which script.sh is run by ‘./byfn.sh up’. Clean your network with ./byfn.sh down and ensure this command is active. Then use the same docker-compose prompt to launch your network again</p>
-<ul>
-<li><p>A script - script.sh - is baked inside the CLI container. The script drives the createChannel command against the supplied channel name and uses the channel.tx file for channel configuration.</p>
-</li>
-<li><p>The output of createChannel is a genesis block - &lt;your_channel_name&gt;.block - which gets stored on the peers’ file systems and contains the channel configuration specified from channel.tx.</p>
-</li>
-<li><p>The joinChannel command is exercised for all four peers, which takes as input the previously generated genesis block. This command instructs the peers to join &lt;your_channel_name&gt; and create a chain starting with &lt;your_channel_name&gt;.block.</p>
-</li>
-<li><p>Now we have a channel consisting of four peers, and two organizations. This is our TwoOrgsChannel profile.</p>
-</li>
-<li><p>peer0.org1.example.com and peer1.org1.example.com belong to Org1; peer0.org2.example.com and peer1.org2.example.com belong to Org2</p>
-</li>
-<li><p>These relationships are defined through the crypto-config.yaml and the MSP path is specified in our docker compose.</p>
-</li>
-<li><p>The anchor peers for Org1MSP (peer0.org1.example.com) and Org2MSP (peer0.org2.example.com) are then updated. We do this by passing the Org1MSPanchors.tx and Org2MSPanchors.tx artifacts to the ordering service along with the name of our channel.</p>
-</li>
-<li><p>A chaincode - chaincode_example02 - is installed on peer0.org1.example.com and peer0.org2.example.com</p>
-</li>
-<li><p>The chaincode is then “instantiated” on peer0.org2.example.com. Instantiation adds the chaincode to the channel, starts the container for the target peer, and initializes the key value pairs associated with the chaincode. The initial values for this example are [“a”,”100” “b”,”200”]. This “instantiation” results in a container by the name of dev-peer0.org2.example.com-mycc-1.0 starting.</p>
-</li>
-<li><p>The instantiation also passes in an argument for the endorsement policy. The policy is defined as -P “AND (‘Org1MSP.peer’,’Org2MSP.peer’)”, meaning that any transaction must be endorsed by a peer tied to Org1 and Org2.</p>
-</li>
-<li><p>A query against the value of “a” is issued to peer0.org1.example.com. The chaincode was previously installed on peer0.org1.example.com, so this will start a container for Org1 peer0 by the name of dev-peer0.org1.example.com-mycc-1.0. The result of the query is also returned. No write operations have occurred, so a query against “a” will still return a value of “100”.</p>
-</li>
-<li><p>An invoke is sent to peer0.org1.example.com to move “10” from “a” to “b”<br>The chaincode is then installed on peer1.org2.example.com</p>
-</li>
-<li><p>A query is sent to peer1.org2.example.com for the value of “a”. This starts a third chaincode container by the name of dev-peer1.org2.example.com-mycc-1.0. A value of 90 is returned, correctly reflecting the previous transaction during which the value for key “a” was modified by 10.#</p>
-</li>
-</ul>
-
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/12/01/破解光猫/">破解光猫</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-12-01
-        </span>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-
-        
-          <p>从<a href="https://blog.csdn.net/kt_ZhangSheng/article/details/80855083" target="_blank" rel="noopener">这里看到</a></p>
-<blockquote>
-<p>进入TEWA-800E的管理页面，发现只能使用默认用户user登陆，而user没有修改路由模式的权限，现在的问题就是想办法登陆超级用户了，查到超级用户账号密码为CUAdmin/CUAdmin。以前似乎可以使用cu.html来登陆，但我试了下，现在（2018年6月底）应该是已经封掉了。<br>Chrome打开光猫登陆页面，默认是192.168.1.1，F12进入开发工具，在source中可以看到user_name固定为user，且提交时还加了对用户名的验证。 找到对应的代码，拷贝到console，修改user_name的值为CUAdmin，去掉用户名的验证。 </p>
-</blockquote>
-<p>就是在console中执行<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">document.getElementById(&apos;user_name&apos;).value= &apos;CUAdmin&apos;;</span><br><span class="line">function submitFrm()</span><br><span class="line">&#123;</span><br><span class="line">  document.getElementById(&apos;loginfrm&apos;).submit();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>就进入管理界面</p>
-<p>上行管理中设置第二个连接为桥接方式，保存就可以了。<br>然后在自己的路由器中设置wlan为ppoe方式，填上用户名密码就行了。</p>
-
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/11/30/learn-febric-01-install-samples-binaries-docker-images/">learn febric install samples, Binaries and Docker Images</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-11-30
-        </span>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-
-        
-          <p><a href="https://hyperledger-fabric.readthedocs.io/en/latest/install.html" target="_blank" rel="noopener">Febric GetStart</a></p>
-<p>新建一个试验项目目录，我起名 febric ,在这个目录里执行如下命令<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl -sSL http://bit.ly/2ysbOFE | bash -s 1.3.0</span><br></pre></td></tr></table></figure></p>
-<p>我自己curl执行错误，就手动下载<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh</span><br></pre></td></tr></table></figure></p>
-<p>保存为bootstrap.sh,然后手动执行</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chmod +x bootstrap.sh</span><br><span class="line">./bootstrap.sh  -s 1.3.0</span><br></pre></td></tr></table></figure>
-<p>应该是下载了好多tools在bin目录，这个目录需要设置的path中<br>下载速度比较慢…</p>
-<blockquote>
-<p>The command above downloads and executes a bash script that will download and extract all of the platform-specific binaries you will need to set up your network and place them into the cloned repo you created above. It retrieves the following platform-specific binaries:</p>
-<ul>
-<li>configtxgen,</li>
-<li>configtxlator,</li>
-<li>cryptogen,</li>
-<li>discover,</li>
-<li>idemixgen</li>
-<li>orderer,</li>
-<li>peer, and</li>
-<li>fabric-ca-client<br><code>`</code><br>Finally, the script will download the Hyperledger Fabric docker images from Docker Hub into your local Docker registry and tag them as ‘latest’.</li>
-</ul>
-</blockquote>
-<p>然后最好把～/febric/bin 添加到系统 PATH 中，方便执行</p>
-
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/11/30/windows-run-spring-boot-as-services/">在windows以服务的方式启动springboot</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-11-30
-        </span>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-
-        
-          <p>了解一下：<br><a href="https://github.com/kohsuke/winsw" target="_blank" rel="noopener">Windows service wrapper </a><br>这个软件可以把任何程序作为服务运行，首先下载exe执行文件，我的执行文件命名:customs.exe<br>创建customs.xml<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">service</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>Customs<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Customs<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>This runs Spring Boot Customs as a Service.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executable</span>&gt;</span>java<span class="tag">&lt;/<span class="name">executable</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arguments</span>&gt;</span>-Xmx256m -jar  -Dspring.profiles.active=test "c:\jenkins\soft\customs\customs.jar"<span class="tag">&lt;/<span class="name">arguments</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logmode</span>&gt;</span>rotate<span class="tag">&lt;/<span class="name">logmode</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>然后执行安装服务命令<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\jenkins\soft\customs&gt;customs install</span><br><span class="line">2018-11-30 11:11:23,416 INFO  - Installing the service with id &apos;Customs&apos;</span><br></pre></td></tr></table></figure></p>
-<p>启动服务<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\jenkins\soft\customs&gt;customs start</span><br><span class="line">2018-11-30 11:12:42,031 INFO  - Starting the service with id &apos;Customs&apos;</span><br><span class="line"></span><br><span class="line">C:\jenkins\soft\customs&gt;dir</span><br><span class="line"> 驱动器 C 中的卷没有标签。</span><br><span class="line"> 卷的序列号是 BCFA-AA62</span><br><span class="line"></span><br><span class="line"> C:\jenkins\soft\customs 的目录</span><br><span class="line"></span><br><span class="line">2018/11/30  11:12    &lt;DIR&gt;          .</span><br><span class="line">2018/11/30  11:12    &lt;DIR&gt;          ..</span><br><span class="line">2018/11/30  11:12                 0 customs.err.log</span><br><span class="line">2018/11/30  11:06           360,448 customs.exe</span><br><span class="line">2018/11/30  10:37        39,628,558 customs.jar</span><br><span class="line">2018/11/30  11:12               978 customs.out.log</span><br><span class="line">2018/11/30  11:12             1,612 customs.wrapper.log</span><br><span class="line">2018/11/30  11:09               367 customs.xml</span><br></pre></td></tr></table></figure></p>
-<p>其中customs.out.log 是spring boot 的执行日志，customs.err.log是错误日志<br>customs.wrapper.log是service wrapper 的执行日志</p>
-<p>看到目录名是jenkins开头的，其实这个项目是用jenkins做CI的，在windows节点执行，要求windows节点接入的时候用管理员身份执行，项目用maven打包完成后添加一个windows shell任务<br>shell脚本如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rem copy jar to c:\jenkins\customs\customs.jar</span><br><span class="line">copy target\customs-0.0.1-SNAPSHOT.jar c:\jenkins\soft\customs\customs.jar</span><br><span class="line">rem 进入工作目录</span><br><span class="line">cd c:\jenkins\soft\customs</span><br><span class="line"></span><br><span class="line">rem 停止服务</span><br><span class="line">customs stop</span><br><span class="line"></span><br><span class="line">rem 启动服务</span><br><span class="line">customs start</span><br></pre></td></tr></table></figure></p>
 
         
       
