@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content=", , wanghongxing">
+  <meta name="keywords" content="fabric, blockchain, hongxing">
 
 
 
@@ -33,7 +33,7 @@
 
 
 
-  <link rel="alternate" href="/default" title="wanghongxing">
+  <link rel="alternate" href="/default" title="hongxing">
 
 
 
@@ -42,7 +42,7 @@
 
 
 
-<link rel="canonical" href="http://wanghongxing.github.io/fabric/channels_zh.html">
+<link rel="canonical" href="http://wanghongxing.github.io/2019/04/21/channels_zh/">
 
 
 
@@ -90,12 +90,12 @@
   window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
 </script>
 
-    <title> hyperledger fabric channel - wanghongxing </title>
+    <title> hyperledger fabric channel - hongxing </title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/." class="logo">wanghongxing</a>
+    <a href="/." class="logo">hongxing</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -125,6 +125,15 @@
         </li>
       </a>
     
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            标签
+          
+        </li>
+      </a>
+    
       <a href="/about">
         <li class="mobile-menu-item">
           
@@ -139,7 +148,7 @@
 
     <div class="container" id="mobile-panel">
       <header id="header" class="header"><div class="logo-wrapper">
-  <a href="/." class="logo">wanghongxing</a>
+  <a href="/." class="logo">hongxing</a>
 </div>
 
 <nav class="site-navbar">
@@ -165,6 +174,15 @@
         </li>
       
         <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
           <a class="menu-item-link" href="/about">
             
             
@@ -183,23 +201,37 @@
         <div class="content-wrapper">
           <div id="content" class="content">
             
+  
   <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          hyperledger fabric channel
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-04-21
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/fabric/">fabric</a>
+            
+          </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
     <div class="post-content">
-      <table>
-<thead>
-<tr>
-<th>原文</th>
-<th>作者</th>
-<th>审核修正</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="http://hyperledger-fabric.readthedocs.io/en/latest/channels.html" target="_blank" rel="noopener">原文</a></td>
-<td>Yi Zeng</td>
-</tr>
-</tbody>
-</table>
+      
+        <p> <a href="http://hyperledger-fabric.readthedocs.io/en/latest/channels.html" target="_blank" rel="noopener">原文</a> </p>
 <p>A Hyperledger Fabric channel is a private “subnet” of communication between two or more specific network members, for the purpose of conducting private and confidential transactions. A channel is defined by members (organizations), anchor peers per member, the shared ledger, chaincode application(s) and the ordering service node(s). Each transaction on the network is executed on a channel, where each party must be authenticated and authorized to transact on that channel. Each peer that joins a channel, has its own identity given by a membership services provider (MSP), which authenticates each peer to its channel peers and services.</p>
 <p>在超级账本Fabric中，一个通道是指一个在两个或多个特定网络成员间的专门为私人的和机密的交易为目的而建立的私有”子网”。一个通道的定义中包含：成员（组织），每个成员的锚节点，共享帐本，链上代码应用程序和排序服务节点。网络上的每个交易都在一个指定的通道中执行，在通道中交易必须通过通道中的每部分的认证和授权。要加入一个通道的每个节点都必须有自己的通过成员服务提供商（MSP）获得的身份标识，用于鉴定每个节点在通道中的是什么节点和服务。</p>
 <p>To create a new channel, the client SDK calls configuration system chaincode and references properties such as anchor peer<strong>s, and members (organizations). This request creates a </strong>genesis block for the channel ledger, which stores configuration information about the channel policies, members and anchor peers. When adding a new member to an existing channel, either this genesis block, or if applicable, a more recent reconfiguration block, is shared with the new member.</p>
@@ -212,8 +244,49 @@
 <p>Although any one anchor peer can belong to multiple channels, and therefore maintain multiple ledgers, no ledger data can pass from one channel to another. This separation of ledgers, by channel, is defined and implemented by configuration chaincode, the identity membership service and the gossip data dissemination protocol. The dissemination of data, which includes information on transactions, ledger state and channel membership, is restricted to peers with verifiable membership on the channel. This isolation of peers and ledger data, by channel, allows network members that require private and confidential transactions to coexist with business competitors and other restricted members, on the same blockchain network.</p>
 <p>虽然任意一个锚节点都可以属于多个通道，而且维护了多个账本，但是不会有任何账本数据会从一个通道传到另一个通道。这就是根据通道对账本的分离，这种分离是在配置链上代码，成员标识服务和gossip传播协议中定义和实现。数据的传播，包括交易的信息，账本状态和通道成员等都在通道内受限制的验证成员身份的节点之间。这种根据通道对节点和账本数据进行隔离，允许网络成员可以在同一个区块链网络中请求私有的和保密的交易给业务上的竞争对手和其他受限的成员。</p>
 
+      
     </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/fabric/">fabric</a>
+            
+              <a href="/tags/blockchain/">blockchain</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2019/04/21/channel_update_zh/">
+        <span class="next-text nav-default">hyperledger fabric channel update</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
   </article>
+
 
           </div>
           

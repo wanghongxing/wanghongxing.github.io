@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content=", , wanghongxing">
+  <meta name="keywords" content="fabric, blockchain, hongxing">
 
 
 
@@ -33,7 +33,7 @@
 
 
 
-  <link rel="alternate" href="/default" title="wanghongxing">
+  <link rel="alternate" href="/default" title="hongxing">
 
 
 
@@ -42,7 +42,7 @@
 
 
 
-<link rel="canonical" href="http://wanghongxing.github.io/fabric/channel_update_zh.html">
+<link rel="canonical" href="http://wanghongxing.github.io/2019/04/21/channel_update_zh/">
 
 
 
@@ -90,12 +90,12 @@
   window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
 </script>
 
-    <title> hyperledger fabric channel update - wanghongxing </title>
+    <title> hyperledger fabric channel update - hongxing </title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/." class="logo">wanghongxing</a>
+    <a href="/." class="logo">hongxing</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -125,6 +125,15 @@
         </li>
       </a>
     
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            标签
+          
+        </li>
+      </a>
+    
       <a href="/about">
         <li class="mobile-menu-item">
           
@@ -139,7 +148,7 @@
 
     <div class="container" id="mobile-panel">
       <header id="header" class="header"><div class="logo-wrapper">
-  <a href="/." class="logo">wanghongxing</a>
+  <a href="/." class="logo">hongxing</a>
 </div>
 
 <nav class="site-navbar">
@@ -165,6 +174,15 @@
         </li>
       
         <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
           <a class="menu-item-link" href="/about">
             
             
@@ -183,23 +201,44 @@
         <div class="content-wrapper">
           <div id="content" class="content">
             
+  
   <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          hyperledger fabric channel update
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-04-21
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/fabric/">fabric</a>
+            
+          </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#重新配置第一个网络"><span class="toc-text">重新配置第一个网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配置环境变量"><span class="toc-text">配置环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动configtxlator服务器"><span class="toc-text">启动configtxlator服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#形成更新对象和重新配置信道"><span class="toc-text">形成更新对象和重新配置信道</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#将Org3加入信道"><span class="toc-text">将Org3加入信道</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#升级和调用"><span class="toc-text">升级和调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+
     <div class="post-content">
-      <table>
-<thead>
-<tr>
-<th>原文</th>
-<th>作者</th>
-<th>审核修正</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="http://hyperledger-fabric.readthedocs.io/en/latest/channel_update.html" target="_blank" rel="noopener">原文</a></td>
-<td>Weibing Wang</td>
-</tr>
-</tbody>
-</table>
+      
+        <p> <a href="http://hyperledger-fabric.readthedocs.io/en/latest/channel_update.html" target="_blank" rel="noopener">原文</a> </p>
 <h2 id="重新配置第一个网络"><a href="#重新配置第一个网络" class="headerlink" title="重新配置第一个网络"></a>重新配置第一个网络</h2><blockquote>
 <p>注意</p>
 <blockquote>
@@ -315,8 +354,55 @@
 <p>你会看到一个响应：<code>Query Result: 80</code>，这准确反映了这个链码的世界状态的改变。  </p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>重新配置过程的确涉及很多，但是各个步骤都有一个合理的方法。最终目标是形成以protobuf二进制格式表示的增量交易对象，然后收集必要数量的管理员签名，使得重新配置交易处理完成信道的修改策略。<code>configtxlator</code>和<code>jq</code>工具，与日益增长<code>peer channel</code>命令一起，为我们提供了完成这项任务所需的功能。</p>
 
+      
     </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/fabric/">fabric</a>
+            
+              <a href="/tags/blockchain/">blockchain</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2019/04/21/channels_zh/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">hyperledger fabric channel</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2019/04/21/Hyperledger-Fabric-02-Glossary/">
+        <span class="next-text nav-default">Hyperledger Fabric Glossary</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
   </article>
+
 
           </div>
           
