@@ -2,15 +2,17 @@
 title: learn febric 02 Building Your First Network
 date: 2018-12-01 19:56:03
 tags:
+  - fabric
+  - blockchain
 ---
 参照官网：
 https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html
 
-> We provide a fully annotated script - byfn.sh - that leverages these Docker images to quickly bootstrap a Hyperledger Fabric network comprised of 4 peers representing two different organizations, and an orderer node. It will also launch a container to run a scripted execution that will join peers to a channel, deploy and instantiate chaincode and drive execution of transactions against the deployed chaincode.
+ We provide a fully annotated script - byfn.sh - that leverages these Docker images to quickly bootstrap a Hyperledger Fabric network comprised of 4 peers representing two different organizations, and an orderer node. It will also launch a container to run a scripted execution that will join peers to a channel, deploy and instantiate chaincode and drive execution of transactions against the deployed chaincode.
 
 就是说这个脚本会启动四个 peer，代表两个组织、一个 orderer 节点。它会启动一个容器，容器会执行一个脚本：把 peer 连接到 channel， 部署并实例化链码，然后针对部署的链码发起交易的执行。
 
-> If you choose not to supply a channel name, then the script will use a default name of mychannel. The CLI timeout parameter (specified with the -t flag) is an optional value; if you choose not to set it, then the CLI will give up on query requests made after the default setting of 10 seconds.
+If you choose not to supply a channel name, then the script will use a default name of mychannel. The CLI timeout parameter (specified with the -t flag) is an optional value; if you choose not to set it, then the CLI will give up on query requests made after the default setting of 10 seconds.
 
 不提供 -c channel 名字，缺省创建mychannel
 
@@ -22,26 +24,26 @@ https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html
 ```
 瞬间执行了好多东西，不知道干啥了
 
-> This first step generates all of the certificates and keys for our various network entities, the genesis block used to bootstrap the ordering service, and a collection of configuration transactions required to configure a Channel.
+This first step generates all of the certificates and keys for our various network entities, the genesis block used to bootstrap the ordering service, and a collection of configuration transactions required to configure a Channel.
 应该是创建了：所有网络实体的证书、密钥，启动ordering 服务的创世块，以及一系列配置Channel所需要的交易配置信息？？
 
 - Bring Up the Network
 把这个网络跑起来
-> Next, you can bring the network up with one of the following commands:
+Next, you can bring the network up with one of the following commands:
 ```
 ./byfn.sh up
-````
+```
 这个命令会编译Golang链码镜像，然后运行相应的容器。
 
-> The logs will continue from there. This will launch all of the containers, and then drive a complete end-to-end application scenario. 
+The logs will continue from there. This will launch all of the containers, and then drive a complete end-to-end application scenario. 
 
 
 
 注意：
 只能同时启动一个，除非你把当前的删掉并重新创建网络
-> Do not run both of these commands. Only one language can be tried unless you bring down and recreate the network between.
+Do not run both of these commands. Only one language can be tried unless you bring down and recreate the network between.
 
-> The above command will compile Golang chaincode images and spin up the corresponding containers. Go is the default chaincode language, however there is also support for Node.js and Java chaincode. If you’d like to run through this tutorial with node chaincode, pass the following command instead:
+The above command will compile Golang chaincode images and spin up the corresponding containers. Go is the default chaincode language, however there is also support for Node.js and Java chaincode. If you’d like to run through this tutorial with node chaincode, pass the following command instead:
 Go是缺省链码开发语言，其实还支持nodejs java, 如果愿意可以加上 -l node 执行nodejs的链码镜像
 ```
 # we use the -l flag to specify the chaincode language
@@ -68,17 +70,17 @@ ddd5b3942165        hyperledger/fabric-peer:latest                              
 
 
 - 停止（或者删除）网络 Bring Down the Network
-> Finally, let’s bring it all down so we can explore the network setup one step at a time. The following will kill your containers, remove the crypto material and four artifacts, and delete the chaincode images from your Docker Registry:
+Finally, let’s bring it all down so we can explore the network setup one step at a time. The following will kill your containers, remove the crypto material and four artifacts, and delete the chaincode images from your Docker Registry:
 ```
 ./byfn.sh down
 ```
 执行了，啥都删了，那些容器都没有了
 
-> If you’d like to learn more about the underlying tooling and bootstrap mechanics, continue reading. In these next sections we’ll walk through the various steps and requirements to build a fully-functional Hyperledger Fabric network.
+If you’d like to learn more about the underlying tooling and bootstrap mechanics, continue reading. In these next sections we’ll walk through the various steps and requirements to build a fully-functional Hyperledger Fabric network.
 
 继续阅读，可以学习更多的底层工具、启动引导技术。下面我们走一遍各种方法、需求来创建一个全功能的超级账本网络
 
-> The manual steps outlined below assume that the FABRIC_LOGGING_SPEC in the cli container is set to DEBUG. You can set this by modifying the docker-compose-cli.yaml file in the first-network directory. e.g.
+The manual steps outlined below assume that the FABRIC_LOGGING_SPEC in the cli container is set to DEBUG. You can set this by modifying the docker-compose-cli.yaml file in the first-network directory. e.g.
 后面要把cli 容器设置成 Debug 模式
 ```
 cli:
@@ -100,32 +102,32 @@ cli:
 但我仍然添加了 FABRIC_LOGGING_SPEC=DEBUG
 
 ## 加密生成器 Crypto Generator
-> We will use the cryptogen tool to generate the cryptographic material (x509 certs and signing keys) for our various network entities. These certificates are representative of identities, and they allow for sign/verify authentication to take place as our entities communicate and transact.
+We will use the cryptogen tool to generate the cryptographic material (x509 certs and signing keys) for our various network entities. These certificates are representative of identities, and they allow for sign/verify authentication to take place as our entities communicate and transact.
 我们用它生成各种网络实体需要的加密素材（就是证书、密钥）。这些证书是身份的代表：他们用来在实体间通讯和交易的时候做加密/认证。
 
 ### 加密是怎么工作的 How does it work?
-> Cryptogen consumes a file - crypto-config.yaml - that contains the network topology and allows us to generate a set of certificates and keys for both the Organizations and the components that belong to those Organizations. Each Organization is provisioned a unique root certificate (ca-cert) that binds specific components (peers and orderers) to that Org. By assigning each Organization a unique CA certificate, we are mimicking a typical network where a participating Member would use its own Certificate Authority. Transactions and communications within Hyperledger Fabric are signed by an entity’s private key (keystore), and then verified by means of a public key (signcerts).
+Cryptogen consumes a file - crypto-config.yaml - that contains the network topology and allows us to generate a set of certificates and keys for both the Organizations and the components that belong to those Organizations. Each Organization is provisioned a unique root certificate (ca-cert) that binds specific components (peers and orderers) to that Org. By assigning each Organization a unique CA certificate, we are mimicking a typical network where a participating Member would use its own Certificate Authority. Transactions and communications within Hyperledger Fabric are signed by an entity’s private key (keystore), and then verified by means of a public key (signcerts).
 cryptogen 使用 crypto-config.yml 做配置文件，配置文件中包含了网络拓扑，让我们能为两个组织和他们的组织成员生成一系列证书和密钥。
 每个组织有一个自己的唯一根证书，根证书绑定组织成员（peers orderers）。
 由于每个组织一个唯一的CA证书，我们就模拟了一个典型的网络，参与的成员必须使用他们自己组织的CA （证书授权）。
 超级账本上的交易和通讯采用实体的私钥来签名，并用他自己的公钥校验。
 
 orderer 名字从配置文件里根据 Specs/Hostname 及 Domain 来确定
-> The naming convention for a network entity is as follows - “{ {.Hostname} }.{ {.Domain} }”. So using our ordering node as a reference point, we are left with an ordering node named - orderer.example.com that is tied to an MSP ID of Orderer. This file contains extensive documentation on the definitions and syntax. You can also refer to the Membership Service Providers (MSP) documentation for a deeper dive on MSP.
+The naming convention for a network entity is as follows - “{ {.Hostname} }.{ {.Domain} }”. So using our ordering node as a reference point, we are left with an ordering node named - orderer.example.com that is tied to an MSP ID of Orderer. This file contains extensive documentation on the definitions and syntax. You can also refer to the Membership Service Providers (MSP) documentation for a deeper dive on MSP.
 
-> After we run the cryptogen tool, the generated certificates and keys will be saved to a folder titled crypto-config.
+After we run the cryptogen tool, the generated certificates and keys will be saved to a folder titled crypto-config.
 
 ##  交易配置生成器 Configuration Transaction Generator
 
 configtxgen 用来创建四个配置
-> The configtxgen tool is used to create four configuration artifacts:
+The configtxgen tool is used to create four configuration artifacts:
 
 - orderer 【genesis block】 创世块
 - channel 【configuration transaction channel】配置交易（还是交易配置）
 - and two 【anchor peer transactions】 - one for each Peer Org. 这个看不懂
 
 没看懂后面两个
-> The orderer block is the Genesis Block for the ordering service, and the channel configuration transaction file is broadcast to the orderer at Channel creation time. The anchor peer transactions, as the name might suggest, specify each Org’s Anchor Peer on this channel.
+The orderer block is the Genesis Block for the ordering service, and the channel configuration transaction file is broadcast to the orderer at Channel creation time. The anchor peer transactions, as the name might suggest, specify each Org’s Anchor Peer on this channel.
 
 ### 交易配置生成器是怎么工作的 How does it work?
 
@@ -133,21 +135,21 @@ configtxgen 用来创建四个配置
 包括三个成员：一个 Orderer 组织，两个 Peer 组织。
 每个管理并维护连个 peer 节点。
 这个文件还定义了一个 "联盟" SampleConsortium, 包括两个 Peer 组织
-> Configtxgen consumes a file - configtx.yaml - that contains the definitions for the sample network. There are three members - one Orderer Org (OrdererOrg) and two Peer Orgs (Org1 & Org2) each managing and maintaining two peer nodes. This file also specifies a consortium - SampleConsortium - consisting of our two Peer Orgs. Pay specific attention to the “Profiles” section at the top of this file. You will notice that we have two unique headers. One for the orderer genesis block - TwoOrgsOrdererGenesis - and one for our channel - TwoOrgsChannel.
+Configtxgen consumes a file - configtx.yaml - that contains the definitions for the sample network. There are three members - one Orderer Org (OrdererOrg) and two Peer Orgs (Org1 & Org2) each managing and maintaining two peer nodes. This file also specifies a consortium - SampleConsortium - consisting of our two Peer Orgs. Pay specific attention to the “Profiles” section at the top of this file. You will notice that we have two unique headers. One for the orderer genesis block - TwoOrgsOrdererGenesis - and one for our channel - TwoOrgsChannel.
 
-> These headers are important, as we will pass them in as arguments when we create our artifacts.
+These headers are important, as we will pass them in as arguments when we create our artifacts.
 
 *Note*
 sample联盟是在系统级定义的，然后再 channel 级别引用。 Channels 是联盟的一个概念，所有联盟必须在广义网络范围内定义。
 这里还有连个值得注意的规范，第一就是为每个组织定义了 anchor peers；第二个就是制定了每个组织的 MSP directory，就是为每个组织 *在创世块中* 保存根证书。这样，每个网络实体跟 ordering service 通讯都可以用它的数字签名校验了。
 
-> Notice that our SampleConsortium is defined in the system-level profile and then referenced by our channel-level profile. Channels exist within the purview of a consortium, and all consortia must be defined in the scope of the network at large.
+Notice that our SampleConsortium is defined in the system-level profile and then referenced by our channel-level profile. Channels exist within the purview of a consortium, and all consortia must be defined in the scope of the network at large.
 This file also contains two additional specifications that are worth noting. Firstly, we specify the anchor peers for each Peer Org (peer0.org1.example.com & peer0.org2.example.com). Secondly, we point to the location of the MSP directory for each member, in turn allowing us to store the root certificates for each Org in the orderer genesis block. This is a critical concept. Now any network entity communicating with the ordering service can have its digital signature verified.
 
 ## 运行工具 Run the tools
 
 既可以手动执行来生成证书和各种配置。当然也可以是这使用 byfn.sh 完成这些任务
-> You can manually generate the certificates/keys and the various configuration artifacts using the configtxgen and cryptogen commands. Alternately, you could try to adapt the byfn.sh script to accomplish your objectives.
+You can manually generate the certificates/keys and the various configuration artifacts using the configtxgen and cryptogen commands. Alternately, you could try to adapt the byfn.sh script to accomplish your objectives.
 
 ## 手动创建 Manually generate the artifacts
 
@@ -326,11 +328,14 @@ drwxr-xr-x 10 root root   320 Nov 30 06:27 scripts/
  2018-12-02 00:50:39.672 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
 2018-12-02 00:50:39.748 UTC [channelCmd] executeJoin -> INFO 002 Successfully submitted proposal to join channel
 
-``` 
+```
+
+
 修改上面的环境变量，可以把其它几个peer 连接到 channel 上。
 
 我们暂时只把 peer0.org2.example.com 接入 channel ，这样我们就可以更新channel 的  anchor peer definitions .
 命令如下:
+
 ```
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp CORE_PEER_ADDRESS=peer0.org2.example.com:7051 CORE_PEER_LOCALMSPID="Org2MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt peer channel join -b mychannel.block
 #其实就是在一行中把环境变量直接设置好，带入peer 命令中，分开就是
@@ -355,7 +360,7 @@ peer channel join -b mychannel.block
 ## 更新 anchor peers
 
 anchor peers 是啥意思？没太搞明白 
-> channel The following commands are channel updates and they will propagate to the definition of the channel. In essence, we adding additional configuration information on top of the channel’s genesis block. Note that we are not modifying the genesis block, but simply adding deltas into the chain that will define the anchor peers.
+channel The following commands are channel updates and they will propagate to the definition of the channel. In essence, we adding additional configuration information on top of the channel’s genesis block. Note that we are not modifying the genesis block, but simply adding deltas into the chain that will define the anchor peers.
 
 更新 channel definition ，定义 Org1 的 anchor peer 为 peer0.org1.example.com:
 ```
@@ -376,7 +381,7 @@ CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypt
 ## 安装并实例化 Chaincode  Install & Instantiate Chaincode
 
 应用程序通过 Chaincode 跟账本的区块链交互，因此我们必须在每个 peer 上安装 Chaincode，Chaincode 会执行并且为我们的交易背书，然后在 channel上实例化 chaincode
-> Applications interact with the blockchain ledger through chaincode. As such we need to install the chaincode on every peer that will execute and endorse our transactions, and then instantiate the chaincode on the channel.
+Applications interact with the blockchain ledger through chaincode. As such we need to install the chaincode on every peer that will execute and endorse our transactions, and then instantiate the chaincode on the channel.
 
 我们首先在四个 peer 节点中的一个安装  Go, Node.js or Java chaincode 例子。
 这些命令把特殊的源代码添加到 peer 的文件系统中。
@@ -537,7 +542,7 @@ peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}'
 
 注意：
 
-> These steps describe the scenario in which script.sh is run by ‘./byfn.sh up’. Clean your network with ./byfn.sh down and ensure this command is active. Then use the same docker-compose prompt to launch your network again
+These steps describe the scenario in which script.sh is run by ‘./byfn.sh up’. Clean your network with ./byfn.sh down and ensure this command is active. Then use the same docker-compose prompt to launch your network again
 
 - A script - script.sh - is baked inside the CLI container. The script drives the createChannel command against the supplied channel name and uses the channel.tx file for channel configuration.
 

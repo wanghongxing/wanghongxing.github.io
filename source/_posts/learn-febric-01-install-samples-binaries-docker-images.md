@@ -2,6 +2,8 @@
 title: learn febric install samples, Binaries and Docker Images
 date: 2018-11-30 22:30:47
 tags:
+  - fabric
+  - blockchain
 ---
 
 [Febric GetStart](https://hyperledger-fabric.readthedocs.io/en/latest/install.html)

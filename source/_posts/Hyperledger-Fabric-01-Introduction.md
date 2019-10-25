@@ -1,0 +1,218 @@
+---
+title: Hyperledger Fabric 介绍（Introduction）
+date: 2019-04-21 10:53:15
+tags:
+  - fabric
+  - blockchain
+---
+
+介绍 (Introduction)
+
+In general terms, a blockchain is an immutable transaction ledger, maintained within a distributed network of peer nodes. These nodes each maintain a copy of the ledger by applying transactions that have been validated by a consensus protocol, grouped into blocks that include a hash that bind each block to the preceding block.
+一般来说，区块链是一个不可变的交易账本，维护在对等节点组成的分布式网络中。这些节点每个都会维护一份交易记录的账本副本，这些交易记录都已通过共识协议验证并组到了区块中，每个区块都包含关联到前一个区块的哈希值。
+
+The first and most widely recognized application of blockchain is the Bitcoin cryptocurrency, though others have followed in its footsteps. Ethereum, an alternative cryptocurrency, took a different approach, integrating many of the same characteristics as Bitcoin but adding smart contracts to create a platform for distributed applications. Bitcoin and Ethereum fall into a class of blockchain that we would classify as public permissionless blockchain technology. Basically, these are public networks, open to anyone, where participants interact anonymously.
+第一个也是最广泛认知的区块链应用是比特币加密货币，其他应用跟随了它的脚步。以太坊是采用了不同方法的另一种加密货币，集成了许多与比特币相同的特性, 但添加了智能合同, 以创建一个分布式应用程序平台。比特币和以太坊属于同一类区块链, 我们将其归类为公共免许可区块链技术。基本上, 这些都运行在公共网络, 对任何人开放, 参与者可以匿名进行交互。
+
+As the popularity of Bitcoin, Ethereum and a few other derivative technologies grew, interest in applying the underlying technology of the blockchain, distributed ledger and distributed application platform to more innovative enterprise use cases also grew. However, many enterprise use cases require performance characteristics that the permissionless blockchain technologies are unable (presently) to deliver. In addition, in many use cases, the identity of the participants is a hard requirement, such as in the case of financial transactions where Know-Your-Customer (KYC) and Anti-Money Laundering (AML) regulations must be followed.
+随着比特币的流行，以及以太坊和其他一些衍生技术的发展，对将区块链、分布式账本和分布式应用平台的基础技术应用于更具创新性的企业用例的兴趣也在增长。 然而许多企业用例需要履行的特征是免许可区块链技术无法（目前）给予的。 另外在许多用例中，参与者的身份是一项硬性要求，例如在必须遵循“了解客户”（KYC）和反洗钱（AML）法规的金融交易。
+
+For enterprise use, we need to consider the following requirements:
+为了企业用户，我们需要考虑下面的需求：
+
+•	Participants must be identified/identifiable
+参与者必须可识别且被识别
+•	Networks need to be permissioned
+网络需要获得许可
+•	High transaction throughput performance
+高性能的交易吞吐量
+•	Low latency of transaction confirmation
+低延迟的交易确认
+•	Privacy and confidentiality of transactions and data pertaining to business transactions
+与业务交易相关的交易和数据的隐私和机密性
+
+While many early blockchain platforms are currently being adapted for enterprise use, Hyperledger Fabric has been designed for enterprise use from the outset. The following sections describe how Hyperledger Fabric (Fabric) differentiates itself from other blockchain platforms and describes some of the motivation for its architectural decisions.
+虽然许多早期的区块链平台目前正在变得适合企业使用，但Hyperledger Fabric从一开始就被设计用于企业用户。 以下部分描述了Hyperledger Fabric如何将自己与其他区块链平台区分开来，并描述了其架构决策的一些动机。
+
+Hyperledger Fabric （中文直译就是超级账本织物）
+
+Hyperledger Fabric is an open source enterprise-grade permissioned distributed ledger technology (DLT) platform, designed for use in enterprise contexts, that delivers some key differentiating capabilities over other popular distributed ledger or blockchain platforms.
+Hyperledger Fabric是开源的企业级要许可的分布式账本技术（DLT）平台，被设计用于企业环境，提供了一些关键的超过其他流行分布式账本或区块链平台的差异化能力。
+
+One key point of differentiation is that Hyperledger was established under the Linux Foundation, which itself has a long and very successful history of nurturing open source projects under open governance that grow strong sustaining communities and thriving ecosystems. Hyperledger is governed by a diverse technical steering committee, and the Hyperledger Fabric project by a diverse set of maintainers from multiple organizations. It has a development community that has grown to over 35 organizations and nearly 200 developers since its earliest commits.
+差异化的一个关键点是Hyperledger是在Linux基金会下建立的，该基金会本身在开放式管理下培育开源项目的历史悠久且非常成功，这些项目可以发展强大的持续社区和蓬勃发展的生态系统。 Hyperledger由多元化技术指导委员会和Hyperledger Fabric项目管理，该项目由来自多个组织的各种维护人员组成。 它拥有一个自最早提交以来已经发展到超过35个组织和近200个开发人员的开发社区。
+
+Fabric has a highly modular and configurable architecture, enabling innovation, versatility and optimization for a broad range of industry use cases including banking, finance, insurance, healthcare, human resources, supply chain and even digital music delivery.
+Fabric具有高度模块化和可配置的架构，可为各种行业使用用例包括银行、金融、保险、医疗保健、人力资源、供应链甚至数字音乐提供创新、多功能性和优化。
+
+Fabric is the first distributed ledger platform to support smart contracts authored in general-purpose programming languages such as Java, Go and Node.js, rather than constrained domain-specific languages (DSL). This means that most enterprises already have the skill set needed to develop smart contracts, and no additional training to learn a new language or DSL is needed.
+Fabric是第一个支持用比如Java、Go和Node.js这样多种编程语言创建智能合约的分布式账本平台，而不是受限制于特定领域语言（DSL）。 这意味着大多数企业已经拥有开发智能合约所需的技能，并且不需要额外的培训来学习新的语言或DSL。
+
+The Fabric platform is also permissioned, meaning that, unlike with a public permissionless network, the participants are known to each other, rather than anonymous and therefore fully untrusted. This means that while the participants may not fully trust one another (they may, for example, be competitors in the same industry), a network can be operated under a governance model that is built off of what trust does exist between participants, such as a legal agreement or framework for handling disputes.
+Fabric平台也是要许可的，这意味着与公共免许可网络不同，参与者彼此了解，不是匿名导致完全不受信任。 这意味着虽然参与者可能彼此不完全信任（例如，他们可能是同一行业中的竞争者），但网络可以在管理模型下运行，该模型基于参与者之间存在信任，例如有处理纠纷的法律协议或框架。
+
+One of the most important of the platform’s differentiators is its support for pluggable consensus protocols that enable the platform to be more effectively customized to fit particular use cases and trust models. For instance, when deployed within a single enterprise, or operated by a trusted authority, fully byzantine fault tolerant consensus might be considered unnecessary and an excessive drag on performance and throughput. In situations such as that, a crash fault-tolerant (CFT) consensus protocol might be more than adequate whereas, in a multi-party, decentralized use case, a more traditional byzantine fault tolerant (BFT) consensus protocol might be required.
+该平台最重要的区别之一是它支持可插拔的共识协议，使平台能够更有效地进行定制，以适应特定的用例和信任模型。 例如，当部署在单个企业内或由可信任的权威机构运营时，完全拜占庭容错的共识可能被认为是不必要的，并且对性能和吞吐量造成过度拖累。 在诸如此类的情况下，碰撞容错（CFT）共识协议可能绰绰有余，而在多方分散用例中，可能需要更传统的拜占庭容错（BFT）共识协议。
+
+Fabric can leverage consensus protocols that do not require a native cryptocurrency to incent costly mining or to fuel smart contract execution. Avoidance of a cryptocurrency reduces some significant risk/attack vectors, and absence of cryptographic mining operations means that the platform can be deployed with roughly the same operational cost as any other distributed system.
+Fabric能利用共识协议，不需要原生加密货币去激励昂贵的挖矿或为智能合约的执行提供燃料。 加密货币的避免会减少一些重要的风险/攻击载体，并且加密挖矿操作的省略意味着可以使用与任何其他分布式系统大致相同的运营成本来部署平台。
+
+The combination of these differentiating design features makes Fabric one of the better performing platforms available today both in terms of transaction processing and transaction confirmation latency, and it enables privacy and confidentiality of transactions and the smart contracts (what Fabric calls “chaincode”) that implement them.
+这些差异化的设计特性组合使Fabric成为当今在交易处理和交易确认延迟方面性能更好的运行平台之一，并且它支持交易和实现交易的智能合约(Fabric称为“链代码”)的隐私和机密性。
+
+Let’s explore these differentiating features in more detail.
+让我们更详细地探索这些差异化的特性。
+
+模块化 (Modularity)
+
+Hyperledger Fabric has been specifically architected to have a modular architecture. Whether it is pluggable consensus, pluggable identity management protocols such as LDAP or OpenID Connect, key management protocols or cryptographic libraries, the platform has been designed at its core to be configured to meet the diversity of enterprise use case requirements.
+Hyperledger Fabric被专门设计为具有模块化的架构。无论它是可插入的共识、可插入的身份管理协议(如LDAP或OpenID Connect)、密钥管理协议或密码库，平台的核心被设计成能够满足企业用例需求的多样性。
+
+At a high level, Fabric is comprised of the following modular components:
+在较高层次上，Fabric由以下模块化组件组成:
+
+•	A pluggable ordering service establishes consensus on the order of transactions and then broadcasts blocks to peers.
+可插拔的排序服务建立了交易排序的共识，然后广播区块到对等节点。
+•	A pluggable membership service provider is responsible for associating entities in the network with cryptographic identities.
+可插拔的成员资格服务提供者，负责将网络中的实体与加密身份相关联。
+•	An optional peer-to-peer gossip service disseminates the blocks output by ordering service to other peers.
+可选的点对点流言服务，通过排序服务向其他节点传播区块的输出。
+•	Smart contracts (“chaincode”) run within a container environment (e.g. Docker) for isolation. They can be written in standard programming languages but do not have direct access to the ledger state.
+智能合约(“链代码”)在容器环境(例如Docker)中运行以进行隔离。它们可以用标准编程语言编写，但不能直接访问帐本状态。
+•	The ledger can be configured to support a variety of DBMSs.
+帐本可以通过配置来支持各种数据库。
+•	A pluggable endorsement and validation policy enforcement that can be independently configured per application.
+可插拔的背书和验证策略实施，可以在每个应用程序中独立配置。
+
+There is fair agreement in the industry that there is no “one blockchain to rule them all”. Hyperledger Fabric can be configured in multiple ways to satisfy the diverse solution requirements for multiple industry use cases.
+业界普遍认为，没有“一种区块链可以满足所有行业”。 Hyperledger Fabric可以通过多种方式进行配置，以满足多种行业用例的各种解决方案要求。
+
+要许可和免许可的区块链对比 (Permissioned vs Permissionless Blockchains)
+
+In a permissionless blockchain, virtually anyone can participate, and every participant is anonymous. In such a context, there can be no trust other than that the state of the blockchain, prior to a certain depth, is immutable. In order to mitigate this absence of trust, permissionless blockchains typically employ a “mined” native cryptocurrency or transaction fees to provide economic incentive to offset the extraordinary costs of participating in a form of byzantine fault tolerant consensus based on “proof of work” (PoW).
+在一个免许可的区块链中，几乎任何人都可以参与，每个参与者都是匿名的。 在这样的环境中，除了在某个深度之前区块链的状态是不可变的之外，不存在任何信任。 为了减轻这种信任的缺失，免许可的区块链通常采用“挖矿”的本地加密货币或交易费用来提供经济激励，以抵消参与基于“工作证明”（PoW）的拜占庭容错共识形式的特殊成本。
+
+Permissioned blockchains, on the other hand, operate a blockchain amongst a set of known, identified and often vetted participants operating under a governance model that yields a certain degree of trust. A permissioned blockchain provides a way to secure the interactions among a group of entities that have a common goal but which may not fully trust each other. By relying on the identities of the participants, a permissioned blockchain can use more traditional crash fault tolerant (CFT) or byzantine fault tolerant (BFT) consensus protocols that do not require costly mining.
+另一方面，要许可的区块链是在一组已知的、被识别的且经常经过被审查的参与者中操作区块链，这些参与者在一种产生一定程度信任的管理模型下运行。 要许可的区块链提供了一种方法来保护具有共同目标但可能彼此不完全信任的一组实体之间的交互。 通过依赖参与者的身份，要许可的区块链可以使用更传统的碰撞容错（CFT）或拜占庭容错（BFT）共识协议，而不需要昂贵的挖矿。
+
+Additionally, in such a permissioned context, the risk of a participant intentionally introducing malicious code through a smart contract is diminished. First, the participants are known to one another and all actions, whether submitting application transactions, modifying the configuration of the network or deploying a smart contract are recorded on the blockchain following an endorsement policy that was established for the network and relevant transaction type. Rather than being completely anonymous, the guilty party can be easily identified and the incident handled in accordance with the terms of the governance model.
+另外，在这种要许可的环境中，参与者通过智能合约故意引入恶意代码的风险降低。 首先，参与者彼此了解并且知道所有动作，无论是提交应用交易，修改网络配置还是部署智能合约，都会带着为网络和相关交易类型建立的背书策略，记录到区块链中。 不是完全匿名，可以很容易地识别有罪方，并根据管理模式的条款处理事件。
+
+智能合约 (Smart Contracts)
+
+A smart contract, or what Fabric calls “chaincode”, functions as a trusted distributed application that gains its security/trust from the blockchain and the underlying consensus among the peers. It is the business logic of a blockchain application.
+智能合约或Fabric称之为“链代码”，作为受信任的分布式应用程序功能，从区块链获得其安全性/信任以及节点之间的基本共识。 它是区块链应用程序的业务逻辑。
+
+There are three key points that apply to smart contracts, especially when applied to a platform:
+有三个关键点适用于智能合约，尤其是应用于平台时：
+
+•	many smart contracts run concurrently in the network,
+许多智能合约在网络中同时运行，
+•	they may be deployed dynamically (in many cases by anyone), and
+它们可以动态部署（在很多情况下是任何人），以及
+•	application code should be treated as untrusted, potentially even malicious.
+应用程序代码应视为不受信任，甚至可能是恶意的。
+
+Most existing smart-contract capable blockchain platforms follow an order-execute architecture in which the consensus protocol:
+大多数现有的支持智能合约的区块链平台在共识协议中遵循排序执行架构：
+•	validates and orders transactions then propagates them to all peer nodes,
+验证并排序交易然后将它们传播到所有对等节点，
+•	each peer then executes the transactions sequentially.
+然后，每个节点顺序执行交易。
+
+The order-execute architecture can be found in virtually all existing blockchain systems, ranging from public/permissionless platforms such as Ethereum (with PoW-based consensus) to permissioned platforms such as Tendermint, Chain, and Quorum.
+几乎所有现有的区块链系统都可以找到排序执行架构，范围从公共/免许可平台，如以太坊（基于PoW的共识）到要许可平台，如Tendermint，Chain和Quorum。
+
+Smart contracts executing in a blockchain that operates with the order-execute architecture must be deterministic; otherwise, consensus might never be reached. To address the non-determinism issue, many platforms require that the smart contracts be written in a non-standard, or domain-specific language (such as Solidity) so that non-deterministic operations can be eliminated. This hinders wide-spread adoption because it requires developers writing smart contracts to learn a new language and may lead to programming errors.
+在区块链中执行的与排序执行架构一起运行的智能合约必须是确定性的; 否则，可能永远不会达成共识。 为了解决非确定性问题，许多平台要求智能合约以非标准或特定领域的语言（例如Solidity）编写，以便可以消除非确定性操作。 这阻碍了智能合约的广泛采用，因为它要求开发人员为编写智能合同而去学习新语言并可能导致编程错误。
+
+Further, since all transactions are executed sequentially by all nodes, performance and scale is limited. The fact that the smart contract code executes on every node in the system demands that complex measures be taken to protect the overall system from potentially malicious contracts in order to ensure resiliency of the overall system.
+此外，由于所有节点都顺序执行所有交易，因此性能和规模受限。 智能合约代码在系统中的每个节点上执行的事实要求采取复杂措施来保护整个系统免受潜在恶意合同的影响，以确保整个系统的弹性。
+
+新方法 (A New Approach)
+
+Fabric introduces a new architecture for transactions that we call execute-order-validate. It addresses the resiliency, flexibility, scalability, performance and confidentiality challenges faced by the order-execute model by separating the transaction flow into three steps:
+Fabric为我们称为执行排序序验证（execute-order-validate）的交易引入了一种新的体系结构。 它通过将交易流程分为三个步骤来解决排序执行（order-execute）模型面临的弹性、灵活性、可伸缩性、性能和机密性的挑战：
+
+•	execute a transaction and check its correctness, thereby endorsing it,
+执行一个交易并检查其正确性，从而认可它，
+•	order transactions via a (pluggable) consensus protocol, and
+通过（可插拔的）共识协议排序交易，以及
+•	validate transactions against an application-specific endorsement policy before committing them to the ledger
+在将提交到帐本之前，根据特定于应用程序的背书策略验证交易
+
+This design departs radically from the order-execute paradigm in that Fabric executes transactions before reaching final agreement on their order.
+这种设计与排序执行范式有根本上的不同，因为Fabric在交易的排序达成最终协议之前就执行了交易。
+
+In Fabric, an application-specific endorsement policy specifies which peer nodes, or how many of them, need to vouch for the correct execution of a given smart contract. Thus, each transaction need only be executed (endorsed) by the subset of the peer nodes necessary to satisfy the transaction’s endorsement policy. This allows for parallel execution increasing overall performance and scale of the system. This first phase also eliminates any non-determinism, as inconsistent results can be filtered out before ordering.
+在Fabric中，应用程序特定的背书策略指定哪些或多少对等节点需要保证正确执行给定的智能合约。 因此每个交易只需要由满足交易的背书策略所必需的对等节点子集来执行（背书）。 这允许并行执行，从而提高系统的整体性能和规模。 在最初阶段也排除了不确定性，因为在排序之前可以滤掉不一致的结果。
+
+Because we have eliminated non-determinism, Fabric is the first blockchain technology that enables use of standard programming languages. In the 1.1.0 release, smart contracts can be written in either Go or Node.js, while there are plans to support other popular languages including Java in subsequent releases.
+因为我们已经排除了不确定性，所以Fabric是第一个能够使用标准编程语言的区块链技术。 在1.1.0版本中，智能合约可以用Go或Node.js编写，而有计划在后续版本中支持包括Java的其他流行语言。
+
+隐私和机密性 (Privacy and Confidentiality)
+
+As we have discussed, in a public, permissionless blockchain network that leverages PoW for its consensus model, transactions are executed on every node. This means that neither can there be confidentiality of the contracts themselves, nor of the transaction data that they process. Every transaction, and the code that implements it, is visible to every node in the network. In this case, we have traded confidentiality of contract and data for byzantine fault tolerant consensus delivered by PoW.
+正如我们所讨论的，在一个公共的、免许可的区块链网络中，利用PoW作为其共识模型，交易在每个节点上执行。 这意味着合同本身和他们处理的交易数据都不存在机密性。 每个交易以及实现它的代码对于网络中的每个节点都是可见的。 在这种情况下，我们用PoW提供的拜占庭容错共识来交换合同和数据的机密性。
+
+This lack of confidentiality can be problematic for many business/enterprise use cases. For example, in a network of supply-chain partners, some consumers might be given preferred rates as a means of either solidifying a relationship, or promoting additional sales. If every participant can see every contract and transaction, it becomes impossible to maintain such business relationships in a completely transparent network – everyone will want the preferred rates!
+对于许多商业/企业用例而言，这种缺乏机密性可能会有问题。 例如在供应链合作伙伴网络中，某些消费者可能会获得优惠利率，作为巩固关系或促进额外销量的手段。 如果每个参与者都可以看到每个合同和交易，那么就无法在完全透明的网络中维持这种业务关系 - 每个人都希望获得优惠费率！
+
+As a second example, consider the securities industry, where a trader building a position (or disposing of one) would not want her competitors to know of this, or else they will seek to get in on the game, weakening the trader’s gambit.
+作为第二个例子，考虑证券行业，交易者买入（或卖出）头寸并不希望她的竞争对手知道这一点，否则他们将寻求跟进，削弱交易者的策略。
+
+In order to address the lack of privacy and confidentiality for purposes of delivering on enterprise use case requirements, blockchain platforms have adopted a variety of approaches. All have their trade-offs.
+为了解决实现企业用例要求所缺乏的隐私和机密性，区块链平台采用了多种方法。 所有人都有自己的权衡。
+
+Encrypting data is one approach to providing confidentiality; however, in a permissionless network leveraging PoW for its consensus, the encrypted data is sitting on every node. Given enough time and computational resource, the encryption could be broken. For many enterprise use cases, the risk that their information could become compromised is unacceptable.
+加密数据是提供机密性的一种方法; 然而，在利用PoW达成共识的免许可网络中，加密数据位于每个节点上。 如果有足够的时间和计算资源，加密可能会被破解。 对于许多企业用例，其信息可能受到损害的风险是不可接受的。
+
+Zero knowledge proofs (ZKP) are another area of research being explored to address this problem, the trade-off here being that, presently, computing a ZKP requires considerable time and computational resources. Hence, the trade-off in this case is performance for confidentiality.
+零知识证明（ZKP）是正在探索解决该问题的另一个研究领域，目前需权衡的是计算ZKP需要相当多的时间和计算资源。 因此在这种情况下需要权衡机密性的性能。
+
+In a permissioned context that can leverage alternate forms of consensus, one might explore approaches that restrict the distribution of confidential information exclusively to authorized nodes.
+在可以利用其他形式共识的要许可环境中，对于限制机密信息的分发可以探索一种可能的方法方法是仅限于授权节点。
+
+Hyperledger Fabric, being a permissioned platform, enables confidentiality through its channel architecture. Basically, participants on a Fabric network can establish a “channel” between the subset of participants that should be granted visibility to a particular set of transactions. Think of this as a network overlay. Thus, only those nodes that participate in a channel have access to the smart contract (chaincode) and data transacted, preserving the privacy and confidentiality of both.
+Hyperledger Fabric是一个要许可的平台，通过其通道（channel）架构实现机密性。 基本上，Fabric网络上的参与者可以在参与者子集之间建立只有得到许可的特定交易集才可见的“通道”。 这可以认为是一个网络罩子。 因此只有进入通道的节点才能访问智能合约（链代码）和数据交易，从而保护两者的隐私和机密性。
+
+To improve upon its privacy and confidentiality capabilities, Fabric has added support for private data and is working on zero knowledge proofs (ZKP) available in the future. More on this as it becomes available.
+为了提高其隐私和机密性能力，Fabric增加了对私有数据的支持，并且正在开发未来可用的零知识证明（ZKP）。 这方面再做得多一点就会变得可用。
+
+可插拔共识 (Pluggable Consensus)
+
+The ordering of transactions is delegated to a modular component for consensus that is logically decoupled from the peers that execute transactions and maintain the ledger. Specifically, the ordering service. Since consensus is modular, its implementation can be tailored to the trust assumption of a particular deployment or solution. This modular architecture allows the platform to rely on well-established toolkits for CFT (crash fault-tolerant) or BFT (byzantine fault-tolerant) ordering.
+交易的排序被委托给模块化组件以实现共识，这在逻辑上与执行交易和维护帐本的节点分离。 具体来说就是排序服务。 由于共识是模块化的，因此可以根据特定部署或解决方案的信任假设来定制其实现。 这种模块化架构允许平台依赖完善的工具包进行CFT（碰撞容错）或BFT（拜占庭容错）来排序。
+
+In the currently available releases, Fabric offers a CFT ordering service implemented with Kafka and Zookeeper. In subsequent releases, Fabric will deliver a Raft consensus ordering service implemented with etcd/Raft and a fully decentralized BFT ordering service.
+在当前可用的版本中，Fabric提供了使用Kafka和Zookeeper实现的CFT排序服务。 在随后的版本中，Fabric将提供一个Raft共识排序服务，实现了etcd / Raft和完全分散的BFT排序服务。
+
+Note also that these are not mutually exclusive. A Fabric network can have multiple ordering services supporting different applications or application requirements.
+另外请注意，这些并不相互排斥。 Fabric网络可以具有多种排序服务，支持不同的应用或应用需求。
+
+性能和规模 (Performance and Scalability)
+
+Performance of a blockchain platform can be affected by many variables such as transaction size, block size, network size, as well as limits of the hardware, etc. The Hyperledger community is currently developing a draft set of measures within the Performance and Scale working group, along with a corresponding implementation of a benchmarking framework called Hyperledger Caliper.
+区块链平台的性能可能会受到许多变数的影响，例如交易大小、区块大小、网络大小以及硬件限制等。 Hyperledger社区目前正在性能和规模工作组内开发一套度量草案 ，以及相应的叫做Hyperledger Caliper的基准框架实现。
+
+While that work continues to be developed and should be seen as a definitive measure of blockchain platform performance and scale characteristics, a team from IBM Research has published a peer reviewed paper that evaluated the architecture and performance of Hyperledger Fabric. The paper offers an in-depth discussion of the architecture of Fabric and then reports on the team’s performance evaluation of the platform using a preliminary release of Hyperledger Fabric v1.1.
+虽然这项工作仍在继续发展中，而且应该被视为区块链平台性能和规模特征的权威度量标准，IBM Research的一个团队发表了一份同行评审文章，评估了Hyperledger Fabric的架构和性能。 文中对Fabric的体系结构进行了深入讨论，然后报告了团队使用Hyperledger Fabric v1.1的初步版本对平台的性能评估。
+
+The benchmarking efforts that the research team did yielded a significant number of performance improvements for the Fabric v1.1.0 release that more than doubled the overall performance of the platform from the v1.0.0 release levels.
+研究团队所做的基准测试努力为Fabric v1.1.0版本带来了大量的性能改进，在v1.0.0版本的水平上平台的整体性能提高了一倍以上。
+
+结论 (Conclusion)
+
+Any serious evaluation of blockchain platforms should include Hyperledger Fabric in its short list.
+任何对区块链平台的严格评测都应该在关键名单中包含Hyperledger Fabric。
+
+Combined, the differentiating capabilities of Fabric make it a highly scalable system for permissioned blockchains supporting flexible trust assumptions that enable the platform to support a wide range of industry use cases ranging from government, to finance, to supply-chain logistics, to healthcare and so much more.
+Fabric可组合的差异化能力使其成为一个高度可伸缩的要许可区块链系统，用于支持灵活的信任假设，使该平台能够支持从政府到金融、供应链物流、医疗保健和更多的行业用例。
+
+More importantly, Hyperledger Fabric is the most active of the (currently) ten Hyperledger projects. The community building around the platform is growing steadily, and the innovation delivered with each successive release far out-paces any of the other enterprise blockchain platforms.
+更重要的是，Hyperledger Fabric是（当前）十个Hyperledger项目中最活跃的。 围绕平台的社区建设正在稳步增长，各个持续版本提供的创新远远超过任何其他企业级区块链平台。
+
+感谢 (Acknowledgement)
+
+The preceding is derived from the peer reviewed “Hyperledger Fabric: A Distributed Operating System for Permissioned Blockchains” - Elli Androulaki, Artem Barger, Vita Bortnikov, Christian Cachin, Konstantinos Christidis, Angelo De Caro, David Enyeart, Christopher Ferris, Gennady Laventman, Yacov Manevich, Srinivasan Muralidharan, Chet Murthy, Binh Nguyen, Manish Sethi, Gari Singh, Keith Smith, Alessandro Sorniotti, Chrysoula Stathakopoulou, Marko Vukolic, Sharon Weed Cocco, Jason Yellick
+前述的内容都来自同行评审“Hyperledger Fabric：一个要许可的区块链分布式操作系统” 
