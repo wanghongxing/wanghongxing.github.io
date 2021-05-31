@@ -121,6 +121,24 @@
         </li>
       </a>
     
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            标签
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            分类
+          
+        </li>
+      </a>
+    
       <a href="/about">
         <li class="mobile-menu-item">
           
@@ -156,6 +174,24 @@
             
             
               归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
             
           </a>
         </li>
@@ -572,7 +608,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2019/04/21/channels_zh/">hyperledger fabric channel 通道</a>
+          <a class="post-link" href="/2019/04/21/configtxgen_zh/">hyperledger fabric configtxgen</a>
         
       </h1>
 
@@ -601,242 +637,42 @@
         
 
         
-          <p> <a href="http://hyperledger-fabric.readthedocs.io/en/latest/channels.html" target="_blank" rel="noopener">原文</a> </p>
-<p>A Hyperledger Fabric channel is a private “subnet” of communication between two or more specific network members, for the purpose of conducting private and confidential transactions. A channel is defined by members (organizations), anchor peers per member, the shared ledger, chaincode application(s) and the ordering service node(s). Each transaction on the network is executed on a channel, where each party must be authenticated and authorized to transact on that channel. Each peer that joins a channel, has its own identity given by a membership services provider (MSP), which authenticates each peer to its channel peers and services.</p>
-<p>在超级账本Fabric中，一个通道是指一个在两个或多个特定网络成员间的专门为私人的和机密的交易为目的而建立的私有”子网”。一个通道的定义中包含：成员（组织），每个成员的锚节点，共享帐本，链上代码应用程序和排序服务节点。网络上的每个交易都在一个指定的通道中执行，在通道中交易必须通过通道中的每部分的认证和授权。要加入一个通道的每个节点都必须有自己的通过成员服务提供商（MSP）获得的身份标识，用于鉴定每个节点在通道中的是什么节点和服务。</p>
-<p>To create a new channel, the client SDK calls configuration system chaincode and references properties such as anchor peer<strong>s, and members (organizations). This request creates a </strong>genesis block for the channel ledger, which stores configuration information about the channel policies, members and anchor peers. When adding a new member to an existing channel, either this genesis block, or if applicable, a more recent reconfiguration block, is shared with the new member.</p>
-<p>要创建一个通道，客户端SDK调用配置系统链上代码和参考属性，比如锚节点和成员（组织）。这个请求会为通道的账本创建一个创世区块，用于存储关于通道的策略，成员和锚节点的配置信息。当需要添加一个新成员到现有通道时，这个创世区块，或者最新的新配置区块（如果可用），将会共享给这个新成员。</p>
-<p>Note<br>注意</p>
-<p>See the Channel Configuration (configtx) section for more more details on the properties and proto structures of config transactions.</p>
-<p>参考通道配置（configtx）章节，可以查看更多关于交易的配置属性和典型的结构的明细信息。</p>
-<p>The election of a leading peer for each member on a channel determines which peer communicates with the ordering service on behalf of the member. If no leader is identified, an algorithm can be used to identify the leader. The consensus service orders transactions and delivers them, in a block, to each leading peer, which then distributes the block to its member peers, and across the channel, using the gossip protocol.</p>
-<p>从通道的所有节点中选举出的领导节点决定哪个节点用于代表其他成员节点与排序服务通讯。如果还没有领导节点，那么一个算法可以用于标识出领导节点。共识服务对交易进行排序，并打包成区块，发送区块给每个领导节点，然后领导节点把区块分发给其成员节点，然后使用gossip协议穿过通道。</p>
-<p>Although any one anchor peer can belong to multiple channels, and therefore maintain multiple ledgers, no ledger data can pass from one channel to another. This separation of ledgers, by channel, is defined and implemented by configuration chaincode, the identity membership service and the gossip data dissemination protocol. The dissemination of data, which includes information on transactions, ledger state and channel membership, is restricted to peers with verifiable membership on the channel. This isolation of peers and ledger data, by channel, allows network members that require private and confidential transactions to coexist with business competitors and other restricted members, on the same blockchain network.</p>
-<p>虽然任意一个锚节点都可以属于多个通道，而且维护了多个账本，但是不会有任何账本数据会从一个通道传到另一个通道。这就是根据通道对账本的分离，这种分离是在配置链上代码，成员标识服务和gossip传播协议中定义和实现。数据的传播，包括交易的信息，账本状态和通道成员等都在通道内受限制的验证成员身份的节点之间。这种根据通道对节点和账本数据进行隔离，允许网络成员可以在同一个区块链网络中请求私有的和保密的交易给业务上的竞争对手和其他受限的成员。</p>
-
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2019/04/21/Fabric-FAQ/">hyperledger fabric faq</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2019-04-21
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/fabric/">fabric</a>
-            
-          </span>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-
-        
-          <h1 id="Hyperledger-Fabric基础知识答疑"><a href="#Hyperledger-Fabric基础知识答疑" class="headerlink" title="Hyperledger Fabric基础知识答疑"></a>Hyperledger Fabric基础知识答疑</h1><p>[TOC]</p>
-<h2 id="–基本问题–"><a href="#–基本问题–" class="headerlink" title="–基本问题–"></a>–基本问题–</h2><h3 id="fabric联盟链方案有什么特点？"><a href="#fabric联盟链方案有什么特点？" class="headerlink" title="fabric联盟链方案有什么特点？"></a>fabric联盟链方案有什么特点？</h3><p>答：</p>
-<ol>
-<li><p>可插拔选项</p>
-<ul>
-<li>账本数据可以多种格式存储 –新版增加了couchdb</li>
-<li>共识机制模块化、可更换 – 新版增加etcdraft</li>
-<li>支持不同的MSP–新版增加了国密支持</li>
-</ul>
-</li>
-<li><p>可扩展性</p>
-</li>
-<li><p>通道功能</p>
-</li>
-<li><p>智能合约</p>
-</li>
-<li><p>安全性、保密性</p>
-<ul>
-<li>私有数据</li>
-<li>MSP证书身份认证</li>
-</ul>
-</li>
-<li><p>没有分叉</p>
-</li>
-</ol>
-<h3 id="fabric-性能如何？"><a href="#fabric-性能如何？" class="headerlink" title="fabric 性能如何？"></a>fabric 性能如何？</h3><p>答：众所周知，比特币最大的短板是它每秒钟7个交易的上限，完全无法满足现实需要。而Fabric目标是实现每秒钟10万交易，这个量接近刚刚过去的双十一交易量瞬时峰值，完全可以满足正常条件下的行业级应用。</p>
-<p>采用测试的服务器配置为： 4vCPU   16Gb   SSDs </p>
-<p>采用kafka做排序服务</p>
-<table>
-<thead>
-<tr>
-<th>背书节点数</th>
-<th>2</th>
-<th>4</th>
-<th>8</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>TPS</td>
-<td>785.58</td>
-<td>948.2</td>
-<td>1265.5</td>
-</tr>
-<tr>
-<td>latency（ms）</td>
-<td>715</td>
-<td>667</td>
-<td>686</td>
-</tr>
-</tbody>
-</table>
-<p><strong>最佳实践</strong></p>
-<p>增加背书节点组的数量、加上负载均衡，就能达到更高的TPS。</p>
-<p>如果采用 ETCDRaft 基本上会有2倍多的性能提升。the Raft experiment yielded almost 2x the performance! </p>
-<h3 id="fabric联盟链方案有什么缺点？"><a href="#fabric联盟链方案有什么缺点？" class="headerlink" title="fabric联盟链方案有什么缺点？"></a>fabric联盟链方案有什么缺点？</h3><p>答：</p>
-<ol>
-<li>部署麻烦；需要有非常专业的技术运维人员</li>
-<li>没有原生的币（数字资产）；如果需要，可以自己开发</li>
-</ol>
-<h3 id="fabric交易的流程是什么？"><a href="#fabric交易的流程是什么？" class="headerlink" title="fabric交易的流程是什么？"></a>fabric交易的流程是什么？</h3><p>答：</p>
-<p><img src="../images/fabric-arch-003.png" alt="交易流程"></p>
-<p>1、客户端构造交易提案</p>
-<p>——客户端构造交易提案，发送给一个或多个Peer节点，交易提案中包含本次交易要调用的合约标识、合约方法和参数信息以及客户端签名等。</p>
-<p>2、Peer节点模拟执行交易</p>
-<p>——Peer节点收到交易提案后，会模拟执行交易，然后将原始交易提案和执行结果打包到一起，进行签名并发回给客户端，其中在模拟执行交易期间产生的数据修改不会写到账本上。</p>
-<p>3、客户端打包</p>
-<p>——客户端收到各个Peer的应答后，打包到一起组成一个交易并签名，发送给Orderer。</p>
-<p>4、共识排序，生成新区块</p>
-<p>——Orderer对接收到的交易进行共识排序，然后按照区块生成策略，将一批交易打包到一起，生成新的区块，发送给Peer节点。</p>
-<p>5、交易校验</p>
-<p>——Peer节点收到区块后，会对区块中的每笔交易进行校验，检查交易依赖的输入输出是否符合当前区块链的状态，完成后将区块写入账本，并修改K-V状态数据。</p>
-<h2 id="–质疑–"><a href="#–质疑–" class="headerlink" title="–质疑–"></a>–质疑–</h2><h3 id="在“网络内部”引入了公钥加密机制和验证者签名，但是这些主要的安全保证只有在提交了外部签名的交易之后才产生"><a href="#在“网络内部”引入了公钥加密机制和验证者签名，但是这些主要的安全保证只有在提交了外部签名的交易之后才产生" class="headerlink" title="在“网络内部”引入了公钥加密机制和验证者签名，但是这些主要的安全保证只有在提交了外部签名的交易之后才产生"></a>在“网络内部”引入了公钥加密机制和验证者签名，但是这些主要的安全保证只有在提交了外部签名的交易之后才产生</h3><p>比特币以及其他区块链久经时间验证的安全模型：其中任何交易的来源仅由外部用户的公钥签名来保证，并且系统不能以任何方式进行干涉。</p>
-<p>与之形成鲜明对比的是，Hyperledger Fabric 中唯一一个重要的签名就是验证者的签名，而用户的签名则消失在通过区块链网络复制的任意数据库中。</p>
-<p>最近一些旨在加快 Hyperledger Fabric 运行速度的研究使得其每秒处理交易量能达到惊人的20000，但性能大幅度提升的背后是研究人员对 Hyperledger Fabric 架构的大规模“魔改”，这使得 Hyperledger Fabric 已经成一个近似的区块链变成了一个四不像：<strong>背书节点（Endorsers）不再充当验证者而 Kafka 被认定为唯一可行的订购服务</strong>。最后，这些仍然只是单通道的性能，这意味着它与区块链作为共享可信来源的整个理念相违背。</p>
-<h3 id="智能合约过于复杂"><a href="#智能合约过于复杂" class="headerlink" title="智能合约过于复杂"></a>智能合约过于复杂</h3><p> “Hello World” 在其他语言中仅需几行就可以实现，而在 Chaincode 中居然需要150行之多。代码越多，可能存在的漏洞就越多。这么大数量的代码中可能隐藏着很多能造成数百万美元损失的漏洞。</p>
-<p>智能合约语言必须专为区块链设计且为安全性做出了优化。在理想的情况下，智能合约语言也应该易于学习，并能便捷地在区块链环境中使用。</p>
-<p><strong>缺乏统一的工程化开发规范，无法满足工程化开发。</strong></p>
-<h2 id="–共识–"><a href="#–共识–" class="headerlink" title="–共识–"></a>–共识–</h2><h3 id="fabric共识模式有哪些？"><a href="#fabric共识模式有哪些？" class="headerlink" title="fabric共识模式有哪些？"></a>fabric共识模式有哪些？</h3><p>答：Orderer目前支持Solo、Kafka、etcd 三种共识机制，其中solo是但节点模式；Kafka是网络消息队列模式；etcd是最新加入的支持崩溃容错的排序模式。</p>
-<h3 id="kafka共识模式是什么？"><a href="#kafka共识模式是什么？" class="headerlink" title="kafka共识模式是什么？"></a>kafka共识模式是什么？</h3><p>答：Kafka是一个中心化的排队服务，能提供更高的性能；</p>
-<p>Hyperledger Fabric中的Kafka实际运行逻辑如下：</p>
-<ol>
-<li>对于每一条链，都有一个对应的分区</li>
-<li>每个链对应一个单一的分区主题</li>
-<li>排序节点负责将来自特定链的交易（通过广播RPC接收）中继到对应的分区</li>
-<li>排序节点可以读取分区并获得在所有排序节点间达成一致的排序交易列表</li>
-<li>一个链中的交易是定时分批处理的，也就是说当一个新的批次的第一个交易进来时，开始计时</li>
-<li>当交易达到最大数量时或超时后进行批次切分，生成新的区块</li>
-<li>定时交易是另一个交易，由上面描述的定时器生成</li>
-<li>每个排序节点为每个链维护一个本地日志，生成的区块保存在本地账本中</li>
-<li>交易区块通过分发RPC返回客户端</li>
-<li>当发生崩溃时，可以利用不同的排序节点分发区块，因为所有的排序节点都维护有本地日志</li>
-</ol>
-<h3 id="Etcdraft共识模式是什么？"><a href="#Etcdraft共识模式是什么？" class="headerlink" title="Etcdraft共识模式是什么？"></a>Etcdraft共识模式是什么？</h3><p>答：Raft 是 v1.4.1 中引入的，它是一种基于 etcd 的崩溃容错（CFT）排序服务；ETCD 是一个高可用强一致性的服务发现存储仓库。</p>
-<p>etcd组件作为一个高可用强一致性的服务发现存储仓库</p>
-<p>etcd四大特点：简单、安全、快速、可信。</p>
-<ul>
-<li>简单：基于HTTP+JSON的API让你用curl就可以轻松使用。</li>
-<li>安全：可选SSL客户认证机制。</li>
-<li>快速：每个实例每秒支持一千次写操作。</li>
-<li>可信：使用Raft算法充分实现了分布式。</li>
-</ul>
-<h3 id="fabric-怎么收费？版权？授权？"><a href="#fabric-怎么收费？版权？授权？" class="headerlink" title="fabric 怎么收费？版权？授权？"></a>fabric 怎么收费？版权？授权？</h3><p>fabric采用 创作共用许可证（Creative Commons licenses，简称cc），它只保留署名权，除此以外的权利全部放弃。也就是说：<strong>必须署名，免费使用。</strong></p>
-<p><strong>必须遵守下列条件：</strong></p>
-<ul>
-<li><p><strong>署名</strong> — 您必须给出<a href="https://creativecommons.org/licenses/by/4.0/deed.zh#" target="_blank" rel="noopener">适当的署名</a>，提供指向本许可协议的链接，同时<a href="https://creativecommons.org/licenses/by/4.0/deed.zh#" target="_blank" rel="noopener">标明是否（对原始作品）作了修改</a>。您可以用任何合理的方式来署名，但是不得以任何方式暗示许可人为您或您的使用背书。</p>
-</li>
-<li><p><strong>没有附加限制</strong> — 您不得适用法律术语或者 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh#" target="_blank" rel="noopener">技术措施</a> 从而限制其他人做许可协议允许的事情。</p>
-</li>
-</ul>
-<p><strong>您可以自由地：</strong></p>
-<ul>
-<li><strong>共享</strong> — 在任何媒介以任何形式复制、发行本作品</li>
-<li><strong>演绎</strong> — 修改、转换或以本作品为基础进行创作</li>
-<li>在任何用途下，甚至商业目的。</li>
-</ul>
-<h3 id="hyperledge-是什么？"><a href="#hyperledge-是什么？" class="headerlink" title="hyperledge 是什么？"></a>hyperledge 是什么？</h3><h2 id="–Endorsement-背书–"><a href="#–Endorsement-背书–" class="headerlink" title="–Endorsement/背书–"></a>–Endorsement/背书–</h2><h3 id="多少个网络中的节点需要对交易进行背书？"><a href="#多少个网络中的节点需要对交易进行背书？" class="headerlink" title="多少个网络中的节点需要对交易进行背书？"></a>多少个网络中的节点需要对交易进行背书？</h3><p>答：需要对交易进行背书操作的节点数量由背书策略决定，背书策略在链码部署的时候指定。</p>
-<h3 id="应用客户端需要连接到所有节点吗？"><a href="#应用客户端需要连接到所有节点吗？" class="headerlink" title="应用客户端需要连接到所有节点吗？"></a>应用客户端需要连接到所有节点吗？</h3><p>答：客户端只需要连接到链码对应的背书策略所要求的足够多的节点。</p>
-<h2 id="–安全和权限控制-Security-amp-Access-Control–"><a href="#–安全和权限控制-Security-amp-Access-Control–" class="headerlink" title="–安全和权限控制/Security &amp; Access Control–"></a>–安全和权限控制/Security &amp; Access Control–</h2><h3 id="和别的区块链比，fabric怎么做到更安全"><a href="#和别的区块链比，fabric怎么做到更安全" class="headerlink" title="和别的区块链比，fabric怎么做到更安全"></a>和别的区块链比，fabric怎么做到更安全</h3><p>答：链码和数据隔离。</p>
-<p>相较于以太坊，Fabric链码和底层账本是分开的，升级链码时并不需要迁移账本数据到新链码当中，真正实现了逻辑与数据的分离。</p>
-<h3 id="我如何能够保证数据的隐私？"><a href="#我如何能够保证数据的隐私？" class="headerlink" title="我如何能够保证数据的隐私？"></a>我如何能够保证数据的隐私？</h3><p>答：数据隐私包括几个方面。</p>
-<p>第一、你可以将你的网络拆分为多个通道，每个通道代表参与者的子集，这些参与者有权访问该通道所部署的链码所包含的数据。</p>
-<p>第二、通过通道你可以限制链码的输入数据只对背书节点可见。可见性设置将决定链码的输入输出数据是否包含在提交交易中，可以只包含输出数据。</p>
-<p>第三、你能在调用链码前对数据进行哈希操作或者加密。如果对数据进行哈希操作，你需要提供获取原数据的方式。如果对数据进行加密，你需要提供获取密钥的方式。</p>
-<p>第四、你可以通过链码中的访问控制逻辑限制数据访问权限，只有机构中特定的角色可以访问。</p>
-<p>第五、节点中的账本数据可以通过文件系统进行加密，节点间数据传输通过TLS进行加密。</p>
-<h3 id="fabric怎么做到监管和保护用户隐私"><a href="#fabric怎么做到监管和保护用户隐私" class="headerlink" title="fabric怎么做到监管和保护用户隐私"></a>fabric怎么做到监管和保护用户隐私</h3><p>答：基于PKI证书体系，Fabric可以实现交易的追踪、认责、不可抵赖、数据授权访问、监管和审计等特性；公有链数据全公开、完全匿名且无监管，成为了部分不法分子的交易天堂。</p>
-<h3 id="排序节点能否看到交易数据？"><a href="#排序节点能否看到交易数据？" class="headerlink" title="排序节点能否看到交易数据？"></a>排序节点能否看到交易数据？</h3><p>答：不能，排序节点只是排序交易，不能解析交易。如果你只关心输入数据，不希望经过排序节点，你可以使用可见性设置。可见性设置将决定链码的输入输出数据是否包含在提交交易中，可以只包含输出数据，这样只有背书节点能看到输入数据。如果你不希望排序节点看到交易输出数据，你能在调用链码前对数据进行哈希操作或者加密。如果对数据进行哈希操作，你需要提供获取原数据的方式。如果对数据进行加密，你需要提供获取密钥的方式。</p>
-<h2 id="–应用端编程模型-Application-side-Programming-Model–"><a href="#–应用端编程模型-Application-side-Programming-Model–" class="headerlink" title="–应用端编程模型/Application-side Programming Model–"></a>–应用端编程模型/Application-side Programming Model–</h2><h3 id="应用客户端如何知道交易的输出？"><a href="#应用客户端如何知道交易的输出？" class="headerlink" title="应用客户端如何知道交易的输出？"></a>应用客户端如何知道交易的输出？</h3><p>答：背书节点会返回提案模拟交易的结果。如果有多个背书节点，客户端能检查返回结果是否相同后再提交交易结果以及排序和生效所需要的背书。最终，生效节点会验证交易是否合法，客户端通过SDK提供的事件通知方式接收交易结果。</p>
-<h3 id="如何查询账本数据？"><a href="#如何查询账本数据？" class="headerlink" title="如何查询账本数据？"></a>如何查询账本数据？</h3><p>答：通过链码可以通过键值查询数据。可以对键值进行范围查询，复合主键可以允许查询出部分键值相同的值，例如由 (owner,asset_id) 组成的复合主键可以用来查询特定实体所拥有的所有asset。</p>
-<h3 id="如何查询数据历史来理解数据出处？"><a href="#如何查询数据历史来理解数据出处？" class="headerlink" title="如何查询数据历史来理解数据出处？"></a>如何查询数据历史来理解数据出处？</h3><p>答： 链码中API  <code>GetHistoryForKey()</code> 会返回键值对应的数据历史。</p>
-<h3 id="如何保证查询结果是正确的，特别是当查询的节点可能正处在恢复和获取最新区块的过程中？"><a href="#如何保证查询结果是正确的，特别是当查询的节点可能正处在恢复和获取最新区块的过程中？" class="headerlink" title="如何保证查询结果是正确的，特别是当查询的节点可能正处在恢复和获取最新区块的过程中？"></a>如何保证查询结果是正确的，特别是当查询的节点可能正处在恢复和获取最新区块的过程中？</h3><p>答：客户端可以查询多个节点，比较他们的区块高度查询结果，选用区块高度最高的结果。</p>
-<h3 id="写入的数据不能立即获取到"><a href="#写入的数据不能立即获取到" class="headerlink" title="写入的数据不能立即获取到"></a>写入的数据不能立即获取到</h3><p>答：通过putState写入的数据并不会立即落到账本上, 要等到第二段交易所有peer节点共识达成后，数据才会落地。因此不可以立即获取之前写入的值，比如批量插入数据，利用putState写入数据,再通过getState函数来判断主键是否重复。</p>
-<h3 id="链码里面的方法需要加锁吗"><a href="#链码里面的方法需要加锁吗" class="headerlink" title="链码里面的方法需要加锁吗?"></a>链码里面的方法需要加锁吗?</h3><p>答：不需要。peer节点已经实现了消息队列，发给链码的链码消息都是顺序执行的，不是并行执行的。</p>
-<h2 id="–链码（智能合约和数字资产）–"><a href="#–链码（智能合约和数字资产）–" class="headerlink" title="–链码（智能合约和数字资产）–"></a>–链码（智能合约和数字资产）–</h2><h3 id="Hyperledger-Fabric-是否支持智能合约逻辑？"><a href="#Hyperledger-Fabric-是否支持智能合约逻辑？" class="headerlink" title="Hyperledger Fabric 是否支持智能合约逻辑？"></a>Hyperledger Fabric 是否支持智能合约逻辑？</h3><p>答：是的，我们称这个功能为 :<code>chaincode</code>. 这是我们对带有附加功能的智能合同方法/算法的理解。</p>
-<p>链码是部署在网络中的程序代码，通过共识流程被链的验证者共同执行并验证。开发者能使用链码来开发商业合同、资产定义和集体管理的去中心化应用。</p>
-<h3 id="如何创建商业合同？"><a href="#如何创建商业合同？" class="headerlink" title="如何创建商业合同？"></a>如何创建商业合同？</h3><p>答：通常有两种方法来开发商业合同：第一个方法是开发单独的合同在独立的链码实例;第二个也是最有效的方法是使用链码创建去中心化的应用来管理一种或多种类型的商业合同的生命周期，并让终端用户实例化带有这些应用的合同实例。</p>
-<h3 id="如何创建资产？"><a href="#如何创建资产？" class="headerlink" title="如何创建资产？"></a>如何创建资产？</h3><p>答：用户可以使用链码（在商业规则方面）和成员管理服务（在数字密钥方面）来设计资产和资产管理逻辑。</p>
-<p>区块链解决方案中有两种流行的方法来设计资产：无状态的UTXO模型，账户余额是过去交易记录中没有使用的交易输出的合计;另一种是账户模型，账户余额被存储在账本中的状态值中。</p>
-<p>每一个方法都有好处和弊端。本区块链技术对两种方法没有倾向。我们最初的要求就是确保两个方法都能够被容易实现。</p>
-<h3 id="链码支持哪些语言？"><a href="#链码支持哪些语言？" class="headerlink" title="链码支持哪些语言？"></a>链码支持哪些语言？</h3><p>答：链码可以使用任何编程语言编写并在容器内执行。第一个全功能支持的语言是Golang。</p>
-<p>对其他语言的支持和模板语言的开发正在被讨论，更多细节会在近期发布。</p>
-<p>还可以通过 Hyperledger Composer 来构建Hyperledger Fabric应用。</p>
-<h3 id="Hyperledger-Fabric是否有原生的货币？"><a href="#Hyperledger-Fabric是否有原生的货币？" class="headerlink" title="Hyperledger Fabric是否有原生的货币？"></a>Hyperledger Fabric是否有原生的货币？</h3><p>答：没有。然而，如果你的区块链网络确实需要原生的货币，你可以使用链码来开发货币。原生货币的一个基本的属性是一些数量会被转移（定义货币的链码会被调用）当每次链上交易被执行。</p>
-<p>Fabric上没有代币机制，仅提供了一张类似白纸一样的平台，完全靠自己去实现；公有链的节点是逐利型的，代币一种激励制度，来保证网络的安全和可持续性。而Fabric作为准入型网络，节点具有很大的可信度和目的性，自然代币就不是很必要。</p>
-<h2 id="–区块–"><a href="#–区块–" class="headerlink" title="–区块–"></a>–区块–</h2><h3 id="fabric-出包时间、大小？"><a href="#fabric-出包时间、大小？" class="headerlink" title="fabric 出包时间、大小？"></a>fabric 出包时间、大小？</h3><p>Fabric出块可配置时间、大小，甚至交易的上限大小，非常灵活。另外Fabric不出空块，只有有交易时才会出块；公有链因其激励机制，定时出块，一定程度上浪费了存储。而且作为共识的一部分，出块时间和块大小很难改变。</p>
-<h2 id="–各版本的区别–"><a href="#–各版本的区别–" class="headerlink" title="–各版本的区别–"></a>–各版本的区别–</h2><h3 id="为什么选择fabric-1-4"><a href="#为什么选择fabric-1-4" class="headerlink" title="为什么选择fabric 1.4"></a>为什么选择fabric 1.4</h3><p>答：fabric v1.4 是第一个长期支持的版本。Fabric v1.4.x will be  first long term support release.</p>
-<h3 id="V1-4最新特性"><a href="#V1-4最新特性" class="headerlink" title="V1.4最新特性"></a>V1.4最新特性</h3><p>答：ETCDrafc 排序；Raft ordering service</p>
-<p>服务能力和可操作性提高；Serviceability and operations improvements</p>
-<p>为开发应用系统提升了编程模型；Improved programming model for developing applications</p>
-<p>提升了私有数据；Private data enhancements</p>
-<h3 id="V1-3最新特性"><a href="#V1-3最新特性" class="headerlink" title="V1.3最新特性"></a>V1.3最新特性</h3><p>答：MSP实现了汇合身份标识；MSP implementation with identity mixer</p>
-<p>设置了背书策略；setting key-level endorsement policies</p>
-<p>支持java写chaincode；support java chaincode develop</p>
-<p>节点上支持基于通道的事件服务；peer channel-based evet services</p>
-<h3 id="V1-2最新特性"><a href="#V1-2最新特性" class="headerlink" title="V1.2最新特性"></a>V1.2最新特性</h3><p>答：支持私有数据；Private Data Collections</p>
-<p>服务发现功能；Service Discovery</p>
-<p>授权控制；Access Control</p>
-<p>背书及验证可插拔；Pluggable endorsement and validation</p>
-<h3 id="V0-6版本和V1-0版本的最大区别是什么？"><a href="#V0-6版本和V1-0版本的最大区别是什么？" class="headerlink" title="V0.6版本和V1.0版本的最大区别是什么？"></a>V0.6版本和V1.0版本的最大区别是什么？</h3><p>答：任何后续版本的差异都在版本说明 中展现。因为Fabric是一个模块可替换的框架，你可以参考设计文档获取更多差异信息。</p>
-<h3 id="哪里可以获得上文中没被解答的技术问题的帮助？"><a href="#哪里可以获得上文中没被解答的技术问题的帮助？" class="headerlink" title="哪里可以获得上文中没被解答的技术问题的帮助？"></a>哪里可以获得上文中没被解答的技术问题的帮助？</h3><p>答：请使用 <a href="https://stackoverflow.com/questions/tagged/hyperledger" target="_blank" rel="noopener">StackOverflow</a>.</p>
-<h2 id="–Ordering-Service–"><a href="#–Ordering-Service–" class="headerlink" title="–Ordering Service–"></a>–Ordering Service–</h2><h3 id="已经运行的排序服务节点，想要更换共识算法，怎么做？I-have-an-ordering-service-up-and-running-and-want-to-switch-consensus-algorithms-How-do-I-do-that"><a href="#已经运行的排序服务节点，想要更换共识算法，怎么做？I-have-an-ordering-service-up-and-running-and-want-to-switch-consensus-algorithms-How-do-I-do-that" class="headerlink" title="已经运行的排序服务节点，想要更换共识算法，怎么做？I have an ordering service up and running and want to switch consensus algorithms. How do I do that?"></a>已经运行的排序服务节点，想要更换共识算法，怎么做？I have an ordering service up and running and want to switch consensus algorithms. How do I do that?</h3><p>答：    这个操作不支持。This is explicitly not supported.</p>
-<h3 id="What-is-the-orderer-system-channel"><a href="#What-is-the-orderer-system-channel" class="headerlink" title="What is the orderer system channel?"></a>What is the orderer system channel?</h3><p>答：    The orderer system channel (sometimes called ordering system channel) is the channel the orderer is initially bootstrapped with. It is used to orchestrate channel creation. The orderer system channel defines consortia and the initial configuration for new channels. At channel creation time, the organization definition in the consortium, the /Channel group’s values and policies, as well as the /Channel/Orderer group’s values and policies, are all combined to form the new initial channel definition.</p>
-<h3 id="If-I-update-my-application-channel-should-I-update-my-orderer-system-channel"><a href="#If-I-update-my-application-channel-should-I-update-my-orderer-system-channel" class="headerlink" title="If I update my application channel, should I update my orderer system channel?"></a>If I update my application channel, should I update my orderer system channel?</h3><p>答：    Once an application channel is created, it is managed independently of any other channel (including the orderer system channel). Depending on the modification, the change may or may not be desirable to port to other channels. In general, MSP changes should be synchronized across all channels, while policy changes are more likely to be specific to a particular channel.</p>
-<h3 id="Can-I-have-an-organization-act-both-in-an-ordering-and-application-role"><a href="#Can-I-have-an-organization-act-both-in-an-ordering-and-application-role" class="headerlink" title="Can I have an organization act both in an ordering and application role?"></a>Can I have an organization act both in an ordering and application role?</h3><p>答：    Although this is possible, it is a highly discouraged configuration. By default the /Channel/Orderer/BlockValidation policy allows any valid certificate of the ordering organizations to sign blocks. If an organization is acting both in an ordering and application role, then this policy should be updated to restrict block signers to the subset of certificates authorized for ordering.</p>
-<h3 id="I-want-to-write-a-consensus-implementation-for-Fabric-Where-do-I-begin"><a href="#I-want-to-write-a-consensus-implementation-for-Fabric-Where-do-I-begin" class="headerlink" title="I want to write a consensus implementation for Fabric. Where do I begin?"></a>I want to write a consensus implementation for Fabric. Where do I begin?</h3><p>答：    A consensus plugin needs to implement the Consenter and Chain interfaces defined in the consensus package. There are two plugins built against these interfaces already: solo and kafka. You can study them to take cues for your own implementation. The ordering service code can be found under the orderer package.</p>
-<h3 id="I-want-to-change-my-ordering-service-configurations-e-g-batch-timeout-after-I-start-the-network-what-should-I-do"><a href="#I-want-to-change-my-ordering-service-configurations-e-g-batch-timeout-after-I-start-the-network-what-should-I-do" class="headerlink" title="I want to change my ordering service configurations, e.g. batch timeout, after I start the network, what should I do?"></a>I want to change my ordering service configurations, e.g. batch timeout, after I start the network, what should I do?</h3><p>答：    This falls under reconfiguring the network. Please consult the topic on configtxlator.</p>
-<h2 id="–Solo–"><a href="#–Solo–" class="headerlink" title="–Solo–"></a>–Solo–</h2><h3 id="怎么在生产环境部署sole模式的共识节点"><a href="#怎么在生产环境部署sole模式的共识节点" class="headerlink" title="怎么在生产环境部署sole模式的共识节点?"></a>怎么在生产环境部署sole模式的共识节点?</h3><p>答：    solo就不是为生产环境设计的。他根本就不支持容错。Solo is not intended for production. It is not, and will never be, fault tolerant.</p>
-<h2 id="–Kafka–"><a href="#–Kafka–" class="headerlink" title="–Kafka–"></a>–Kafka–</h2><h3 id="How-do-I-remove-a-node-from-the-ordering-service"><a href="#How-do-I-remove-a-node-from-the-ordering-service" class="headerlink" title="How do I remove a node from the ordering service?"></a>How do I remove a node from the ordering service?</h3><p>答：<br>This is a two step-process:</p>
-<p>Add the node’s certificate to the relevant orderer’s MSP CRL to prevent peers/clients from connecting to it.<br>Prevent the node from connecting to the Kafka cluster by leveraging standard Kafka access control measures such as TLS CRLs, or firewalling.</p>
-<h3 id="I-have-never-deployed-a-Kafka-ZK-cluster-before-and-I-want-to-use-the-Kafka-based-ordering-service-How-do-I-proceed"><a href="#I-have-never-deployed-a-Kafka-ZK-cluster-before-and-I-want-to-use-the-Kafka-based-ordering-service-How-do-I-proceed" class="headerlink" title="I have never deployed a Kafka/ZK cluster before, and I want to use the Kafka-based ordering service. How do I proceed?"></a>I have never deployed a Kafka/ZK cluster before, and I want to use the Kafka-based ordering service. How do I proceed?</h3><p>答：    The Hyperledger Fabric documentation assumes the reader generally has the operational expertise to setup, configure, and manage a Kafka cluster (see Caveat emptor). If you insist on proceeding without such expertise, you should complete, at a minimum, the first 6 steps of the Kafka Quickstart guide before experimenting with the Kafka-based ordering service. You can also consult this sample configuration file for a brief explanation of the sensible defaults for Kafka/ZooKeeper.</p>
-<h3 id="Where-can-I-find-a-Docker-composition-for-a-network-that-uses-the-Kafka-based-ordering-service"><a href="#Where-can-I-find-a-Docker-composition-for-a-network-that-uses-the-Kafka-based-ordering-service" class="headerlink" title="Where can I find a Docker composition for a network that uses the Kafka-based ordering service?"></a>Where can I find a Docker composition for a network that uses the Kafka-based ordering service?</h3><p>答：    Consult the end-to-end CLI example.</p>
-<h3 id="Why-is-there-a-ZooKeeper-dependency-in-the-Kafka-based-ordering-service"><a href="#Why-is-there-a-ZooKeeper-dependency-in-the-Kafka-based-ordering-service" class="headerlink" title="Why is there a ZooKeeper dependency in the Kafka-based ordering service?"></a>Why is there a ZooKeeper dependency in the Kafka-based ordering service?</h3><p>答：    Kafka uses it internally for coordination between its brokers.</p>
-<h3 id="I’m-trying-to-follow-the-BYFN-example-and-get-a-“service-unavailable”-error-what-should-I-do"><a href="#I’m-trying-to-follow-the-BYFN-example-and-get-a-“service-unavailable”-error-what-should-I-do" class="headerlink" title="I’m trying to follow the BYFN example and get a “service unavailable” error, what should I do?"></a>I’m trying to follow the BYFN example and get a “service unavailable” error, what should I do?</h3><p>答：    Check the ordering service’s logs. A “Rejecting deliver request because of consenter error” log message is usually indicative of a connection problem with the Kafka cluster. Ensure that the Kafka cluster is set up properly, and is reachable by the ordering service’s nodes.</p>
-<h2 id="–拜占庭容错算法-BFT–"><a href="#–拜占庭容错算法-BFT–" class="headerlink" title="–拜占庭容错算法/BFT–"></a>–拜占庭容错算法/BFT–</h2><h3 id="When-is-a-BFT-version-of-the-ordering-service-going-to-be-available"><a href="#When-is-a-BFT-version-of-the-ordering-service-going-to-be-available" class="headerlink" title="When is a BFT version of the ordering service going to be available?"></a>When is a BFT version of the ordering service going to be available?</h3><p>答：    No date has been set. We are working towards a release during the 1.x cycle, i.e. it will come with a minor version upgrade in Fabric. Track FAB-33 for updates.</p>
-<p>在0.6版本，Fabric支持PBFT（实用拜占庭容错算法）共识算法，1.0及以后版本中不再支持。之所以把0.6版本中的PBFT共识算法暂时取消可能是因为：</p>
-<p>1、PBFT提供(n-1)/3的容错性，但是O(N^2)消息复杂度使得随着节点的增加，交易性能大幅下降。</p>
-<p>2、Fabric是准入型网络，对PBFT这种共识算法要求不高。</p>
+          <p> <a href="http://hyperledger-fabric.readthedocs.io/en/latest/configtxgen.html" target="_blank" rel="noopener">原文</a>  </p>
+<p>This document describe the usage for the configtxgen utility for manipulating Hyperledger Fabric channel configuration.</p>
+<p>本文档描述了<code>configtxgen</code>工具的用法，该工具用来操作超级账本Fabric的通道配置。</p>
+<p>For now, the tool is primarily focused on generating the genesis block for bootstrapping the orderer, but it is intended to be enhanced in the future for generating new channel configurations as well as reconfiguring existing channels.</p>
+<p>目前，该工具主要侧重于生成引导共识节点的创世纪块，但是将来预计增加生成新通道的配置以及重新配置已有的通道。</p>
+<h2 id="Configuration-Profiles-配置文件"><a href="#Configuration-Profiles-配置文件" class="headerlink" title="Configuration Profiles - 配置文件"></a>Configuration Profiles - 配置文件</h2><p>The configuration parameters supplied to the configtxgen tool are primarily provided by the configtx.yaml file. This file is located at fabric/sampleconfig/configtx.yaml in the fabric.git repository.</p>
+<p>configtxgen工具的配置参数主要由<code>configtx.yaml</code>文件提供。在fabric库中，配置文件在<code>fabric/sampleconfig/configtx.yaml</code>。</p>
+<p>This configuration file is split primarily into three pieces.</p>
+<p>此配置文件主要分为三部分。</p>
+<p>1.The Profiles section. By default, this section includes some sample configurations which can be used for development or testing scenarios, and refer to crypto material present in the fabric.git tree. These profiles can make a good starting point for construction a real deployment profile. The configtxgen tool allows you to specify the profile it is operating under by passing the -profile flag. Profiles may explicitly declare all configuration, but usually inherit configuration from the defaults in (3) below.</p>
+<p>1.<code>Profiles</code>部分。默认情况下，这部分包含一些用于开发或测试场景的示例配置，这些配置涉及fabric目录中加密部分。这些配置能为构建一个真正开发配置做一个良好开始。<code>configtxgen</code>工具允许你通过<code>-profile</code>标签来指定配置文件。<code>Profiles</code>部分可以显式声明所有配置，但是通常都是从一下（3）默认配置中继承。</p>
+<p>2.The Organizations section. By default, this section includes a single reference to the sampleconfig MSP definition. For production deployments, the sample organization should be removed, and the MSP definitions of the network members should be referenced and defined instead. Each element in the Organizations section should be tagged with an anchor label such as &amp;orgName which will allow the definition to be referenced in the Profiles sections.</p>
+<p>2.<code>Organizations</code>部分。默认情况下，这部分包含实力配置MSP定义的单一引用。对于生产部署，应该删除示例配置，并应引用和定义网络成员的MSP定义。<code>Organizations</code>部分每一个元素都必须带有锚标签，如<code>&amp;orgName</code>，这些标签在<code>Profiles</code>部分引用。</p>
+<p>3.The default sections. There are default sections for Orderer and Application configuration, these include attributes like BatchTimeout and are generally used as the base inherited values for the profiles.</p>
+<p>3.默认部分。此部分包括共识和应用部分的默认配置，包括一些属性配置，如<code>BatchTimeout</code>和一般用作继承的基础值。</p>
+<p>This configuration file may be edited, or, individual properties may be overridden by setting environment variables, such as CONFIGTX_ORDERER_ORDERERTYPE=kafka. Note that the Profiles element and profile name do not need to be specified.</p>
+<p>这个配置文件可以被编辑，或者通过设置环境变量来重写属性值，如<code>CONFIGTX_ORDERER_ORDERERTYPE=kafka</code>。注意，不需要指定配置文件元素和配置文件名称。</p>
+<h2 id="Bootstrapping-the-orderer-引导共识"><a href="#Bootstrapping-the-orderer-引导共识" class="headerlink" title="Bootstrapping the orderer - 引导共识"></a>Bootstrapping the orderer - 引导共识</h2><p>After creating a configuration profile as desired, simply invoke</p>
+<p>创建配置文件后，简单调用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">configtxgen -profile &lt;profile_name&gt;</span><br></pre></td></tr></table></figure>
+<p>This will produce a genesis.block file in the current directory. You may optionally specify another filename by passing in the -path parameter, or, you may skip the writing of the file by passing the dryRun parameter if you simply wish to test parsing of the file.</p>
+<p>这会在当前文件目录下生成<code>genesis.block</code>。你也可以通过<code>-path</code>参数指定其他文件名。如果你只希望测试这个文件，可以通过<code>dryRun</code>参数来跳过创建文件。</p>
+<p>Then, to utilize this genesis block, before starting the orderer, simply specify ORDERER_GENERAL_GENESISMETHOD=file and ORDERER_GENERAL_GENESISFILE=$PWD/genesis.block or modify the orderer.yaml file to encode these values.</p>
+<p>然后为了使用生成的创世快，在启动orderer之前，简单的通过指定<code>ORDERER_GENERAL_GENESISMETHOD=file</code> 和<code>ORDERER_GENERAL_GENESISFILE=$PWD/genesis.block</code> 或者修改<code>orderer.yaml</code>文件编辑这些属性值。</p>
+<h2 id="Creating-a-channel-创建通道"><a href="#Creating-a-channel-创建通道" class="headerlink" title="Creating a channel - 创建通道"></a>Creating a channel - 创建通道</h2><p>The tool can also output a channel creation tx by executing</p>
+<p>此工具同样可以创建通道交易通过执行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">configtxgen -profile &lt;profile_name&gt; -channelID &lt;channel_name&gt; -outputCreateChannelTx &lt;tx_filename&gt;</span><br></pre></td></tr></table></figure>
+<p>This will output a marshaled Envelope message which may be sent to broadcast to create a channel.</p>
+<p>这将输出一个<code>Envelope</code>消息，用来发送广播来创建通道。</p>
+<h2 id="Reviewing-a-configuration-检查配置"><a href="#Reviewing-a-configuration-检查配置" class="headerlink" title="Reviewing a configuration - 检查配置"></a>Reviewing a configuration - 检查配置</h2><p>In addition to creating configuration, the configtxgen tool is also capable of inspecting configuration.</p>
+<p>除了创建配置，<code>configtxgen</code>工具同样提供检查配置的功能。</p>
+<p>It supports inspecting both configuration blocks, and configuration transactions. You may use the inspect flags -inspectBlock and -inspectChannelCreateTx respectively with the path to a file to inspect to output a human readable (JSON) representation of the configuration.</p>
+<p>它支持检查配置块和配置交易。你可以用检查标签<code>-inspectBlock</code> 和 <code>-inspectChannelCreateTx</code> 分别指定文件路径来输出可读的（JSON）配置。</p>
+<p>You may even wish to combine the inspection with generation. For example:</p>
+<p>你甚至可能希望将创建与检查相结合。例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ build/bin/configtxgen -channelID foo -outputBlock foo.block -inspectBlock foo.block</span><br><span class="line">2017/03/01 21:24:24 Loading configuration</span><br><span class="line">2017/03/01 21:24:24 Checking for configtx.yaml at:</span><br><span class="line">2017/03/01 21:24:24 Checking for configtx.yaml at:</span><br><span class="line">2017/03/01 21:24:24 Checking for configtx.yaml at: /home/yellickj/go/src/github.com/hyperledger/fabric/common/configtx/tool</span><br><span class="line">2017/03/01 21:24:24 map[orderer:map[BatchSize:map[MaxMessageCount:10 AbsoluteMaxBytes:99 MB PreferredMaxBytes:512 KB] Kafka:map[Brokers:[127.0.0.1:9092]] Organizations:&lt;nil&gt; OrdererType:solo Addresses:[127.0.0.1:7050] BatchTimeout:10s] application:map[Organizations:&lt;nil&gt;] profiles:map[SampleInsecureSolo:map[Orderer:map[BatchTimeout:10s BatchSize:map[MaxMessageCount:10 AbsoluteMaxBytes:99 MB PreferredMaxBytes:512 KB] Kafka:map[Brokers:[127.0.0.1:9092]] Organizations:&lt;nil&gt; OrdererType:solo Addresses:[127.0.0.1:7050]] Application:map[Organizations:&lt;nil&gt;]] SampleInsecureKafka:map[Orderer:map[Addresses:[127.0.0.1:7050] BatchTimeout:10s BatchSize:map[AbsoluteMaxBytes:99 MB PreferredMaxBytes:512 KB MaxMessageCount:10] Kafka:map[Brokers:[127.0.0.1:9092]] Organizations:&lt;nil&gt; OrdererType:kafka] Application:map[Organizations:&lt;nil&gt;]] SampleSingleMSPSolo:map[Orderer:map[OrdererType:solo Addresses:[127.0.0.1:7050] BatchTimeout:10s BatchSize:map[MaxMessageCount:10 AbsoluteMaxBytes:99 MB PreferredMaxBytes:512 KB] Kafka:map[Brokers:[127.0.0.1:9092]] Organizations:[map[Name:SampleOrg ID:DEFAULT MSPDir:msp BCCSP:map[Default:SW SW:map[Hash:SHA3 Security:256 FileKeyStore:map[KeyStore:&lt;nil&gt;]]] AnchorPeers:[map[Host:127.0.0.1 Port:7051]]]]] Application:map[Organizations:[map[Name:SampleOrg ID:DEFAULT MSPDir:msp BCCSP:map[Default:SW SW:map[Hash:SHA3 Security:256 FileKeyStore:map[KeyStore:&lt;nil&gt;]]] AnchorPeers:[map[Port:7051 Host:127.0.0.1]]]]]]] organizations:[map[Name:SampleOrg ID:DEFAULT MSPDir:msp BCCSP:map[Default:SW SW:map[Hash:SHA3 Security:256 FileKeyStore:map[KeyStore:&lt;nil&gt;]]] AnchorPeers:[map[Host:127.0.0.1 Port:7051]]]]]</span><br><span class="line">2017/03/01 21:24:24 Generating genesis block</span><br><span class="line">2017/03/01 21:24:24 Writing genesis block</span><br><span class="line">2017/03/01 21:24:24 Inspecting block</span><br><span class="line">2017/03/01 21:24:24 Parsing genesis block</span><br><span class="line">Config for channel: foo</span><br><span class="line">&#123;</span><br><span class="line">    &quot;&quot;: &#123;</span><br><span class="line">        &quot;Values&quot;: &#123;&#125;,</span><br><span class="line">        &quot;Groups&quot;: &#123;</span><br><span class="line">            &quot;/Channel&quot;: &#123;</span><br><span class="line">                &quot;Values&quot;: &#123;</span><br><span class="line">                    &quot;HashingAlgorithm&quot;: &#123;</span><br><span class="line">                        &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                        &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                        &quot;Value&quot;: &#123;</span><br><span class="line">                            &quot;name&quot;: &quot;SHA256&quot;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    &quot;BlockDataHashingStructure&quot;: &#123;</span><br><span class="line">                        &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                        &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                        &quot;Value&quot;: &#123;</span><br><span class="line">                            &quot;width&quot;: 4294967295</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    &quot;OrdererAddresses&quot;: &#123;</span><br><span class="line">                        &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                        &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                        &quot;Value&quot;: &#123;</span><br><span class="line">                            &quot;addresses&quot;: [</span><br><span class="line">                                &quot;127.0.0.1:7050&quot;</span><br><span class="line">                            ]</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">                &quot;Groups&quot;: &#123;</span><br><span class="line">                    &quot;/Channel/Orderer&quot;: &#123;</span><br><span class="line">                        &quot;Values&quot;: &#123;</span><br><span class="line">                            &quot;ChainCreationPolicyNames&quot;: &#123;</span><br><span class="line">                                &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                                &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                                &quot;Value&quot;: &#123;</span><br><span class="line">                                    &quot;names&quot;: [</span><br><span class="line">                                        &quot;AcceptAllPolicy&quot;</span><br><span class="line">                                    ]</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;,</span><br><span class="line">                            &quot;ConsensusType&quot;: &#123;</span><br><span class="line">                                &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                                &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                                &quot;Value&quot;: &#123;</span><br><span class="line">                                    &quot;type&quot;: &quot;solo&quot;</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;,</span><br><span class="line">                            &quot;BatchSize&quot;: &#123;</span><br><span class="line">                                &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                                &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                                &quot;Value&quot;: &#123;</span><br><span class="line">                                    &quot;maxMessageCount&quot;: 10,</span><br><span class="line">                                    &quot;absoluteMaxBytes&quot;: 103809024,</span><br><span class="line">                                    &quot;preferredMaxBytes&quot;: 524288</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;,</span><br><span class="line">                            &quot;BatchTimeout&quot;: &#123;</span><br><span class="line">                                &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                                &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                                &quot;Value&quot;: &#123;</span><br><span class="line">                                    &quot;timeout&quot;: &quot;10s&quot;</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;,</span><br><span class="line">                            &quot;IngressPolicyNames&quot;: &#123;</span><br><span class="line">                                &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                                &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                                &quot;Value&quot;: &#123;</span><br><span class="line">                                    &quot;names&quot;: [</span><br><span class="line">                                        &quot;AcceptAllPolicy&quot;</span><br><span class="line">                                    ]</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;,</span><br><span class="line">                            &quot;EgressPolicyNames&quot;: &#123;</span><br><span class="line">                                &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                                &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                                &quot;Value&quot;: &#123;</span><br><span class="line">                                    &quot;names&quot;: [</span><br><span class="line">                                        &quot;AcceptAllPolicy&quot;</span><br><span class="line">                                    ]</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;,</span><br><span class="line">                        &quot;Groups&quot;: &#123;&#125;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    &quot;/Channel/Application&quot;: &#123;</span><br><span class="line">                        &quot;Values&quot;: &#123;&#125;,</span><br><span class="line">                        &quot;Groups&quot;: &#123;&#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
         
       
@@ -1211,7 +1047,7 @@ message ConfigValue {
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2019/04/21/configtxgen_zh/">hyperledger fabric configtxgen</a>
+          <a class="post-link" href="/2019/04/21/channels_zh/">hyperledger fabric channel 通道</a>
         
       </h1>
 
@@ -1240,42 +1076,242 @@ message ConfigValue {
         
 
         
-          <p> <a href="http://hyperledger-fabric.readthedocs.io/en/latest/configtxgen.html" target="_blank" rel="noopener">原文</a>  </p>
-<p>This document describe the usage for the configtxgen utility for manipulating Hyperledger Fabric channel configuration.</p>
-<p>本文档描述了<code>configtxgen</code>工具的用法，该工具用来操作超级账本Fabric的通道配置。</p>
-<p>For now, the tool is primarily focused on generating the genesis block for bootstrapping the orderer, but it is intended to be enhanced in the future for generating new channel configurations as well as reconfiguring existing channels.</p>
-<p>目前，该工具主要侧重于生成引导共识节点的创世纪块，但是将来预计增加生成新通道的配置以及重新配置已有的通道。</p>
-<h2 id="Configuration-Profiles-配置文件"><a href="#Configuration-Profiles-配置文件" class="headerlink" title="Configuration Profiles - 配置文件"></a>Configuration Profiles - 配置文件</h2><p>The configuration parameters supplied to the configtxgen tool are primarily provided by the configtx.yaml file. This file is located at fabric/sampleconfig/configtx.yaml in the fabric.git repository.</p>
-<p>configtxgen工具的配置参数主要由<code>configtx.yaml</code>文件提供。在fabric库中，配置文件在<code>fabric/sampleconfig/configtx.yaml</code>。</p>
-<p>This configuration file is split primarily into three pieces.</p>
-<p>此配置文件主要分为三部分。</p>
-<p>1.The Profiles section. By default, this section includes some sample configurations which can be used for development or testing scenarios, and refer to crypto material present in the fabric.git tree. These profiles can make a good starting point for construction a real deployment profile. The configtxgen tool allows you to specify the profile it is operating under by passing the -profile flag. Profiles may explicitly declare all configuration, but usually inherit configuration from the defaults in (3) below.</p>
-<p>1.<code>Profiles</code>部分。默认情况下，这部分包含一些用于开发或测试场景的示例配置，这些配置涉及fabric目录中加密部分。这些配置能为构建一个真正开发配置做一个良好开始。<code>configtxgen</code>工具允许你通过<code>-profile</code>标签来指定配置文件。<code>Profiles</code>部分可以显式声明所有配置，但是通常都是从一下（3）默认配置中继承。</p>
-<p>2.The Organizations section. By default, this section includes a single reference to the sampleconfig MSP definition. For production deployments, the sample organization should be removed, and the MSP definitions of the network members should be referenced and defined instead. Each element in the Organizations section should be tagged with an anchor label such as &amp;orgName which will allow the definition to be referenced in the Profiles sections.</p>
-<p>2.<code>Organizations</code>部分。默认情况下，这部分包含实力配置MSP定义的单一引用。对于生产部署，应该删除示例配置，并应引用和定义网络成员的MSP定义。<code>Organizations</code>部分每一个元素都必须带有锚标签，如<code>&amp;orgName</code>，这些标签在<code>Profiles</code>部分引用。</p>
-<p>3.The default sections. There are default sections for Orderer and Application configuration, these include attributes like BatchTimeout and are generally used as the base inherited values for the profiles.</p>
-<p>3.默认部分。此部分包括共识和应用部分的默认配置，包括一些属性配置，如<code>BatchTimeout</code>和一般用作继承的基础值。</p>
-<p>This configuration file may be edited, or, individual properties may be overridden by setting environment variables, such as CONFIGTX_ORDERER_ORDERERTYPE=kafka. Note that the Profiles element and profile name do not need to be specified.</p>
-<p>这个配置文件可以被编辑，或者通过设置环境变量来重写属性值，如<code>CONFIGTX_ORDERER_ORDERERTYPE=kafka</code>。注意，不需要指定配置文件元素和配置文件名称。</p>
-<h2 id="Bootstrapping-the-orderer-引导共识"><a href="#Bootstrapping-the-orderer-引导共识" class="headerlink" title="Bootstrapping the orderer - 引导共识"></a>Bootstrapping the orderer - 引导共识</h2><p>After creating a configuration profile as desired, simply invoke</p>
-<p>创建配置文件后，简单调用</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">configtxgen -profile &lt;profile_name&gt;</span><br></pre></td></tr></table></figure>
-<p>This will produce a genesis.block file in the current directory. You may optionally specify another filename by passing in the -path parameter, or, you may skip the writing of the file by passing the dryRun parameter if you simply wish to test parsing of the file.</p>
-<p>这会在当前文件目录下生成<code>genesis.block</code>。你也可以通过<code>-path</code>参数指定其他文件名。如果你只希望测试这个文件，可以通过<code>dryRun</code>参数来跳过创建文件。</p>
-<p>Then, to utilize this genesis block, before starting the orderer, simply specify ORDERER_GENERAL_GENESISMETHOD=file and ORDERER_GENERAL_GENESISFILE=$PWD/genesis.block or modify the orderer.yaml file to encode these values.</p>
-<p>然后为了使用生成的创世快，在启动orderer之前，简单的通过指定<code>ORDERER_GENERAL_GENESISMETHOD=file</code> 和<code>ORDERER_GENERAL_GENESISFILE=$PWD/genesis.block</code> 或者修改<code>orderer.yaml</code>文件编辑这些属性值。</p>
-<h2 id="Creating-a-channel-创建通道"><a href="#Creating-a-channel-创建通道" class="headerlink" title="Creating a channel - 创建通道"></a>Creating a channel - 创建通道</h2><p>The tool can also output a channel creation tx by executing</p>
-<p>此工具同样可以创建通道交易通过执行</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">configtxgen -profile &lt;profile_name&gt; -channelID &lt;channel_name&gt; -outputCreateChannelTx &lt;tx_filename&gt;</span><br></pre></td></tr></table></figure>
-<p>This will output a marshaled Envelope message which may be sent to broadcast to create a channel.</p>
-<p>这将输出一个<code>Envelope</code>消息，用来发送广播来创建通道。</p>
-<h2 id="Reviewing-a-configuration-检查配置"><a href="#Reviewing-a-configuration-检查配置" class="headerlink" title="Reviewing a configuration - 检查配置"></a>Reviewing a configuration - 检查配置</h2><p>In addition to creating configuration, the configtxgen tool is also capable of inspecting configuration.</p>
-<p>除了创建配置，<code>configtxgen</code>工具同样提供检查配置的功能。</p>
-<p>It supports inspecting both configuration blocks, and configuration transactions. You may use the inspect flags -inspectBlock and -inspectChannelCreateTx respectively with the path to a file to inspect to output a human readable (JSON) representation of the configuration.</p>
-<p>它支持检查配置块和配置交易。你可以用检查标签<code>-inspectBlock</code> 和 <code>-inspectChannelCreateTx</code> 分别指定文件路径来输出可读的（JSON）配置。</p>
-<p>You may even wish to combine the inspection with generation. For example:</p>
-<p>你甚至可能希望将创建与检查相结合。例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ build/bin/configtxgen -channelID foo -outputBlock foo.block -inspectBlock foo.block</span><br><span class="line">2017/03/01 21:24:24 Loading configuration</span><br><span class="line">2017/03/01 21:24:24 Checking for configtx.yaml at:</span><br><span class="line">2017/03/01 21:24:24 Checking for configtx.yaml at:</span><br><span class="line">2017/03/01 21:24:24 Checking for configtx.yaml at: /home/yellickj/go/src/github.com/hyperledger/fabric/common/configtx/tool</span><br><span class="line">2017/03/01 21:24:24 map[orderer:map[BatchSize:map[MaxMessageCount:10 AbsoluteMaxBytes:99 MB PreferredMaxBytes:512 KB] Kafka:map[Brokers:[127.0.0.1:9092]] Organizations:&lt;nil&gt; OrdererType:solo Addresses:[127.0.0.1:7050] BatchTimeout:10s] application:map[Organizations:&lt;nil&gt;] profiles:map[SampleInsecureSolo:map[Orderer:map[BatchTimeout:10s BatchSize:map[MaxMessageCount:10 AbsoluteMaxBytes:99 MB PreferredMaxBytes:512 KB] Kafka:map[Brokers:[127.0.0.1:9092]] Organizations:&lt;nil&gt; OrdererType:solo Addresses:[127.0.0.1:7050]] Application:map[Organizations:&lt;nil&gt;]] SampleInsecureKafka:map[Orderer:map[Addresses:[127.0.0.1:7050] BatchTimeout:10s BatchSize:map[AbsoluteMaxBytes:99 MB PreferredMaxBytes:512 KB MaxMessageCount:10] Kafka:map[Brokers:[127.0.0.1:9092]] Organizations:&lt;nil&gt; OrdererType:kafka] Application:map[Organizations:&lt;nil&gt;]] SampleSingleMSPSolo:map[Orderer:map[OrdererType:solo Addresses:[127.0.0.1:7050] BatchTimeout:10s BatchSize:map[MaxMessageCount:10 AbsoluteMaxBytes:99 MB PreferredMaxBytes:512 KB] Kafka:map[Brokers:[127.0.0.1:9092]] Organizations:[map[Name:SampleOrg ID:DEFAULT MSPDir:msp BCCSP:map[Default:SW SW:map[Hash:SHA3 Security:256 FileKeyStore:map[KeyStore:&lt;nil&gt;]]] AnchorPeers:[map[Host:127.0.0.1 Port:7051]]]]] Application:map[Organizations:[map[Name:SampleOrg ID:DEFAULT MSPDir:msp BCCSP:map[Default:SW SW:map[Hash:SHA3 Security:256 FileKeyStore:map[KeyStore:&lt;nil&gt;]]] AnchorPeers:[map[Port:7051 Host:127.0.0.1]]]]]]] organizations:[map[Name:SampleOrg ID:DEFAULT MSPDir:msp BCCSP:map[Default:SW SW:map[Hash:SHA3 Security:256 FileKeyStore:map[KeyStore:&lt;nil&gt;]]] AnchorPeers:[map[Host:127.0.0.1 Port:7051]]]]]</span><br><span class="line">2017/03/01 21:24:24 Generating genesis block</span><br><span class="line">2017/03/01 21:24:24 Writing genesis block</span><br><span class="line">2017/03/01 21:24:24 Inspecting block</span><br><span class="line">2017/03/01 21:24:24 Parsing genesis block</span><br><span class="line">Config for channel: foo</span><br><span class="line">&#123;</span><br><span class="line">    &quot;&quot;: &#123;</span><br><span class="line">        &quot;Values&quot;: &#123;&#125;,</span><br><span class="line">        &quot;Groups&quot;: &#123;</span><br><span class="line">            &quot;/Channel&quot;: &#123;</span><br><span class="line">                &quot;Values&quot;: &#123;</span><br><span class="line">                    &quot;HashingAlgorithm&quot;: &#123;</span><br><span class="line">                        &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                        &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                        &quot;Value&quot;: &#123;</span><br><span class="line">                            &quot;name&quot;: &quot;SHA256&quot;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    &quot;BlockDataHashingStructure&quot;: &#123;</span><br><span class="line">                        &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                        &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                        &quot;Value&quot;: &#123;</span><br><span class="line">                            &quot;width&quot;: 4294967295</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    &quot;OrdererAddresses&quot;: &#123;</span><br><span class="line">                        &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                        &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                        &quot;Value&quot;: &#123;</span><br><span class="line">                            &quot;addresses&quot;: [</span><br><span class="line">                                &quot;127.0.0.1:7050&quot;</span><br><span class="line">                            ]</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">                &quot;Groups&quot;: &#123;</span><br><span class="line">                    &quot;/Channel/Orderer&quot;: &#123;</span><br><span class="line">                        &quot;Values&quot;: &#123;</span><br><span class="line">                            &quot;ChainCreationPolicyNames&quot;: &#123;</span><br><span class="line">                                &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                                &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                                &quot;Value&quot;: &#123;</span><br><span class="line">                                    &quot;names&quot;: [</span><br><span class="line">                                        &quot;AcceptAllPolicy&quot;</span><br><span class="line">                                    ]</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;,</span><br><span class="line">                            &quot;ConsensusType&quot;: &#123;</span><br><span class="line">                                &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                                &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                                &quot;Value&quot;: &#123;</span><br><span class="line">                                    &quot;type&quot;: &quot;solo&quot;</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;,</span><br><span class="line">                            &quot;BatchSize&quot;: &#123;</span><br><span class="line">                                &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                                &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                                &quot;Value&quot;: &#123;</span><br><span class="line">                                    &quot;maxMessageCount&quot;: 10,</span><br><span class="line">                                    &quot;absoluteMaxBytes&quot;: 103809024,</span><br><span class="line">                                    &quot;preferredMaxBytes&quot;: 524288</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;,</span><br><span class="line">                            &quot;BatchTimeout&quot;: &#123;</span><br><span class="line">                                &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                                &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                                &quot;Value&quot;: &#123;</span><br><span class="line">                                    &quot;timeout&quot;: &quot;10s&quot;</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;,</span><br><span class="line">                            &quot;IngressPolicyNames&quot;: &#123;</span><br><span class="line">                                &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                                &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                                &quot;Value&quot;: &#123;</span><br><span class="line">                                    &quot;names&quot;: [</span><br><span class="line">                                        &quot;AcceptAllPolicy&quot;</span><br><span class="line">                                    ]</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;,</span><br><span class="line">                            &quot;EgressPolicyNames&quot;: &#123;</span><br><span class="line">                                &quot;Version&quot;: &quot;0&quot;,</span><br><span class="line">                                &quot;ModPolicy&quot;: &quot;&quot;,</span><br><span class="line">                                &quot;Value&quot;: &#123;</span><br><span class="line">                                    &quot;names&quot;: [</span><br><span class="line">                                        &quot;AcceptAllPolicy&quot;</span><br><span class="line">                                    ]</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;,</span><br><span class="line">                        &quot;Groups&quot;: &#123;&#125;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    &quot;/Channel/Application&quot;: &#123;</span><br><span class="line">                        &quot;Values&quot;: &#123;&#125;,</span><br><span class="line">                        &quot;Groups&quot;: &#123;&#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <p> <a href="http://hyperledger-fabric.readthedocs.io/en/latest/channels.html" target="_blank" rel="noopener">原文</a> </p>
+<p>A Hyperledger Fabric channel is a private “subnet” of communication between two or more specific network members, for the purpose of conducting private and confidential transactions. A channel is defined by members (organizations), anchor peers per member, the shared ledger, chaincode application(s) and the ordering service node(s). Each transaction on the network is executed on a channel, where each party must be authenticated and authorized to transact on that channel. Each peer that joins a channel, has its own identity given by a membership services provider (MSP), which authenticates each peer to its channel peers and services.</p>
+<p>在超级账本Fabric中，一个通道是指一个在两个或多个特定网络成员间的专门为私人的和机密的交易为目的而建立的私有”子网”。一个通道的定义中包含：成员（组织），每个成员的锚节点，共享帐本，链上代码应用程序和排序服务节点。网络上的每个交易都在一个指定的通道中执行，在通道中交易必须通过通道中的每部分的认证和授权。要加入一个通道的每个节点都必须有自己的通过成员服务提供商（MSP）获得的身份标识，用于鉴定每个节点在通道中的是什么节点和服务。</p>
+<p>To create a new channel, the client SDK calls configuration system chaincode and references properties such as anchor peer<strong>s, and members (organizations). This request creates a </strong>genesis block for the channel ledger, which stores configuration information about the channel policies, members and anchor peers. When adding a new member to an existing channel, either this genesis block, or if applicable, a more recent reconfiguration block, is shared with the new member.</p>
+<p>要创建一个通道，客户端SDK调用配置系统链上代码和参考属性，比如锚节点和成员（组织）。这个请求会为通道的账本创建一个创世区块，用于存储关于通道的策略，成员和锚节点的配置信息。当需要添加一个新成员到现有通道时，这个创世区块，或者最新的新配置区块（如果可用），将会共享给这个新成员。</p>
+<p>Note<br>注意</p>
+<p>See the Channel Configuration (configtx) section for more more details on the properties and proto structures of config transactions.</p>
+<p>参考通道配置（configtx）章节，可以查看更多关于交易的配置属性和典型的结构的明细信息。</p>
+<p>The election of a leading peer for each member on a channel determines which peer communicates with the ordering service on behalf of the member. If no leader is identified, an algorithm can be used to identify the leader. The consensus service orders transactions and delivers them, in a block, to each leading peer, which then distributes the block to its member peers, and across the channel, using the gossip protocol.</p>
+<p>从通道的所有节点中选举出的领导节点决定哪个节点用于代表其他成员节点与排序服务通讯。如果还没有领导节点，那么一个算法可以用于标识出领导节点。共识服务对交易进行排序，并打包成区块，发送区块给每个领导节点，然后领导节点把区块分发给其成员节点，然后使用gossip协议穿过通道。</p>
+<p>Although any one anchor peer can belong to multiple channels, and therefore maintain multiple ledgers, no ledger data can pass from one channel to another. This separation of ledgers, by channel, is defined and implemented by configuration chaincode, the identity membership service and the gossip data dissemination protocol. The dissemination of data, which includes information on transactions, ledger state and channel membership, is restricted to peers with verifiable membership on the channel. This isolation of peers and ledger data, by channel, allows network members that require private and confidential transactions to coexist with business competitors and other restricted members, on the same blockchain network.</p>
+<p>虽然任意一个锚节点都可以属于多个通道，而且维护了多个账本，但是不会有任何账本数据会从一个通道传到另一个通道。这就是根据通道对账本的分离，这种分离是在配置链上代码，成员标识服务和gossip传播协议中定义和实现。数据的传播，包括交易的信息，账本状态和通道成员等都在通道内受限制的验证成员身份的节点之间。这种根据通道对节点和账本数据进行隔离，允许网络成员可以在同一个区块链网络中请求私有的和保密的交易给业务上的竞争对手和其他受限的成员。</p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2019/04/21/Fabric-FAQ/">hyperledger fabric faq</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-04-21
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/fabric/">fabric</a>
+            
+          </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <h1 id="Hyperledger-Fabric基础知识答疑"><a href="#Hyperledger-Fabric基础知识答疑" class="headerlink" title="Hyperledger Fabric基础知识答疑"></a>Hyperledger Fabric基础知识答疑</h1><p>[TOC]</p>
+<h2 id="–基本问题–"><a href="#–基本问题–" class="headerlink" title="–基本问题–"></a>–基本问题–</h2><h3 id="fabric联盟链方案有什么特点？"><a href="#fabric联盟链方案有什么特点？" class="headerlink" title="fabric联盟链方案有什么特点？"></a>fabric联盟链方案有什么特点？</h3><p>答：</p>
+<ol>
+<li><p>可插拔选项</p>
+<ul>
+<li>账本数据可以多种格式存储 –新版增加了couchdb</li>
+<li>共识机制模块化、可更换 – 新版增加etcdraft</li>
+<li>支持不同的MSP–新版增加了国密支持</li>
+</ul>
+</li>
+<li><p>可扩展性</p>
+</li>
+<li><p>通道功能</p>
+</li>
+<li><p>智能合约</p>
+</li>
+<li><p>安全性、保密性</p>
+<ul>
+<li>私有数据</li>
+<li>MSP证书身份认证</li>
+</ul>
+</li>
+<li><p>没有分叉</p>
+</li>
+</ol>
+<h3 id="fabric-性能如何？"><a href="#fabric-性能如何？" class="headerlink" title="fabric 性能如何？"></a>fabric 性能如何？</h3><p>答：众所周知，比特币最大的短板是它每秒钟7个交易的上限，完全无法满足现实需要。而Fabric目标是实现每秒钟10万交易，这个量接近刚刚过去的双十一交易量瞬时峰值，完全可以满足正常条件下的行业级应用。</p>
+<p>采用测试的服务器配置为： 4vCPU   16Gb   SSDs </p>
+<p>采用kafka做排序服务</p>
+<table>
+<thead>
+<tr>
+<th>背书节点数</th>
+<th>2</th>
+<th>4</th>
+<th>8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TPS</td>
+<td>785.58</td>
+<td>948.2</td>
+<td>1265.5</td>
+</tr>
+<tr>
+<td>latency（ms）</td>
+<td>715</td>
+<td>667</td>
+<td>686</td>
+</tr>
+</tbody>
+</table>
+<p><strong>最佳实践</strong></p>
+<p>增加背书节点组的数量、加上负载均衡，就能达到更高的TPS。</p>
+<p>如果采用 ETCDRaft 基本上会有2倍多的性能提升。the Raft experiment yielded almost 2x the performance! </p>
+<h3 id="fabric联盟链方案有什么缺点？"><a href="#fabric联盟链方案有什么缺点？" class="headerlink" title="fabric联盟链方案有什么缺点？"></a>fabric联盟链方案有什么缺点？</h3><p>答：</p>
+<ol>
+<li>部署麻烦；需要有非常专业的技术运维人员</li>
+<li>没有原生的币（数字资产）；如果需要，可以自己开发</li>
+</ol>
+<h3 id="fabric交易的流程是什么？"><a href="#fabric交易的流程是什么？" class="headerlink" title="fabric交易的流程是什么？"></a>fabric交易的流程是什么？</h3><p>答：</p>
+<p><img src="../images/fabric-arch-003.png" alt="交易流程"></p>
+<p>1、客户端构造交易提案</p>
+<p>——客户端构造交易提案，发送给一个或多个Peer节点，交易提案中包含本次交易要调用的合约标识、合约方法和参数信息以及客户端签名等。</p>
+<p>2、Peer节点模拟执行交易</p>
+<p>——Peer节点收到交易提案后，会模拟执行交易，然后将原始交易提案和执行结果打包到一起，进行签名并发回给客户端，其中在模拟执行交易期间产生的数据修改不会写到账本上。</p>
+<p>3、客户端打包</p>
+<p>——客户端收到各个Peer的应答后，打包到一起组成一个交易并签名，发送给Orderer。</p>
+<p>4、共识排序，生成新区块</p>
+<p>——Orderer对接收到的交易进行共识排序，然后按照区块生成策略，将一批交易打包到一起，生成新的区块，发送给Peer节点。</p>
+<p>5、交易校验</p>
+<p>——Peer节点收到区块后，会对区块中的每笔交易进行校验，检查交易依赖的输入输出是否符合当前区块链的状态，完成后将区块写入账本，并修改K-V状态数据。</p>
+<h2 id="–质疑–"><a href="#–质疑–" class="headerlink" title="–质疑–"></a>–质疑–</h2><h3 id="在“网络内部”引入了公钥加密机制和验证者签名，但是这些主要的安全保证只有在提交了外部签名的交易之后才产生"><a href="#在“网络内部”引入了公钥加密机制和验证者签名，但是这些主要的安全保证只有在提交了外部签名的交易之后才产生" class="headerlink" title="在“网络内部”引入了公钥加密机制和验证者签名，但是这些主要的安全保证只有在提交了外部签名的交易之后才产生"></a>在“网络内部”引入了公钥加密机制和验证者签名，但是这些主要的安全保证只有在提交了外部签名的交易之后才产生</h3><p>比特币以及其他区块链久经时间验证的安全模型：其中任何交易的来源仅由外部用户的公钥签名来保证，并且系统不能以任何方式进行干涉。</p>
+<p>与之形成鲜明对比的是，Hyperledger Fabric 中唯一一个重要的签名就是验证者的签名，而用户的签名则消失在通过区块链网络复制的任意数据库中。</p>
+<p>最近一些旨在加快 Hyperledger Fabric 运行速度的研究使得其每秒处理交易量能达到惊人的20000，但性能大幅度提升的背后是研究人员对 Hyperledger Fabric 架构的大规模“魔改”，这使得 Hyperledger Fabric 已经成一个近似的区块链变成了一个四不像：<strong>背书节点（Endorsers）不再充当验证者而 Kafka 被认定为唯一可行的订购服务</strong>。最后，这些仍然只是单通道的性能，这意味着它与区块链作为共享可信来源的整个理念相违背。</p>
+<h3 id="智能合约过于复杂"><a href="#智能合约过于复杂" class="headerlink" title="智能合约过于复杂"></a>智能合约过于复杂</h3><p> “Hello World” 在其他语言中仅需几行就可以实现，而在 Chaincode 中居然需要150行之多。代码越多，可能存在的漏洞就越多。这么大数量的代码中可能隐藏着很多能造成数百万美元损失的漏洞。</p>
+<p>智能合约语言必须专为区块链设计且为安全性做出了优化。在理想的情况下，智能合约语言也应该易于学习，并能便捷地在区块链环境中使用。</p>
+<p><strong>缺乏统一的工程化开发规范，无法满足工程化开发。</strong></p>
+<h2 id="–共识–"><a href="#–共识–" class="headerlink" title="–共识–"></a>–共识–</h2><h3 id="fabric共识模式有哪些？"><a href="#fabric共识模式有哪些？" class="headerlink" title="fabric共识模式有哪些？"></a>fabric共识模式有哪些？</h3><p>答：Orderer目前支持Solo、Kafka、etcd 三种共识机制，其中solo是但节点模式；Kafka是网络消息队列模式；etcd是最新加入的支持崩溃容错的排序模式。</p>
+<h3 id="kafka共识模式是什么？"><a href="#kafka共识模式是什么？" class="headerlink" title="kafka共识模式是什么？"></a>kafka共识模式是什么？</h3><p>答：Kafka是一个中心化的排队服务，能提供更高的性能；</p>
+<p>Hyperledger Fabric中的Kafka实际运行逻辑如下：</p>
+<ol>
+<li>对于每一条链，都有一个对应的分区</li>
+<li>每个链对应一个单一的分区主题</li>
+<li>排序节点负责将来自特定链的交易（通过广播RPC接收）中继到对应的分区</li>
+<li>排序节点可以读取分区并获得在所有排序节点间达成一致的排序交易列表</li>
+<li>一个链中的交易是定时分批处理的，也就是说当一个新的批次的第一个交易进来时，开始计时</li>
+<li>当交易达到最大数量时或超时后进行批次切分，生成新的区块</li>
+<li>定时交易是另一个交易，由上面描述的定时器生成</li>
+<li>每个排序节点为每个链维护一个本地日志，生成的区块保存在本地账本中</li>
+<li>交易区块通过分发RPC返回客户端</li>
+<li>当发生崩溃时，可以利用不同的排序节点分发区块，因为所有的排序节点都维护有本地日志</li>
+</ol>
+<h3 id="Etcdraft共识模式是什么？"><a href="#Etcdraft共识模式是什么？" class="headerlink" title="Etcdraft共识模式是什么？"></a>Etcdraft共识模式是什么？</h3><p>答：Raft 是 v1.4.1 中引入的，它是一种基于 etcd 的崩溃容错（CFT）排序服务；ETCD 是一个高可用强一致性的服务发现存储仓库。</p>
+<p>etcd组件作为一个高可用强一致性的服务发现存储仓库</p>
+<p>etcd四大特点：简单、安全、快速、可信。</p>
+<ul>
+<li>简单：基于HTTP+JSON的API让你用curl就可以轻松使用。</li>
+<li>安全：可选SSL客户认证机制。</li>
+<li>快速：每个实例每秒支持一千次写操作。</li>
+<li>可信：使用Raft算法充分实现了分布式。</li>
+</ul>
+<h3 id="fabric-怎么收费？版权？授权？"><a href="#fabric-怎么收费？版权？授权？" class="headerlink" title="fabric 怎么收费？版权？授权？"></a>fabric 怎么收费？版权？授权？</h3><p>fabric采用 创作共用许可证（Creative Commons licenses，简称cc），它只保留署名权，除此以外的权利全部放弃。也就是说：<strong>必须署名，免费使用。</strong></p>
+<p><strong>必须遵守下列条件：</strong></p>
+<ul>
+<li><p><strong>署名</strong> — 您必须给出<a href="https://creativecommons.org/licenses/by/4.0/deed.zh#" target="_blank" rel="noopener">适当的署名</a>，提供指向本许可协议的链接，同时<a href="https://creativecommons.org/licenses/by/4.0/deed.zh#" target="_blank" rel="noopener">标明是否（对原始作品）作了修改</a>。您可以用任何合理的方式来署名，但是不得以任何方式暗示许可人为您或您的使用背书。</p>
+</li>
+<li><p><strong>没有附加限制</strong> — 您不得适用法律术语或者 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh#" target="_blank" rel="noopener">技术措施</a> 从而限制其他人做许可协议允许的事情。</p>
+</li>
+</ul>
+<p><strong>您可以自由地：</strong></p>
+<ul>
+<li><strong>共享</strong> — 在任何媒介以任何形式复制、发行本作品</li>
+<li><strong>演绎</strong> — 修改、转换或以本作品为基础进行创作</li>
+<li>在任何用途下，甚至商业目的。</li>
+</ul>
+<h3 id="hyperledge-是什么？"><a href="#hyperledge-是什么？" class="headerlink" title="hyperledge 是什么？"></a>hyperledge 是什么？</h3><h2 id="–Endorsement-背书–"><a href="#–Endorsement-背书–" class="headerlink" title="–Endorsement/背书–"></a>–Endorsement/背书–</h2><h3 id="多少个网络中的节点需要对交易进行背书？"><a href="#多少个网络中的节点需要对交易进行背书？" class="headerlink" title="多少个网络中的节点需要对交易进行背书？"></a>多少个网络中的节点需要对交易进行背书？</h3><p>答：需要对交易进行背书操作的节点数量由背书策略决定，背书策略在链码部署的时候指定。</p>
+<h3 id="应用客户端需要连接到所有节点吗？"><a href="#应用客户端需要连接到所有节点吗？" class="headerlink" title="应用客户端需要连接到所有节点吗？"></a>应用客户端需要连接到所有节点吗？</h3><p>答：客户端只需要连接到链码对应的背书策略所要求的足够多的节点。</p>
+<h2 id="–安全和权限控制-Security-amp-Access-Control–"><a href="#–安全和权限控制-Security-amp-Access-Control–" class="headerlink" title="–安全和权限控制/Security &amp; Access Control–"></a>–安全和权限控制/Security &amp; Access Control–</h2><h3 id="和别的区块链比，fabric怎么做到更安全"><a href="#和别的区块链比，fabric怎么做到更安全" class="headerlink" title="和别的区块链比，fabric怎么做到更安全"></a>和别的区块链比，fabric怎么做到更安全</h3><p>答：链码和数据隔离。</p>
+<p>相较于以太坊，Fabric链码和底层账本是分开的，升级链码时并不需要迁移账本数据到新链码当中，真正实现了逻辑与数据的分离。</p>
+<h3 id="我如何能够保证数据的隐私？"><a href="#我如何能够保证数据的隐私？" class="headerlink" title="我如何能够保证数据的隐私？"></a>我如何能够保证数据的隐私？</h3><p>答：数据隐私包括几个方面。</p>
+<p>第一、你可以将你的网络拆分为多个通道，每个通道代表参与者的子集，这些参与者有权访问该通道所部署的链码所包含的数据。</p>
+<p>第二、通过通道你可以限制链码的输入数据只对背书节点可见。可见性设置将决定链码的输入输出数据是否包含在提交交易中，可以只包含输出数据。</p>
+<p>第三、你能在调用链码前对数据进行哈希操作或者加密。如果对数据进行哈希操作，你需要提供获取原数据的方式。如果对数据进行加密，你需要提供获取密钥的方式。</p>
+<p>第四、你可以通过链码中的访问控制逻辑限制数据访问权限，只有机构中特定的角色可以访问。</p>
+<p>第五、节点中的账本数据可以通过文件系统进行加密，节点间数据传输通过TLS进行加密。</p>
+<h3 id="fabric怎么做到监管和保护用户隐私"><a href="#fabric怎么做到监管和保护用户隐私" class="headerlink" title="fabric怎么做到监管和保护用户隐私"></a>fabric怎么做到监管和保护用户隐私</h3><p>答：基于PKI证书体系，Fabric可以实现交易的追踪、认责、不可抵赖、数据授权访问、监管和审计等特性；公有链数据全公开、完全匿名且无监管，成为了部分不法分子的交易天堂。</p>
+<h3 id="排序节点能否看到交易数据？"><a href="#排序节点能否看到交易数据？" class="headerlink" title="排序节点能否看到交易数据？"></a>排序节点能否看到交易数据？</h3><p>答：不能，排序节点只是排序交易，不能解析交易。如果你只关心输入数据，不希望经过排序节点，你可以使用可见性设置。可见性设置将决定链码的输入输出数据是否包含在提交交易中，可以只包含输出数据，这样只有背书节点能看到输入数据。如果你不希望排序节点看到交易输出数据，你能在调用链码前对数据进行哈希操作或者加密。如果对数据进行哈希操作，你需要提供获取原数据的方式。如果对数据进行加密，你需要提供获取密钥的方式。</p>
+<h2 id="–应用端编程模型-Application-side-Programming-Model–"><a href="#–应用端编程模型-Application-side-Programming-Model–" class="headerlink" title="–应用端编程模型/Application-side Programming Model–"></a>–应用端编程模型/Application-side Programming Model–</h2><h3 id="应用客户端如何知道交易的输出？"><a href="#应用客户端如何知道交易的输出？" class="headerlink" title="应用客户端如何知道交易的输出？"></a>应用客户端如何知道交易的输出？</h3><p>答：背书节点会返回提案模拟交易的结果。如果有多个背书节点，客户端能检查返回结果是否相同后再提交交易结果以及排序和生效所需要的背书。最终，生效节点会验证交易是否合法，客户端通过SDK提供的事件通知方式接收交易结果。</p>
+<h3 id="如何查询账本数据？"><a href="#如何查询账本数据？" class="headerlink" title="如何查询账本数据？"></a>如何查询账本数据？</h3><p>答：通过链码可以通过键值查询数据。可以对键值进行范围查询，复合主键可以允许查询出部分键值相同的值，例如由 (owner,asset_id) 组成的复合主键可以用来查询特定实体所拥有的所有asset。</p>
+<h3 id="如何查询数据历史来理解数据出处？"><a href="#如何查询数据历史来理解数据出处？" class="headerlink" title="如何查询数据历史来理解数据出处？"></a>如何查询数据历史来理解数据出处？</h3><p>答： 链码中API  <code>GetHistoryForKey()</code> 会返回键值对应的数据历史。</p>
+<h3 id="如何保证查询结果是正确的，特别是当查询的节点可能正处在恢复和获取最新区块的过程中？"><a href="#如何保证查询结果是正确的，特别是当查询的节点可能正处在恢复和获取最新区块的过程中？" class="headerlink" title="如何保证查询结果是正确的，特别是当查询的节点可能正处在恢复和获取最新区块的过程中？"></a>如何保证查询结果是正确的，特别是当查询的节点可能正处在恢复和获取最新区块的过程中？</h3><p>答：客户端可以查询多个节点，比较他们的区块高度查询结果，选用区块高度最高的结果。</p>
+<h3 id="写入的数据不能立即获取到"><a href="#写入的数据不能立即获取到" class="headerlink" title="写入的数据不能立即获取到"></a>写入的数据不能立即获取到</h3><p>答：通过putState写入的数据并不会立即落到账本上, 要等到第二段交易所有peer节点共识达成后，数据才会落地。因此不可以立即获取之前写入的值，比如批量插入数据，利用putState写入数据,再通过getState函数来判断主键是否重复。</p>
+<h3 id="链码里面的方法需要加锁吗"><a href="#链码里面的方法需要加锁吗" class="headerlink" title="链码里面的方法需要加锁吗?"></a>链码里面的方法需要加锁吗?</h3><p>答：不需要。peer节点已经实现了消息队列，发给链码的链码消息都是顺序执行的，不是并行执行的。</p>
+<h2 id="–链码（智能合约和数字资产）–"><a href="#–链码（智能合约和数字资产）–" class="headerlink" title="–链码（智能合约和数字资产）–"></a>–链码（智能合约和数字资产）–</h2><h3 id="Hyperledger-Fabric-是否支持智能合约逻辑？"><a href="#Hyperledger-Fabric-是否支持智能合约逻辑？" class="headerlink" title="Hyperledger Fabric 是否支持智能合约逻辑？"></a>Hyperledger Fabric 是否支持智能合约逻辑？</h3><p>答：是的，我们称这个功能为 :<code>chaincode</code>. 这是我们对带有附加功能的智能合同方法/算法的理解。</p>
+<p>链码是部署在网络中的程序代码，通过共识流程被链的验证者共同执行并验证。开发者能使用链码来开发商业合同、资产定义和集体管理的去中心化应用。</p>
+<h3 id="如何创建商业合同？"><a href="#如何创建商业合同？" class="headerlink" title="如何创建商业合同？"></a>如何创建商业合同？</h3><p>答：通常有两种方法来开发商业合同：第一个方法是开发单独的合同在独立的链码实例;第二个也是最有效的方法是使用链码创建去中心化的应用来管理一种或多种类型的商业合同的生命周期，并让终端用户实例化带有这些应用的合同实例。</p>
+<h3 id="如何创建资产？"><a href="#如何创建资产？" class="headerlink" title="如何创建资产？"></a>如何创建资产？</h3><p>答：用户可以使用链码（在商业规则方面）和成员管理服务（在数字密钥方面）来设计资产和资产管理逻辑。</p>
+<p>区块链解决方案中有两种流行的方法来设计资产：无状态的UTXO模型，账户余额是过去交易记录中没有使用的交易输出的合计;另一种是账户模型，账户余额被存储在账本中的状态值中。</p>
+<p>每一个方法都有好处和弊端。本区块链技术对两种方法没有倾向。我们最初的要求就是确保两个方法都能够被容易实现。</p>
+<h3 id="链码支持哪些语言？"><a href="#链码支持哪些语言？" class="headerlink" title="链码支持哪些语言？"></a>链码支持哪些语言？</h3><p>答：链码可以使用任何编程语言编写并在容器内执行。第一个全功能支持的语言是Golang。</p>
+<p>对其他语言的支持和模板语言的开发正在被讨论，更多细节会在近期发布。</p>
+<p>还可以通过 Hyperledger Composer 来构建Hyperledger Fabric应用。</p>
+<h3 id="Hyperledger-Fabric是否有原生的货币？"><a href="#Hyperledger-Fabric是否有原生的货币？" class="headerlink" title="Hyperledger Fabric是否有原生的货币？"></a>Hyperledger Fabric是否有原生的货币？</h3><p>答：没有。然而，如果你的区块链网络确实需要原生的货币，你可以使用链码来开发货币。原生货币的一个基本的属性是一些数量会被转移（定义货币的链码会被调用）当每次链上交易被执行。</p>
+<p>Fabric上没有代币机制，仅提供了一张类似白纸一样的平台，完全靠自己去实现；公有链的节点是逐利型的，代币一种激励制度，来保证网络的安全和可持续性。而Fabric作为准入型网络，节点具有很大的可信度和目的性，自然代币就不是很必要。</p>
+<h2 id="–区块–"><a href="#–区块–" class="headerlink" title="–区块–"></a>–区块–</h2><h3 id="fabric-出包时间、大小？"><a href="#fabric-出包时间、大小？" class="headerlink" title="fabric 出包时间、大小？"></a>fabric 出包时间、大小？</h3><p>Fabric出块可配置时间、大小，甚至交易的上限大小，非常灵活。另外Fabric不出空块，只有有交易时才会出块；公有链因其激励机制，定时出块，一定程度上浪费了存储。而且作为共识的一部分，出块时间和块大小很难改变。</p>
+<h2 id="–各版本的区别–"><a href="#–各版本的区别–" class="headerlink" title="–各版本的区别–"></a>–各版本的区别–</h2><h3 id="为什么选择fabric-1-4"><a href="#为什么选择fabric-1-4" class="headerlink" title="为什么选择fabric 1.4"></a>为什么选择fabric 1.4</h3><p>答：fabric v1.4 是第一个长期支持的版本。Fabric v1.4.x will be  first long term support release.</p>
+<h3 id="V1-4最新特性"><a href="#V1-4最新特性" class="headerlink" title="V1.4最新特性"></a>V1.4最新特性</h3><p>答：ETCDrafc 排序；Raft ordering service</p>
+<p>服务能力和可操作性提高；Serviceability and operations improvements</p>
+<p>为开发应用系统提升了编程模型；Improved programming model for developing applications</p>
+<p>提升了私有数据；Private data enhancements</p>
+<h3 id="V1-3最新特性"><a href="#V1-3最新特性" class="headerlink" title="V1.3最新特性"></a>V1.3最新特性</h3><p>答：MSP实现了汇合身份标识；MSP implementation with identity mixer</p>
+<p>设置了背书策略；setting key-level endorsement policies</p>
+<p>支持java写chaincode；support java chaincode develop</p>
+<p>节点上支持基于通道的事件服务；peer channel-based evet services</p>
+<h3 id="V1-2最新特性"><a href="#V1-2最新特性" class="headerlink" title="V1.2最新特性"></a>V1.2最新特性</h3><p>答：支持私有数据；Private Data Collections</p>
+<p>服务发现功能；Service Discovery</p>
+<p>授权控制；Access Control</p>
+<p>背书及验证可插拔；Pluggable endorsement and validation</p>
+<h3 id="V0-6版本和V1-0版本的最大区别是什么？"><a href="#V0-6版本和V1-0版本的最大区别是什么？" class="headerlink" title="V0.6版本和V1.0版本的最大区别是什么？"></a>V0.6版本和V1.0版本的最大区别是什么？</h3><p>答：任何后续版本的差异都在版本说明 中展现。因为Fabric是一个模块可替换的框架，你可以参考设计文档获取更多差异信息。</p>
+<h3 id="哪里可以获得上文中没被解答的技术问题的帮助？"><a href="#哪里可以获得上文中没被解答的技术问题的帮助？" class="headerlink" title="哪里可以获得上文中没被解答的技术问题的帮助？"></a>哪里可以获得上文中没被解答的技术问题的帮助？</h3><p>答：请使用 <a href="https://stackoverflow.com/questions/tagged/hyperledger" target="_blank" rel="noopener">StackOverflow</a>.</p>
+<h2 id="–Ordering-Service–"><a href="#–Ordering-Service–" class="headerlink" title="–Ordering Service–"></a>–Ordering Service–</h2><h3 id="已经运行的排序服务节点，想要更换共识算法，怎么做？I-have-an-ordering-service-up-and-running-and-want-to-switch-consensus-algorithms-How-do-I-do-that"><a href="#已经运行的排序服务节点，想要更换共识算法，怎么做？I-have-an-ordering-service-up-and-running-and-want-to-switch-consensus-algorithms-How-do-I-do-that" class="headerlink" title="已经运行的排序服务节点，想要更换共识算法，怎么做？I have an ordering service up and running and want to switch consensus algorithms. How do I do that?"></a>已经运行的排序服务节点，想要更换共识算法，怎么做？I have an ordering service up and running and want to switch consensus algorithms. How do I do that?</h3><p>答：    这个操作不支持。This is explicitly not supported.</p>
+<h3 id="What-is-the-orderer-system-channel"><a href="#What-is-the-orderer-system-channel" class="headerlink" title="What is the orderer system channel?"></a>What is the orderer system channel?</h3><p>答：    The orderer system channel (sometimes called ordering system channel) is the channel the orderer is initially bootstrapped with. It is used to orchestrate channel creation. The orderer system channel defines consortia and the initial configuration for new channels. At channel creation time, the organization definition in the consortium, the /Channel group’s values and policies, as well as the /Channel/Orderer group’s values and policies, are all combined to form the new initial channel definition.</p>
+<h3 id="If-I-update-my-application-channel-should-I-update-my-orderer-system-channel"><a href="#If-I-update-my-application-channel-should-I-update-my-orderer-system-channel" class="headerlink" title="If I update my application channel, should I update my orderer system channel?"></a>If I update my application channel, should I update my orderer system channel?</h3><p>答：    Once an application channel is created, it is managed independently of any other channel (including the orderer system channel). Depending on the modification, the change may or may not be desirable to port to other channels. In general, MSP changes should be synchronized across all channels, while policy changes are more likely to be specific to a particular channel.</p>
+<h3 id="Can-I-have-an-organization-act-both-in-an-ordering-and-application-role"><a href="#Can-I-have-an-organization-act-both-in-an-ordering-and-application-role" class="headerlink" title="Can I have an organization act both in an ordering and application role?"></a>Can I have an organization act both in an ordering and application role?</h3><p>答：    Although this is possible, it is a highly discouraged configuration. By default the /Channel/Orderer/BlockValidation policy allows any valid certificate of the ordering organizations to sign blocks. If an organization is acting both in an ordering and application role, then this policy should be updated to restrict block signers to the subset of certificates authorized for ordering.</p>
+<h3 id="I-want-to-write-a-consensus-implementation-for-Fabric-Where-do-I-begin"><a href="#I-want-to-write-a-consensus-implementation-for-Fabric-Where-do-I-begin" class="headerlink" title="I want to write a consensus implementation for Fabric. Where do I begin?"></a>I want to write a consensus implementation for Fabric. Where do I begin?</h3><p>答：    A consensus plugin needs to implement the Consenter and Chain interfaces defined in the consensus package. There are two plugins built against these interfaces already: solo and kafka. You can study them to take cues for your own implementation. The ordering service code can be found under the orderer package.</p>
+<h3 id="I-want-to-change-my-ordering-service-configurations-e-g-batch-timeout-after-I-start-the-network-what-should-I-do"><a href="#I-want-to-change-my-ordering-service-configurations-e-g-batch-timeout-after-I-start-the-network-what-should-I-do" class="headerlink" title="I want to change my ordering service configurations, e.g. batch timeout, after I start the network, what should I do?"></a>I want to change my ordering service configurations, e.g. batch timeout, after I start the network, what should I do?</h3><p>答：    This falls under reconfiguring the network. Please consult the topic on configtxlator.</p>
+<h2 id="–Solo–"><a href="#–Solo–" class="headerlink" title="–Solo–"></a>–Solo–</h2><h3 id="怎么在生产环境部署sole模式的共识节点"><a href="#怎么在生产环境部署sole模式的共识节点" class="headerlink" title="怎么在生产环境部署sole模式的共识节点?"></a>怎么在生产环境部署sole模式的共识节点?</h3><p>答：    solo就不是为生产环境设计的。他根本就不支持容错。Solo is not intended for production. It is not, and will never be, fault tolerant.</p>
+<h2 id="–Kafka–"><a href="#–Kafka–" class="headerlink" title="–Kafka–"></a>–Kafka–</h2><h3 id="How-do-I-remove-a-node-from-the-ordering-service"><a href="#How-do-I-remove-a-node-from-the-ordering-service" class="headerlink" title="How do I remove a node from the ordering service?"></a>How do I remove a node from the ordering service?</h3><p>答：<br>This is a two step-process:</p>
+<p>Add the node’s certificate to the relevant orderer’s MSP CRL to prevent peers/clients from connecting to it.<br>Prevent the node from connecting to the Kafka cluster by leveraging standard Kafka access control measures such as TLS CRLs, or firewalling.</p>
+<h3 id="I-have-never-deployed-a-Kafka-ZK-cluster-before-and-I-want-to-use-the-Kafka-based-ordering-service-How-do-I-proceed"><a href="#I-have-never-deployed-a-Kafka-ZK-cluster-before-and-I-want-to-use-the-Kafka-based-ordering-service-How-do-I-proceed" class="headerlink" title="I have never deployed a Kafka/ZK cluster before, and I want to use the Kafka-based ordering service. How do I proceed?"></a>I have never deployed a Kafka/ZK cluster before, and I want to use the Kafka-based ordering service. How do I proceed?</h3><p>答：    The Hyperledger Fabric documentation assumes the reader generally has the operational expertise to setup, configure, and manage a Kafka cluster (see Caveat emptor). If you insist on proceeding without such expertise, you should complete, at a minimum, the first 6 steps of the Kafka Quickstart guide before experimenting with the Kafka-based ordering service. You can also consult this sample configuration file for a brief explanation of the sensible defaults for Kafka/ZooKeeper.</p>
+<h3 id="Where-can-I-find-a-Docker-composition-for-a-network-that-uses-the-Kafka-based-ordering-service"><a href="#Where-can-I-find-a-Docker-composition-for-a-network-that-uses-the-Kafka-based-ordering-service" class="headerlink" title="Where can I find a Docker composition for a network that uses the Kafka-based ordering service?"></a>Where can I find a Docker composition for a network that uses the Kafka-based ordering service?</h3><p>答：    Consult the end-to-end CLI example.</p>
+<h3 id="Why-is-there-a-ZooKeeper-dependency-in-the-Kafka-based-ordering-service"><a href="#Why-is-there-a-ZooKeeper-dependency-in-the-Kafka-based-ordering-service" class="headerlink" title="Why is there a ZooKeeper dependency in the Kafka-based ordering service?"></a>Why is there a ZooKeeper dependency in the Kafka-based ordering service?</h3><p>答：    Kafka uses it internally for coordination between its brokers.</p>
+<h3 id="I’m-trying-to-follow-the-BYFN-example-and-get-a-“service-unavailable”-error-what-should-I-do"><a href="#I’m-trying-to-follow-the-BYFN-example-and-get-a-“service-unavailable”-error-what-should-I-do" class="headerlink" title="I’m trying to follow the BYFN example and get a “service unavailable” error, what should I do?"></a>I’m trying to follow the BYFN example and get a “service unavailable” error, what should I do?</h3><p>答：    Check the ordering service’s logs. A “Rejecting deliver request because of consenter error” log message is usually indicative of a connection problem with the Kafka cluster. Ensure that the Kafka cluster is set up properly, and is reachable by the ordering service’s nodes.</p>
+<h2 id="–拜占庭容错算法-BFT–"><a href="#–拜占庭容错算法-BFT–" class="headerlink" title="–拜占庭容错算法/BFT–"></a>–拜占庭容错算法/BFT–</h2><h3 id="When-is-a-BFT-version-of-the-ordering-service-going-to-be-available"><a href="#When-is-a-BFT-version-of-the-ordering-service-going-to-be-available" class="headerlink" title="When is a BFT version of the ordering service going to be available?"></a>When is a BFT version of the ordering service going to be available?</h3><p>答：    No date has been set. We are working towards a release during the 1.x cycle, i.e. it will come with a minor version upgrade in Fabric. Track FAB-33 for updates.</p>
+<p>在0.6版本，Fabric支持PBFT（实用拜占庭容错算法）共识算法，1.0及以后版本中不再支持。之所以把0.6版本中的PBFT共识算法暂时取消可能是因为：</p>
+<p>1、PBFT提供(n-1)/3的容错性，但是O(N^2)消息复杂度使得随着节点的增加，交易性能大幅下降。</p>
+<p>2、Fabric是准入型网络，对PBFT这种共识算法要求不高。</p>
 
         
       
