@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="fabric go sdk add gm support 增加国密支持">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="hongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/2019/11/27/fabric-go-sdk-add-gm-support/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> fabric go sdk add gm support 增加国密支持 - hongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">hongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          fabric go sdk add gm support 增加国密支持
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-11-27
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路"><span class="toc-text">思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#internal-github-com-hyperledger-fabric-bccsp"><span class="toc-text">internal/github.com/hyperledger/fabric/bccsp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pkg-core-cryptosuite-bccsp-目录修改"><span class="toc-text">pkg/core/cryptosuite/bccsp 目录修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#internal-github-com-hyperledger-fabric-msp"><span class="toc-text">internal/github.com/hyperledger/fabric/msp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#试着编译sdk"><span class="toc-text">试着编译sdk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编译my118-com-tradeblock-explorer-api"><span class="toc-text">编译my118.com/tradeblock-explorer-api</span></a></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>参照 <strong>Hyperledger Fabric 国密补丁</strong> <a href="https://github.com/flyinox/fabric-sm-patch.git" target="_blank" rel="noopener">https://github.com/flyinox/fabric-sm-patch.git</a> 把必要东西复制过来,修改后就能完成国密支持。</p>
+<p>首先签出代码：</p>
+<p><a href="https://github.com/hyperledger/fabric-sdk-go.git" target="_blank" rel="noopener">https://github.com/hyperledger/fabric-sdk-go.git</a></p>
+<p>go sdk 需要修改bccsp msp，其中 bccsp 有两部分：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">internal/github.com/hyperledger/fabric/bccsp</span><br><span class="line"></span><br><span class="line">pkg/core/cryptosuite/bccsp</span><br></pre></td></tr></table></figure>
+<p>msp 在</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">internal/github.com/hyperledger/fabric/msp</span><br></pre></td></tr></table></figure>
+<h3 id="internal-github-com-hyperledger-fabric-bccsp"><a href="#internal-github-com-hyperledger-fabric-bccsp" class="headerlink" title="internal/github.com/hyperledger/fabric/bccsp"></a>internal/github.com/hyperledger/fabric/bccsp</h3><p>internal/github.com/hyperledger/fabric/bccsp 目录下是fabric 加密服务，具体需要添加一个国密的工厂类，把原始的sw工程类替换为国密工厂类。具体需要复制：</p>
+<p>fabric 国密布丁的</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bccsp/gmfactory.go  =&gt; bccsp/factory/gm/gmfactory.go</span><br><span class="line"></span><br><span class="line">bccsp/gm  =&gt; bcccsp/gm</span><br></pre></td></tr></table></figure>
+<p>然后修改所有复制过来的文件中import路径,在前面加上<code>github.com/hyperledger/fabric-sdk-go/internal/</code> ，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;github.com/hyperledger/fabric/bccsp&quot;</span><br></pre></td></tr></table></figure>
+<p>to</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="pkg-core-cryptosuite-bccsp-目录修改"><a href="#pkg-core-cryptosuite-bccsp-目录修改" class="headerlink" title="pkg/core/cryptosuite/bccsp 目录修改"></a>pkg/core/cryptosuite/bccsp 目录修改</h3><p>增加gm 目录，复制 sw/cryptosuiteimpl.go =&gt; gm/cryptosuiteimpl.go</p>
+<p>然后修改package sw =&gt; package gm</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bccspSw &quot;github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/factory/sw&quot;</span><br></pre></td></tr></table></figure>
+<p>to</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bccspGm &quot;github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/bccsp/factory/gm&quot;</span><br></pre></td></tr></table></figure>
+<p>修改基础调用bccspSw 的地方为 bccspGm</p>
+<p>然后修改 multisuite/cryptosuiteimpl.go</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;github.com/hyperledger/fabric-sdk-go/pkg/core/cryptosuite/bccsp/sw&quot;</span><br></pre></td></tr></table></figure>
+<p>to</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;github.com/hyperledger/fabric-sdk-go/pkg/core/cryptosuite/bccsp/gm&quot;</span><br></pre></td></tr></table></figure>
+<p>然后修改如下语句</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">case &quot;sw&quot;:</span><br><span class="line">  return sw.GetSuiteByConfig(config)</span><br></pre></td></tr></table></figure>
+<p>to</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">case &quot;sw&quot;:</span><br><span class="line">  return gm.GetSuiteByConfig(config)</span><br></pre></td></tr></table></figure>
+<p>其实就是把调用sw的地方改为gm。</p>
+<h3 id="internal-github-com-hyperledger-fabric-msp"><a href="#internal-github-com-hyperledger-fabric-msp" class="headerlink" title="internal/github.com/hyperledger/fabric/msp"></a>internal/github.com/hyperledger/fabric/msp</h3><p>这个目录就是修改如下几个文件:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cert.go</span><br><span class="line">identities.go</span><br><span class="line">mspimpl.go</span><br><span class="line">mspimplsetup.go</span><br><span class="line">mspimplvalidate.go</span><br></pre></td></tr></table></figure>
+<p>替换所有 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;crypto/x509&quot;</span><br></pre></td></tr></table></figure>
+<p>to</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;github.com/flyinox/crypto/x509&quot;</span><br></pre></td></tr></table></figure>
+<p>修改go.mod</p>
+<p>添加： </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">github.com/flyinox/crypto master</span><br></pre></td></tr></table></figure>
+<h3 id="试着编译sdk"><a href="#试着编译sdk" class="headerlink" title="试着编译sdk"></a>试着编译sdk</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> make</span></span><br><span class="line"></span><br><span class="line">gobin is not installed (GO111MODULE=off go get -u github.com/myitcv/gobin)</span><br><span class="line">Missing tool dependency. You can fix by running make depend or installing the tool listed above.</span><br><span class="line">Makefile:251: recipe for target 'depend-noforce' failed</span><br><span class="line">make: [depend-noforce] Error 1 (ignored)</span><br><span class="line">Running check_license.sh</span><br><span class="line">Examining working directory changes</span><br><span class="line">The following files are missing SPDX-License-Identifier headers:</span><br><span class="line">internal/github.com/hyperledger/fabric/msp/cert.go</span><br><span class="line"></span><br><span class="line">Please replace the Apache license header comment text with:</span><br><span class="line">SPDX-License-Identifier: Apache-2.0</span><br><span class="line"></span><br><span class="line">Checking committed files for traditional Apache License headers ...</span><br><span class="line">All remaining files have Apache 2.0 headers</span><br><span class="line">rm -Rf /tmp/enroll_user /tmp/msp /tmp/keyvaluestore /tmp/hfc-kvs /tmp/state /tmp/state-store</span><br><span class="line">rm -f integration-report.xml report.xml</span><br><span class="line">go clean</span><br><span class="line">go: finding golang.org/x/text v0.3.0</span><br><span class="line">go: finding google.golang.org/genproto v0.0.0-20190327125643-d831d65fe17d</span><br><span class="line">go: finding golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2</span><br><span class="line">go: finding golang.org/x/net v0.0.0-20190311183353-d8887717615a</span><br><span class="line">go: finding golang.org/x/net v0.0.0-20180906233101-161cd47e91fd</span><br><span class="line">go: finding golang.org/x/sync v0.0.0-20180314180146-1d60e4601c6f</span><br><span class="line">go: finding google.golang.org/appengine v1.4.0</span><br><span class="line">go: finding golang.org/x/sys v0.0.0-20180909124046-d0be0721c37e</span><br><span class="line">go: finding google.golang.org/grpc v1.23.0</span><br><span class="line">go: finding golang.org/x/net v0.0.0-20180724234803-3673e40ba225</span><br><span class="line">go: finding github.com/golang/mock v1.1.1</span><br><span class="line">go: finding github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b</span><br><span class="line">go: finding github.com/google/go-cmp v0.2.0</span><br><span class="line">go: finding golang.org/x/lint v0.0.0-20190313153728-d0100b6bd8b3</span><br><span class="line">go: finding github.com/client9/misspell v0.3.4</span><br><span class="line">go: finding golang.org/x/oauth2 v0.0.0-20180821212333-d2e6202438be</span><br><span class="line">go: finding honnef.co/go/tools v0.0.0-20190523083050-ea95bdfd59fc</span><br><span class="line">go: finding golang.org/x/tools v0.0.0-20190524140312-2c0ae7006135</span><br><span class="line">go: finding cloud.google.com/go v0.26.0</span><br><span class="line">go: finding google.golang.org/appengine v1.1.0</span><br><span class="line">go: finding google.golang.org/genproto v0.0.0-20180817151627-c66870c02cf8</span><br><span class="line">go: finding github.com/BurntSushi/toml v0.3.1</span><br><span class="line">go: finding golang.org/x/tools v0.0.0-20190311212946-11955173bddd</span><br><span class="line">go: finding golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a</span><br></pre></td></tr></table></figure>
+<p>然后另开终端执行</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">GO111MODULE=off go get -u github.com/myitcv/gobin</span><br></pre></td></tr></table></figure>
+<h3 id="编译my118-com-tradeblock-explorer-api"><a href="#编译my118-com-tradeblock-explorer-api" class="headerlink" title="编译my118.com/tradeblock-explorer-api"></a>编译my118.com/tradeblock-explorer-api</h3><p>因为 go 版本问题，下载依赖包的时候需要：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export GO111MODULE=on ;go mod tidy</span><br><span class="line">go build</span><br></pre></td></tr></table></figure>
+<p>执行应用的时候加载证书失败，</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ./tradeblock-explorer-api</span></span><br><span class="line">2019/11/27 03:37:20.219 [I] [router.go:270]  /opt/gopath/src/my118.com/tradeblock-explorer-api/controllers no changed</span><br><span class="line"> [fabsdk/fab] 2019/11/27 03:37:20 UTC - fab.detectDeprecatedNetworkConfig -&gt; WARN Getting orderers from endpoint config channels.orderer is deprecated, use entity matchers to override orderer configuration</span><br><span class="line"> [fabsdk/fab] 2019/11/27 03:37:20 UTC - fab.detectDeprecatedNetworkConfig -&gt; WARN visit https://github.com/hyperledger/fabric-sdk-go/blob/master/test/fixtures/config/overrides/local_entity_matchers.yaml for samples</span><br><span class="line"> [fabsdk/fab] 2019/11/27 03:37:20 UTC - fab.detectDeprecatedNetworkConfig -&gt; WARN Getting orderers from endpoint config channels.orderer is deprecated, use entity matchers to override orderer configuration</span><br><span class="line"> [fabsdk/fab] 2019/11/27 03:37:20 UTC - fab.detectDeprecatedNetworkConfig -&gt; WARN visit https://github.com/hyperledger/fabric-sdk-go/blob/master/test/fixtures/config/overrides/local_entity_matchers.yaml for samples</span><br><span class="line">panic: Failed to init context: getting private key from cert failed: fetching public key from cert failed: Unable to parse cert from decoded bytes: x509: unsupported elliptic curve</span><br><span class="line"></span><br><span class="line">goroutine 1 [running]:</span><br><span class="line">my118.com/tradeblock-explorer-api/service.Setup()</span><br><span class="line">	/opt/gopath/src/my118.com/tradeblock-explorer-api/service/fabricservice.go:84 +0x833</span><br><span class="line">main.init.0()</span><br><span class="line">	/opt/gopath/src/my118.com/tradeblock-explorer-api/main.go:19 +0x71</span><br></pre></td></tr></table></figure>
+<p>修改fabric-sdk-go:  pkg/core/cryptosuite/cryptosuite.go</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;github.com/hyperledger/fabric-sdk-go/pkg/core/cryptosuite/bccsp/sw&quot;</span><br></pre></td></tr></table></figure>
+<p>to</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;github.com/hyperledger/fabric-sdk-go/pkg/core/cryptosuite/bccsp/gm&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">s, err := sw.GetSuiteWithDefaultEphemeral()</span><br></pre></td></tr></table></figure>
+<p>to</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">s, err := gm.GetSuiteWithDefaultEphemeral()</span><br></pre></td></tr></table></figure>
+<p>pkg/core/config/cryptoutil/cryptoutil.go 替换 x509</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;crypto/x509&quot;</span><br></pre></td></tr></table></figure>
+<p>to</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;github.com/flyinox/crypto/x509&quot;</span><br></pre></td></tr></table></figure>
+<p>macos编译</p>
+<p>执行</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export GO111MODULE=on ;go mod tidy</span><br><span class="line"></span><br><span class="line">go: golang.org/x/oauth2@v0.0.0-20180821212333-d2e6202438be: unrecognized import path "golang.org/x/oauth2" (https fetch: Get https://golang.org/x/oauth2?go-get=1: dial tcp 216.239.37.1:443: i/o timeout)</span><br><span class="line">go: golang.org/x/exp@v0.0.0-20190121172915-509febef88a4: unrecognized import path "golang.org/x/exp" (https fetch: Get https://golang.org/x/exp?go-get=1: dial tcp 216.239.37.1:443: i/o timeout)</span><br><span class="line">go: golang.org/x/lint@v0.0.0-20190227174305-5b3e6a55c961: unrecognized import path "golang.org/x/lint" (https fetch: Get https://golang.org/x/lint?go-get=1: dial tcp 216.239.37.1:443: i/o timeout)</span><br></pre></td></tr></table></figure>
+<p>修改 go.mod增加</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">golang.org/x/oauth2 =&gt; github.com/golang/oauth2 v0.0.0-20180821212333-d2e6202438be</span><br><span class="line">golang.org/x/exp =&gt; github.com/golang/exp v0.0.0-20190121172915-509febef88a4</span><br><span class="line">golang.org/x/lint =&gt; github.com/golang/lint v0.0.0-20190227174305-5b3e6a55c961</span><br></pre></td></tr></table></figure>
+<p>其实改为用手机4g上网后，把go升级为1.13,go mod tidy就完全可以了</p>
+<p>调试执行，目前执行到fabric-sdk-go/pkg/msp/getsigid.go: line: 132 处，可以从配置文件中获得certBytes,下一步需要执行        </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">privateKey, err = mgr.getPrivateKeyFromCert(username, certBytes)</span><br></pre></td></tr></table></figure>
+<p>具体文件是  fabric-sdk-go:pkg/msp/getsigid.go: line:218行getPrivateKeyFromCert</p>
+<p>然后需要调用 pkg/core/config/cryptoutil.go : GetPublicKeyFromCert</p>
+<p>x509:  parseCertificate 返回一个 x509Cert</p>
+<p>继续执行 cryptoutils.go line: 69</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">key, err := cs.KeyImport(x509Cert, factory.GetX509PublicKeyImportOpts(true))</span><br></pre></td></tr></table></figure>
+<p>执行到pkg/core/cryptosuite/bccsp/wrapper/cryptosuiteimpl.go line:40 </p>
+<p>然后执行到了bccsp/sw/impl.go  这个应该是执行错了，不应该到这里。</p>
+<p>跟踪查找后觉得应该是fabric/bccsp/factory/pkcs11/pkcs11factory.go Get中返回了sw，</p>
+<p>修改Get function ，替换成gm的程序。</p>
+<p>执行了还是不行。</p>
+<p>在pkg/core/cryptosuite/bccsp/wrappr/cryptosuiteimpl.go 中还是sw；在18行new的时候打个断点试试看</p>
+<p>发现是在pkg/fabsdk/factory/defcore/corefactory.go 中直接使用sw，替换成gm以后再次执行，进来的时候就进入看到wrapper中是gm实现</p>
+<p><strong>这时候公钥获取成功</strong>。</p>
+<p>但是下面的私钥解析失败…继续</p>
+<p>继续调试，执行完 pkg/msp/getsigid.go getPrivateKeyPemFromKeyStore 没有问题</p>
+<p>返回到 getPrivateKeyFromKeyStore </p>
+<p>继续执行     return fabricCaUtil.ImportBCCSPKeyFromPEMBytes(pemBytes, mgr.cryptoSuite, true)</p>
+<p>internal/github.com/hyperledge/fabric-ca/util/csp.go</p>
+<p>跟踪到fabric/bccsp/utils/keys.go ： DERToPrivateKey</p>
+<p>x509.ParsePKCS1PrivateKey  不行</p>
+<p>ParsePKCS8PrivateKey  不行</p>
+<p>ParseECPrivateKey 出错</p>
+<p>修改keys.go </p>
+<p>  // “crypto/x509”</p>
+<p>  “github.com/flyinox/crypto/x509”</p>
+<p><strong>然后私钥就可以加载了。</strong></p>
+<p>然而后面导入的时候还是失败，</p>
+<p>fabric-ca/sdkpatch/cryptosuitebridge/cryptosuitebridge.go增加：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func GetSM2PrivateKeyImportOpts(ephemeral bool) core.KeyImportOpts &#123;</span><br><span class="line"></span><br><span class="line">  return &amp;bccsp.SM2PrivateKeyImportOpts&#123;Temporary: ephemeral&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>fabric-ca/util/csp.go</p>
+<p>增加</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;github.com/flyinox/crypto/sm/sm2&quot;</span><br></pre></td></tr></table></figure>
+<p>ImportBCCSPKeyFromPEMBytes 中添加</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">case *sm2.PrivateKey:</span><br><span class="line">	priv, err := factory.PrivateKeyToDER(key.(*sm2.PrivateKey))</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return nil, errors.WithMessage(err, fmt.Sprintf(&quot;Failed to convert ECDSA private key for &apos;%s&apos;&quot;, keyFile))</span><br><span class="line">	&#125;</span><br><span class="line">	sk, err := myCSP.KeyImport(priv, factory.GetSM2PrivateKeyImportOpts(temporary))</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return nil, errors.WithMessage(err, fmt.Sprintf(&quot;Failed to import ECDSA private key for &apos;%s&apos;&quot;, keyFile))</span><br><span class="line">	&#125;</span><br><span class="line">	return sk, nil</span><br></pre></td></tr></table></figure>
+<p>然后应用启动没有问题了，写一步就是看看连接区块链节点有没有问题？</p>
+<p>连接到区块链后，提示签名不对，应该是签名算法什么的配置错误</p>
+<p>查看pkg/core/cryptosuite/cryptoconfig.go </p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	defEnabled       = <span class="literal">true</span></span><br><span class="line">	defHashAlgorithm = <span class="string">"SHA2"</span></span><br><span class="line">	defLevel         = <span class="number">256</span></span><br><span class="line">	defProvider      = <span class="string">"SW"</span></span><br><span class="line">	defSoftVerify    = <span class="literal">true</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// IsSecurityEnabled config used enable and disable security in cryptosuite</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Config)</span> <span class="title">IsSecurityEnabled</span><span class="params">()</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	val, ok := c.backend.Lookup(<span class="string">"client.BCCSP.security.enabled"</span>)</span><br><span class="line">	<span class="keyword">if</span> !ok &#123;</span><br><span class="line">		<span class="keyword">return</span> defEnabled</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> cast.ToBool(val)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// SecurityAlgorithm returns cryptoSuite config hash algorithm</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Config)</span> <span class="title">SecurityAlgorithm</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	val, ok := c.backend.Lookup(<span class="string">"client.BCCSP.security.hashAlgorithm"</span>)</span><br><span class="line">	<span class="keyword">if</span> !ok &#123;</span><br><span class="line">		<span class="keyword">return</span> defHashAlgorithm</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> cast.ToString(val)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// SecurityLevel returns cryptSuite config security level</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Config)</span> <span class="title">SecurityLevel</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	val, ok := c.backend.Lookup(<span class="string">"client.BCCSP.security.level"</span>)</span><br><span class="line">	<span class="keyword">if</span> !ok &#123;</span><br><span class="line">		<span class="keyword">return</span> defLevel</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> cast.ToInt(val)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//SecurityProvider provider SW or PKCS11</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Config)</span> <span class="title">SecurityProvider</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	val, ok := c.backend.Lookup(<span class="string">"client.BCCSP.security.default.provider"</span>)</span><br><span class="line">	<span class="keyword">if</span> !ok &#123;</span><br><span class="line">		<span class="keyword">return</span> strings.ToLower(defProvider)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> strings.ToLower(cast.ToString(val))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//SoftVerify flag</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Config)</span> <span class="title">SoftVerify</span><span class="params">()</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	val, ok := c.backend.Lookup(<span class="string">"client.BCCSP.security.softVerify"</span>)</span><br><span class="line">	<span class="keyword">if</span> !ok &#123;</span><br><span class="line">		<span class="keyword">return</span> defSoftVerify</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> cast.ToBool(val)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//SecurityProviderLibPath will be set only if provider is PKCS11</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Config)</span> <span class="title">SecurityProviderLibPath</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	configuredLibs := c.backend.GetString(<span class="string">"client.BCCSP.security.library"</span>)</span><br><span class="line">	libPaths := strings.Split(configuredLibs, <span class="string">","</span>)</span><br><span class="line">	logger.Debugf(<span class="string">"Configured BCCSP Lib Paths %s"</span>, libPaths)</span><br><span class="line">	<span class="keyword">var</span> lib <span class="keyword">string</span></span><br><span class="line">	<span class="keyword">for</span> _, path := <span class="keyword">range</span> libPaths &#123;</span><br><span class="line">		<span class="keyword">if</span> _, err := os.Stat(strings.TrimSpace(path)); !os.IsNotExist(err) &#123;</span><br><span class="line">			lib = strings.TrimSpace(path)</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> lib != <span class="string">""</span> &#123;</span><br><span class="line">		logger.Debugf(<span class="string">"Found softhsm library: %s"</span>, lib)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		logger.Debug(<span class="string">"Softhsm library was not found"</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> lib</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//SecurityProviderPin will be set only if provider is PKCS11</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Config)</span> <span class="title">SecurityProviderPin</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> c.backend.GetString(<span class="string">"client.BCCSP.security.pin"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//SecurityProviderLabel will be set only if provider is PKCS11</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Config)</span> <span class="title">SecurityProviderLabel</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> c.backend.GetString(<span class="string">"client.BCCSP.security.label"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// KeyStorePath returns the keystore path used by BCCSP</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Config)</span> <span class="title">KeyStorePath</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	keystorePath := pathvar.Subst(c.backend.GetString(<span class="string">"client.credentialStore.cryptoStore.path"</span>))</span><br><span class="line">	<span class="keyword">return</span> filepath.Join(keystorePath, <span class="string">"keystore"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>总结出来的加密配置有：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 缺省配置</span><br><span class="line">const (</span><br><span class="line">	defEnabled       = true</span><br><span class="line">	defHashAlgorithm = &quot;SHA2&quot;</span><br><span class="line">	defLevel         = 256</span><br><span class="line">	defProvider      = &quot;SW&quot;</span><br><span class="line">	defSoftVerify    = true</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># IsSecurityEnabled config used enable and disable security in cryptosuite</span><br><span class="line">client.BCCSP.security.enabled</span><br><span class="line"></span><br><span class="line"># SecurityAlgorithm returns cryptoSuite config hash algorithm</span><br><span class="line">client.BCCSP.security.hashAlgorithm</span><br><span class="line"></span><br><span class="line"># SecurityLevel returns cryptSuite config security level</span><br><span class="line">client.BCCSP.security.level </span><br><span class="line"></span><br><span class="line">#SecurityProvider provider SW or PKCS11</span><br><span class="line">client.BCCSP.security.default.provider</span><br><span class="line"></span><br><span class="line">#SoftVerify flag</span><br><span class="line">client.BCCSP.security.softVerify</span><br><span class="line"></span><br><span class="line">#SecurityProviderLibPath will be set only if provider is PKCS11</span><br><span class="line">client.BCCSP.security.library</span><br><span class="line"></span><br><span class="line">#SecurityProviderPin will be set only if provider is PKCS11</span><br><span class="line">client.BCCSP.security.pin</span><br><span class="line"></span><br><span class="line">#SecurityProviderLabel will be set only if provider is PKCS11</span><br><span class="line">client.BCCSP.security.label</span><br><span class="line"># KeyStorePath returns the keystore path used by BCCSP</span><br><span class="line">client.credentialStore.cryptoStore.path</span><br></pre></td></tr></table></figure>
+<p>经过半天调试，queryChainCode在pkg/fab/channel/ledger.go  line:258 queryChaincode</p>
+<p>看到在SendProposal 的时候自动生成的签名</p>
+<p>SendProposal 在 pkg/fab/txn/proposal.go</p>
+<p>line: 60 func signProposal(ctx contextApi.Client, proposal <em>pb.Proposal) (</em>pb.SignedProposal, error) </p>
+<p>执行到 pkg/fab/signingmgr/signingmgr.go : sign</p>
+<p>internal/github.com/hyperledger/fabric/bccsp/gm/impl.go: Hash</p>
+<p>传入参数：opts.type 是bccsp.SHAOpts</p>
+<p>感觉应该是 internal/github.com/hyperledger/fabric-ca/sdkpatch/cryptosuitebridge/cryptosuitebridge.go</p>
+<p>中要有sm2的支持</p>
+<p>pkg/core/cryptosuite/cryptosuite.go 中是不是还需要修改</p>
+<p>调试发现实在pkg/fab/txn/env.go: NewHeader 中 line ：82</p>
+<p>这个应该是报文头的hash，java中我记得是用固定的sha256，这块应该没问题</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ho := cryptosuite.GetSHA256Opts() // TODO: make configurable</span><br><span class="line">h, err := ctx.CryptoSuite().GetHash(ho)</span><br></pre></td></tr></table></figure>
+<p>signingManager: pkg/fab/signingmgr/</p>
+<p>contextApi.Client 中的sign</p>
+<p>调用的是   line: 42</p>
+<p>digest, err := mgr.cryptoProvider.Hash(object, mgr.hashOpts)</p>
+<p>这里的hashOpts是 SHAOpts，这里需要改成SM3</p>
+<p>signingManager 的signerOpts是New的时候通过CryptoSuite中传过来的 GetSHAOpts</p>
+<p>我把pkg/core/cryptosuite/cryptosuite.go 返回hash方法改为sm3</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">//GetSHAOpts returns options for computing SHA.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetSHAOpts</span><span class="params">()</span> <span class="title">core</span>.<span class="title">HashOpts</span></span> &#123;</span><br><span class="line">	<span class="comment">// return &amp;bccsp.SHAOpts&#123;&#125;</span></span><br><span class="line">	<span class="keyword">return</span> &amp;bccsp.SM3Opts&#123;&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是服务器端仍然显示：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">peer0.my118.com       | 2019-11-29 04:47:19.826 UTC [protoutils] ValidateProposalMessage -&gt; WARN 03c channel [tbchannel]: creator's signature over the proposal is not valid: The signature is invalid</span><br><span class="line">peer0.my118.com       | 2019-11-29 04:47:19.826 UTC [comm.grpc.server] 1 -&gt; INFO 03d unary call completed grpc.service=protos.Endorser grpc.method=ProcessProposal grpc.request_deadline=2019-11-29T04:49:26.519Z grpc.peer_address=10.0.2.2:59187 error="access denied: channel [tbchannel] creator org [Org1MSP], err:creator's signature over the proposal is not valid: The signature is invalid" grpc.code=Unknown grpc.call_duration=9.856479ms</span><br></pre></td></tr></table></figure>
+<p>服务器端验证流程 msp/identities.go</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> hashFamily <span class="keyword">string</span></span><br><span class="line"><span class="keyword">switch</span> id.cert.PublicKeyAlgorithm &#123;</span><br><span class="line"><span class="keyword">case</span> x509.ECDSA:</span><br><span class="line">	hashFamily = id.msp.cryptoConfig.SignatureHashFamily</span><br><span class="line"><span class="keyword">case</span> x509.SM2:<span class="comment">//We here verify the msg instead of the digest of msg</span></span><br><span class="line">	hashFamily = bccsp.SM3SIG</span><br><span class="line"><span class="keyword">default</span>:</span><br><span class="line">	hashFamily = id.msp.cryptoConfig.SignatureHashFamily</span><br><span class="line">&#125;</span><br><span class="line">hashOpt, err := id.getHashOpt(hashFamily)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> errors.WithMessage(err, <span class="string">"failed getting hash function options"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">digest, err := id.msp.bccsp.Hash(msg, hashOpt)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> errors.WithMessage(err, <span class="string">"failed computing digest"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> mspIdentityLogger.IsEnabledFor(zapcore.DebugLevel) &#123;</span><br><span class="line">	mspIdentityLogger.Debugf(<span class="string">"Verify: digest = %s"</span>, hex.Dump(digest))</span><br><span class="line">	mspIdentityLogger.Debugf(<span class="string">"Verify: sig = %s"</span>, hex.Dump(sig))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">valid, err := id.msp.bccsp.Verify(id.pk, sig, digest, <span class="literal">nil</span>)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> errors.WithMessage(err, <span class="string">"could not determine the validity of the signature"</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> !valid &#123;</span><br><span class="line">	<span class="keyword">return</span> errors.New(<span class="string">"The signature is invalid"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="literal">nil</span></span><br></pre></td></tr></table></figure>
+<p>服务器端的签名流程：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">	<span class="keyword">var</span> hashFamily <span class="keyword">string</span></span><br><span class="line">	<span class="keyword">switch</span> id.cert.PublicKeyAlgorithm &#123;</span><br><span class="line">	<span class="keyword">case</span> x509.ECDSA:</span><br><span class="line">		hashFamily = id.msp.cryptoConfig.SignatureHashFamily</span><br><span class="line">	<span class="keyword">case</span> x509.SM2:<span class="comment">//We here Sign the msg instead of the digest of msg</span></span><br><span class="line">		hashFamily = bccsp.SM3SIG</span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		hashFamily = id.msp.cryptoConfig.SignatureHashFamily</span><br><span class="line">	&#125;</span><br><span class="line">	hashOpt, err := id.getHashOpt(hashFamily)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, errors.WithMessage(err, <span class="string">"failed getting hash function options"</span>)</span><br><span class="line">	&#125;</span><br><span class="line"><span class="comment">////这个计算消息哈希</span></span><br><span class="line">	digest, err := id.msp.bccsp.Hash(msg, hashOpt)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, errors.WithMessage(err, <span class="string">"failed computing digest"</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(msg) &lt; <span class="number">32</span> &#123;</span><br><span class="line">		mspIdentityLogger.Debugf(<span class="string">"Sign: plaintext: %X \n"</span>, msg)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		mspIdentityLogger.Debugf(<span class="string">"Sign: plaintext: %X...%X \n"</span>, msg[<span class="number">0</span>:<span class="number">16</span>], msg[<span class="built_in">len</span>(msg)<span class="number">-16</span>:])</span><br><span class="line">	&#125;</span><br><span class="line">	mspIdentityLogger.Debugf(<span class="string">"Sign: digest: %X \n"</span>, digest)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Sign</span></span><br><span class="line">	<span class="keyword">return</span> id.signer.Sign(rand.Reader, digest, <span class="literal">nil</span>)</span><br></pre></td></tr></table></figure>
+<p>试着在 signingmgr.go 中通过core.key 获得publickey，然后判断类型</p>
+<p>现在做测试用例也不能用sm3sig签名验签通过</p>
+<p>今天决定用vscode调试peer</p>
+<p>执行i时候发现</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Fatal error when initializing core config : Could not find config file. Please make sure that FABRIC_CFG_PATH is set to a path which contains core.yaml</span><br></pre></td></tr></table></figure>
+<p> 看代码   devPath := filepath.Join(p, “src/github.com/hyperledger/fabric/sampleconfig”)</p>
+<p>974 ok</p>
+<p>今天比较牛逼的是好像可以调试peer节点，估计这样的话orderer节点都可以调试</p>
+<p>具体就是先把crypto-config/peerOrganizations/my118 目录复制到/data/目录下，然后在launch.json文件中这样增加</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"peer-client"</span>,</span><br><span class="line">  <span class="attr">"type"</span>: <span class="string">"go"</span>,</span><br><span class="line">  <span class="attr">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">  <span class="attr">"mode"</span>: <span class="string">"auto"</span>,</span><br><span class="line">  <span class="attr">"program"</span>: <span class="string">"/Users/whx/fabric-gm-1.4/src/github.com/hyperledger/fabric/peer/main.go"</span>,</span><br><span class="line">  <span class="attr">"cwd"</span>: <span class="string">"/Users/whx/temp/"</span>,</span><br><span class="line">  <span class="attr">"args"</span>: [</span><br><span class="line">    <span class="string">"chaincode"</span>,</span><br><span class="line">    <span class="string">"query"</span>, </span><br><span class="line">    <span class="string">"-Ctbchannel"</span>,</span><br><span class="line">    <span class="string">"-ntradetrain"</span>,</span><br><span class="line">    <span class="string">"-c &#123;\"Args\":[\"load\",\"a\"]&#125;"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"showLog"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"env"</span>: &#123;</span><br><span class="line">    <span class="attr">"CGO_LDFLAGS_ALLOW"</span>: <span class="string">"-I.*"</span> ,</span><br><span class="line">    <span class="attr">"CGO_CFLAGS"</span>: <span class="string">" "</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_ADDRESS"</span>: <span class="string">"peer0.my118.com:6051"</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_TLS_CERT_FILE"</span>: <span class="string">"/data/my118.com/peers/peer0.my118.com/tls/server.crt"</span>,			</span><br><span class="line">    <span class="attr">"CORE_PEER_TLS_KEY_FILE"</span>: <span class="string">"/data/my118.com/peers/peer0.my118.com/tls/server.key"</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_TLS_ROOTCERT_FILE"</span>: <span class="string">"/data/my118.com/peers/peer0.my118.com/tls/ca.crt"</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_MSPCONFIGPAT"</span>: <span class="string">"/data/my118.com/users/Admin@my118.com/msp"</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_CHAINCODELISTENADDRESS"</span>: <span class="string">"peer0.my118.com:6052"</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_LOCALMSPID"</span>: <span class="string">"Org1MSP"</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_TLS_ENABLED"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"FABRIC_CFG_PATH"</span>: <span class="string">"/data/my118.com/users/Admin@my118.com/"</span>,</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;, </span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"peer-server"</span>,</span><br><span class="line">  <span class="attr">"type"</span>: <span class="string">"go"</span>,</span><br><span class="line">  <span class="attr">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">  <span class="attr">"mode"</span>: <span class="string">"auto"</span>,</span><br><span class="line">  <span class="attr">"program"</span>: <span class="string">"/Users/whx/fabric-gm-1.4/src/github.com/hyperledger/fabric/peer/main.go"</span>,</span><br><span class="line">  <span class="attr">"cwd"</span>: <span class="string">"/Users/whx/temp/"</span>,</span><br><span class="line">  <span class="attr">"args"</span>: [</span><br><span class="line">    <span class="string">"node"</span>,</span><br><span class="line">    <span class="string">"start"</span>, </span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"showLog"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"env"</span>: &#123;</span><br><span class="line">    <span class="attr">"CGO_LDFLAGS_ALLOW"</span>: <span class="string">"-I.*"</span> ,</span><br><span class="line">    <span class="attr">"CGO_CFLAGS"</span>: <span class="string">" "</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_TLS_CERT_FILE"</span>: <span class="string">"/data/my118.com/peers/peer0.my118.com/tls/server.crt"</span>,	</span><br><span class="line">    <span class="attr">"CORE_PEER_TLS_KEY_FILE"</span>: <span class="string">"/data/my118.com/peers/peer0.my118.com/tls/server.key"</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_TLS_ROOTCERT_FILE"</span>: <span class="string">"/data/my118.com/peers/peer0.my118.com/tls/ca.crt"</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_MSPCONFIGPAT"</span>: <span class="string">"/data/my118.com/peers/peer0.my118.com/msp"</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_ADDRESS"</span>: <span class="string">"peer0.my118.com:6051"</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_CHAINCODELISTENADDRESS"</span>: <span class="string">"peer0.my118.com:6052"</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_CHAINCODEADDRESS"</span>: <span class="string">"peer0.my118.com:6052"</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_LOCALMSPID"</span>: <span class="string">"Org1MSP"</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_TLS_ENABLED"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_GOSSIP_USELEADERELECTION"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_GOSSIP_ORGLEADER"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_PROFILE_ENABLED"</span>:<span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"CORE_PEER_ID"</span>: <span class="string">"peer0.my118.com"</span>,</span><br><span class="line"></span><br><span class="line">    <span class="attr">"FABRIC_CFG_PATH"</span>: <span class="string">"/data/my118.com/users/Admin@my118.com/"</span>,</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>需要新建/var/hyperledger/production目录，否则peer节点没法创建账本目录。</p>
+<p>本机的/etc/hosts文件需要增加</p>
+<p>192.168.1.67  peer0.my118.com<br>192.168.1.67 orderer0.my118.com</p>
+<p>调试过程中发现github.com/flyinox/crypto 中的代码跟fabric-sm-patch中的不一样，把fabric-sm-patch中的crypto取出来，放到github.com/wanghongxing/crypto,然后修改所有项目中的</p>
+<p>github.com/flyinox/crypto =&gt; github.com/wanghongxing/crypto </p>
+<p>然后就没有问题了</p>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2019/11/20/fabric-source-code-explorer/">
+        <span class="next-text nav-default">fabric source code explorer fabric 源代码探索</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2021
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

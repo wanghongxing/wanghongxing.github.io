@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="hyperledger fabric faq">
+
+
+
+
+  <meta name="keywords" content="fabric, blockchain, hongxing">
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="hongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/2019/04/21/Fabric-FAQ/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> hyperledger fabric faq - hongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">hongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          hyperledger fabric faq
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-04-21
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/fabric/">fabric</a>
+            
+          </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hyperledger-Fabric基础知识答疑"><span class="toc-text">Hyperledger Fabric基础知识答疑</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#–基本问题–"><span class="toc-text">–基本问题–</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#fabric联盟链方案有什么特点？"><span class="toc-text">fabric联盟链方案有什么特点？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fabric-性能如何？"><span class="toc-text">fabric 性能如何？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fabric联盟链方案有什么缺点？"><span class="toc-text">fabric联盟链方案有什么缺点？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fabric交易的流程是什么？"><span class="toc-text">fabric交易的流程是什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#–质疑–"><span class="toc-text">–质疑–</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在“网络内部”引入了公钥加密机制和验证者签名，但是这些主要的安全保证只有在提交了外部签名的交易之后才产生"><span class="toc-text">在“网络内部”引入了公钥加密机制和验证者签名，但是这些主要的安全保证只有在提交了外部签名的交易之后才产生</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#智能合约过于复杂"><span class="toc-text">智能合约过于复杂</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#–共识–"><span class="toc-text">–共识–</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#fabric共识模式有哪些？"><span class="toc-text">fabric共识模式有哪些？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kafka共识模式是什么？"><span class="toc-text">kafka共识模式是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Etcdraft共识模式是什么？"><span class="toc-text">Etcdraft共识模式是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fabric-怎么收费？版权？授权？"><span class="toc-text">fabric 怎么收费？版权？授权？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hyperledge-是什么？"><span class="toc-text">hyperledge 是什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#–Endorsement-背书–"><span class="toc-text">–Endorsement/背书–</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#多少个网络中的节点需要对交易进行背书？"><span class="toc-text">多少个网络中的节点需要对交易进行背书？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#应用客户端需要连接到所有节点吗？"><span class="toc-text">应用客户端需要连接到所有节点吗？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#–安全和权限控制-Security-amp-Access-Control–"><span class="toc-text">–安全和权限控制/Security &amp; Access Control–</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#和别的区块链比，fabric怎么做到更安全"><span class="toc-text">和别的区块链比，fabric怎么做到更安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#我如何能够保证数据的隐私？"><span class="toc-text">我如何能够保证数据的隐私？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fabric怎么做到监管和保护用户隐私"><span class="toc-text">fabric怎么做到监管和保护用户隐私</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#排序节点能否看到交易数据？"><span class="toc-text">排序节点能否看到交易数据？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#–应用端编程模型-Application-side-Programming-Model–"><span class="toc-text">–应用端编程模型/Application-side Programming Model–</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#应用客户端如何知道交易的输出？"><span class="toc-text">应用客户端如何知道交易的输出？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何查询账本数据？"><span class="toc-text">如何查询账本数据？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何查询数据历史来理解数据出处？"><span class="toc-text">如何查询数据历史来理解数据出处？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何保证查询结果是正确的，特别是当查询的节点可能正处在恢复和获取最新区块的过程中？"><span class="toc-text">如何保证查询结果是正确的，特别是当查询的节点可能正处在恢复和获取最新区块的过程中？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#写入的数据不能立即获取到"><span class="toc-text">写入的数据不能立即获取到</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#链码里面的方法需要加锁吗"><span class="toc-text">链码里面的方法需要加锁吗?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#–链码（智能合约和数字资产）–"><span class="toc-text">–链码（智能合约和数字资产）–</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hyperledger-Fabric-是否支持智能合约逻辑？"><span class="toc-text">Hyperledger Fabric 是否支持智能合约逻辑？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何创建商业合同？"><span class="toc-text">如何创建商业合同？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何创建资产？"><span class="toc-text">如何创建资产？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#链码支持哪些语言？"><span class="toc-text">链码支持哪些语言？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hyperledger-Fabric是否有原生的货币？"><span class="toc-text">Hyperledger Fabric是否有原生的货币？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#–区块–"><span class="toc-text">–区块–</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#fabric-出包时间、大小？"><span class="toc-text">fabric 出包时间、大小？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#–各版本的区别–"><span class="toc-text">–各版本的区别–</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么选择fabric-1-4"><span class="toc-text">为什么选择fabric 1.4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#V1-4最新特性"><span class="toc-text">V1.4最新特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#V1-3最新特性"><span class="toc-text">V1.3最新特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#V1-2最新特性"><span class="toc-text">V1.2最新特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#V0-6版本和V1-0版本的最大区别是什么？"><span class="toc-text">V0.6版本和V1.0版本的最大区别是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#哪里可以获得上文中没被解答的技术问题的帮助？"><span class="toc-text">哪里可以获得上文中没被解答的技术问题的帮助？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#–Ordering-Service–"><span class="toc-text">–Ordering Service–</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#已经运行的排序服务节点，想要更换共识算法，怎么做？I-have-an-ordering-service-up-and-running-and-want-to-switch-consensus-algorithms-How-do-I-do-that"><span class="toc-text">已经运行的排序服务节点，想要更换共识算法，怎么做？I have an ordering service up and running and want to switch consensus algorithms. How do I do that?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-the-orderer-system-channel"><span class="toc-text">What is the orderer system channel?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#If-I-update-my-application-channel-should-I-update-my-orderer-system-channel"><span class="toc-text">If I update my application channel, should I update my orderer system channel?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Can-I-have-an-organization-act-both-in-an-ordering-and-application-role"><span class="toc-text">Can I have an organization act both in an ordering and application role?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I-want-to-write-a-consensus-implementation-for-Fabric-Where-do-I-begin"><span class="toc-text">I want to write a consensus implementation for Fabric. Where do I begin?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I-want-to-change-my-ordering-service-configurations-e-g-batch-timeout-after-I-start-the-network-what-should-I-do"><span class="toc-text">I want to change my ordering service configurations, e.g. batch timeout, after I start the network, what should I do?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#–Solo–"><span class="toc-text">–Solo–</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#怎么在生产环境部署sole模式的共识节点"><span class="toc-text">怎么在生产环境部署sole模式的共识节点?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#–Kafka–"><span class="toc-text">–Kafka–</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#How-do-I-remove-a-node-from-the-ordering-service"><span class="toc-text">How do I remove a node from the ordering service?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I-have-never-deployed-a-Kafka-ZK-cluster-before-and-I-want-to-use-the-Kafka-based-ordering-service-How-do-I-proceed"><span class="toc-text">I have never deployed a Kafka/ZK cluster before, and I want to use the Kafka-based ordering service. How do I proceed?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Where-can-I-find-a-Docker-composition-for-a-network-that-uses-the-Kafka-based-ordering-service"><span class="toc-text">Where can I find a Docker composition for a network that uses the Kafka-based ordering service?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-is-there-a-ZooKeeper-dependency-in-the-Kafka-based-ordering-service"><span class="toc-text">Why is there a ZooKeeper dependency in the Kafka-based ordering service?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I’m-trying-to-follow-the-BYFN-example-and-get-a-“service-unavailable”-error-what-should-I-do"><span class="toc-text">I’m trying to follow the BYFN example and get a “service unavailable” error, what should I do?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#–拜占庭容错算法-BFT–"><span class="toc-text">–拜占庭容错算法/BFT–</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#When-is-a-BFT-version-of-the-ordering-service-going-to-be-available"><span class="toc-text">When is a BFT version of the ordering service going to be available?</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <h1 id="Hyperledger-Fabric基础知识答疑"><a href="#Hyperledger-Fabric基础知识答疑" class="headerlink" title="Hyperledger Fabric基础知识答疑"></a>Hyperledger Fabric基础知识答疑</h1><p>[TOC]</p>
+<h2 id="–基本问题–"><a href="#–基本问题–" class="headerlink" title="–基本问题–"></a>–基本问题–</h2><h3 id="fabric联盟链方案有什么特点？"><a href="#fabric联盟链方案有什么特点？" class="headerlink" title="fabric联盟链方案有什么特点？"></a>fabric联盟链方案有什么特点？</h3><p>答：</p>
+<ol>
+<li><p>可插拔选项</p>
+<ul>
+<li>账本数据可以多种格式存储 –新版增加了couchdb</li>
+<li>共识机制模块化、可更换 – 新版增加etcdraft</li>
+<li>支持不同的MSP–新版增加了国密支持</li>
+</ul>
+</li>
+<li><p>可扩展性</p>
+</li>
+<li><p>通道功能</p>
+</li>
+<li><p>智能合约</p>
+</li>
+<li><p>安全性、保密性</p>
+<ul>
+<li>私有数据</li>
+<li>MSP证书身份认证</li>
+</ul>
+</li>
+<li><p>没有分叉</p>
+</li>
+</ol>
+<h3 id="fabric-性能如何？"><a href="#fabric-性能如何？" class="headerlink" title="fabric 性能如何？"></a>fabric 性能如何？</h3><p>答：众所周知，比特币最大的短板是它每秒钟7个交易的上限，完全无法满足现实需要。而Fabric目标是实现每秒钟10万交易，这个量接近刚刚过去的双十一交易量瞬时峰值，完全可以满足正常条件下的行业级应用。</p>
+<p>采用测试的服务器配置为： 4vCPU   16Gb   SSDs </p>
+<p>采用kafka做排序服务</p>
+<table>
+<thead>
+<tr>
+<th>背书节点数</th>
+<th>2</th>
+<th>4</th>
+<th>8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TPS</td>
+<td>785.58</td>
+<td>948.2</td>
+<td>1265.5</td>
+</tr>
+<tr>
+<td>latency（ms）</td>
+<td>715</td>
+<td>667</td>
+<td>686</td>
+</tr>
+</tbody>
+</table>
+<p><strong>最佳实践</strong></p>
+<p>增加背书节点组的数量、加上负载均衡，就能达到更高的TPS。</p>
+<p>如果采用 ETCDRaft 基本上会有2倍多的性能提升。the Raft experiment yielded almost 2x the performance! </p>
+<h3 id="fabric联盟链方案有什么缺点？"><a href="#fabric联盟链方案有什么缺点？" class="headerlink" title="fabric联盟链方案有什么缺点？"></a>fabric联盟链方案有什么缺点？</h3><p>答：</p>
+<ol>
+<li>部署麻烦；需要有非常专业的技术运维人员</li>
+<li>没有原生的币（数字资产）；如果需要，可以自己开发</li>
+</ol>
+<h3 id="fabric交易的流程是什么？"><a href="#fabric交易的流程是什么？" class="headerlink" title="fabric交易的流程是什么？"></a>fabric交易的流程是什么？</h3><p>答：</p>
+<p><img src="../images/fabric-arch-003.png" alt="交易流程"></p>
+<p>1、客户端构造交易提案</p>
+<p>——客户端构造交易提案，发送给一个或多个Peer节点，交易提案中包含本次交易要调用的合约标识、合约方法和参数信息以及客户端签名等。</p>
+<p>2、Peer节点模拟执行交易</p>
+<p>——Peer节点收到交易提案后，会模拟执行交易，然后将原始交易提案和执行结果打包到一起，进行签名并发回给客户端，其中在模拟执行交易期间产生的数据修改不会写到账本上。</p>
+<p>3、客户端打包</p>
+<p>——客户端收到各个Peer的应答后，打包到一起组成一个交易并签名，发送给Orderer。</p>
+<p>4、共识排序，生成新区块</p>
+<p>——Orderer对接收到的交易进行共识排序，然后按照区块生成策略，将一批交易打包到一起，生成新的区块，发送给Peer节点。</p>
+<p>5、交易校验</p>
+<p>——Peer节点收到区块后，会对区块中的每笔交易进行校验，检查交易依赖的输入输出是否符合当前区块链的状态，完成后将区块写入账本，并修改K-V状态数据。</p>
+<h2 id="–质疑–"><a href="#–质疑–" class="headerlink" title="–质疑–"></a>–质疑–</h2><h3 id="在“网络内部”引入了公钥加密机制和验证者签名，但是这些主要的安全保证只有在提交了外部签名的交易之后才产生"><a href="#在“网络内部”引入了公钥加密机制和验证者签名，但是这些主要的安全保证只有在提交了外部签名的交易之后才产生" class="headerlink" title="在“网络内部”引入了公钥加密机制和验证者签名，但是这些主要的安全保证只有在提交了外部签名的交易之后才产生"></a>在“网络内部”引入了公钥加密机制和验证者签名，但是这些主要的安全保证只有在提交了外部签名的交易之后才产生</h3><p>比特币以及其他区块链久经时间验证的安全模型：其中任何交易的来源仅由外部用户的公钥签名来保证，并且系统不能以任何方式进行干涉。</p>
+<p>与之形成鲜明对比的是，Hyperledger Fabric 中唯一一个重要的签名就是验证者的签名，而用户的签名则消失在通过区块链网络复制的任意数据库中。</p>
+<p>最近一些旨在加快 Hyperledger Fabric 运行速度的研究使得其每秒处理交易量能达到惊人的20000，但性能大幅度提升的背后是研究人员对 Hyperledger Fabric 架构的大规模“魔改”，这使得 Hyperledger Fabric 已经成一个近似的区块链变成了一个四不像：<strong>背书节点（Endorsers）不再充当验证者而 Kafka 被认定为唯一可行的订购服务</strong>。最后，这些仍然只是单通道的性能，这意味着它与区块链作为共享可信来源的整个理念相违背。</p>
+<h3 id="智能合约过于复杂"><a href="#智能合约过于复杂" class="headerlink" title="智能合约过于复杂"></a>智能合约过于复杂</h3><p> “Hello World” 在其他语言中仅需几行就可以实现，而在 Chaincode 中居然需要150行之多。代码越多，可能存在的漏洞就越多。这么大数量的代码中可能隐藏着很多能造成数百万美元损失的漏洞。</p>
+<p>智能合约语言必须专为区块链设计且为安全性做出了优化。在理想的情况下，智能合约语言也应该易于学习，并能便捷地在区块链环境中使用。</p>
+<p><strong>缺乏统一的工程化开发规范，无法满足工程化开发。</strong></p>
+<h2 id="–共识–"><a href="#–共识–" class="headerlink" title="–共识–"></a>–共识–</h2><h3 id="fabric共识模式有哪些？"><a href="#fabric共识模式有哪些？" class="headerlink" title="fabric共识模式有哪些？"></a>fabric共识模式有哪些？</h3><p>答：Orderer目前支持Solo、Kafka、etcd 三种共识机制，其中solo是但节点模式；Kafka是网络消息队列模式；etcd是最新加入的支持崩溃容错的排序模式。</p>
+<h3 id="kafka共识模式是什么？"><a href="#kafka共识模式是什么？" class="headerlink" title="kafka共识模式是什么？"></a>kafka共识模式是什么？</h3><p>答：Kafka是一个中心化的排队服务，能提供更高的性能；</p>
+<p>Hyperledger Fabric中的Kafka实际运行逻辑如下：</p>
+<ol>
+<li>对于每一条链，都有一个对应的分区</li>
+<li>每个链对应一个单一的分区主题</li>
+<li>排序节点负责将来自特定链的交易（通过广播RPC接收）中继到对应的分区</li>
+<li>排序节点可以读取分区并获得在所有排序节点间达成一致的排序交易列表</li>
+<li>一个链中的交易是定时分批处理的，也就是说当一个新的批次的第一个交易进来时，开始计时</li>
+<li>当交易达到最大数量时或超时后进行批次切分，生成新的区块</li>
+<li>定时交易是另一个交易，由上面描述的定时器生成</li>
+<li>每个排序节点为每个链维护一个本地日志，生成的区块保存在本地账本中</li>
+<li>交易区块通过分发RPC返回客户端</li>
+<li>当发生崩溃时，可以利用不同的排序节点分发区块，因为所有的排序节点都维护有本地日志</li>
+</ol>
+<h3 id="Etcdraft共识模式是什么？"><a href="#Etcdraft共识模式是什么？" class="headerlink" title="Etcdraft共识模式是什么？"></a>Etcdraft共识模式是什么？</h3><p>答：Raft 是 v1.4.1 中引入的，它是一种基于 etcd 的崩溃容错（CFT）排序服务；ETCD 是一个高可用强一致性的服务发现存储仓库。</p>
+<p>etcd组件作为一个高可用强一致性的服务发现存储仓库</p>
+<p>etcd四大特点：简单、安全、快速、可信。</p>
+<ul>
+<li>简单：基于HTTP+JSON的API让你用curl就可以轻松使用。</li>
+<li>安全：可选SSL客户认证机制。</li>
+<li>快速：每个实例每秒支持一千次写操作。</li>
+<li>可信：使用Raft算法充分实现了分布式。</li>
+</ul>
+<h3 id="fabric-怎么收费？版权？授权？"><a href="#fabric-怎么收费？版权？授权？" class="headerlink" title="fabric 怎么收费？版权？授权？"></a>fabric 怎么收费？版权？授权？</h3><p>fabric采用 创作共用许可证（Creative Commons licenses，简称cc），它只保留署名权，除此以外的权利全部放弃。也就是说：<strong>必须署名，免费使用。</strong></p>
+<p><strong>必须遵守下列条件：</strong></p>
+<ul>
+<li><p><strong>署名</strong> — 您必须给出<a href="https://creativecommons.org/licenses/by/4.0/deed.zh#" target="_blank" rel="noopener">适当的署名</a>，提供指向本许可协议的链接，同时<a href="https://creativecommons.org/licenses/by/4.0/deed.zh#" target="_blank" rel="noopener">标明是否（对原始作品）作了修改</a>。您可以用任何合理的方式来署名，但是不得以任何方式暗示许可人为您或您的使用背书。</p>
+</li>
+<li><p><strong>没有附加限制</strong> — 您不得适用法律术语或者 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh#" target="_blank" rel="noopener">技术措施</a> 从而限制其他人做许可协议允许的事情。</p>
+</li>
+</ul>
+<p><strong>您可以自由地：</strong></p>
+<ul>
+<li><strong>共享</strong> — 在任何媒介以任何形式复制、发行本作品</li>
+<li><strong>演绎</strong> — 修改、转换或以本作品为基础进行创作</li>
+<li>在任何用途下，甚至商业目的。</li>
+</ul>
+<h3 id="hyperledge-是什么？"><a href="#hyperledge-是什么？" class="headerlink" title="hyperledge 是什么？"></a>hyperledge 是什么？</h3><h2 id="–Endorsement-背书–"><a href="#–Endorsement-背书–" class="headerlink" title="–Endorsement/背书–"></a>–Endorsement/背书–</h2><h3 id="多少个网络中的节点需要对交易进行背书？"><a href="#多少个网络中的节点需要对交易进行背书？" class="headerlink" title="多少个网络中的节点需要对交易进行背书？"></a>多少个网络中的节点需要对交易进行背书？</h3><p>答：需要对交易进行背书操作的节点数量由背书策略决定，背书策略在链码部署的时候指定。</p>
+<h3 id="应用客户端需要连接到所有节点吗？"><a href="#应用客户端需要连接到所有节点吗？" class="headerlink" title="应用客户端需要连接到所有节点吗？"></a>应用客户端需要连接到所有节点吗？</h3><p>答：客户端只需要连接到链码对应的背书策略所要求的足够多的节点。</p>
+<h2 id="–安全和权限控制-Security-amp-Access-Control–"><a href="#–安全和权限控制-Security-amp-Access-Control–" class="headerlink" title="–安全和权限控制/Security &amp; Access Control–"></a>–安全和权限控制/Security &amp; Access Control–</h2><h3 id="和别的区块链比，fabric怎么做到更安全"><a href="#和别的区块链比，fabric怎么做到更安全" class="headerlink" title="和别的区块链比，fabric怎么做到更安全"></a>和别的区块链比，fabric怎么做到更安全</h3><p>答：链码和数据隔离。</p>
+<p>相较于以太坊，Fabric链码和底层账本是分开的，升级链码时并不需要迁移账本数据到新链码当中，真正实现了逻辑与数据的分离。</p>
+<h3 id="我如何能够保证数据的隐私？"><a href="#我如何能够保证数据的隐私？" class="headerlink" title="我如何能够保证数据的隐私？"></a>我如何能够保证数据的隐私？</h3><p>答：数据隐私包括几个方面。</p>
+<p>第一、你可以将你的网络拆分为多个通道，每个通道代表参与者的子集，这些参与者有权访问该通道所部署的链码所包含的数据。</p>
+<p>第二、通过通道你可以限制链码的输入数据只对背书节点可见。可见性设置将决定链码的输入输出数据是否包含在提交交易中，可以只包含输出数据。</p>
+<p>第三、你能在调用链码前对数据进行哈希操作或者加密。如果对数据进行哈希操作，你需要提供获取原数据的方式。如果对数据进行加密，你需要提供获取密钥的方式。</p>
+<p>第四、你可以通过链码中的访问控制逻辑限制数据访问权限，只有机构中特定的角色可以访问。</p>
+<p>第五、节点中的账本数据可以通过文件系统进行加密，节点间数据传输通过TLS进行加密。</p>
+<h3 id="fabric怎么做到监管和保护用户隐私"><a href="#fabric怎么做到监管和保护用户隐私" class="headerlink" title="fabric怎么做到监管和保护用户隐私"></a>fabric怎么做到监管和保护用户隐私</h3><p>答：基于PKI证书体系，Fabric可以实现交易的追踪、认责、不可抵赖、数据授权访问、监管和审计等特性；公有链数据全公开、完全匿名且无监管，成为了部分不法分子的交易天堂。</p>
+<h3 id="排序节点能否看到交易数据？"><a href="#排序节点能否看到交易数据？" class="headerlink" title="排序节点能否看到交易数据？"></a>排序节点能否看到交易数据？</h3><p>答：不能，排序节点只是排序交易，不能解析交易。如果你只关心输入数据，不希望经过排序节点，你可以使用可见性设置。可见性设置将决定链码的输入输出数据是否包含在提交交易中，可以只包含输出数据，这样只有背书节点能看到输入数据。如果你不希望排序节点看到交易输出数据，你能在调用链码前对数据进行哈希操作或者加密。如果对数据进行哈希操作，你需要提供获取原数据的方式。如果对数据进行加密，你需要提供获取密钥的方式。</p>
+<h2 id="–应用端编程模型-Application-side-Programming-Model–"><a href="#–应用端编程模型-Application-side-Programming-Model–" class="headerlink" title="–应用端编程模型/Application-side Programming Model–"></a>–应用端编程模型/Application-side Programming Model–</h2><h3 id="应用客户端如何知道交易的输出？"><a href="#应用客户端如何知道交易的输出？" class="headerlink" title="应用客户端如何知道交易的输出？"></a>应用客户端如何知道交易的输出？</h3><p>答：背书节点会返回提案模拟交易的结果。如果有多个背书节点，客户端能检查返回结果是否相同后再提交交易结果以及排序和生效所需要的背书。最终，生效节点会验证交易是否合法，客户端通过SDK提供的事件通知方式接收交易结果。</p>
+<h3 id="如何查询账本数据？"><a href="#如何查询账本数据？" class="headerlink" title="如何查询账本数据？"></a>如何查询账本数据？</h3><p>答：通过链码可以通过键值查询数据。可以对键值进行范围查询，复合主键可以允许查询出部分键值相同的值，例如由 (owner,asset_id) 组成的复合主键可以用来查询特定实体所拥有的所有asset。</p>
+<h3 id="如何查询数据历史来理解数据出处？"><a href="#如何查询数据历史来理解数据出处？" class="headerlink" title="如何查询数据历史来理解数据出处？"></a>如何查询数据历史来理解数据出处？</h3><p>答： 链码中API  <code>GetHistoryForKey()</code> 会返回键值对应的数据历史。</p>
+<h3 id="如何保证查询结果是正确的，特别是当查询的节点可能正处在恢复和获取最新区块的过程中？"><a href="#如何保证查询结果是正确的，特别是当查询的节点可能正处在恢复和获取最新区块的过程中？" class="headerlink" title="如何保证查询结果是正确的，特别是当查询的节点可能正处在恢复和获取最新区块的过程中？"></a>如何保证查询结果是正确的，特别是当查询的节点可能正处在恢复和获取最新区块的过程中？</h3><p>答：客户端可以查询多个节点，比较他们的区块高度查询结果，选用区块高度最高的结果。</p>
+<h3 id="写入的数据不能立即获取到"><a href="#写入的数据不能立即获取到" class="headerlink" title="写入的数据不能立即获取到"></a>写入的数据不能立即获取到</h3><p>答：通过putState写入的数据并不会立即落到账本上, 要等到第二段交易所有peer节点共识达成后，数据才会落地。因此不可以立即获取之前写入的值，比如批量插入数据，利用putState写入数据,再通过getState函数来判断主键是否重复。</p>
+<h3 id="链码里面的方法需要加锁吗"><a href="#链码里面的方法需要加锁吗" class="headerlink" title="链码里面的方法需要加锁吗?"></a>链码里面的方法需要加锁吗?</h3><p>答：不需要。peer节点已经实现了消息队列，发给链码的链码消息都是顺序执行的，不是并行执行的。</p>
+<h2 id="–链码（智能合约和数字资产）–"><a href="#–链码（智能合约和数字资产）–" class="headerlink" title="–链码（智能合约和数字资产）–"></a>–链码（智能合约和数字资产）–</h2><h3 id="Hyperledger-Fabric-是否支持智能合约逻辑？"><a href="#Hyperledger-Fabric-是否支持智能合约逻辑？" class="headerlink" title="Hyperledger Fabric 是否支持智能合约逻辑？"></a>Hyperledger Fabric 是否支持智能合约逻辑？</h3><p>答：是的，我们称这个功能为 :<code>chaincode</code>. 这是我们对带有附加功能的智能合同方法/算法的理解。</p>
+<p>链码是部署在网络中的程序代码，通过共识流程被链的验证者共同执行并验证。开发者能使用链码来开发商业合同、资产定义和集体管理的去中心化应用。</p>
+<h3 id="如何创建商业合同？"><a href="#如何创建商业合同？" class="headerlink" title="如何创建商业合同？"></a>如何创建商业合同？</h3><p>答：通常有两种方法来开发商业合同：第一个方法是开发单独的合同在独立的链码实例;第二个也是最有效的方法是使用链码创建去中心化的应用来管理一种或多种类型的商业合同的生命周期，并让终端用户实例化带有这些应用的合同实例。</p>
+<h3 id="如何创建资产？"><a href="#如何创建资产？" class="headerlink" title="如何创建资产？"></a>如何创建资产？</h3><p>答：用户可以使用链码（在商业规则方面）和成员管理服务（在数字密钥方面）来设计资产和资产管理逻辑。</p>
+<p>区块链解决方案中有两种流行的方法来设计资产：无状态的UTXO模型，账户余额是过去交易记录中没有使用的交易输出的合计;另一种是账户模型，账户余额被存储在账本中的状态值中。</p>
+<p>每一个方法都有好处和弊端。本区块链技术对两种方法没有倾向。我们最初的要求就是确保两个方法都能够被容易实现。</p>
+<h3 id="链码支持哪些语言？"><a href="#链码支持哪些语言？" class="headerlink" title="链码支持哪些语言？"></a>链码支持哪些语言？</h3><p>答：链码可以使用任何编程语言编写并在容器内执行。第一个全功能支持的语言是Golang。</p>
+<p>对其他语言的支持和模板语言的开发正在被讨论，更多细节会在近期发布。</p>
+<p>还可以通过 Hyperledger Composer 来构建Hyperledger Fabric应用。</p>
+<h3 id="Hyperledger-Fabric是否有原生的货币？"><a href="#Hyperledger-Fabric是否有原生的货币？" class="headerlink" title="Hyperledger Fabric是否有原生的货币？"></a>Hyperledger Fabric是否有原生的货币？</h3><p>答：没有。然而，如果你的区块链网络确实需要原生的货币，你可以使用链码来开发货币。原生货币的一个基本的属性是一些数量会被转移（定义货币的链码会被调用）当每次链上交易被执行。</p>
+<p>Fabric上没有代币机制，仅提供了一张类似白纸一样的平台，完全靠自己去实现；公有链的节点是逐利型的，代币一种激励制度，来保证网络的安全和可持续性。而Fabric作为准入型网络，节点具有很大的可信度和目的性，自然代币就不是很必要。</p>
+<h2 id="–区块–"><a href="#–区块–" class="headerlink" title="–区块–"></a>–区块–</h2><h3 id="fabric-出包时间、大小？"><a href="#fabric-出包时间、大小？" class="headerlink" title="fabric 出包时间、大小？"></a>fabric 出包时间、大小？</h3><p>Fabric出块可配置时间、大小，甚至交易的上限大小，非常灵活。另外Fabric不出空块，只有有交易时才会出块；公有链因其激励机制，定时出块，一定程度上浪费了存储。而且作为共识的一部分，出块时间和块大小很难改变。</p>
+<h2 id="–各版本的区别–"><a href="#–各版本的区别–" class="headerlink" title="–各版本的区别–"></a>–各版本的区别–</h2><h3 id="为什么选择fabric-1-4"><a href="#为什么选择fabric-1-4" class="headerlink" title="为什么选择fabric 1.4"></a>为什么选择fabric 1.4</h3><p>答：fabric v1.4 是第一个长期支持的版本。Fabric v1.4.x will be  first long term support release.</p>
+<h3 id="V1-4最新特性"><a href="#V1-4最新特性" class="headerlink" title="V1.4最新特性"></a>V1.4最新特性</h3><p>答：ETCDrafc 排序；Raft ordering service</p>
+<p>服务能力和可操作性提高；Serviceability and operations improvements</p>
+<p>为开发应用系统提升了编程模型；Improved programming model for developing applications</p>
+<p>提升了私有数据；Private data enhancements</p>
+<h3 id="V1-3最新特性"><a href="#V1-3最新特性" class="headerlink" title="V1.3最新特性"></a>V1.3最新特性</h3><p>答：MSP实现了汇合身份标识；MSP implementation with identity mixer</p>
+<p>设置了背书策略；setting key-level endorsement policies</p>
+<p>支持java写chaincode；support java chaincode develop</p>
+<p>节点上支持基于通道的事件服务；peer channel-based evet services</p>
+<h3 id="V1-2最新特性"><a href="#V1-2最新特性" class="headerlink" title="V1.2最新特性"></a>V1.2最新特性</h3><p>答：支持私有数据；Private Data Collections</p>
+<p>服务发现功能；Service Discovery</p>
+<p>授权控制；Access Control</p>
+<p>背书及验证可插拔；Pluggable endorsement and validation</p>
+<h3 id="V0-6版本和V1-0版本的最大区别是什么？"><a href="#V0-6版本和V1-0版本的最大区别是什么？" class="headerlink" title="V0.6版本和V1.0版本的最大区别是什么？"></a>V0.6版本和V1.0版本的最大区别是什么？</h3><p>答：任何后续版本的差异都在版本说明 中展现。因为Fabric是一个模块可替换的框架，你可以参考设计文档获取更多差异信息。</p>
+<h3 id="哪里可以获得上文中没被解答的技术问题的帮助？"><a href="#哪里可以获得上文中没被解答的技术问题的帮助？" class="headerlink" title="哪里可以获得上文中没被解答的技术问题的帮助？"></a>哪里可以获得上文中没被解答的技术问题的帮助？</h3><p>答：请使用 <a href="https://stackoverflow.com/questions/tagged/hyperledger" target="_blank" rel="noopener">StackOverflow</a>.</p>
+<h2 id="–Ordering-Service–"><a href="#–Ordering-Service–" class="headerlink" title="–Ordering Service–"></a>–Ordering Service–</h2><h3 id="已经运行的排序服务节点，想要更换共识算法，怎么做？I-have-an-ordering-service-up-and-running-and-want-to-switch-consensus-algorithms-How-do-I-do-that"><a href="#已经运行的排序服务节点，想要更换共识算法，怎么做？I-have-an-ordering-service-up-and-running-and-want-to-switch-consensus-algorithms-How-do-I-do-that" class="headerlink" title="已经运行的排序服务节点，想要更换共识算法，怎么做？I have an ordering service up and running and want to switch consensus algorithms. How do I do that?"></a>已经运行的排序服务节点，想要更换共识算法，怎么做？I have an ordering service up and running and want to switch consensus algorithms. How do I do that?</h3><p>答：    这个操作不支持。This is explicitly not supported.</p>
+<h3 id="What-is-the-orderer-system-channel"><a href="#What-is-the-orderer-system-channel" class="headerlink" title="What is the orderer system channel?"></a>What is the orderer system channel?</h3><p>答：    The orderer system channel (sometimes called ordering system channel) is the channel the orderer is initially bootstrapped with. It is used to orchestrate channel creation. The orderer system channel defines consortia and the initial configuration for new channels. At channel creation time, the organization definition in the consortium, the /Channel group’s values and policies, as well as the /Channel/Orderer group’s values and policies, are all combined to form the new initial channel definition.</p>
+<h3 id="If-I-update-my-application-channel-should-I-update-my-orderer-system-channel"><a href="#If-I-update-my-application-channel-should-I-update-my-orderer-system-channel" class="headerlink" title="If I update my application channel, should I update my orderer system channel?"></a>If I update my application channel, should I update my orderer system channel?</h3><p>答：    Once an application channel is created, it is managed independently of any other channel (including the orderer system channel). Depending on the modification, the change may or may not be desirable to port to other channels. In general, MSP changes should be synchronized across all channels, while policy changes are more likely to be specific to a particular channel.</p>
+<h3 id="Can-I-have-an-organization-act-both-in-an-ordering-and-application-role"><a href="#Can-I-have-an-organization-act-both-in-an-ordering-and-application-role" class="headerlink" title="Can I have an organization act both in an ordering and application role?"></a>Can I have an organization act both in an ordering and application role?</h3><p>答：    Although this is possible, it is a highly discouraged configuration. By default the /Channel/Orderer/BlockValidation policy allows any valid certificate of the ordering organizations to sign blocks. If an organization is acting both in an ordering and application role, then this policy should be updated to restrict block signers to the subset of certificates authorized for ordering.</p>
+<h3 id="I-want-to-write-a-consensus-implementation-for-Fabric-Where-do-I-begin"><a href="#I-want-to-write-a-consensus-implementation-for-Fabric-Where-do-I-begin" class="headerlink" title="I want to write a consensus implementation for Fabric. Where do I begin?"></a>I want to write a consensus implementation for Fabric. Where do I begin?</h3><p>答：    A consensus plugin needs to implement the Consenter and Chain interfaces defined in the consensus package. There are two plugins built against these interfaces already: solo and kafka. You can study them to take cues for your own implementation. The ordering service code can be found under the orderer package.</p>
+<h3 id="I-want-to-change-my-ordering-service-configurations-e-g-batch-timeout-after-I-start-the-network-what-should-I-do"><a href="#I-want-to-change-my-ordering-service-configurations-e-g-batch-timeout-after-I-start-the-network-what-should-I-do" class="headerlink" title="I want to change my ordering service configurations, e.g. batch timeout, after I start the network, what should I do?"></a>I want to change my ordering service configurations, e.g. batch timeout, after I start the network, what should I do?</h3><p>答：    This falls under reconfiguring the network. Please consult the topic on configtxlator.</p>
+<h2 id="–Solo–"><a href="#–Solo–" class="headerlink" title="–Solo–"></a>–Solo–</h2><h3 id="怎么在生产环境部署sole模式的共识节点"><a href="#怎么在生产环境部署sole模式的共识节点" class="headerlink" title="怎么在生产环境部署sole模式的共识节点?"></a>怎么在生产环境部署sole模式的共识节点?</h3><p>答：    solo就不是为生产环境设计的。他根本就不支持容错。Solo is not intended for production. It is not, and will never be, fault tolerant.</p>
+<h2 id="–Kafka–"><a href="#–Kafka–" class="headerlink" title="–Kafka–"></a>–Kafka–</h2><h3 id="How-do-I-remove-a-node-from-the-ordering-service"><a href="#How-do-I-remove-a-node-from-the-ordering-service" class="headerlink" title="How do I remove a node from the ordering service?"></a>How do I remove a node from the ordering service?</h3><p>答：<br>This is a two step-process:</p>
+<p>Add the node’s certificate to the relevant orderer’s MSP CRL to prevent peers/clients from connecting to it.<br>Prevent the node from connecting to the Kafka cluster by leveraging standard Kafka access control measures such as TLS CRLs, or firewalling.</p>
+<h3 id="I-have-never-deployed-a-Kafka-ZK-cluster-before-and-I-want-to-use-the-Kafka-based-ordering-service-How-do-I-proceed"><a href="#I-have-never-deployed-a-Kafka-ZK-cluster-before-and-I-want-to-use-the-Kafka-based-ordering-service-How-do-I-proceed" class="headerlink" title="I have never deployed a Kafka/ZK cluster before, and I want to use the Kafka-based ordering service. How do I proceed?"></a>I have never deployed a Kafka/ZK cluster before, and I want to use the Kafka-based ordering service. How do I proceed?</h3><p>答：    The Hyperledger Fabric documentation assumes the reader generally has the operational expertise to setup, configure, and manage a Kafka cluster (see Caveat emptor). If you insist on proceeding without such expertise, you should complete, at a minimum, the first 6 steps of the Kafka Quickstart guide before experimenting with the Kafka-based ordering service. You can also consult this sample configuration file for a brief explanation of the sensible defaults for Kafka/ZooKeeper.</p>
+<h3 id="Where-can-I-find-a-Docker-composition-for-a-network-that-uses-the-Kafka-based-ordering-service"><a href="#Where-can-I-find-a-Docker-composition-for-a-network-that-uses-the-Kafka-based-ordering-service" class="headerlink" title="Where can I find a Docker composition for a network that uses the Kafka-based ordering service?"></a>Where can I find a Docker composition for a network that uses the Kafka-based ordering service?</h3><p>答：    Consult the end-to-end CLI example.</p>
+<h3 id="Why-is-there-a-ZooKeeper-dependency-in-the-Kafka-based-ordering-service"><a href="#Why-is-there-a-ZooKeeper-dependency-in-the-Kafka-based-ordering-service" class="headerlink" title="Why is there a ZooKeeper dependency in the Kafka-based ordering service?"></a>Why is there a ZooKeeper dependency in the Kafka-based ordering service?</h3><p>答：    Kafka uses it internally for coordination between its brokers.</p>
+<h3 id="I’m-trying-to-follow-the-BYFN-example-and-get-a-“service-unavailable”-error-what-should-I-do"><a href="#I’m-trying-to-follow-the-BYFN-example-and-get-a-“service-unavailable”-error-what-should-I-do" class="headerlink" title="I’m trying to follow the BYFN example and get a “service unavailable” error, what should I do?"></a>I’m trying to follow the BYFN example and get a “service unavailable” error, what should I do?</h3><p>答：    Check the ordering service’s logs. A “Rejecting deliver request because of consenter error” log message is usually indicative of a connection problem with the Kafka cluster. Ensure that the Kafka cluster is set up properly, and is reachable by the ordering service’s nodes.</p>
+<h2 id="–拜占庭容错算法-BFT–"><a href="#–拜占庭容错算法-BFT–" class="headerlink" title="–拜占庭容错算法/BFT–"></a>–拜占庭容错算法/BFT–</h2><h3 id="When-is-a-BFT-version-of-the-ordering-service-going-to-be-available"><a href="#When-is-a-BFT-version-of-the-ordering-service-going-to-be-available" class="headerlink" title="When is a BFT version of the ordering service going to be available?"></a>When is a BFT version of the ordering service going to be available?</h3><p>答：    No date has been set. We are working towards a release during the 1.x cycle, i.e. it will come with a minor version upgrade in Fabric. Track FAB-33 for updates.</p>
+<p>在0.6版本，Fabric支持PBFT（实用拜占庭容错算法）共识算法，1.0及以后版本中不再支持。之所以把0.6版本中的PBFT共识算法暂时取消可能是因为：</p>
+<p>1、PBFT提供(n-1)/3的容错性，但是O(N^2)消息复杂度使得随着节点的增加，交易性能大幅下降。</p>
+<p>2、Fabric是准入型网络，对PBFT这种共识算法要求不高。</p>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/fabric/">fabric</a>
+            
+              <a href="/tags/blockchain/">blockchain</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2019/04/21/channels_zh/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">hyperledger fabric channel 通道</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2019/04/21/configtx_zh/">
+        <span class="next-text nav-default">hyperledger fabric configtx 配置交易</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2021
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

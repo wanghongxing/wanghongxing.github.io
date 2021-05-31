@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="fabric ca 在生产环境的使用和配置">
+
+
+
+
+  <meta name="keywords" content="fabric, blockchain, hongxing">
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="hongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/2019/04/21/use-fabric-ca-in-prod/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> fabric ca 在生产环境的使用和配置 - hongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">hongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          fabric ca 在生产环境的使用和配置
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-04-21
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/fabric/">fabric</a>
+            
+          </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、生成root-CA、tlsCA-证书"><span class="toc-text">一、生成root CA、tlsCA 证书</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-生成椭圆加密根证书步骤"><span class="toc-text">1. 生成椭圆加密根证书步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看"><span class="toc-text">查看</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-生成椭圆加密TLS根证书步骤"><span class="toc-text">2. 生成椭圆加密TLS根证书步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看-1"><span class="toc-text">查看</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、启动-CA-服务器"><span class="toc-text">二、启动 CA 服务器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、启动-tlsCA-服务器"><span class="toc-text">三、启动 tlsCA 服务器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、orderer节点证书生成"><span class="toc-text">四、orderer节点证书生成</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、生成ordrer组织的msp"><span class="toc-text">1、生成ordrer组织的msp</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#登陆管理员用户"><span class="toc-text">登陆管理员用户</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、生成Admin用户证书"><span class="toc-text">2、生成Admin用户证书</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注册用户Admin"><span class="toc-text">注册用户Admin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成Admin-msp目录"><span class="toc-text">生成Admin msp目录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成其它用户证书"><span class="toc-text">生成其它用户证书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、生成orderer0-的-MSP"><span class="toc-text">3、生成orderer0 的 MSP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注册-orderer0"><span class="toc-text">注册 orderer0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#登记orderer0"><span class="toc-text">登记orderer0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成msp-目录"><span class="toc-text">生成msp 目录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成orderer1-的msp"><span class="toc-text">生成orderer1 的msp</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、orderer节点tls证书生成"><span class="toc-text">五、orderer节点tls证书生成</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、生成orderer组织的tls"><span class="toc-text">1、生成orderer组织的tls</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#登记orderer组织"><span class="toc-text">登记orderer组织</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、生成Admin的tls"><span class="toc-text">2、生成Admin的tls</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注册Admin"><span class="toc-text">注册Admin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#登记Admin"><span class="toc-text">登记Admin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成Admin-的-tls-目录"><span class="toc-text">生成Admin 的 tls 目录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、生成orderer0的tls"><span class="toc-text">3、生成orderer0的tls</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注册orderer0"><span class="toc-text">注册orderer0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#登记orderer0-1"><span class="toc-text">登记orderer0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成tls目录"><span class="toc-text">生成tls目录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成orderer1的msp"><span class="toc-text">生成orderer1的msp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#清理没用的文件"><span class="toc-text">清理没用的文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、联盟成员-peer节点的证书生成"><span class="toc-text">六、联盟成员 peer节点的证书生成</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、生成组织证书"><span class="toc-text">1、生成组织证书</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#登陆管理员用户-1"><span class="toc-text">登陆管理员用户</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、生成Admin证书"><span class="toc-text">2、生成Admin证书</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#生成Admin用户"><span class="toc-text">生成Admin用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注册用户Admin-1"><span class="toc-text">注册用户Admin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成Admin-msp目录-1"><span class="toc-text">生成Admin msp目录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、生成peer0-的-MSP"><span class="toc-text">3、生成peer0 的 MSP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注册-peer0"><span class="toc-text">注册 peer0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#登记peer0"><span class="toc-text">登记peer0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成msp-目录-1"><span class="toc-text">生成msp 目录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成peer1的msp"><span class="toc-text">生成peer1的msp</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#七、联盟成员-peer节点tls证书生成"><span class="toc-text">七、联盟成员 peer节点tls证书生成</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、生成组织msp"><span class="toc-text">1、生成组织msp</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#登记组织"><span class="toc-text">登记组织</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、生成Admin的tls-1"><span class="toc-text">2、生成Admin的tls</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注册Admin-1"><span class="toc-text">注册Admin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#登记Admin-1"><span class="toc-text">登记Admin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成Admin-的-tls-目录-1"><span class="toc-text">生成Admin 的 tls 目录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、生成peer0的tls"><span class="toc-text">3、生成peer0的tls</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注册peer0"><span class="toc-text">注册peer0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#登记peer0-1"><span class="toc-text">登记peer0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成tls目录-1"><span class="toc-text">生成tls目录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成-peer1-的msp"><span class="toc-text">生成 peer1 的msp</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#八、用每个组织的证书生成网络创世块"><span class="toc-text">八、用每个组织的证书生成网络创世块</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#九、附录"><span class="toc-text">九、附录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#重新登陆一个身份"><span class="toc-text">重新登陆一个身份</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#撤销一个证书或身份"><span class="toc-text">撤销一个证书或身份</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#启用TLS"><span class="toc-text">启用TLS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#体验-Fabric-CA-命令行"><span class="toc-text">体验 Fabric CA 命令行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fabric-CA-服务端配置文件格式"><span class="toc-text">Fabric CA 服务端配置文件格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fabric-CA-客户端配置文件格式"><span class="toc-text">Fabric CA 客户端配置文件格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置优先级说明"><span class="toc-text">配置优先级说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于路径的一些说明"><span class="toc-text">关于路径的一些说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fabric-CA-服务端"><span class="toc-text">Fabric CA 服务端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初始化服务端"><span class="toc-text">初始化服务端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动服务端"><span class="toc-text">启动服务端</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <p>Fabric CA为Hyperledger Fabric行使证书机构的功能。</p>
+<p>Fabric CA提供以下功能：</p>
+<ol>
+<li>身份注册，或者将连接到LDAP作为用户注册；</li>
+<li>颁发登录证书(ECerts)；</li>
+<li>颁发交易证书(TCerts)，保证链上交易的匿名性与不可连接性；</li>
+<li>证书续期与撤销</li>
+</ol>
+<p>Fabric CA 包含一个服务端组件和一个客户端组件，稍后会进行介绍。</p>
+<p>[TOC]</p>
+<h1 id="一、生成root-CA、tlsCA-证书"><a href="#一、生成root-CA、tlsCA-证书" class="headerlink" title="一、生成root CA、tlsCA 证书"></a>一、生成root CA、tlsCA 证书</h1><p>一个组织对所有成员都要有自己的证书为了保证安全隔离，fabric规划了数据证书和传输证书，数据证书就是对数据进行加密、加签的时候使用的，传输证书就是所有数据传输过程中的私有证书。</p>
+<p>为了实现数据、传输证书分离，每个组织的CA 也要分离，所以每个组织要有有自己的ROOT CA 和ROOT tlsCA。</p>
+<p>准备目录：ca tlsca</p>
+<h2 id="1-生成椭圆加密根证书步骤"><a href="#1-生成椭圆加密根证书步骤" class="headerlink" title="1. 生成椭圆加密根证书步骤"></a>1. 生成椭圆加密根证书步骤</h2><p>进入ca目录</p>
+<ul>
+<li>生成私钥</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl ecparam -name prime256v1 -genkey -out ca-key_.pem</span><br></pre></td></tr></table></figure>
+<ul>
+<li>私钥转换成pk8格式</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl pkcs8 -inform PEM -outform PEM -topk8 -nocrypt -<span class="keyword">in</span> ca-key_.pem -out ca-key.pem</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>做好配置文件</p>
+<p>生成一个openssl.conf</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ req ]</span><br><span class="line">default_md              = sha256</span><br><span class="line">default_keyfile         = ca-key.pem</span><br><span class="line">distinguished_name      = req_distinguished_name</span><br><span class="line">prompt = no</span><br><span class="line">x509_extensions = v3_ca</span><br><span class="line">req_extensions  = v3_req</span><br><span class="line">x509_extensions = usr_cert</span><br><span class="line">[ req_distinguished_name ]</span><br><span class="line">C=CN</span><br><span class="line">ST=BJ</span><br><span class="line">L=BJ</span><br><span class="line">O=my118.com</span><br><span class="line">CN=ca.my118.com</span><br><span class="line">[ usr_cert ]</span><br><span class="line">basicConstraints=critical,CA:true,pathlen:1</span><br><span class="line">keyUsage=critical, keyCertSign,cRLSign</span><br><span class="line">subjectKeyIdentifier=hash</span><br><span class="line">[ v3_req ]</span><br><span class="line">basicConstraints=critical,CA:true,pathlen:1</span><br><span class="line">keyUsage=critical, keyCertSign,cRLSign</span><br><span class="line">subjectKeyIdentifier=hash</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>创建生成证书请求</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl req -config openssl.cnf -new -key ca-key.pem -out cert-req.csr</span><br></pre></td></tr></table></figure>
+<ul>
+<li>生成自签名证书</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">openssl x509 -req   -extfile openssl.cnf -extensions usr_cert  -in cert-req.csr -out ca-cert.pem -signkey ca-key.pem  -CAcreateserial -days 3650</span><br></pre></td></tr></table></figure>
+<h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h3><ul>
+<li>查看cert-req.csr</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl req -<span class="keyword">in</span> cert-req.csr -noout</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看ca-cert.pem</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl x509 -<span class="keyword">in</span> ca-cert.pem -text -noout</span><br></pre></td></tr></table></figure>
+<h2 id="2-生成椭圆加密TLS根证书步骤"><a href="#2-生成椭圆加密TLS根证书步骤" class="headerlink" title="2. 生成椭圆加密TLS根证书步骤"></a>2. 生成椭圆加密TLS根证书步骤</h2><p>进入tlsca目录</p>
+<ul>
+<li>生成私钥</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl ecparam -name prime256v1 -genkey -out tlsca-key_.pem</span><br></pre></td></tr></table></figure>
+<ul>
+<li>私钥转换成pk8格式</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl pkcs8 -inform PEM -outform PEM -topk8 -nocrypt -<span class="keyword">in</span> tlsca-key_.pem -out tlsca-key.pem</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>做好配置文件</p>
+<p>生成一个openssl.conf</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ req ]</span><br><span class="line">default_md              = sha256</span><br><span class="line">default_keyfile         = tlsca-key.pem</span><br><span class="line">distinguished_name      = req_distinguished_name</span><br><span class="line">prompt = no</span><br><span class="line">x509_extensions = v3_ca</span><br><span class="line">req_extensions  = v3_req</span><br><span class="line">x509_extensions = usr_cert</span><br><span class="line">[ req_distinguished_name ]</span><br><span class="line">C=CN</span><br><span class="line">ST=BJ</span><br><span class="line">L=BJ</span><br><span class="line">O=my118.com</span><br><span class="line">CN=tlsca.my118.com</span><br><span class="line">[ usr_cert ]</span><br><span class="line">basicConstraints=critical,CA:true,pathlen:1</span><br><span class="line">keyUsage=critical, keyCertSign,cRLSign</span><br><span class="line">subjectKeyIdentifier=hash</span><br><span class="line">[ v3_req ]</span><br><span class="line">basicConstraints=critical,CA:true,pathlen:1</span><br><span class="line">keyUsage=critical, keyCertSign,cRLSign</span><br><span class="line">subjectKeyIdentifier=hash</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>创建生成证书请求</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl req -config openssl.cnf -new -key tlsca-key.pem -out tlscert-req.csr</span><br></pre></td></tr></table></figure>
+<ul>
+<li>生成自签名证书</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">openssl x509 -req   -extfile openssl.cnf -extensions usr_cert  -in tlscert-req.csr -out tlsca-cert.pem -signkey tlsca-key.pem  -CAcreateserial -days 3650</span><br></pre></td></tr></table></figure>
+<h3 id="查看-1"><a href="#查看-1" class="headerlink" title="查看"></a>查看</h3><ul>
+<li>查看 tlscert-req.csr</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl req -<span class="keyword">in</span> tlscert-req.csr -text</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看 tlsca-cert.pem</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl x509 -<span class="keyword">in</span> tlsca-cert.pem -text -noout</span><br></pre></td></tr></table></figure>
+<h1 id="二、启动-CA-服务器"><a href="#二、启动-CA-服务器" class="headerlink" title="二、启动 CA 服务器"></a>二、启动 CA 服务器</h1><p>使用 docker-compose 来启动</p>
+<p>创建ca-server目录，然后新建 docker-compose.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">fabric-ca-server:</span></span><br><span class="line"><span class="attr">   image:</span> <span class="string">hyperledger/fabric-ca</span></span><br><span class="line"><span class="attr">   container_name:</span> <span class="string">fabric-ca-server</span></span><br><span class="line"><span class="attr">   ports:</span></span><br><span class="line"><span class="bullet">     -</span> <span class="string">"7054:7054"</span></span><br><span class="line"><span class="attr">   environment:</span></span><br><span class="line"><span class="bullet">     -</span> <span class="string">FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server</span></span><br><span class="line"><span class="attr">   volumes:</span></span><br><span class="line"><span class="bullet">     -</span> <span class="string">"./fabric-ca-server:/etc/hyperledger/fabric-ca-server"</span></span><br><span class="line"><span class="attr">   command:</span> <span class="string">sh</span> <span class="bullet">-c</span> <span class="string">'fabric-ca-server start -b admin:adminpwd'</span></span><br></pre></td></tr></table></figure>
+<p>创建 fabric-ca-server，把ca-cert.pem ca-key.pem文件复制到fabric-ca-server目录中。</p>
+<p>在  fabric-ca-server 目录下新建 fabric-ca-server-config.yaml 文件</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="number">1.4</span><span class="number">.3</span><span class="bullet">-snapshot-3e29f1a</span></span><br><span class="line"><span class="attr">port:</span> <span class="number">7054</span></span><br><span class="line"><span class="attr">cors:</span></span><br><span class="line"><span class="attr">    enabled:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    origins:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"*"</span></span><br><span class="line"><span class="attr">debug:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">crlsizelimit:</span> <span class="number">512000</span></span><br><span class="line"><span class="attr">tls:</span></span><br><span class="line"><span class="attr">  enabled:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">  certfile:</span></span><br><span class="line"><span class="attr">  keyfile:</span></span><br><span class="line"><span class="attr">  clientauth:</span></span><br><span class="line"><span class="attr">    type:</span> <span class="string">noclientcert</span></span><br><span class="line"><span class="attr">    certfiles:</span></span><br><span class="line"><span class="attr">ca:</span></span><br><span class="line"><span class="attr">  name:</span></span><br><span class="line"><span class="attr">  keyfile:</span></span><br><span class="line"><span class="attr">  certfile:</span></span><br><span class="line"><span class="attr">  chainfile:</span></span><br><span class="line"><span class="attr">crl:</span></span><br><span class="line"><span class="attr">  expiry:</span> <span class="number">24</span><span class="string">h</span></span><br><span class="line"><span class="attr">registry:</span></span><br><span class="line"><span class="attr">  maxenrollments:</span> <span class="bullet">-1</span></span><br><span class="line"><span class="attr">  identities:</span></span><br><span class="line"><span class="attr">     - name:</span> <span class="string">admin</span></span><br><span class="line"><span class="attr">       pass:</span> <span class="string">adminpw</span></span><br><span class="line"><span class="attr">       type:</span> <span class="string">client</span></span><br><span class="line"><span class="attr">       affiliation:</span> <span class="string">""</span></span><br><span class="line"><span class="attr">       attrs:</span></span><br><span class="line">          <span class="string">hf.Registrar.Roles:</span> <span class="string">"*"</span></span><br><span class="line">          <span class="string">hf.Registrar.DelegateRoles:</span> <span class="string">"*"</span></span><br><span class="line">          <span class="string">hf.Revoker:</span> <span class="literal">true</span></span><br><span class="line">          <span class="string">hf.IntermediateCA:</span> <span class="literal">true</span></span><br><span class="line">          <span class="string">hf.GenCRL:</span> <span class="literal">true</span></span><br><span class="line">          <span class="string">hf.Registrar.Attributes:</span> <span class="string">"*"</span></span><br><span class="line">          <span class="string">hf.AffiliationMgr:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">db:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">sqlite3</span></span><br><span class="line"><span class="attr">  datasource:</span> <span class="string">fabric-ca-server.db</span></span><br><span class="line"><span class="attr">  tls:</span></span><br><span class="line"><span class="attr">      enabled:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">      certfiles:</span></span><br><span class="line"><span class="attr">      client:</span></span><br><span class="line"><span class="attr">        certfile:</span></span><br><span class="line"><span class="attr">        keyfile:</span></span><br><span class="line"></span><br><span class="line"><span class="attr">affiliations:</span></span><br><span class="line"><span class="attr">   com:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">my118</span></span><br><span class="line"><span class="attr">signing:</span></span><br><span class="line"><span class="attr">    default:</span></span><br><span class="line"><span class="attr">      usage:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">digital</span> <span class="string">signature</span></span><br><span class="line"><span class="attr">      expiry:</span> <span class="number">8760</span><span class="string">h</span></span><br><span class="line"><span class="attr">    profiles:</span></span><br><span class="line"><span class="attr">      ca:</span></span><br><span class="line"><span class="attr">         usage:</span></span><br><span class="line"><span class="bullet">           -</span> <span class="string">cert</span> <span class="string">sign</span></span><br><span class="line"><span class="bullet">           -</span> <span class="string">crl</span> <span class="string">sign</span></span><br><span class="line"><span class="attr">         expiry:</span> <span class="number">43800</span><span class="string">h</span></span><br><span class="line"><span class="attr">         caconstraint:</span></span><br><span class="line"><span class="attr">           isca:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">           maxpathlen:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">      tls:</span></span><br><span class="line"><span class="attr">         usage:</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">signing</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">key</span> <span class="string">encipherment</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">server</span> <span class="string">auth</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">client</span> <span class="string">auth</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">key</span> <span class="string">agreement</span></span><br><span class="line"><span class="attr">         expiry:</span> <span class="number">8760</span><span class="string">h</span></span><br><span class="line"><span class="attr">csr:</span></span><br><span class="line"><span class="attr">   cn:</span> <span class="string">fabric-ca-server</span></span><br><span class="line"><span class="attr">   keyrequest:</span></span><br><span class="line"><span class="attr">     algo:</span> <span class="string">ecdsa</span></span><br><span class="line"><span class="attr">     size:</span> <span class="number">256</span></span><br><span class="line"><span class="attr">   names:</span></span><br><span class="line"><span class="attr">      - C:</span> <span class="string">CN</span></span><br><span class="line"><span class="attr">        ST:</span> <span class="string">"BJ"</span></span><br><span class="line"><span class="attr">        L:</span></span><br><span class="line"><span class="attr">        O:</span> <span class="string">my118</span></span><br><span class="line"><span class="attr">        OU:</span> <span class="string">tech</span></span><br><span class="line"><span class="attr">   hosts:</span></span><br><span class="line"><span class="bullet">     -</span> <span class="number">4</span><span class="string">aaf61d0f70f</span></span><br><span class="line"><span class="bullet">     -</span> <span class="string">localhost</span></span><br><span class="line"><span class="attr">   ca:</span></span><br><span class="line"><span class="attr">      expiry:</span> <span class="number">131400</span><span class="string">h</span></span><br><span class="line"><span class="attr">      pathlength:</span> <span class="number">1</span></span><br><span class="line"><span class="attr">idemix:</span></span><br><span class="line"><span class="attr">  rhpoolsize:</span> <span class="number">1000</span></span><br><span class="line"><span class="attr">  nonceexpiration:</span> <span class="number">15</span><span class="string">s</span></span><br><span class="line"><span class="attr">  noncesweepinterval:</span> <span class="number">15</span><span class="string">m</span></span><br><span class="line"><span class="attr">bccsp:</span></span><br><span class="line"><span class="attr">    default:</span> <span class="string">SW</span></span><br><span class="line"><span class="attr">    sw:</span></span><br><span class="line"><span class="attr">        hash:</span> <span class="string">SHA2</span></span><br><span class="line"><span class="attr">        security:</span> <span class="number">256</span></span><br><span class="line"><span class="attr">        filekeystore:</span></span><br><span class="line"><span class="attr">            keystore:</span> <span class="string">msp/keystore</span></span><br><span class="line"><span class="attr">cacount:</span></span><br><span class="line"><span class="attr">cafiles:</span></span><br><span class="line"><span class="attr">intermediate:</span></span><br><span class="line"><span class="attr">  parentserver:</span></span><br><span class="line"><span class="attr">    url:</span></span><br><span class="line"><span class="attr">    caname:</span></span><br><span class="line"><span class="attr">  enrollment:</span></span><br><span class="line"><span class="attr">    hosts:</span></span><br><span class="line"><span class="attr">    profile:</span></span><br><span class="line"><span class="attr">    label:</span></span><br><span class="line"><span class="attr">  tls:</span></span><br><span class="line"><span class="attr">    certfiles:</span></span><br><span class="line"><span class="attr">    client:</span></span><br><span class="line"><span class="attr">      certfile:</span></span><br><span class="line"><span class="attr">      keyfile:</span></span><br><span class="line"><span class="attr">cfg:</span></span><br><span class="line"><span class="attr">  identities:</span></span><br><span class="line"><span class="attr">    passwordattempts:</span> <span class="number">10</span></span><br><span class="line"><span class="attr">operations:</span></span><br><span class="line"><span class="attr">    listenAddress:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:9443</span></span><br><span class="line"><span class="attr">    tls:</span></span><br><span class="line"><span class="attr">        enabled:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">        cert:</span></span><br><span class="line"><span class="attr">            file:</span></span><br><span class="line"><span class="attr">        key:</span></span><br><span class="line"><span class="attr">            file:</span></span><br><span class="line"><span class="attr">        clientAuthRequired:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">        clientRootCAs:</span></span><br><span class="line"><span class="attr">            files:</span> <span class="string">[]</span></span><br><span class="line"><span class="attr">metrics:</span></span><br><span class="line"><span class="attr">    provider:</span> <span class="string">disabled</span></span><br><span class="line"><span class="attr">    statsd:</span></span><br><span class="line"><span class="attr">        network:</span> <span class="string">udp</span></span><br><span class="line"><span class="attr">        address:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:8125</span></span><br><span class="line"><span class="attr">        writeInterval:</span> <span class="number">10</span><span class="string">s</span></span><br><span class="line"><span class="attr">        prefix:</span> <span class="string">server</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+<h1 id="三、启动-tlsCA-服务器"><a href="#三、启动-tlsCA-服务器" class="headerlink" title="三、启动 tlsCA 服务器"></a>三、启动 tlsCA 服务器</h1><p>创建tlsca-server目录，然后新建 docker-compose.yaml使用 docker-compose 来启动</p>
+<p>编辑docker-compose.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">fabric-tlsca-server:</span></span><br><span class="line"><span class="attr">   image:</span> <span class="string">hyperledger/fabric-ca</span></span><br><span class="line"><span class="attr">   container_name:</span> <span class="string">fabric-tlsca-server</span></span><br><span class="line"><span class="attr">   ports:</span></span><br><span class="line"><span class="bullet">     -</span> <span class="string">"8054:7054"</span></span><br><span class="line"><span class="attr">   environment:</span></span><br><span class="line"><span class="bullet">     -</span> <span class="string">FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server</span></span><br><span class="line"><span class="attr">   volumes:</span></span><br><span class="line"><span class="bullet">     -</span> <span class="string">"./fabric-ca-server:/etc/hyperledger/fabric-ca-server"</span></span><br><span class="line"><span class="attr">   command:</span> <span class="string">sh</span> <span class="bullet">-c</span> <span class="string">'fabric-ca-server start -b admin:adminpw'</span></span><br></pre></td></tr></table></figure>
+<p>创建 fabric-ca-server目录，把 tlsca-cert.pem tlsca-key.pem文件复制到fabric-tlsca-server目录中，然后改名为ca-cert.pem ca-key.pem。</p>
+<p>在  fabric-ca-server 目录下新建 fabric-ca-server-config.yaml 文件，内容同CA。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+<p><strong>Farbic CA 客户端</strong></p>
+<p>下一部分讲解如何使用fabric-ca-client的命令。</p>
+<p>Fabric CA客户端的根目录定义规则如下：</p>
+<ul>
+<li>如果存在环境变量 <code>FABRIC_CA_CLIENT_HOME</code> ，则使用这个值</li>
+<li>否则，如果存在环境变量 <code>FABRIC_CA_HOME</code> ，则使用这个值</li>
+<li>否则，如果存在环境变量 <code>CA_CFG_PATH</code> ，则使用这个值</li>
+<li>否则，使用<code>$HOME/.fabric-ca-client</code></li>
+</ul>
+<p>下面的指引假设客户端的配置文件存在于客户端根目录。</p>
+<h1 id="四、orderer节点证书生成"><a href="#四、orderer节点证书生成" class="headerlink" title="四、orderer节点证书生成"></a>四、orderer节点证书生成</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export DOMAIN_NAME="my118.com"</span><br><span class="line">export DOMAIN_NAME_REVERT="com.my118"</span><br><span class="line"></span><br><span class="line">export CA_HOST_NAME="localhost"</span><br><span class="line">export TLS_CA_HOST_NAME="localhost"</span><br><span class="line">export CA_HOST_PORT="7054"</span><br><span class="line">export TLS_CA_HOST_PORT="8054"</span><br><span class="line"></span><br><span class="line">export CA_HOST="$&#123;CA_HOST_NAME&#125;:$&#123;CA_HOST_PORT&#125;"</span><br><span class="line">export TLS_CA_HOST="$&#123;TLS_CA_HOST_NAME&#125;:$&#123;TLS_CA_HOST_PORT&#125;"</span><br><span class="line"></span><br><span class="line">export ADMIN_NAME="admin"</span><br><span class="line">export ADMIN_PWD="adminpw"</span><br></pre></td></tr></table></figure>
+<h2 id="1、生成ordrer组织的msp"><a href="#1、生成ordrer组织的msp" class="headerlink" title="1、生成ordrer组织的msp"></a>1、生成ordrer组织的msp</h2><h3 id="登陆管理员用户"><a href="#登陆管理员用户" class="headerlink" title="登陆管理员用户"></a>登陆管理员用户</h3><p>只有先登录管理员用户，才能执行注册别的用户、客户端。</p>
+<p>首先，你需要修改配置文件 fabric-ca-client-config.yaml 来设置注册时一些字段的默认值。</p>
+<p>这个也可以在登录后修改，然后重新登录。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">url: http://localhost:7054</span><br><span class="line"></span><br><span class="line">mspdir: msp</span><br><span class="line">tls:</span><br><span class="line">  certfiles:</span><br><span class="line">  client:</span><br><span class="line">    certfile:</span><br><span class="line">    keyfile:</span><br><span class="line"></span><br><span class="line">csr:</span><br><span class="line">  cn: admin2</span><br><span class="line">  keyrequest:</span><br><span class="line">    algo: ecdsa</span><br><span class="line">    size: 256</span><br><span class="line">  serialnumber:</span><br><span class="line">  names:</span><br><span class="line">    - C: CN</span><br><span class="line">      ST: BJ</span><br><span class="line">      L:</span><br><span class="line">      O: my118.om</span><br><span class="line">#      OU: Fabric</span><br><span class="line">  hosts:</span><br><span class="line">    - ubuntu-xenial</span><br><span class="line"></span><br><span class="line">id:</span><br><span class="line">  type: user</span><br><span class="line">  affiliation:</span><br><span class="line">  maxenrollments: 0</span><br><span class="line">  attributes:</span><br><span class="line"></span><br><span class="line">enrollment:</span><br><span class="line">  profile:</span><br><span class="line">  label:</span><br><span class="line"></span><br><span class="line">caname:</span><br><span class="line"></span><br><span class="line">bccsp:</span><br><span class="line">    default: SW</span><br><span class="line">    sw:</span><br><span class="line">        hash: SHA2</span><br><span class="line">        security: 256</span><br><span class="line">        filekeystore:</span><br><span class="line">            keystore: msp/keystore</span><br></pre></td></tr></table></figure>
+<p>运行<code>fabric-ca-client enroll</code>命令来登录一个身份。比如，下面的命令向一个本地运行在7054端口的Fabric CA服务端，登录了一个ID为admin，password为adminpw的身份。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client enroll -M ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/msp -u http://$&#123;ADMIN_NAME&#125;:$&#123;ADMIN_PWD&#125;@$&#123;CA_HOST&#125; --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<p>登录命令会存储一个登录证书（ECert），相对应的私钥，还有CA证书链PEM文件。这些存储在Fabric CA客户端的msp目录的子目录下，你会看到信息提示PEM存储在哪里。</p>
+<h2 id="2、生成Admin用户证书"><a href="#2、生成Admin用户证书" class="headerlink" title="2、生成Admin用户证书"></a>2、生成Admin用户证书</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export USERNAME="Admin"</span><br></pre></td></tr></table></figure>
+<h3 id="注册用户Admin"><a href="#注册用户Admin" class="headerlink" title="注册用户Admin"></a>注册用户Admin</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">fabric-ca-client register --id.name $&#123;USERNAME&#125;@$&#123;DOMAIN_NAME&#125; --id.type client --id.affiliation "$&#123;DOMAIN_NAME_REVERT&#125;" --id.attrs '"hf.Registrar.Roles=client,orderer,peer,user","hf.Registrar.DelegateRoles=client,orderer,peer,user",hf.Registrar.Attributes=*,hf.GenCRL=true,hf.Revoker=true,hf.AffiliationMgr=true,hf.IntermediateCA=true,role=admin:ecert' --id.secret=123456 --csr.cn=$&#123;DOMAIN_NAME&#125; --csr.hosts=["$&#123;DOMAIN_NAME&#125;"] -M ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/msp -u http://$&#123;ADMIN_NAME&#125;:$&#123;ADMIN_PWD&#125;@$&#123;CA_HOST&#125; --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<p>密码会被打印出来，登录这个新注册的身份的时候，需要用到这个密码。这允许一个管理员注册身份，然后把这个身份的ID和密码给别人来登陆。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2019/11/12 14:55:51 [INFO] Configuration file location: /home/vagrant/fabric-ca-client-config.yaml</span><br><span class="line">Password: 123456</span><br></pre></td></tr></table></figure>
+<p>登录证书：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client enroll -u http://$&#123;USERNAME&#125;@$&#123;DOMAIN_NAME&#125;:123456@$&#123;CA_HOST&#125; --csr.cn=$&#123;DOMAIN_NAME&#125; --csr.hosts=["$&#123;DOMAIN_NAME&#125;"] -M ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USERNAME&#125;@$&#123;DOMAIN_NAME&#125;/msp --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<p>查看证书：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">openssl x509 -text -noout -in ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USERNAME&#125;@$&#123;DOMAIN_NAME&#125;/msp/signcerts/cert.pem</span><br></pre></td></tr></table></figure>
+<h3 id="生成Admin-msp目录"><a href="#生成Admin-msp目录" class="headerlink" title="生成Admin msp目录"></a>生成Admin msp目录</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USERNAME&#125;@$&#123;DOMAIN_NAME&#125;/msp/admincerts</span><br><span class="line">cp ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USERNAME&#125;@$&#123;DOMAIN_NAME&#125;/msp/signcerts/cert.pem ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USERNAME&#125;@$&#123;DOMAIN_NAME&#125;/msp/admincerts</span><br><span class="line"></span><br><span class="line">mkdir ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/msp/admincerts</span><br><span class="line">cp ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USERNAME&#125;@$&#123;DOMAIN_NAME&#125;/msp/signcerts/cert.pem ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/msp/admincerts</span><br></pre></td></tr></table></figure>
+<h2 id="生成其它用户证书"><a href="#生成其它用户证书" class="headerlink" title="生成其它用户证书"></a>生成其它用户证书</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export USERNAME="otheruser"</span><br></pre></td></tr></table></figure>
+<p>执行以上注册登记步骤即可。</p>
+<h2 id="3、生成orderer0-的-MSP"><a href="#3、生成orderer0-的-MSP" class="headerlink" title="3、生成orderer0 的 MSP"></a>3、生成orderer0 的 MSP</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export ORDERERNAME="orderer0"</span><br></pre></td></tr></table></figure>
+<h3 id="注册-orderer0"><a href="#注册-orderer0" class="headerlink" title="注册 orderer0"></a>注册 orderer0</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client register --id.name $&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125; --id.type orderer --id.affiliation "$&#123;DOMAIN_NAME_REVERT&#125;" --id.attrs '"role=orderer",ecert=true' --id.secret=123456 --csr.cn=$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125; --csr.hosts=["$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125;"] -M ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/msp -u http://$&#123;ADMIN_NAME&#125;:$&#123;ADMIN_PWD&#125;@$&#123;CA_HOST&#125; --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<h3 id="登记orderer0"><a href="#登记orderer0" class="headerlink" title="登记orderer0"></a>登记orderer0</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client enroll -u http://$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125;:123456@$&#123;CA_HOST&#125; --csr.cn=$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125; --csr.hosts=['$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125;'] -M ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/orderers/$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125;/msp --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<h3 id="生成msp-目录"><a href="#生成msp-目录" class="headerlink" title="生成msp 目录"></a>生成msp 目录</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/orderers/$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125;/msp/admincerts</span><br><span class="line">cp ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/users/Admin@$&#123;DOMAIN_NAME&#125;/msp/signcerts/cert.pem ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/orderers/$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125;/msp/admincerts</span><br></pre></td></tr></table></figure>
+<h2 id="生成orderer1-的msp"><a href="#生成orderer1-的msp" class="headerlink" title="生成orderer1 的msp"></a>生成orderer1 的msp</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export ORDERERNAME="orderer1"</span><br></pre></td></tr></table></figure>
+<p>然后重复执行上面的步骤</p>
+<h1 id="五、orderer节点tls证书生成"><a href="#五、orderer节点tls证书生成" class="headerlink" title="五、orderer节点tls证书生成"></a>五、orderer节点tls证书生成</h1><h2 id="1、生成orderer组织的tls"><a href="#1、生成orderer组织的tls" class="headerlink" title="1、生成orderer组织的tls"></a>1、生成orderer组织的tls</h2><h3 id="登记orderer组织"><a href="#登记orderer组织" class="headerlink" title="登记orderer组织"></a>登记orderer组织</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client enroll -M ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/tls -u http://$&#123;ADMIN_NAME&#125;:$&#123;ADMIN_PWD&#125;@$&#123;TLS_CA_HOST&#125; --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<h2 id="2、生成Admin的tls"><a href="#2、生成Admin的tls" class="headerlink" title="2、生成Admin的tls"></a>2、生成Admin的tls</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export USER_NAME="Admin"</span><br></pre></td></tr></table></figure>
+<h3 id="注册Admin"><a href="#注册Admin" class="headerlink" title="注册Admin"></a>注册Admin</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client register --id.name $&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125; --id.type client --id.affiliation "$&#123;DOMAIN_NAME_REVERT&#125;" --id.attrs '"hf.Registrar.Roles=client,orderer,peer,user","hf.Registrar.DelegateRoles=client,orderer,peer,user",hf.Registrar.Attributes=*,hf.GenCRL=true,hf.Revoker=true,hf.AffiliationMgr=true,hf.IntermediateCA=true,role=admin:ecert' --id.secret=123456 --csr.cn=$&#123;DOMAIN_NAME&#125; --csr.hosts=["$&#123;DOMAIN_NAME&#125;"] -M ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/tls -u http://$&#123;ADMIN_NAME&#125;:$&#123;ADMIN_PWD&#125;@$&#123;TLS_CA_HOST&#125; --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<h3 id="登记Admin"><a href="#登记Admin" class="headerlink" title="登记Admin"></a>登记Admin</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client enroll -d --enrollment.profile tls -u http://$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;:123456@localhost:8054 --csr.cn=$&#123;DOMAIN_NAME&#125; --csr.hosts=["$&#123;DOMAIN_NAME&#125;"] -M ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/tls --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<h3 id="生成Admin-的-tls-目录"><a href="#生成Admin-的-tls-目录" class="headerlink" title="生成Admin 的 tls 目录"></a>生成Admin 的 tls 目录</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/tls/tlscacerts/tls-localhost-8054.pem ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/tls/ca.crt</span><br><span class="line">cp ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/tls/signcerts/cert.pem ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/tls/client.crt</span><br><span class="line">cp ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/tls/keystore/*_sk ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/tls/client.key</span><br></pre></td></tr></table></figure>
+<h2 id="3、生成orderer0的tls"><a href="#3、生成orderer0的tls" class="headerlink" title="3、生成orderer0的tls"></a>3、生成orderer0的tls</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export ORDERERNAME="orderer0"</span><br></pre></td></tr></table></figure>
+<h3 id="注册orderer0"><a href="#注册orderer0" class="headerlink" title="注册orderer0"></a>注册orderer0</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client register --id.name $&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125; --id.type orderer --id.affiliation "$&#123;DOMAIN_NAME_REVERT&#125;" --id.attrs '"role=orderer",ecert=true' --id.secret=123456 --csr.cn=$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125; --csr.hosts=["$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125;"] -M ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/tls -u http://$&#123;ADMIN_NAME&#125;:$&#123;ADMIN_PWD&#125;@$&#123;TLS_CA_HOST&#125; --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<h3 id="登记orderer0-1"><a href="#登记orderer0-1" class="headerlink" title="登记orderer0"></a>登记orderer0</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client enroll  --enrollment.profile tls -u http://$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125;:123456@localhost:8054 --csr.cn=$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125; --csr.hosts=["$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125;"] -M ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/orderers/$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125;/tls --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<h3 id="生成tls目录"><a href="#生成tls目录" class="headerlink" title="生成tls目录"></a>生成tls目录</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/orderers/$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125;/tls/tlscacerts/tls-localhost-8054.pem ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/orderers/$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125;/tls/ca.crt</span><br><span class="line">cp ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/orderers/$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125;/tls/signcerts/cert.pem ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/orderers/$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125;/tls/server.crt</span><br><span class="line">cp ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/orderers/$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125;/tls/keystore/*_sk ~/fabric-ca/crypto-config/ordererOrganizations/$&#123;DOMAIN_NAME&#125;/orderers/$&#123;ORDERERNAME&#125;.$&#123;DOMAIN_NAME&#125;/tls/server.key</span><br></pre></td></tr></table></figure>
+<h2 id="生成orderer1的msp"><a href="#生成orderer1的msp" class="headerlink" title="生成orderer1的msp"></a>生成orderer1的msp</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export ORDERERNAME="orderer1"</span><br></pre></td></tr></table></figure>
+<p>然后执行以上步骤</p>
+<h2 id="清理没用的文件"><a href="#清理没用的文件" class="headerlink" title="清理没用的文件"></a>清理没用的文件</h2><p>最后阶段数据清理,删除所有的 IssuerPublicKey  IssuerRevocationPublicKey</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find ~/fabric-ca/crypto-config/ -name "IssuerPublicKey" --exec rm &#123;&#125; \;</span><br><span class="line">find ~/fabric-ca/crypto-config/ -name "IssuerRevocationPublicKey" -exec rm &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="六、联盟成员-peer节点的证书生成"><a href="#六、联盟成员-peer节点的证书生成" class="headerlink" title="六、联盟成员 peer节点的证书生成"></a>六、联盟成员 peer节点的证书生成</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export DOMAIN_NAME="customs.gov.cn"</span><br><span class="line">export DOMAIN_NAME_REVERT="cn.gov.customs"</span><br><span class="line"></span><br><span class="line">export DOMAIN_NAME="my118.com"</span><br><span class="line">export DOMAIN_NAME_REVERT="com.my118"</span><br><span class="line"></span><br><span class="line">export CA_HOST_NAME="localhost"</span><br><span class="line">export TLS_CA_HOST_NAME="localhost"</span><br><span class="line">export CA_HOST_PORT="7054"</span><br><span class="line">export TLS_CA_HOST_PORT="8054"</span><br><span class="line"></span><br><span class="line">export CA_HOST="$&#123;CA_HOST_NAME&#125;:$&#123;CA_HOST_PORT&#125;"</span><br><span class="line">export TLS_CA_HOST="$&#123;TLS_CA_HOST_NAME&#125;:$&#123;TLS_CA_HOST_PORT&#125;"</span><br><span class="line"></span><br><span class="line">export ADMIN_NAME="admin"</span><br><span class="line">export ADMIN_PWD="adminpw"</span><br></pre></td></tr></table></figure>
+<p>联盟组织成员需要生成自己的CA、tlsCA证书，然后启动CA、tlsCA服务，然后才能执行证书生成过程。</p>
+<h2 id="1、生成组织证书"><a href="#1、生成组织证书" class="headerlink" title="1、生成组织证书"></a>1、生成组织证书</h2><h3 id="登陆管理员用户-1"><a href="#登陆管理员用户-1" class="headerlink" title="登陆管理员用户"></a>登陆管理员用户</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client enroll -M ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/msp -u http://$&#123;ADMIN_NAME&#125;:$&#123;ADMIN_PWD&#125;@$&#123;CA_HOST&#125; --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<h2 id="2、生成Admin证书"><a href="#2、生成Admin证书" class="headerlink" title="2、生成Admin证书"></a>2、生成Admin证书</h2><p>你需要修改配置文件 fabric-ca-client-config.yaml 来设置注册时一些字段的默认值。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">url:</span> <span class="attr">http://localhost:7054</span></span><br><span class="line"></span><br><span class="line"><span class="attr">mspdir:</span> <span class="string">msp</span></span><br><span class="line"><span class="attr">tls:</span></span><br><span class="line"><span class="attr">  certfiles:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    certfile:</span></span><br><span class="line"><span class="attr">    keyfile:</span></span><br><span class="line"></span><br><span class="line"><span class="attr">csr:</span></span><br><span class="line"><span class="attr">  cn:</span> <span class="string">admin2</span></span><br><span class="line"><span class="attr">  keyrequest:</span></span><br><span class="line"><span class="attr">    algo:</span> <span class="string">ecdsa</span></span><br><span class="line"><span class="attr">    size:</span> <span class="number">256</span></span><br><span class="line"><span class="attr">  serialnumber:</span></span><br><span class="line"><span class="attr">  names:</span></span><br><span class="line"><span class="attr">    - C:</span> <span class="string">CN</span></span><br><span class="line"><span class="attr">      ST:</span> <span class="string">BJ</span></span><br><span class="line"><span class="attr">      L:</span></span><br><span class="line"><span class="attr">      O:</span> <span class="string">example.com</span></span><br><span class="line"><span class="comment">#      OU: Fabric</span></span><br><span class="line"><span class="attr">  hosts:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">ubuntu-xenial</span></span><br><span class="line"></span><br><span class="line"><span class="attr">id:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">user</span></span><br><span class="line"><span class="attr">  affiliation:</span></span><br><span class="line"><span class="attr">  maxenrollments:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">  attributes:</span></span><br><span class="line"></span><br><span class="line"><span class="attr">enrollment:</span></span><br><span class="line"><span class="attr">  profile:</span></span><br><span class="line"><span class="attr">  label:</span></span><br><span class="line"></span><br><span class="line"><span class="attr">caname:</span></span><br><span class="line"></span><br><span class="line"><span class="attr">bccsp:</span></span><br><span class="line"><span class="attr">    default:</span> <span class="string">SW</span></span><br><span class="line"><span class="attr">    sw:</span></span><br><span class="line"><span class="attr">        hash:</span> <span class="string">SHA2</span></span><br><span class="line"><span class="attr">        security:</span> <span class="number">256</span></span><br><span class="line"><span class="attr">        filekeystore:</span></span><br><span class="line"><span class="attr">            keystore:</span> <span class="string">msp/keystore</span></span><br></pre></td></tr></table></figure>
+<h3 id="生成Admin用户"><a href="#生成Admin用户" class="headerlink" title="生成Admin用户"></a>生成Admin用户</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export USER_NAME="Admin"</span><br></pre></td></tr></table></figure>
+<h3 id="注册用户Admin-1"><a href="#注册用户Admin-1" class="headerlink" title="注册用户Admin"></a>注册用户Admin</h3><p>如果节点组织是orderer组织， fabric-ca-client register 操作就直接忽略，因为Admin用户已经注册。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client register --id.name $&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125; --id.type client --id.affiliation "$&#123;DOMAIN_NAME_REVERT&#125;" --id.attrs '"hf.Registrar.Roles=client,orderer,peer,user","hf.Registrar.DelegateRoles=client,orderer,peer,user",hf.Registrar.Attributes=*,hf.GenCRL=true,hf.Revoker=true,hf.AffiliationMgr=true,hf.IntermediateCA=true,role=admin:ecert' --id.secret=123456 --csr.cn=$&#123;DOMAIN_NAME&#125; --csr.hosts=["$&#123;DOMAIN_NAME&#125;"] -M ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/msp -u http://$&#123;ADMIN_NAME&#125;:$&#123;ADMIN_PWD&#125;@$&#123;CA_HOST&#125; --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<p>密码会被打印出来，登录这个新注册的身份的时候，需要用到这个密码。这允许一个管理员注册身份，然后把这个身份的ID和密码给别人来登陆。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">2019/11/12 14:55:51 [INFO] Configuration file location: /home/vagrant/fabric-ca-client-config.yaml</span><br><span class="line">Password: 123456</span><br></pre></td></tr></table></figure>
+<p>登录证书：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client enroll -u http://$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;:123456@$&#123;CA_HOST&#125; --csr.cn=$&#123;DOMAIN_NAME&#125; --csr.hosts=["$&#123;DOMAIN_NAME&#125;"] -M ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/msp --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<p>查看证书：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">openssl x509 -text -noout -in ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/msp/signcerts/cert.pem</span><br></pre></td></tr></table></figure>
+<h3 id="生成Admin-msp目录-1"><a href="#生成Admin-msp目录-1" class="headerlink" title="生成Admin msp目录"></a>生成Admin msp目录</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/msp/admincerts</span><br><span class="line">cp ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/msp/signcerts/cert.pem ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/msp/admincerts</span><br><span class="line"></span><br><span class="line">mkdir ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/msp/admincerts</span><br><span class="line">cp ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/msp/signcerts/cert.pem ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/msp/admincerts</span><br></pre></td></tr></table></figure>
+<h2 id="3、生成peer0-的-MSP"><a href="#3、生成peer0-的-MSP" class="headerlink" title="3、生成peer0 的 MSP"></a>3、生成peer0 的 MSP</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export PEERNAME="peer0"</span><br></pre></td></tr></table></figure>
+<h3 id="注册-peer0"><a href="#注册-peer0" class="headerlink" title="注册 peer0"></a>注册 peer0</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client register --id.name $&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125; --id.type peer --id.affiliation "$&#123;DOMAIN_NAME_REVERT&#125;" --id.attrs '"role=peer",ecert=true' --id.secret=123456 --csr.cn=$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125; --csr.hosts=['$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125;'] -M ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/msp -u http://$&#123;ADMIN_NAME&#125;:$&#123;ADMIN_PWD&#125;@$&#123;CA_HOST&#125; --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<h3 id="登记peer0"><a href="#登记peer0" class="headerlink" title="登记peer0"></a>登记peer0</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client enroll -u http://$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125;:123456@$&#123;CA_HOST&#125; --csr.cn=$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125; --csr.hosts=["$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125;"] -M ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/peers/$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125;/msp --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<h3 id="生成msp-目录-1"><a href="#生成msp-目录-1" class="headerlink" title="生成msp 目录"></a>生成msp 目录</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/peers/$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125;/msp/admincerts</span><br><span class="line">cp ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/users/Admin@$&#123;DOMAIN_NAME&#125;/msp/signcerts/cert.pem ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/peers/$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125;/msp/admincerts</span><br></pre></td></tr></table></figure>
+<h2 id="生成peer1的msp"><a href="#生成peer1的msp" class="headerlink" title="生成peer1的msp"></a>生成peer1的msp</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export PEERNAME="peer1"</span><br></pre></td></tr></table></figure>
+<p>重复以上步骤</p>
+<h1 id="七、联盟成员-peer节点tls证书生成"><a href="#七、联盟成员-peer节点tls证书生成" class="headerlink" title="七、联盟成员 peer节点tls证书生成"></a>七、联盟成员 peer节点tls证书生成</h1><h2 id="1、生成组织msp"><a href="#1、生成组织msp" class="headerlink" title="1、生成组织msp"></a>1、生成组织msp</h2><h3 id="登记组织"><a href="#登记组织" class="headerlink" title="登记组织"></a>登记组织</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client enroll -M ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/tls -u http://$&#123;ADMIN_NAME&#125;:$&#123;ADMIN_PWD&#125;@$&#123;TLS_CA_HOST&#125; --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<h2 id="2、生成Admin的tls-1"><a href="#2、生成Admin的tls-1" class="headerlink" title="2、生成Admin的tls"></a>2、生成Admin的tls</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export USER_NAME="Admin"</span><br></pre></td></tr></table></figure>
+<h3 id="注册Admin-1"><a href="#注册Admin-1" class="headerlink" title="注册Admin"></a>注册Admin</h3><p>如果节点组织是orderer组织， fabric-ca-client register 操作就直接忽略，因为Admin用户已经注册。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client register --id.name $&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125; --id.type client --id.affiliation "$&#123;DOMAIN_NAME_REVERT&#125;" --id.attrs '"hf.Registrar.Roles=client,orderer,peer,user","hf.Registrar.DelegateRoles=client,orderer,peer,user",hf.Registrar.Attributes=*,hf.GenCRL=true,hf.Revoker=true,hf.AffiliationMgr=true,role=admin:ecert' --id.secret=123456 --csr.cn=$&#123;DOMAIN_NAME&#125; --csr.hosts=["$&#123;DOMAIN_NAME&#125;"] -M ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/tls -u http://$&#123;ADMIN_NAME&#125;:$&#123;ADMIN_PWD&#125;@$&#123;TLS_CA_HOST&#125; --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<h3 id="登记Admin-1"><a href="#登记Admin-1" class="headerlink" title="登记Admin"></a>登记Admin</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client enroll  --enrollment.profile tls -u http://$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;:123456@$&#123;TLS_CA_HOST&#125; --csr.cn=$&#123;DOMAIN_NAME&#125; --csr.hosts=['$&#123;DOMAIN_NAME&#125;'] -M ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/tls --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<h3 id="生成Admin-的-tls-目录-1"><a href="#生成Admin-的-tls-目录-1" class="headerlink" title="生成Admin 的 tls 目录"></a>生成Admin 的 tls 目录</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/tls/tlscacerts/tls-localhost-8054.pem ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/tls/ca.crt</span><br><span class="line">cp ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/tls/signcerts/cert.pem ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/tls/client.crt</span><br><span class="line">cp ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/tls/keystore/*_sk ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/users/$&#123;USER_NAME&#125;@$&#123;DOMAIN_NAME&#125;/tls/client.key</span><br></pre></td></tr></table></figure>
+<h2 id="3、生成peer0的tls"><a href="#3、生成peer0的tls" class="headerlink" title="3、生成peer0的tls"></a>3、生成peer0的tls</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export PEERNAME="peer0"</span><br></pre></td></tr></table></figure>
+<h3 id="注册peer0"><a href="#注册peer0" class="headerlink" title="注册peer0"></a>注册peer0</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client register --id.name $&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125; --id.type peer --id.affiliation "$&#123;DOMAIN_NAME_REVERT&#125;" --id.attrs '"role=peer",ecert=true' --id.secret=123456 --csr.cn=$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125; --csr.hosts=['$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125;'] -M ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/tls -u http://$&#123;ADMIN_NAME&#125;:$&#123;ADMIN_PWD&#125;@$&#123;TLS_CA_HOST&#125; --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<h3 id="登记peer0-1"><a href="#登记peer0-1" class="headerlink" title="登记peer0"></a>登记peer0</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client enroll --enrollment.profile tls -u http://$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125;:123456@$&#123;TLS_CA_HOST&#125; --csr.cn=$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125; --csr.hosts=['$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125;'] -M ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/peers/$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125;/tls --home ~/fabric-ca</span><br></pre></td></tr></table></figure>
+<h3 id="生成tls目录-1"><a href="#生成tls目录-1" class="headerlink" title="生成tls目录"></a>生成tls目录</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/peers/$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125;/tls/tlscacerts/tls-localhost-8054.pem ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/peers/$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125;/tls/ca.crt</span><br><span class="line">cp ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/peers/$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125;/tls/signcerts/cert.pem ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/peers/$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125;/tls/server.crt</span><br><span class="line">cp ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/peers/$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125;/tls/keystore/*_sk ~/fabric-ca/crypto-config/peerOrganizations/$&#123;DOMAIN_NAME&#125;/peers/$&#123;PEERNAME&#125;.$&#123;DOMAIN_NAME&#125;/tls/server.key</span><br></pre></td></tr></table></figure>
+<h2 id="生成-peer1-的msp"><a href="#生成-peer1-的msp" class="headerlink" title="生成 peer1 的msp"></a>生成 peer1 的msp</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export PEERNAME="peer1"</span><br></pre></td></tr></table></figure>
+<p>重复以上步骤</p>
+<h1 id="八、用每个组织的证书生成网络创世块"><a href="#八、用每个组织的证书生成网络创世块" class="headerlink" title="八、用每个组织的证书生成网络创世块"></a>八、用每个组织的证书生成网络创世块</h1><h1 id="九、附录"><a href="#九、附录" class="headerlink" title="九、附录"></a>九、附录</h1><h2 id="重新登陆一个身份"><a href="#重新登陆一个身份" class="headerlink" title="重新登陆一个身份"></a>重新登陆一个身份</h2><p>假设你的登陆证书快过期了，你可以重新登陆来替换你的登陆证书（ECert）。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export FABRIC_CA_CLIENT_HOME=$HOME/fabric-ca/clients/peer</span><br><span class="line">fabric-ca-client reenroll</span><br></pre></td></tr></table></figure>
+<h2 id="撤销一个证书或身份"><a href="#撤销一个证书或身份" class="headerlink" title="撤销一个证书或身份"></a>撤销一个证书或身份</h2><p>身份和证书都能被撤销。撤销一个身份会撤销该身份拥有的所有证书，该身份也不能再获得新的证书。撤销一个证书会使该证书失效。</p>
+<p>为了撤销一个证书或身份，发起者必须有hf.Revoker属性。发起者只能撤销与自己的affiliation相同的证书或身份，或者发起者的affiliation是被撤销者的affiliation的前缀。</p>
+<p>举个例子，一个“orgs.org1”的发起者只能撤销orgs.org1或者orgs.org1.department1的身份，而不能撤销orgs.org2的身份。</p>
+<p>下面的命令撤销一个身份。将来所有发自该身份的请求都会被Fabric CA服务器拒收。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fabric-ca-client revoke -e &lt;enrollment_id&gt; -r &lt;reason&gt;</span><br></pre></td></tr></table></figure>
+<p>下面是<code>-r</code>选项支持的理由：</p>
+<ol>
+<li>unspecified</li>
+<li>keycompromise</li>
+<li>cacompromise</li>
+<li>affiliationchange</li>
+<li>superseded</li>
+<li>cessationofoperation</li>
+<li>certificatehold</li>
+<li>removefromcrl</li>
+<li>privilegewithdrawn</li>
+<li>aacompromise</li>
+</ol>
+<p>举个例子，有着根affiliation的admin可以回收peer1身份：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> FABRIC_CA_CLIENT_HOME=<span class="variable">$HOME</span>/fabric-ca/clients/admin</span><br><span class="line">fabric-ca-client revoke -e peer1</span><br></pre></td></tr></table></figure>
+<p>An enrollment certificate that belongs to an identity can be revoked by specifying its AKI (Authority Key Identifier) and serial number as follows:</p>
+<p>一个身份可以撤销自己的登陆证书（ECert），需要指定ECert的AKI和序列号：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fabric-ca-client revoke -a xxx -s yyy -r &lt;reason&gt;</span><br></pre></td></tr></table></figure>
+<p>For example, you can get the AKI and the serial number of a certificate using the openssl command and pass them to the revoke command to revoke the said certificate as follows:</p>
+<p>举个例子，你可以通过openssl命令来获取一个证书的AKI和序列号：</p>
+<pre><code>serial=$(openssl x509 -in userecert.pem -serial -noout | cut -d &quot;=&quot; -f 2)
+aki=$(openssl x509 -in userecert.pem -text | awk &apos;/keyid/ {gsub(/ *keyid:|:/,&quot;&quot;,$1);print tolower($0)}&apos;)
+fabric-ca-client revoke -s $serial -a $aki -r affiliationchange
+</code></pre><h3 id="启用TLS"><a href="#启用TLS" class="headerlink" title="启用TLS"></a>启用TLS</h3><p>这一部分介绍如何为Fabric CA客户端配置TLS。</p>
+<p>The following sections may be configured in the <code>fabric-ca-client-config.yaml</code>.</p>
+<p>下面的可以配置在<code>fabric-ca-client-config.yaml</code>中。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">tls:</span></span><br><span class="line">    <span class="comment"># Enable TLS (default: false)</span></span><br><span class="line"><span class="attr">    enabled:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    certfiles:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">root.pem</span></span><br><span class="line"><span class="attr">    client:</span></span><br><span class="line"><span class="attr">        certfile:</span> <span class="string">tls_client-cert.pem</span></span><br><span class="line"><span class="attr">        keyfile:</span> <span class="string">tls_client-key.pem</span></span><br></pre></td></tr></table></figure>
+<p><em>certfiles</em>是该客户端信任的根证书集合。一般这都会是Fabric CA服务端根目录下的ca-cert.pem。</p>
+<p>The client option is required only if mutual TLS is configured on the server.</p>
+<p>只有在服务器配置了双向TLS的情况下，<em>client</em>选项才需要。</p>
+<hr>
+<h2 id="体验-Fabric-CA-命令行"><a href="#体验-Fabric-CA-命令行" class="headerlink" title="体验 Fabric CA 命令行"></a>体验 Fabric CA 命令行</h2><p>这一部分提供 fabric-ca-server 和 fabric-ca-client 命令行的使用说明。另外的使用信息会在接下来的内容中提供。</p>
+<p>fabric-ca-server</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Hyperledger Fabric Certificate Authority Server</span><br><span class="line"></span><br><span class="line">Usage:</span><br><span class="line">    fabric-ca-server [command]</span><br><span class="line"></span><br><span class="line">Available Commands:</span><br><span class="line">    init        Initialize the Fabric CA server</span><br><span class="line">    start       Start the Fabric CA server</span><br><span class="line"></span><br><span class="line">Flags:</span><br><span class="line">        --address string                         Listening address of Fabric CA server (default &quot;0.0.0.0&quot;)</span><br><span class="line">    -b, --boot string                            The user:pass for bootstrap admin which is required to build default config file</span><br><span class="line">        --ca.certfile string                     PEM-encoded CA certificate file (default &quot;ca-cert.pem&quot;)</span><br><span class="line">        --ca.chainfile string                    PEM-encoded CA chain file (default &quot;ca-chain.pem&quot;)</span><br><span class="line">        --ca.keyfile string                      PEM-encoded CA key file (default &quot;ca-key.pem&quot;)</span><br><span class="line">    -n, --ca.name string                         Certificate Authority name</span><br><span class="line">    -c, --config string                          Configuration file (default &quot;fabric-ca-server-config.yaml&quot;)</span><br><span class="line">        --csr.cn string                          The common name field of the certificate signing request to a parent Fabric CA server</span><br><span class="line">        --csr.hosts stringSlice                  A list of space-separated host names in a certificate signing request to a parent Fabric CA server</span><br><span class="line">        --csr.serialnumber string                The serial number in a certificate signing request to a parent Fabric CA server</span><br><span class="line">        --db.datasource string                   Data source which is database specific (default &quot;fabric-ca-server.db&quot;)</span><br><span class="line">        --db.tls.certfiles stringSlice           PEM-encoded list of trusted certificate files</span><br><span class="line">        --db.tls.client.certfile string          PEM-encoded certificate file when mutual authenticate is enabled</span><br><span class="line">        --db.tls.client.keyfile string           PEM-encoded key file when mutual authentication is enabled</span><br><span class="line">        --db.type string                         Type of database; one of: sqlite3, postgres, mysql (default &quot;sqlite3&quot;)</span><br><span class="line">    -d, --debug                                  Enable debug level logging</span><br><span class="line">        --ldap.enabled                           Enable the LDAP client for authentication and attributes</span><br><span class="line">        --ldap.groupfilter string                The LDAP group filter for a single affiliation group (default &quot;(memberUid=%s)&quot;)</span><br><span class="line">        --ldap.url string                        LDAP client URL of form ldap://adminDN:adminPassword@host[:port]/base</span><br><span class="line">        --ldap.userfilter string                 The LDAP user filter to use when searching for users (default &quot;(uid=%s)&quot;)</span><br><span class="line">    -p, --port int                               Listening port of Fabric CA server (default 7054)</span><br><span class="line">        --registry.maxenrollments int            Maximum number of enrollments; valid if LDAP not enabled</span><br><span class="line">        --tls.certfile string                    PEM-encoded TLS certificate file for server&apos;s listening port (default &quot;ca-cert.pem&quot;)</span><br><span class="line">        --tls.clientauth.certfiles stringSlice   PEM-encoded list of trusted certificate files</span><br><span class="line">        --tls.clientauth.type string             Policy the server will follow for TLS Client Authentication. (default &quot;noclientcert&quot;)</span><br><span class="line">        --tls.enabled                            Enable TLS on the listening port</span><br><span class="line">        --tls.keyfile string                     PEM-encoded TLS key for server&apos;s listening port (default &quot;ca-key.pem&quot;)</span><br><span class="line">    -u, --url string                             URL of the parent Fabric CA server</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Use &quot;fabric-ca-server [command] --help&quot; for more information about a command.</span><br></pre></td></tr></table></figure>
+<p>fabric-ca-client</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># fabric-ca-client</span><br><span class="line">Hyperledger Fabric Certificate Authority Client</span><br><span class="line"></span><br><span class="line">Usage:</span><br><span class="line">    fabric-ca-client [command]</span><br><span class="line"></span><br><span class="line">Available Commands:</span><br><span class="line">    enroll      Enroll an identity</span><br><span class="line">    getcacert   Get CA certificate chain</span><br><span class="line">    reenroll    Reenroll an identity</span><br><span class="line">    register    Register an identity</span><br><span class="line">    revoke      Revoke an identity</span><br><span class="line"></span><br><span class="line">Flags:</span><br><span class="line">    -c, --config string                Configuration file (default &quot;$HOME/.fabric-ca-client/fabric-ca-client-config.yaml&quot;)</span><br><span class="line">        --csr.cn string                The common name field of the certificate signing request</span><br><span class="line">        --csr.hosts stringSlice        A list of space-separated host names in a certificate signing request</span><br><span class="line">        --csr.serialnumber string      The serial number in a certificate signing request</span><br><span class="line">    -d, --debug                        Enable debug level logging</span><br><span class="line">        --enrollment.hosts string      Comma-separated host list</span><br><span class="line">        --enrollment.label string      Label to use in HSM operations</span><br><span class="line">        --enrollment.profile string    Name of the signing profile to use in issuing the certificate</span><br><span class="line">        --id.affiliation string        The identity&apos;s affiliation</span><br><span class="line">        --id.attr string               Attributes associated with this identity (e.g. hf.Revoker=true)</span><br><span class="line">        --id.maxenrollments int        The maximum number of times the secret can be reused to enroll</span><br><span class="line">        --id.name string               Unique name of the identity</span><br><span class="line">        --id.secret string             The enrollment secret for the identity being registered</span><br><span class="line">        --id.type string               Type of identity being registered (e.g. &apos;peer, app, user&apos;)</span><br><span class="line">    -M, --mspdir string                Membership Service Provider directory (default &quot;msp&quot;)</span><br><span class="line">    -m, --myhost string                Hostname to include in the certificate signing request during enrollment (default &quot;$HOSTNAME&quot;)</span><br><span class="line">        --tls.certfiles stringSlice    PEM-encoded list of trusted certificate files</span><br><span class="line">        --tls.client.certfile string   PEM-encoded certificate file when mutual authenticate is enabled</span><br><span class="line">        --tls.client.keyfile string    PEM-encoded key file when mutual authentication is enabled</span><br><span class="line">    -u, --url string                   URL of the Fabric CA server (default &quot;http://$&#123;CA_HOST&#125;&quot;)</span><br><span class="line"></span><br><span class="line">Use &quot;fabric-ca-client [command] --help&quot; for more information about a command.</span><br></pre></td></tr></table></figure>
+<p>Note that command line options that are string slices (lists) can be specified either by specifying the option with space-separated list elements or by specifying the option multiple times, each with a string value that make up the list. For example, to specify host1 and host2 for csr.hosts option, you can either pass –csr.hosts “host1 host2” or –csr.hosts host1 –csr.hosts host2</p>
+<p>注意在命令行中需要给某个选项输入列表时，可以用空格分割，或者多次使用该选项。例如，指定<code>host1</code>和<code>host2</code>给csr.hosts选项，你可以用–csr.hosts “host1 host2”或者–csr.hosts host1 –csr.hosts host2</p>
+<h2 id="Fabric-CA-服务端配置文件格式"><a href="#Fabric-CA-服务端配置文件格式" class="headerlink" title="Fabric CA 服务端配置文件格式"></a>Fabric CA 服务端配置文件格式</h2><p>配置文件可以通过 <code>-c</code> 或者 <code>--config</code> 选项来指定。如果 <code>--config</code> 选项使用了，而指定的文件不存在，默认的配置文件（如下）会在指定的位置被创建。然而，如果没有指定配置文件，默认配置文件会在 fabric-ca-server 的 home 目录下创建。（参考 <a href="#fabric-ca-服务端">Fabric CA 服务端</a> 了解更多）</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Server's listening port (default: 7054)</span></span><br><span class="line"><span class="attr">port:</span> <span class="number">7054</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Enables debug logging (default: false)</span></span><br><span class="line"><span class="attr">debug:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="comment">#  TLS section for the server's listening port</span></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="attr">tls:</span></span><br><span class="line">    <span class="comment"># Enable TLS (default: false)</span></span><br><span class="line"><span class="attr">    enabled:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    certfile:</span> <span class="string">ca-cert.pem</span></span><br><span class="line"><span class="attr">    keyfile:</span> <span class="string">ca-key.pem</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="comment">#  The CA section contains the key and certificate files used when</span></span><br><span class="line"><span class="comment">#  issuing enrollment certificates (ECerts) and transaction</span></span><br><span class="line"><span class="comment">#  certificates (TCerts).</span></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="attr">ca:</span></span><br><span class="line">    <span class="comment"># Certificate file (default: ca-cert.pem)</span></span><br><span class="line"><span class="attr">    certfile:</span> <span class="string">ca-cert.pem</span></span><br><span class="line">    <span class="comment"># Key file (default: ca-key.pem)</span></span><br><span class="line"><span class="attr">    keyfile:</span> <span class="string">ca-key.pem</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="comment">#  The registry section controls how the Fabric CA server does two things:</span></span><br><span class="line"><span class="comment">#  1) authenticates enrollment requests which contain identity name and</span></span><br><span class="line"><span class="comment">#     password (also known as enrollment ID and secret).</span></span><br><span class="line"><span class="comment">#  2) once authenticated, retrieves the identity's attribute names and</span></span><br><span class="line"><span class="comment">#     values which the Fabric CA server optionally puts into TCerts</span></span><br><span class="line"><span class="comment">#     which it issues for transacting on the Hyperledger Fabric blockchain.</span></span><br><span class="line"><span class="comment">#     These attributes are useful for making access control decisions in</span></span><br><span class="line"><span class="comment">#     chaincode.</span></span><br><span class="line"><span class="comment">#  There are two main configuration options:</span></span><br><span class="line"><span class="comment">#  1) The Fabric CA server is the registry</span></span><br><span class="line"><span class="comment">#  2) An LDAP server is the registry, in which case the Fabric CA server</span></span><br><span class="line"><span class="comment">#     calls the LDAP server to perform these tasks.</span></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="attr">registry:</span></span><br><span class="line">    <span class="comment"># Maximum number of times a password/secret can be reused for enrollment</span></span><br><span class="line">    <span class="comment"># (default: 0, which means there is no limit)</span></span><br><span class="line"><span class="attr">    maxEnrollments:</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Contains identity information which is used when LDAP is disabled</span></span><br><span class="line"><span class="attr">    identities:</span></span><br><span class="line"><span class="attr">        - name:</span> <span class="string">&lt;&lt;&lt;ADMIN&gt;&gt;&gt;</span></span><br><span class="line"><span class="attr">        pass:</span> <span class="string">&lt;&lt;&lt;ADMINPW&gt;&gt;&gt;</span></span><br><span class="line"><span class="attr">        type:</span> <span class="string">client</span></span><br><span class="line"><span class="attr">        affiliation:</span> <span class="string">""</span></span><br><span class="line"><span class="attr">        attrs:</span></span><br><span class="line">            <span class="string">hf.Registrar.Roles:</span> <span class="string">"client,user,peer,validator,auditor,ca"</span></span><br><span class="line">            <span class="string">hf.Registrar.DelegateRoles:</span> <span class="string">"client,user,validator,auditor"</span></span><br><span class="line">            <span class="string">hf.Revoker:</span> <span class="literal">true</span></span><br><span class="line">            <span class="string">hf.IntermediateCA:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="comment">#  Database section</span></span><br><span class="line"><span class="comment">#  Supported types are: "sqlite3", "postgres", and "mysql".</span></span><br><span class="line"><span class="comment">#  The datasource value depends on the type.</span></span><br><span class="line"><span class="comment">#  If the type is "sqlite3", the datasource value is a file name to use</span></span><br><span class="line"><span class="comment">#  as the database store.  Since "sqlite3" is an embedded database, it</span></span><br><span class="line"><span class="comment">#  may not be used if you want to run the Fabric CA server in a cluster.</span></span><br><span class="line"><span class="comment">#  To run the Fabric CA server in a cluster, you must choose "postgres"</span></span><br><span class="line"><span class="comment">#  or "mysql".</span></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="attr">db:</span></span><br><span class="line"><span class="attr">    type:</span> <span class="string">sqlite3</span></span><br><span class="line"><span class="attr">    datasource:</span> <span class="string">fabric-ca-server.db</span></span><br><span class="line"><span class="attr">    tls:</span></span><br><span class="line"><span class="attr">        enabled:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">        certfiles:</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">db-server-cert.pem</span></span><br><span class="line"><span class="attr">        client:</span></span><br><span class="line"><span class="attr">            certfile:</span> <span class="string">db-client-cert.pem</span></span><br><span class="line"><span class="attr">            keyfile:</span> <span class="string">db-client-key.pem</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="comment">#  LDAP section</span></span><br><span class="line"><span class="comment">#  If LDAP is enabled, the Fabric CA server calls LDAP to:</span></span><br><span class="line"><span class="comment">#  1) authenticate enrollment ID and secret (i.e. identity name and password)</span></span><br><span class="line"><span class="comment">#     for enrollment requests</span></span><br><span class="line"><span class="comment">#  2) To retrieve identity attributes</span></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="attr">ldap:</span></span><br><span class="line">    <span class="comment"># Enables or disables the LDAP client (default: false)</span></span><br><span class="line"><span class="attr">    enabled:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># The URL of the LDAP server</span></span><br><span class="line"><span class="attr">    url:</span> <span class="attr">ldap://&lt;adminDN&gt;:&lt;adminPassword&gt;@&lt;host&gt;:&lt;port&gt;/&lt;base&gt;</span></span><br><span class="line"><span class="attr">    tls:</span></span><br><span class="line"><span class="attr">        certfiles:</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">ldap-server-cert.pem</span></span><br><span class="line"><span class="attr">        client:</span></span><br><span class="line"><span class="attr">            certfile:</span> <span class="string">ldap-client-cert.pem</span></span><br><span class="line"><span class="attr">            keyfile:</span> <span class="string">ldap-client-key.pem</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="comment">#  Affiliation section</span></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="attr">affiliations:</span></span><br><span class="line"><span class="attr">    org1:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">department1</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">department2</span></span><br><span class="line"><span class="attr">    org2:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">department1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="comment">#  Signing section</span></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="attr">signing:</span></span><br><span class="line"><span class="attr">    profiles:</span></span><br><span class="line"><span class="attr">        ca:</span></span><br><span class="line"><span class="attr">            usage:</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">cert</span> <span class="string">sign</span></span><br><span class="line"><span class="attr">            expiry:</span> <span class="number">8000</span><span class="string">h</span></span><br><span class="line"><span class="attr">            caconstraint:</span></span><br><span class="line"><span class="attr">            isca:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    default:</span></span><br><span class="line"><span class="attr">        usage:</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">cert</span> <span class="string">sign</span></span><br><span class="line"><span class="attr">        expiry:</span> <span class="number">8000</span><span class="string">h</span></span><br><span class="line"></span><br><span class="line"><span class="comment">###########################################################################</span></span><br><span class="line"><span class="comment">#  Certificate Signing Request section for generating the CA certificate</span></span><br><span class="line"><span class="comment">###########################################################################</span></span><br><span class="line"><span class="attr">csr:</span></span><br><span class="line"><span class="attr">    cn:</span> <span class="string">fabric-ca-server</span></span><br><span class="line"><span class="attr">    names:</span></span><br><span class="line"><span class="attr">        - C:</span> <span class="string">US</span></span><br><span class="line"><span class="attr">            ST:</span> <span class="string">North</span> <span class="string">Carolina</span></span><br><span class="line"><span class="attr">            L:</span></span><br><span class="line"><span class="attr">            O:</span> <span class="string">Hyperledger</span></span><br><span class="line"><span class="attr">            OU:</span> <span class="string">Fabric</span></span><br><span class="line"><span class="attr">    hosts:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">&lt;&lt;&lt;MYHOST&gt;&gt;&gt;</span></span><br><span class="line"><span class="attr">    ca:</span></span><br><span class="line"><span class="attr">        pathlen:</span></span><br><span class="line"><span class="attr">        pathlenzero:</span></span><br><span class="line"><span class="attr">        expiry:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="comment">#  Crypto section configures the crypto primitives used for all</span></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="attr">crypto:</span></span><br><span class="line"><span class="attr">    software:</span></span><br><span class="line"><span class="attr">        hash_family:</span> <span class="string">SHA2</span></span><br><span class="line"><span class="attr">        security_level:</span> <span class="number">256</span></span><br><span class="line"><span class="attr">        ephemeral:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">        key_store_dir:</span> <span class="string">keys</span></span><br></pre></td></tr></table></figure>
+<h2 id="Fabric-CA-客户端配置文件格式"><a href="#Fabric-CA-客户端配置文件格式" class="headerlink" title="Fabric CA 客户端配置文件格式"></a>Fabric CA 客户端配置文件格式</h2><p>A configuration file can be provided to the client using the -c or –config option. If the config option is used and the specified file doesn’t exist, a default configuration file (like the one shown below) will be created in the specified location. However, if no config option was used, it will be created in the client’s home directory (see Fabric CA Client section more info).</p>
+<p>配置文件可以通过 <code>-c</code> 或者 <code>--config</code> 选项来指定。如果 <code>--config</code> 选项使用了，而指定的文件不存在，默认的配置文件（如下）会在指定的位置被创建。然而，如果没有指定配置文件，默认配置文件会在 fabric-ca-client 的 home 目录下创建。（参考 <a href="#fabric-ca-客户端">Fabric CA 客户端</a> 了解更多）</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="comment"># Client Configuration</span></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># URL of the fabric-ca-server (default: http://$&#123;CA_HOST&#125;)</span></span><br><span class="line"><span class="attr">URL:</span> <span class="attr">http://$&#123;CA_HOST&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Membership Service Provider (MSP) directory</span></span><br><span class="line"><span class="comment"># When the client is used to enroll a peer or an orderer, this field must be</span></span><br><span class="line"><span class="comment"># set to the MSP directory of the peer/orderer</span></span><br><span class="line"><span class="attr">MSPDir:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="comment">#    TLS section for secure socket connection</span></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="attr">tls:</span></span><br><span class="line">    <span class="comment"># Enable TLS (default: false)</span></span><br><span class="line"><span class="attr">    enabled:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    certfiles:</span>   <span class="comment"># Comma Separated (e.g. root.pem, root2.pem)</span></span><br><span class="line"><span class="attr">    client:</span></span><br><span class="line"><span class="attr">        certfile:</span></span><br><span class="line"><span class="attr">        keyfile:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="comment">#  Certificate Signing Request section for generating the CSR for</span></span><br><span class="line"><span class="comment">#  an enrollment certificate (ECert)</span></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="attr">csr:</span></span><br><span class="line"><span class="attr">    cn:</span> <span class="string">&lt;&lt;&lt;ENROLLMENT_ID&gt;&gt;&gt;</span></span><br><span class="line"><span class="attr">    names:</span></span><br><span class="line"><span class="attr">        - C:</span> <span class="string">US</span></span><br><span class="line"><span class="attr">        ST:</span> <span class="string">North</span> <span class="string">Carolina</span></span><br><span class="line"><span class="attr">        L:</span></span><br><span class="line"><span class="attr">        O:</span> <span class="string">Hyperledger</span></span><br><span class="line"><span class="attr">        OU:</span> <span class="string">Fabric</span></span><br><span class="line"><span class="attr">    hosts:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">&lt;&lt;&lt;MYHOST&gt;&gt;&gt;</span></span><br><span class="line"><span class="attr">    ca:</span></span><br><span class="line"><span class="attr">        pathlen:</span></span><br><span class="line"><span class="attr">        pathlenzero:</span></span><br><span class="line"><span class="attr">        expiry:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="comment">#  Registration section used to register a new user with fabric-ca server</span></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="attr">id:</span></span><br><span class="line"><span class="attr">    name:</span></span><br><span class="line"><span class="attr">    type:</span></span><br><span class="line"><span class="attr">    affiliation:</span></span><br><span class="line"><span class="attr">    attrs:</span></span><br><span class="line"><span class="attr">        - name:</span></span><br><span class="line"><span class="attr">        value:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="comment">#  Enrollment section used to enroll a user with fabric-ca server</span></span><br><span class="line"><span class="comment">#############################################################################</span></span><br><span class="line"><span class="attr">enrollment:</span></span><br><span class="line"><span class="attr">    hosts:</span></span><br><span class="line"><span class="attr">    profile:</span></span><br><span class="line"><span class="attr">    label:</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置优先级说明"><a href="#配置优先级说明" class="headerlink" title="配置优先级说明"></a>配置优先级说明</h2><p>Fabric CA 提供3种方式来配置 fabric-ca-server 和 fabric-ca-client 。优先级如下：</p>
+<ol>
+<li>命令行参数</li>
+<li>环境变量</li>
+<li>配置文件</li>
+</ol>
+<p>接下来，我们试着对配置文件进行修改。配置文件的修改可以被环境变量或者命令行参数覆盖。</p>
+<p>举个例子，假设我们有以下客户端的配置文件：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">tls:</span></span><br><span class="line">    <span class="comment"># Enable TLS (default: false)</span></span><br><span class="line"><span class="attr">    enabled:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># TLS for the client's listenting port (default: false)</span></span><br><span class="line"><span class="attr">    certfiles:</span>   <span class="comment"># Comma Separated (e.g. root.pem, root2.pem)</span></span><br><span class="line"><span class="attr">    client:</span></span><br><span class="line"><span class="attr">        certfile:</span> <span class="string">cert.pem</span></span><br><span class="line"><span class="attr">        keyfile:</span></span><br></pre></td></tr></table></figure>
+<p>可以用以下环境变量来覆盖配置文件中 <code>cert.pem</code> 的配置</p>
+<p><code>export FABRIC_CA_CLIENT_TLS_CLIENT_CERTFILE=cert2.pem</code></p>
+<p>如果我们想同时覆盖环境变量和配置文件，可以通过命令行参数</p>
+<p><code>fabric-ca-client enroll --tls.client.certfile cert3.pem</code></p>
+<p>以上方法对fabric-ca-server同样适用，区别是在环境变量的前缀，把<code>FABIRC_CA_CLIENT</code>替换为<code>FABRIC_CA_SERVER</code>。</p>
+<h2 id="关于路径的一些说明"><a href="#关于路径的一些说明" class="headerlink" title="关于路径的一些说明"></a>关于路径的一些说明</h2><p>fabric-ca-server 和 fabirc-ca-client 的配置文件里的所有属性都支持相对路径和绝对路径。相对路径是相对于配置目录，即配置文件所在的目录。比如，如果配置目录是 <code>~/config</code> ，而 tls 部分的配置如下所示，那么Fabric CA 服务端或者客户端会在 <code>~/config</code> 目录下查找 <code>root.pem</code> ，在 <code>~/config／certs</code> 下查找 <code>cert.pem</code> ，在 <code>/abs/path</code> 目录下查找 <code>key.pem</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">tls:</span><br><span class="line">    enabled: true</span><br><span class="line">    certfiles:   root.pem</span><br><span class="line">    client:</span><br><span class="line">        certfile: certs/cert.pem</span><br><span class="line">        keyfile: /abs/path/key.pem</span><br></pre></td></tr></table></figure>
+<h2 id="Fabric-CA-服务端"><a href="#Fabric-CA-服务端" class="headerlink" title="Fabric CA 服务端"></a>Fabric CA 服务端</h2><p>这一部分说明Fabric CA服务端。</p>
+<p>在启动Fabric CA服务端之前，你可以先初始化Fabric CA服务端。通过初始化，程序会自动生成一份默认配置文件，方便用户在启动前自行修改一些配置项。</p>
+<p>Fabric CA服务端的根目录通过以下方式决定：</p>
+<ul>
+<li>如果存在环境变量 <code>FABRIC_CA_SERVER_HOME</code> ，则使用这个值</li>
+<li>否则，如果存在环境变量 <code>FABRIC_CA_HOME</code> ，则使用这个值</li>
+<li>否则，如果存在环境变量 <code>CA_CFG_PATH</code> ，则使用这个值</li>
+<li>否则，使用当前的工作目录作为根目录</li>
+</ul>
+<p>本章接下来的部分，我们假设你已经设置了环境变量 <code>FABRIC_CA_HOME</code> ，并且值设置为 <code>$HOME/fabric-ca/server</code>。</p>
+<p>接下来的内容都默认服务端配置文件存在于服务端根目录下。</p>
+<h2 id="初始化服务端"><a href="#初始化服务端" class="headerlink" title="初始化服务端"></a>初始化服务端</h2><p>用以下命令初始化Fabric CA服务端</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-server init -b $&#123;ADMIN_NAME&#125;:$&#123;ADMIN_PWD&#125;</span><br></pre></td></tr></table></figure>
+<p>初始化时必须提供 <code>-b</code> (bootstrap identity: 引导身份) 选项。启动服务端时，至少需要提供一个引导身份。服务端配置文件包含一个可以配置的证书签名请求 (Certificate Signing Request, CSR) 部分。下面是一个CSR的例子。</p>
+<p>如果你想通过TLS远程连接Fabric CA服务端，把下面的CSR配置内容中的”localhost”替换成你将会运行Fabric CA服务端的域名。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cn: localhost</span><br><span class="line">key:</span><br><span class="line">    algo: ecdsa</span><br><span class="line">    size: 256</span><br><span class="line">names:</span><br><span class="line">- C: US</span><br><span class="line">    ST: &quot;North Carolina&quot;</span><br><span class="line">    L:</span><br><span class="line">    O: Hyperledger</span><br><span class="line">    OU: Fabric</span><br></pre></td></tr></table></figure>
+<p>上面所有的字段都符合X.509签名与证书规范，可以由<code>fabric-ca-server</code> init命令来生成。服务端配置文件中提到的<code>ca.certfile</code>和<code>ca.keyfile</code>这两个文件也符合X.509规范。字段如下：</p>
+<ul>
+<li>cn 通用名</li>
+<li>key 指明算法和密钥长度</li>
+<li>O 组织</li>
+<li>OU 组织单位</li>
+<li>L 地址或城市</li>
+<li>ST 州（省）</li>
+<li>C 国家</li>
+</ul>
+<p>如果需要修改CSR里面的值，你可以修改配置文件，然后把配置中由<code>ca.certfile</code>和<code>ca.keyfile</code>这两项指明的文件删除。然后再运行一次 <code>fabric-ca-server init -b ${ADMIN_NAME}:${ADMIN_PWD}</code> 命令。</p>
+<p><code>fabirc-ca-server init</code> 命令生成一个自签名的CA证书，除非使用了 <code>-u &lt;parent-fabric-ca-server-URL&gt;</code> 选项。如果使用了 <code>-u</code> 选项，本服务端CA证书会由父Fabric CA服务端签名。<code>fabirc-ca-server init</code> 命令同时也会在服务端的根目录生成一个默认配置文件<em>fabric-ca-server-config.yaml</em>。</p>
+<p>算法和密钥长度</p>
+<p>可以通过自定义CSR来生成支持ECDSA和RSA的X.509证书和密钥。以下是一个椭圆曲线数字签名算法（ECDSA）的设置，采用的曲线是<code>prime256v1</code>，签名算法是<code>ecdsa-with-SHA256</code>。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">key:</span><br><span class="line">    algo: ecdsa</span><br><span class="line">    size: 256</span><br></pre></td></tr></table></figure>
+<p>对算法和密钥长度的选择取决于你对安全的考量。</p>
+<p>ECDSA提供以下选项：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">size</th>
+<th style="text-align:center">ASN1 OID</th>
+<th style="text-align:center">Signature Algorithm</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">256</td>
+<td style="text-align:center">prime256v1</td>
+<td style="text-align:center">ecdsa-with-SHA256</td>
+</tr>
+<tr>
+<td style="text-align:center">384</td>
+<td style="text-align:center">secp384r1</td>
+<td style="text-align:center">ecdsa-with-SHA384</td>
+</tr>
+<tr>
+<td style="text-align:center">521</td>
+<td style="text-align:center">secp384r1</td>
+<td style="text-align:center">ecdsa-with-SHA521</td>
+</tr>
+</tbody>
+</table>
+<p>RSA提供以下选项：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">size</th>
+<th style="text-align:center">Modulus (bits)</th>
+<th style="text-align:center">Signature Algorithm</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">2048</td>
+<td style="text-align:center">2048</td>
+<td style="text-align:center">sha256WithRSAEncryption</td>
+</tr>
+<tr>
+<td style="text-align:center">4096</td>
+<td style="text-align:center">2096</td>
+<td style="text-align:center">sha512WithRSAEncryption</td>
+</tr>
+</tbody>
+</table>
+<h2 id="启动服务端"><a href="#启动服务端" class="headerlink" title="启动服务端"></a>启动服务端</h2><p>如果服务器之前没有初始化过，它会在第一次启动的时候进行初始化。在初始化的过程中，它会如果ca-cert.pem和ca-key.pem这两个文件不存在，它会生成这两个文件；如果配置文件不存在，它会生成默认配置文件。参考<a href="#初始化服务端">初始化服务端</a>。</p>
+<p>除非Fabric CA服务端配置了使用LDAP，否则它必须配置至少一个预注册引导身份来允许你登录其他身份。<code>-b</code>选项指明引导身份的用户名和密码。</p>
+<p>可以通过<code>-c</code>选项来指明其他的配置文件。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># fabric-ca-server start -c &lt;path-to-config-file&gt; -b &lt;admin&gt;:&lt;adminpw&gt;</span><br></pre></td></tr></table></figure>
+<p>为了使fabric ca server监听<code>https</code>而不是<code>http</code>，配置<code>tls.enabled</code>为<code>true</code>。</p>
+<p>为了限制登录时相同密码的次数，可以在配置文件中设置<code>registry.maxEnrollments</code>为恰当的值。如果你设置这个值为1，Fabric CA服务端只允许一个密码被一个登录ID使用（即不会出现多个ID有相同的密码）。如果你设置这个值为0，Fabric CA服务端不会限制密码的重复使用次数。默认值为0。</p>
+<p>Fabric CA服务端现在应该正在监听7054端口。</p>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/fabric/">fabric</a>
+            
+              <a href="/tags/blockchain/">blockchain</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2019/04/21/channel_update_zh/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">hyperledger fabric channel update 重新配置第一个网络</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2019/04/21/Hyperledger-Fabric-02-Glossary/">
+        <span class="next-text nav-default">Hyperledger Fabric Glossary</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2021
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

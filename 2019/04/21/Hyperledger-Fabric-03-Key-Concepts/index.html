@@ -215,28 +215,23 @@
 <p>一种分布式账本（A Distributed Ledger）</p>
 <p>At the heart of a blockchain network is a distributed ledger that records all the transactions that take place on the network.<br>区块链网络的核心是一个分布式帐本，记录网络上发生的所有交易。</p>
 <p>A blockchain ledger is often described as decentralized because it is replicated across many network participants, each of whom collaborate in its maintenance. We’ll see that decentralization and collaboration are powerful attributes that mirror the way businesses exchange goods and services in the real world.<br>区块链帐本通常被描述为分散管理的，因为它在许多网络参与者之间复制，每个参与者在维护工作中协作。我们将看到，分散化和协作是反映真实世界中企业交换商品和服务的强大属性。</p>
-<p>在这里插入图片描述</p>
 <p>In addition to being decentralized and collaborative, the information recorded to a blockchain is append-only, using cryptographic techniques that guarantee that once a transaction has been added to the ledger it cannot be modified. This property of “immutability” makes it simple to determine the provenance of information because participants can be sure information has not been changed after the fact. It’s why blockchains are sometimes described as systems of proof.<br>除了分散管理和协作外，记录到区块链的信息是只能添加，使用加密技术可以确保事务一旦添加到帐本中，就不能进行修改。这种“不可变性”的特性使得确定信息的来源变得很简单，因为参与者可以确定信息在事后没有被更改。这就是为什么区块链有时被描述为证明系统。</p>
 <p>智能合约 (Smart Contracts)</p>
 <p>To support the consistent update of information — and to enable a whole host of ledger functions (transacting, querying, etc) — a blockchain network uses smart contracts to provide controlled access to the ledger.<br>为了支持信息的一致更新——并支持所有帐本功能(交易、查询等)——区块链网络使用智能合约提供对帐本的受控访问。</p>
-<p>在这里插入图片描述</p>
 <p>Smart contracts are not only a key mechanism for encapsulating information and keeping it simple across the network, they can also be written to allow participants to execute certain aspects of transactions automatically.<br>智能合约不仅是封装信息并使其在网络上保持简单的关键机制，还可以编写它们来允许参与者在某些方面自动执行交易。</p>
 <p>A smart contract can, for example, be written to stipulate the cost of shipping an item where the shipping charge changes depending on how quickly the item arrives. With the terms agreed to by both parties and written to the ledger, the appropriate funds change hands automatically when the item is received.<br>例如，一份智能合约可以规定货物的运输成本，运费取决于货物到达的速度。双方同意条款并记入帐本，当货物收到时，相应的资金自动易手。</p>
 <p>共识 (Consensus)</p>
 <p>The process of keeping the ledger transactions synchronized across the network — to ensure that ledgers update only when transactions are approved by the appropriate participants, and that when ledgers do update, they update with the same transactions in the same order — is called consensus.<br>使帐本交易在网络上保持同步的过程——确保帐本只有在交易得到适当的参与者批准时才进行更新，以及当帐本进行更新时，它们以相同的排序对相同的交易进行更新——称为共识。</p>
-<p>在这里插入图片描述</p>
 <p>You’ll learn a lot more about ledgers, smart contracts and consensus later. For now, it’s enough to think of a blockchain as a shared, replicated transaction system which is updated via smart contracts and kept consistently synchronized through a collaborative process called consensus.<br>稍后你将了解更多关于账本、智能合约和共识的内容。现在，只要将区块链看作是一个共享的、复制的交易系统就足够了，它通过智能合约进行更新，并通过称为共识的协作过程保持一致的同步。</p>
 <p>为什么区块链有用 (Why is a Blockchain useful)?</p>
 <p>当前的记录系统 (Today’s Systems of Record)</p>
 <p>The transactional networks of today are little more than slightly updated versions of networks that have existed since business records have been kept. The members of a business network transact with each other, but they maintain separate records of their transactions. And the things they’re transacting — whether it’s Flemish tapestries in the 16th century or the securities of today — must have their provenance established each time they’re sold to ensure that the business selling an item possesses a chain of title verifying their ownership of it.<br>当前的交易型网络不过是自保留业务记录以来已经存在的网络的略微更新版本。业务网络的成员彼此进行交易，但他们保持各自的交易记录。他们交易的物品——无论是16世纪的佛兰德挂毯还是今天的证券——每次出售时都必须确定其出处，以确保出售物品的企业拥有一系列产权，以证明其所有权。</p>
 <p>What you’re left with is a business network that looks like this:<br>剩下的就是这样一个商业网络：</p>
-<p>在这里插入图片描述</p>
 <p>Modern technology has taken this process from stone tablets and paper folders to hard drives and cloud platforms, but the underlying structure is the same. Unified systems for managing the identity of network participants do not exist, establishing provenance is so laborious it takes days to clear securities transactions (the world volume of which is numbered in the many trillions of dollars), contracts must be signed and executed manually, and every database in the system contains unique information and therefore represents a single point of failure.<br>现代技术已经将这一过程从石板和纸质文件夹转移到硬盘和云平台，但其底层结构是相同的。用统一的系统来管理网络参与者身份并不存在，确立出处是如此费力以致需要很多天去理清证券交易（世界的交易量是数万亿美元)，合同必须手动签署和执行，每个数据库系统中包含独特的信息,因此代表了存在单点故障。</p>
 <p>It’s impossible with today’s fractured approach to information and process sharing to build a system of record that spans a business network, even though the needs of visibility and trust are clear.<br>如今，尽管可见性和信任的需求是明确的，但信息和流程共享的方式是破碎的，要建立一个跨越业务网络的记录系统是不可能的。</p>
 <p>区块链差异 (The Blockchain Difference)</p>
 <p>What if, instead of the rat’s nest of inefficiencies represented by the “modern” system of transactions, business networks had standard methods for establishing identity on the network, executing transactions, and storing data? What if establishing the provenance of an asset could be determined by looking through a list of transactions that, once written, cannot be changed, and can therefore be trusted?<br>如果业务网络不再是“现代”交易系统所代表的低效之巢，而是拥有在网络上建立身份、执行交易和存储数据的标准方法？如果可以通过查看一组交易来确定资产的来源，这些交易一旦被写入，就不能更改，因此可以信任呢?</p>
 <p>That business network would look more like this:<br>这个商业网络看起来更像这样:</p>
-<p>在这里插入图片描述</p>
 <p>This is a blockchain network, wherein every participant has their own replicated copy of the ledger. In addition to ledger information being shared, the processes which update the ledger are also shared. Unlike today’s systems, where a participant’s private programs are used to update their private ledgers, a blockchain system has shared programs to update shared ledgers.<br>这是一个区块链网络，每个参与者都有自己复制的帐本副本。除了帐本信息共享外，账本的更新过程也是共享的。不像当前的系统，参与者的私有程序被用来更新他们的私有账本，区块链系统已经共享了程序来更新共享账本。</p>
 <p>With the ability to coordinate their business network through a shared ledger, blockchain networks can reduce the time, cost, and risk associated with private information and processing while improving trust and visibility.<br>借助通过共享帐本协调业务网络的能力，区块链网络可以减少与私有信息和处理相关的时间、成本和风险，同时提高信任和可见性。</p>
 <p>You now know what blockchain is and why it’s useful. There are a lot of other details that are important, but they all relate to these fundamental ideas of the sharing of information and processes.<br>现在你知道什么是区块链，以及它为什么有用。还有很多其他重要的细节，但它们都与共享信息和流程的基本思想有关。</p>
@@ -385,7 +380,7 @@
      
       2018 - 
     
-    2019
+    2021
 
     <span class="heart">
       <i class="iconfont icon-heart"></i>

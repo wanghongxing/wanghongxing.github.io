@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="PKI 体系概述">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="hongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/2019/11/18/PKI-体系概述/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> PKI 体系概述 - hongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">hongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          PKI 体系概述
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-11-18
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#传统密码学"><span class="toc-text">传统密码学</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#现代密码学加密基元"><span class="toc-text">现代密码学加密基元</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#密钥管理"><span class="toc-text">密钥管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PKI-的本质是把非对称密钥管理标准化"><span class="toc-text">PKI 的本质是把非对称密钥管理标准化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数字证书分类"><span class="toc-text">数字证书分类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基于数字证书可以实现四种基本安全功能"><span class="toc-text">基于数字证书可以实现四种基本安全功能</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <h1 id="传统密码学"><a href="#传统密码学" class="headerlink" title="传统密码学"></a>传统密码学</h1><ul>
+<li>换位加密法；</li>
+<li>替换加密法；</li>
+</ul>
+<h1 id="现代密码学加密基元"><a href="#现代密码学加密基元" class="headerlink" title="现代密码学加密基元"></a>现代密码学加密基元</h1><p>加密基元就是一些基础的密码学算法，通过它们才能够构建更多的密码学算法、协议、应用程序。</p>
+<p><img src="../images/encode-01.png" alt="encode-01"></p>
+<p>说明：</p>
+<ul>
+<li><strong>散列函数（散列（hash）、指纹、消息摘要、摘要算法、杂凑函数）</strong>：把任意长度的输入消息数据转化成固定长度的输出数据的一种密码算法。</li>
+<li><strong>消息验证代码</strong>：验证数据完整性，即数据没有被篡改。</li>
+<li><strong>数字签名</strong>：RSA私钥加密，公钥解密，结合散列函数。验证消息真实性。</li>
+<li><strong>伪随机函数（PRF）</strong>：生成任意数量的伪随机数据。</li>
+<li><strong>RSA</strong>：可以同时用于密钥交换和身份验证（数字签名）。</li>
+<li><strong>DHE_RSA</strong>：DHE 算法：密钥协商，RSA 算法：身份验证（数字签名）。</li>
+<li><strong>ECDHE_RSA</strong>： ECDHE 算法：密钥协商，RSA 算法：身份验证（数字签名）。</li>
+<li><strong>ECDHE_ECDSA</strong>：ECDHE 算法：密钥协商，ECDSA 算法：身份验证（数字签名）。</li>
+</ul>
+<h1 id="密钥管理"><a href="#密钥管理" class="headerlink" title="密钥管理"></a>密钥管理</h1><p><img src="../images/encode-02.png" alt="encode-01"></p>
+<p>密钥管理模式：</p>
+<ul>
+<li>无中心模式；</li>
+<li>有中心模式；</li>
+</ul>
+<h1 id="PKI-的本质是把非对称密钥管理标准化"><a href="#PKI-的本质是把非对称密钥管理标准化" class="headerlink" title="PKI 的本质是把非对称密钥管理标准化"></a>PKI 的本质是把非对称密钥管理标准化</h1><p>PKI 是 Public Key Infrastructure 的缩写，其主要功能是绑定证书持有者的身份和相关的密钥对（通过为公钥及相关的用户身份信息签发数字证书），为用户提供方便的证书申请、证书作废、证书获取、证书状态查询的途径，并利用数字证书及相关的各种服务（证书发布，黑名单发布，时间戳服务等）实现通信中各实体的身份认证、完整性、抗抵赖性和保密性。</p>
+<p><img src="../images/encode-03.png" alt="encode-01"></p>
+<p><strong>数字证书</strong>：解决公钥与用户映射关系问题；</p>
+<p><strong>CA</strong>：解决数字证书签发问题；</p>
+<p><img src="../images/encode-04.png" alt="encode-01"></p>
+<ul>
+<li><strong>KMC</strong>：解决私钥的备份与恢复问题；</li>
+<li><strong>双证书机制</strong>：「签名证书及私钥」只用于签名验签，「加密证书及私钥」只用于加密解密。</li>
+<li><strong>LDAP</strong>：解决数字证书查询和下载的性能问题，避免 CA 中心成为性能瓶颈。</li>
+<li><strong>CRL（证书作废列表）</strong>和 <strong>OSCP（在线证书状态协议）</strong>：方便用户快速获得证书状态。</li>
+<li><strong>RA</strong>：方便证书业务远程办理、方便证书管理流程与应用系统结合。</li>
+<li><strong>电子认证服务机构</strong>：保证 CA 系统在数字证书管理方面的规范性、合规性和安全性。</li>
+</ul>
+<h1 id="数字证书分类"><a href="#数字证书分类" class="headerlink" title="数字证书分类"></a>数字证书分类</h1><p><img src="../images/encode-05.png" alt="encode-01"></p>
+<h2 id="基于数字证书可以实现四种基本安全功能"><a href="#基于数字证书可以实现四种基本安全功能" class="headerlink" title="基于数字证书可以实现四种基本安全功能"></a>基于数字证书可以实现四种基本安全功能</h2><ol>
+<li>身份认证；</li>
+<li>保密性；</li>
+<li>完整性；</li>
+<li>抗抵赖性；</li>
+</ol>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2019/11/20/fabric-source-code-explorer/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">fabric source code explorer fabric 源代码探索</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2019/11/15/Compare-eth-eos-fabric/">
+        <span class="next-text nav-default">Compare eth eos fabric</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2021
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

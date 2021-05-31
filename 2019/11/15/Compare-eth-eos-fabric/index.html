@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="Compare eth eos fabric">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="hongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/2019/11/15/Compare-eth-eos-fabric/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> Compare eth eos fabric - hongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">hongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Compare eth eos fabric
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-11-15
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#BITCOIN"><span class="toc-text">BITCOIN</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#以太坊"><span class="toc-text">以太坊</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Dapps和智能合约"><span class="toc-text">Dapps和智能合约</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是以太坊gas？"><span class="toc-text">什么是以太坊gas？</span></a></li></ol></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#EOS"><span class="toc-text">EOS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#通过DPOS实现可扩展性"><span class="toc-text">通过DPOS实现可扩展性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hyperledger-Fabric"><span class="toc-text">Hyperledger Fabric</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#需要许可的区块链"><span class="toc-text">需要许可的区块链</span></a></li></ol></li>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <p>重点关注和比较的平台是：</p>
+<ul>
+<li>Ethereum</li>
+<li>EOS</li>
+<li>Hyperledger</li>
+<li>Cosmos</li>
+<li>Cardano</li>
+</ul>
+<h1 id="BITCOIN"><a href="#BITCOIN" class="headerlink" title="BITCOIN"></a>BITCOIN</h1><p>POW</p>
+<p>默克树</p>
+<p>比特币虽然是区块链技术的原型，具有非常重要的地位，但由于其技术架构的局限性，如挖矿、非图灵完备等，很难应用到复杂的业务场景中去，但非常适合用于货币发行。</p>
+<h1 id="以太坊"><a href="#以太坊" class="headerlink" title="以太坊"></a>以太坊</h1><p>POW</p>
+<p>状态快照</p>
+<p>EVM</p>
+<p>毫无疑问，以太坊是智能合约平台的老大。像比特币一样，以太坊是一种加密货币，然而，也就是这个地方还有些相似性。因为虽然比特币是“第一代”区块链，但以太坊通过成为有史以来第一个第二代区块链打破了局面。以太坊通过在区块链上引入智能合约，彻底改变了加密世界。</p>
+<p>智能合约首先由Nick Szabo概念化。这个想法很简单，在双方之间有一套自动执行指令，不需要由第三方监督或执行。这个想法似乎很简单，对吧？然而，智能合约使以太坊能够创建一个环境，来自世界各地的开发人员可以创建自己的去中心化应用程序，即Dapps。</p>
+<h4 id="Dapps和智能合约"><a href="#Dapps和智能合约" class="headerlink" title="Dapps和智能合约"></a>Dapps和智能合约</h4><p>Dapp的创造是以太坊最重要的特征之一。除了去中心化之外，还有Dapp必须具备的某些其他功能：</p>
+<ul>
+<li>Dapp的源代码应该对所有人开放。</li>
+<li>应用程序必须有某种代币来为自己提供支持。</li>
+<li>应用程序必须能够生成自己的代币并具有内置的共识机制。</li>
+</ul>
+<p>开发人员使用一种名为Solidity的编程语言，这种语言是一种有目的的简洁，松散类型的语言，其语法与ECMAScript（Javascript）非常相似。除了创建智能合约外，你还必须拥有可以执行它的环境。但是，此执行环境必须具有一些属性。这些属性是：</p>
+<ul>
+<li>确定性。</li>
+<li>可终止。</li>
+<li>隔离的。</li>
+</ul>
+<p>以太坊使用名为以太坊虚拟机（EVM）的虚拟机执行其智能合约。</p>
+<h4 id="什么是以太坊gas？"><a href="#什么是以太坊gas？" class="headerlink" title="什么是以太坊gas？"></a>什么是以太坊gas？</h4><p>还记得智能合约环境的“终止”属性吗？好吧，以太坊智能合约通过利用gas来实现这一特性。在智能合约中编码的每一行都需要一定量的gas才能执行。因此，当开发人员提交智能合约以供执行时，他们还会指定最大gas限制。</p>
+<p>想想gas限制是你在开车前装满汽车的燃料，燃料耗尽的那一刻，汽车停止工作。智能合约中的每一行都需要一定量的gas才能执行。一旦gas耗尽，智能合约就会停止执行。</p>
+<h1 id="EOS"><a href="#EOS" class="headerlink" title="EOS"></a>EOS</h1><p>DPoS</p>
+<p>EOS的目标是成为一个去中心化的操作系统，可以支持工业规模的去中心化应用。EOS是Dan Larimer（BitShares和Steemit的创造者）和Block.One创建的。EOS长达一年最近成为ICO的焦点，这个ICO筹集了创纪录的40亿美元。</p>
+<p>这听起来很神奇，但真正吸引公众想象的是以下两种说法：</p>
+<ul>
+<li>他们声称有能力每秒进行数百万笔交易。</li>
+<li>他们计划完全取消交易费用。</li>
+</ul>
+<h4 id="通过DPOS实现可扩展性"><a href="#通过DPOS实现可扩展性" class="headerlink" title="通过DPOS实现可扩展性"></a>通过DPOS实现可扩展性</h4><p>EOS通过利用委托的股权证明（DPOS）共识机制实现其可扩展性，这是传统的股权证明的变体。理论上它每秒可以进行数百万次交易。</p>
+<h1 id="Hyperledger-Fabric"><a href="#Hyperledger-Fabric" class="headerlink" title="Hyperledger Fabric"></a>Hyperledger Fabric</h1><p>BFT 共识</p>
+<p>状态快照</p>
+<p>docker</p>
+<p>部署麻烦</p>
+<p>扩展性好</p>
+<p>没有分叉</p>
+<p>没有币</p>
+<p>以太坊和EOS都是合适的加密货币，Fabric不是加密货币。</p>
+<p>它的功能与以太坊类似，也是一个分布式的智能合约平台。但与以太坊和比特币不同的是，它从一开始就是一个框架，而不是一个公有链，也没有内置的代币（Token）。</p>
+<p>Fabric还采用了容器技术，将智能合约代码（Chaincode）放在Docker中运行，从而使智能合约可以用几乎任意的高级语言来编写。</p>
+<h4 id="需要许可的区块链"><a href="#需要许可的区块链" class="headerlink" title="需要许可的区块链"></a>需要许可的区块链</h4><p>像以太坊，EOS等平台都是公共区块链，这意味着任何人都可以选择加入网络。但是，对于需要自己的区块链基础设施的大企业来说，这是非常不受欢迎的。</p>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2019/11/18/PKI-体系概述/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">PKI 体系概述</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2019/11/15/fabric-Architecture/">
+        <span class="next-text nav-default">fabric Architecture 体系结构</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2021
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

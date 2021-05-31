@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="Fabric CA Practice探索目录结构">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="hongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/2019/11/12/Fabric-crypto-directory-inspect/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> Fabric CA Practice探索目录结构 - hongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">hongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Fabric CA Practice探索目录结构
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-11-12
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-生成椭圆加密根证书步骤"><span class="toc-text">1. 生成椭圆加密根证书步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-查看"><span class="toc-text">2. 查看</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-加载ca-cert-pem证书-开启ca服务"><span class="toc-text">3. 加载ca-cert.pem证书,开启ca服务.</span></a></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <p>首先生成所有企业的证书。</p>
+<p>进入orderer证书目录</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd crypto-config/ordererOrganizations/my118.com/</span><br><span class="line">tree</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">tree</span><br><span class="line">.</span><br><span class="line">├── ca</span><br><span class="line">│   ├── 6ebc1d3414ee1448013d4f6aef49815177a6ba385cd50a4374ac44b73c8213db_sk</span><br><span class="line">│   └── ca.my118.com-cert.pem</span><br><span class="line">├── msp</span><br><span class="line">│   ├── admincerts</span><br><span class="line">│   │   └── Admin@my118.com-cert.pem</span><br><span class="line">│   ├── cacerts</span><br><span class="line">│   │   └── ca.my118.com-cert.pem</span><br><span class="line">│   └── tlscacerts</span><br><span class="line">│       └── tlsca.my118.com-cert.pem</span><br><span class="line">├── orderers</span><br><span class="line">│   ├── orderer0.my118.com</span><br><span class="line">│   │   ├── msp</span><br><span class="line">│   │   │   ├── admincerts</span><br><span class="line">│   │   │   │   └── Admin@my118.com-cert.pem</span><br><span class="line">│   │   │   ├── cacerts</span><br><span class="line">│   │   │   │   └── ca.my118.com-cert.pem</span><br><span class="line">│   │   │   ├── keystore</span><br><span class="line">│   │   │   │   └── ec64443141408b15f94ab8ea364ce2669d442d33208f14dae7a7c0dab5dbd49d_sk</span><br><span class="line">│   │   │   ├── signcerts</span><br><span class="line">│   │   │   │   └── orderer0.my118.com-cert.pem</span><br><span class="line">│   │   │   └── tlscacerts</span><br><span class="line">│   │   │       └── tlsca.my118.com-cert.pem</span><br><span class="line">│   │   └── tls</span><br><span class="line">│   │       ├── ca.crt</span><br><span class="line">│   │       ├── server.crt</span><br><span class="line">│   │       └── server.key</span><br><span class="line">│   └── orderer1.my118.com</span><br><span class="line">│       ├── msp</span><br><span class="line">│       │   ├── admincerts</span><br><span class="line">│       │   │   └── Admin@my118.com-cert.pem</span><br><span class="line">│       │   ├── cacerts</span><br><span class="line">│       │   │   └── ca.my118.com-cert.pem</span><br><span class="line">│       │   ├── keystore</span><br><span class="line">│       │   │   └── c3e47367fc9d6d16b56eb61c80ed0f59758235c5d6e147425d9e743693e88093_sk</span><br><span class="line">│       │   ├── signcerts</span><br><span class="line">│       │   │   └── orderer1.my118.com-cert.pem</span><br><span class="line">│       │   └── tlscacerts</span><br><span class="line">│       │       └── tlsca.my118.com-cert.pem</span><br><span class="line">│       └── tls</span><br><span class="line">│           ├── ca.crt</span><br><span class="line">│           ├── server.crt</span><br><span class="line">│           └── server.key</span><br><span class="line">├── tlsca</span><br><span class="line">│   ├── 30a9aab0ad7155e3a54d5839f6a80fbe472a0ab8a2103e0b763c5aa1b85d64fd_sk</span><br><span class="line">│   └── tlsca.my118.com-cert.pem</span><br><span class="line">└── users</span><br><span class="line">    └── Admin@my118.com</span><br><span class="line">        ├── msp</span><br><span class="line">        │   ├── admincerts</span><br><span class="line">        │   │   └── Admin@my118.com-cert.pem</span><br><span class="line">        │   ├── cacerts</span><br><span class="line">        │   │   └── ca.my118.com-cert.pem</span><br><span class="line">        │   ├── keystore</span><br><span class="line">        │   │   └── 82b660a4e12a2285c926a11e3356258b161cb3c1c7edb84711b3db968e83d075_sk</span><br><span class="line">        │   ├── signcerts</span><br><span class="line">        │   │   └── Admin@my118.com-cert.pem</span><br><span class="line">        │   └── tlscacerts</span><br><span class="line">        │       └── tlsca.my118.com-cert.pem</span><br><span class="line">        └── tls</span><br><span class="line">            ├── ca.crt</span><br><span class="line">            ├── client.crt</span><br><span class="line">            └── client.key</span><br></pre></td></tr></table></figure>
+<p><strong>查看ca证书</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd ca/</span><br><span class="line">openssl x509 -text -in ca.my118.com-cert.pem</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Certificate:</span><br><span class="line">    Data:</span><br><span class="line">        Version: 3 (0x2)</span><br><span class="line">        Serial Number:</span><br><span class="line">            e8:42:b4:2b:42:c7:6b:5e:ca:04:2c:d1:7e:a1:26:6a</span><br><span class="line">    Signature Algorithm: ecdsa-with-SHA256</span><br><span class="line">        Issuer: C=CN, ST=TJ, L=TJ, O=my118.com, CN=ca.my118.com</span><br><span class="line">        Validity</span><br><span class="line">            Not Before: Nov 11 14:03:00 2019 GMT</span><br><span class="line">            Not After : Nov  8 14:03:00 2029 GMT</span><br><span class="line">        Subject: C=CN, ST=TJ, L=TJ, O=my118.com, CN=ca.my118.com</span><br><span class="line">        Subject Public Key Info:</span><br><span class="line">            Public Key Algorithm: id-ecPublicKey</span><br><span class="line">                Public-Key: (256 bit)</span><br><span class="line">                pub:</span><br><span class="line">                    04:e9:ff:1b:61:6c:83:ef:1e:92:b8:f1:f5:80:25:</span><br><span class="line">                    14:5d:cd:14:dc:3b:37:50:8d:c7:cb:17:42:f7:5b:</span><br><span class="line">                    63:8a:43:9f:ff:6c:92:dd:85:88:f6:2e:a0:7e:1a:</span><br><span class="line">                    28:55:f2:61:7d:c7:f4:46:74:6f:c2:e6:71:d1:c6:</span><br><span class="line">                    c0:96:2d:bc:18</span><br><span class="line">                ASN1 OID: prime256v1</span><br><span class="line">                NIST CURVE: P-256</span><br><span class="line">        X509v3 extensions:</span><br><span class="line">            X509v3 Key Usage: critical</span><br><span class="line">                Digital Signature, Key Encipherment, Certificate Sign, CRL Sign</span><br><span class="line">            X509v3 Extended Key Usage:</span><br><span class="line">                TLS Web Client Authentication, TLS Web Server Authentication</span><br><span class="line">            X509v3 Basic Constraints: critical</span><br><span class="line">                CA:TRUE</span><br><span class="line">            X509v3 Subject Key Identifier:</span><br><span class="line">                6E:BC:1D:34:14:EE:14:48:01:3D:4F:6A:EF:49:81:51:77:A6:BA:38:5C:D5:0A:43:74:AC:44:B7:3C:82:13:DB</span><br><span class="line">    Signature Algorithm: ecdsa-with-SHA256</span><br><span class="line">         30:44:02:20:63:59:6a:ca:f3:2f:0d:80:db:79:a3:a4:21:cd:</span><br><span class="line">         aa:75:98:7f:58:f1:40:f9:a0:44:94:c0:7e:6e:c5:d2:9f:65:</span><br><span class="line">         02:20:00:91:7f:e8:63:77:b6:60:fa:eb:60:bf:74:07:59:82:</span><br><span class="line">         c4:40:ef:05:4c:e9:82:64:1a:26:03:fc:bd:70:ae:6e</span><br></pre></td></tr></table></figure>
+<p>说明ca证书是一个字签名的证书。</p>
+<p><strong>然后查看tlsca证书</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd tlsca</span><br><span class="line">ls</span><br><span class="line">openssl x509 -text -in tlsca.my118.com-cert.pem</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Certificate:</span><br><span class="line">    Data:</span><br><span class="line">        Version: 3 (0x2)</span><br><span class="line">        Serial Number:</span><br><span class="line">            83:bb:13:c5:5f:79:ff:33:85:9f:6a:7b:7c:fc:8b:a7</span><br><span class="line">    Signature Algorithm: ecdsa-with-SHA256</span><br><span class="line">        Issuer: C=CN, ST=TJ, L=TJ, O=my118.com, CN=tlsca.my118.com</span><br><span class="line">        Validity</span><br><span class="line">            Not Before: Nov 11 14:03:00 2019 GMT</span><br><span class="line">            Not After : Nov  8 14:03:00 2029 GMT</span><br><span class="line">        Subject: C=CN, ST=TJ, L=TJ, O=my118.com, CN=tlsca.my118.com</span><br><span class="line">        Subject Public Key Info:</span><br><span class="line">            Public Key Algorithm: id-ecPublicKey</span><br><span class="line">                Public-Key: (256 bit)</span><br><span class="line">                pub:</span><br><span class="line">                    04:97:39:49:f2:19:1e:7c:50:c3:57:d8:e8:87:b4:</span><br><span class="line">                    fb:d2:0a:57:dd:61:21:3e:6d:18:11:71:a9:79:56:</span><br><span class="line">                    0d:37:e6:9d:07:b0:d1:19:74:3e:ee:10:37:8d:97:</span><br><span class="line">                    cf:43:3a:52:70:70:6a:69:ae:cc:9f:56:b4:82:3b:</span><br><span class="line">                    c1:72:a7:77:af</span><br><span class="line">                ASN1 OID: prime256v1</span><br><span class="line">                NIST CURVE: P-256</span><br><span class="line">        X509v3 extensions:</span><br><span class="line">            X509v3 Key Usage: critical</span><br><span class="line">                Digital Signature, Key Encipherment, Certificate Sign, CRL Sign</span><br><span class="line">            X509v3 Extended Key Usage:</span><br><span class="line">                TLS Web Client Authentication, TLS Web Server Authentication</span><br><span class="line">            X509v3 Basic Constraints: critical</span><br><span class="line">                CA:TRUE</span><br><span class="line">            X509v3 Subject Key Identifier:</span><br><span class="line">                30:A9:AA:B0:AD:71:55:E3:A5:4D:58:39:F6:A8:0F:BE:47:2A:0A:B8:A2:10:3E:0B:76:3C:5A:A1:B8:5D:64:FD</span><br><span class="line">    Signature Algorithm: ecdsa-with-SHA256</span><br><span class="line">         30:45:02:21:00:b0:07:80:21:5f:ab:8e:6c:2a:91:66:9f:bb:</span><br><span class="line">         d2:31:77:28:7b:e5:48:69:1a:74:df:de:36:d0:30:cc:aa:9d:</span><br><span class="line">         82:02:20:16:b3:32:9a:3b:b5:23:88:6f:79:94:36:07:15:9c:</span><br><span class="line">         6a:bb:e9:59:bd:fb:61:d0:99:73:ff:62:21:78:86:50:2c</span><br></pre></td></tr></table></figure>
+<p>说明tlsca也是一个自签名的证书。</p>
+<p>查看users目录</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># cd users/Admin@my118.com</span><br><span class="line"># tree</span><br><span class="line">├── msp</span><br><span class="line">│   ├── admincerts</span><br><span class="line">│   │   └── Admin@my118.com-cert.pem</span><br><span class="line">│   ├── cacerts</span><br><span class="line">│   │   └── ca.my118.com-cert.pem</span><br><span class="line">│   ├── keystore</span><br><span class="line">│   │   └── 82b660a4e12a2285c926a11e3356258b161cb3c1c7edb84711b3db968e83d075_sk</span><br><span class="line">│   ├── signcerts</span><br><span class="line">│   │   └── Admin@my118.com-cert.pem</span><br><span class="line">│   └── tlscacerts</span><br><span class="line">│       └── tlsca.my118.com-cert.pem</span><br><span class="line">└── tls</span><br><span class="line">    ├── ca.crt</span><br><span class="line">    ├── client.crt</span><br><span class="line">    └── client.key</span><br></pre></td></tr></table></figure>
+<p>然后进入msp目录，查看所有证书，很明显keystore目录下放的是<a href="mailto:admin@my118.com" target="_blank" rel="noopener">admin@my118.com</a>私钥，cacerts tlscacert目录是orderer组织跟目录的ca和tlsca的证书。</p>
+<p>比对admincerts和signcerts目录，这两个目录内容一致，都是被orderer ca签署的admin证书。</p>
+<pre><code>Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            3f:08:d6:79:f0:56:27:9b:65:ea:0d:14:f8:78:44:91
+    Signature Algorithm: ecdsa-with-SHA256
+        Issuer: C = CN, ST = TJ, L = TJ, O = my118.com, CN = ca.my118.com
+        Validity
+            Not Before: Nov 11 14:03:00 2019 GMT
+            Not After : Nov  8 14:03:00 2029 GMT
+        Subject: C = CN, ST = TJ, L = TJ, CN = Admin@my118.com
+        Subject Public Key Info:
+            Public Key Algorithm: id-ecPublicKey
+                Public-Key: (256 bit)
+                pub:
+                    04:ea:c4:07:f7:e7:52:82:ef:c5:ef:52:0f:02:2b:
+                    c2:94:97:50:47:8c:16:32:89:48:9b:b5:2e:b4:50:
+                    e3:6e:8c:1b:28:86:77:d6:e9:ff:c9:76:98:6e:c1:
+                    92:84:20:ef:b4:ad:08:b4:d2:1c:2e:40:af:b4:d2:
+                    cb:4d:0c:4f:68
+                ASN1 OID: prime256v1
+                NIST CURVE: P-256
+        X509v3 extensions:
+            X509v3 Key Usage: critical
+                Digital Signature
+            X509v3 Basic Constraints: critical
+                CA:FALSE
+            X509v3 Authority Key Identifier:
+                keyid:6E:BC:1D:34:14:EE:14:48:01:3D:4F:6A:EF:49:81:51:77:A6:BA:38:5C:D5:0A:43:74:AC:44:B7:3C:82:13:DB
+
+    Signature Algorithm: ecdsa-with-SHA256
+         30:44:02:20:23:29:f3:7a:dd:d7:b1:c9:46:73:bd:b4:b4:16:
+         cb:3c:5d:d5:d8:e6:85:08:b5:68:38:0f:93:43:77:be:0d:e0:
+         02:20:61:07:93:ca:cc:37:a0:16:ff:bf:82:63:e8:14:11:ac:
+         fc:24:2f:9e:34:81:52:55:47:ac:ac:df:64:7f:49:b7
+</code></pre><p>继续查看Admin的tls目录</p>
+<p>比对后发现，ca.crt就是orderer的tlsca证书。</p>
+<p>client.key是为admin专门生成的tls传输用的私钥。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"># openssl x509 -text -noout -in client.crt</span><br><span class="line">Certificate:</span><br><span class="line">    Data:</span><br><span class="line">        Version: 3 (0x2)</span><br><span class="line">        Serial Number:</span><br><span class="line">            d9:32:95:b1:62:4e:e8:43:da:87:83:f2:23:c4:de:06</span><br><span class="line">    Signature Algorithm: ecdsa-with-SHA256</span><br><span class="line">        Issuer: C = CN, ST = TJ, L = TJ, O = my118.com, CN = tlsca.my118.com</span><br><span class="line">        Validity</span><br><span class="line">            Not Before: Nov 11 14:03:00 2019 GMT</span><br><span class="line">            Not After : Nov  8 14:03:00 2029 GMT</span><br><span class="line">        Subject: C = CN, ST = TJ, L = TJ, CN = Admin@my118.com</span><br><span class="line">        Subject Public Key Info:</span><br><span class="line">            Public Key Algorithm: id-ecPublicKey</span><br><span class="line">                Public-Key: (256 bit)</span><br><span class="line">                pub:</span><br><span class="line">                    04:c6:c5:65:1e:62:6a:c5:53:ee:c5:a3:c8:6a:cd:</span><br><span class="line">                    40:f7:00:30:7d:e8:e4:8c:88:b8:4b:05:b2:e2:3c:</span><br><span class="line">                    82:32:09:19:34:f2:40:ba:a8:30:95:ff:b5:89:8b:</span><br><span class="line">                    0c:e2:f3:c0:3b:0f:58:b8:46:74:a9:2b:d6:77:5c:</span><br><span class="line">                    24:41:a2:74:d6</span><br><span class="line">                ASN1 OID: prime256v1</span><br><span class="line">                NIST CURVE: P-256</span><br><span class="line">        X509v3 extensions:</span><br><span class="line">            X509v3 Key Usage: critical</span><br><span class="line">                Digital Signature, Key Encipherment</span><br><span class="line">            X509v3 Extended Key Usage:</span><br><span class="line">                TLS Web Server Authentication, TLS Web Client Authentication</span><br><span class="line">            X509v3 Basic Constraints: critical</span><br><span class="line">                CA:FALSE</span><br><span class="line">            X509v3 Authority Key Identifier:</span><br><span class="line">                keyid:30:A9:AA:B0:AD:71:55:E3:A5:4D:58:39:F6:A8:0F:BE:47:2A:0A:B8:A2:10:3E:0B:76:3C:5A:A1:B8:5D:64:FD</span><br><span class="line"></span><br><span class="line">    Signature Algorithm: ecdsa-with-SHA256</span><br><span class="line">         30:45:02:21:00:cb:73:df:c5:8e:23:4b:30:bb:ab:43:28:d4:</span><br><span class="line">         4e:ec:26:4e:e8:38:a3:e2:03:a8:13:74:58:60:95:08:28:96:</span><br><span class="line">         82:02:20:64:26:0c:1d:26:1a:a8:36:3d:6d:44:1c:01:0b:59:</span><br><span class="line">         7e:ce:0a:c5:64:93:3a:06:c0:d7:13:7f:f6:ad:8f:f7:e4</span><br></pre></td></tr></table></figure>
+<p>说明client.crt是用orderer tlsCA签署的client证书，就是为了tls使用的。</p>
+<p>查看msp目录，比对后发现cacerts  是复制ca目录，然后删除了私钥；</p>
+<p>tlscacerts是复制了 tlsca目录，然后删除了私钥；</p>
+<p>admincerts目录下放了Admin被CA签署的证书；<strong>这个干啥不知道</strong></p>
+<p>估计这三个个目录是要放到所有orderers的子目录中发放的，所以要删除私钥。</p>
+<hr>
+<p><strong>每个组织的 msp 目录的作用</strong></p>
+<p>经过查看configtxgen 过程，发现在configtx.yaml文件中，每个组织的msp目录都有配置</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="meta">&amp;OrdererOrg</span></span><br><span class="line">    <span class="comment"># DefaultOrg defines the organization which is used in the sampleconfig</span></span><br><span class="line">    <span class="comment"># of the fabric.git development environment</span></span><br><span class="line"><span class="attr">    Name:</span> <span class="string">OrdererOrg</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ID to load the MSP definition as</span></span><br><span class="line"><span class="attr">    ID:</span> <span class="string">OrdererMSP</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># MSPDir is the filesystem path which contains the MSP configuration</span></span><br><span class="line"><span class="attr">    MSPDir:</span> <span class="string">crypto-config/ordererOrganizations/my118.com/msp</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="meta">&amp;Org1</span></span><br><span class="line"><span class="attr">    Name:</span> <span class="string">Org1MSP</span></span><br><span class="line"><span class="attr">    ID:</span> <span class="string">Org1MSP</span></span><br><span class="line"><span class="attr">    MSPDir:</span> <span class="string">crypto-config/peerOrganizations/my118.com/msp</span></span><br><span class="line"><span class="attr">    AnchorPeers:</span></span><br><span class="line"><span class="attr">        - Host:</span> <span class="string">peer0.my118.com</span></span><br><span class="line"><span class="attr">          Port:</span> <span class="number">6051</span></span><br><span class="line"><span class="attr">    Policies:</span></span><br></pre></td></tr></table></figure>
+<p>然后在生成网络创世块的时候会读取每个组织的msp。</p>
+<p>其中对于msp子目录的名称规定如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"> cacerts              = &quot;cacerts&quot;</span><br><span class="line">admincerts           = &quot;admincerts&quot;</span><br><span class="line">signcerts            = &quot;signcerts&quot;</span><br><span class="line">keystore             = &quot;keystore&quot;</span><br><span class="line">intermediatecerts    = &quot;intermediatecerts&quot;</span><br><span class="line">crlsfolder           = &quot;crls&quot;</span><br><span class="line">configfilename       = &quot;config.yaml&quot;</span><br><span class="line">tlscacerts           = &quot;tlscacerts&quot;</span><br><span class="line">tlsintermediatecerts = &quot;tlsintermediatecerts&quot;</span><br></pre></td></tr></table></figure>
+<p>代码中对于cacerts 、admincert要求是必须有的，没有就提示出错。</p>
+<p>在生成<strong>网络</strong>创世块的时候需要所有 Consortiums 组织的  msp。网络创世块也是用来创建一个特殊的系统通道，系统通道名字可以自定义。</p>
+<p><del>在生成<strong>通道</strong>创世块的时候需要所有 Consortiums 组织的  msp。</del>这个通道块里没有组织签名。</p>
+<p>每个组织的msp其实就是组织的ca 自签名的公钥、tlsca自签名的公钥、被ca签名的管理员的公钥。这三个公钥应该是放到创世块中，当组织加入的时候来验证组织的合法性。</p>
+<p><strong>这样就可以得出一个结论：</strong></p>
+<p>每个组织的 msp 目录，需要发给整个网络的技术运维人员，技术人员用来在生成通道的时候做背书用。</p>
+<hr>
+<p><strong>每个orderer的目录</strong></p>
+<p>查看orderer0目录：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># cd orderer0.my118.com/</span><br><span class="line"># tree</span><br><span class="line">.</span><br><span class="line">├── msp</span><br><span class="line">│   ├── admincerts</span><br><span class="line">│   │   └── Admin@my118.com-cert.pem</span><br><span class="line">│   ├── cacerts</span><br><span class="line">│   │   └── ca.my118.com-cert.pem</span><br><span class="line">│   ├── keystore</span><br><span class="line">│   │   └── ec64443141408b15f94ab8ea364ce2669d442d33208f14dae7a7c0dab5dbd49d_sk</span><br><span class="line">│   ├── signcerts</span><br><span class="line">│   │   └── orderer0.my118.com-cert.pem</span><br><span class="line">│   └── tlscacerts</span><br><span class="line">│       └── tlsca.my118.com-cert.pem</span><br><span class="line">└── tls</span><br><span class="line">    ├── ca.crt</span><br><span class="line">    ├── server.crt</span><br><span class="line">    └── server.key</span><br></pre></td></tr></table></figure>
+<p>比对后发现 ：</p>
+<p><strong>msp目录下</strong></p>
+<p>cacerts  tlscacerts admincerts这三个目录就是父目录下msp目录的内容</p>
+<p>keystore目录是orderer0的私钥；</p>
+<p>signcerts/orderer0.my118.com-cert.pem 是orderer CA签署的orderer0的证书。</p>
+<p>tls 目录下</p>
+<p>ca.crt是 orderer的tls CA；</p>
+<p>server.key是orderer0的tls 私钥；</p>
+<p>server.crt是orderer0的tlsCA签署的orderer0的 tls 证书</p>
+<hr>
+<p>下面再看看peer节点，选择进入ccic,</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># cd crypto-config/peerOrganizations/ccic.com</span><br><span class="line"></span><br><span class="line"># tree</span><br><span class="line">.</span><br><span class="line">├── ca</span><br><span class="line">│   ├── 7c77020ac73d6089e94a7b86e0fc3e786284f88069b5fa074a69b2751cc68131_sk</span><br><span class="line">│   └── ca.ccic.com-cert.pem</span><br><span class="line">├── msp</span><br><span class="line">│   ├── admincerts</span><br><span class="line">│   │   └── Admin@ccic.com-cert.pem</span><br><span class="line">│   ├── cacerts</span><br><span class="line">│   │   └── ca.ccic.com-cert.pem</span><br><span class="line">│   ├── config.yaml</span><br><span class="line">│   └── tlscacerts</span><br><span class="line">│       └── tlsca.ccic.com-cert.pem</span><br><span class="line">├── peers</span><br><span class="line">│   ├── peer0.ccic.com</span><br><span class="line">│   │   ├── msp</span><br><span class="line">│   │   │   ├── admincerts</span><br><span class="line">│   │   │   │   └── Admin@ccic.com-cert.pem</span><br><span class="line">│   │   │   ├── cacerts</span><br><span class="line">│   │   │   │   └── ca.ccic.com-cert.pem</span><br><span class="line">│   │   │   ├── config.yaml</span><br><span class="line">│   │   │   ├── keystore</span><br><span class="line">│   │   │   │   └── 0d5ba722de757d9e8f818d9522139f0d1a185c70b720235f5e9ffea8d7ee7f96_sk</span><br><span class="line">│   │   │   ├── signcerts</span><br><span class="line">│   │   │   │   └── peer0.ccic.com-cert.pem</span><br><span class="line">│   │   │   └── tlscacerts</span><br><span class="line">│   │   │       └── tlsca.ccic.com-cert.pem</span><br><span class="line">│   │   └── tls</span><br><span class="line">│   │       ├── ca.crt</span><br><span class="line">│   │       ├── server.crt</span><br><span class="line">│   │       └── server.key</span><br><span class="line">│   └── peer1.ccic.com</span><br><span class="line">│       ├── msp</span><br><span class="line">│       │   ├── admincerts</span><br><span class="line">│       │   │   └── Admin@ccic.com-cert.pem</span><br><span class="line">│       │   ├── cacerts</span><br><span class="line">│       │   │   └── ca.ccic.com-cert.pem</span><br><span class="line">│       │   ├── config.yaml</span><br><span class="line">│       │   ├── keystore</span><br><span class="line">│       │   │   └── f47185eb28389df59137475196b000518af58849a9bd914b863ee21a7721d594_sk</span><br><span class="line">│       │   ├── signcerts</span><br><span class="line">│       │   │   └── peer1.ccic.com-cert.pem</span><br><span class="line">│       │   └── tlscacerts</span><br><span class="line">│       │       └── tlsca.ccic.com-cert.pem</span><br><span class="line">│       └── tls</span><br><span class="line">│           ├── ca.crt</span><br><span class="line">│           ├── server.crt</span><br><span class="line">│           └── server.key</span><br><span class="line">├── tlsca</span><br><span class="line">│   ├── ad5a10d6fbee212b2388804e995fa412f4e79c4d6fe210c43a0833db55f8374a_sk</span><br><span class="line">│   └── tlsca.ccic.com-cert.pem</span><br><span class="line">└── users</span><br><span class="line">    ├── Admin@ccic.com</span><br><span class="line">    │   ├── msp</span><br><span class="line">    │   │   ├── admincerts</span><br><span class="line">    │   │   │   └── Admin@ccic.com-cert.pem</span><br><span class="line">    │   │   ├── cacerts</span><br><span class="line">    │   │   │   └── ca.ccic.com-cert.pem</span><br><span class="line">    │   │   ├── keystore</span><br><span class="line">    │   │   │   └── 3d7688039db187b9f332e6fa77b5a6ead75ff2d4324de2023331c5f39d425ff9_sk</span><br><span class="line">    │   │   ├── signcerts</span><br><span class="line">    │   │   │   └── Admin@ccic.com-cert.pem</span><br><span class="line">    │   │   └── tlscacerts</span><br><span class="line">    │   │       └── tlsca.ccic.com-cert.pem</span><br><span class="line">    │   └── tls</span><br><span class="line">    │       ├── ca.crt</span><br><span class="line">    │       ├── client.crt</span><br><span class="line">    │       └── client.key</span><br><span class="line">    ├── User1@ccic.com</span><br><span class="line">    │   ├── msp</span><br><span class="line">    │   │   ├── admincerts</span><br><span class="line">    │   │   │   └── User1@ccic.com-cert.pem</span><br><span class="line">    │   │   ├── cacerts</span><br><span class="line">    │   │   │   └── ca.ccic.com-cert.pem</span><br><span class="line">    │   │   ├── keystore</span><br><span class="line">    │   │   │   └── 5757fb7fce606a34111442ca18afe657c353699c643e54f68127e86f4f894bcb_sk</span><br><span class="line">    │   │   ├── signcerts</span><br><span class="line">    │   │   │   └── User1@ccic.com-cert.pem</span><br><span class="line">    │   │   └── tlscacerts</span><br><span class="line">    │   │       └── tlsca.ccic.com-cert.pem</span><br><span class="line">    │   └── tls</span><br><span class="line">    │       ├── ca.crt</span><br><span class="line">    │       ├── client.crt</span><br><span class="line">    │       └── client.key</span><br><span class="line">    └── User2@ccic.com</span><br><span class="line">        ├── msp</span><br><span class="line">        │   ├── admincerts</span><br><span class="line">        │   │   └── User2@ccic.com-cert.pem</span><br><span class="line">        │   ├── cacerts</span><br><span class="line">        │   │   └── ca.ccic.com-cert.pem</span><br><span class="line">        │   ├── keystore</span><br><span class="line">        │   │   └── bd5079dde34fdc0d679cc2baf409a0f6398587ecbbeb5e856a80b15019ada0eb_sk</span><br><span class="line">        │   ├── signcerts</span><br><span class="line">        │   │   └── User2@ccic.com-cert.pem</span><br><span class="line">        │   └── tlscacerts</span><br><span class="line">        │       └── tlsca.ccic.com-cert.pem</span><br><span class="line">        └── tls</span><br><span class="line">            ├── ca.crt</span><br><span class="line">            ├── client.crt</span><br><span class="line">            └── client.key</span><br></pre></td></tr></table></figure>
+<p>ca、tlsca目录和orderer一样，都是自签名的CA证书</p>
+<p>users/Admin User1 User2目录里面内容都跟orderer目录下一致</p>
+<p>msp 目录比orderer下的msp多了一个config.yaml，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">NodeOUs:</span><br><span class="line">  Enable: true</span><br><span class="line">  ClientOUIdentifier:</span><br><span class="line">    Certificate: cacerts/ca.ccic.com-cert.pem</span><br><span class="line">    OrganizationalUnitIdentifier: client</span><br><span class="line">  PeerOUIdentifier:</span><br><span class="line">    Certificate: cacerts/ca.ccic.com-cert.pem</span><br><span class="line">    OrganizationalUnitIdentifier: peer</span><br></pre></td></tr></table></figure>
+<hr>
+<p>正式生产环境联盟创建的步骤：</p>
+<ol>
+<li>每个组织生成自己的CA证书、tlsCA证书、admin证书，发给中心技术人员；</li>
+<li>中心技术人员把每个组织的证书名称放到单独的msp目录；</li>
+<li>中心技术人员创建 configtx.yaml，保证每个组织的msp目录设置正确；</li>
+<li>中心技术人员生成网络创世块及通道创世块，稍后发送给每个组织</li>
+<li><p>中心技术人员创建中心节点的网络环境：    </p>
+<ul>
+<li><p>创建orderer节点    </p>
+</li>
+<li><p>创建kafka节点    </p>
+</li>
+<li><p>创建zookeeper节点</p>
+</li>
+</ul>
+</li>
+<li>中心技术人员把orderer节点的域名、ip、端口号等配置信息及创世块发给每个组织</li>
+<li>每个组织创建自己的peer节点，并把orderer节点的域名映射加入peer节点中</li>
+<li>组织peer节点启动后，使用网路创世块及通道创世块来加入网络和通道</li>
+</ol>
+<hr>
+<p>联盟成员组织生成自己证书的过程</p>
+<ol>
+<li>已有现成 CA 的，可以是已有的 CA；没有的，需要生成新的 CA，包括：私钥、自签名证书（公钥）；私钥要单独安全的保存；</li>
+<li>生成自有tlsCA，包括：私钥、自签名证书（公钥）；私钥要单独安全的保存；</li>
+<li>生成管理员私钥，然后使用 CA 签署成管理员证书；私钥要单独安全的保存；</li>
+<li>把以上三个已经签名的证书作为组织的msp目录：cacerts、 tlscacerts 、admincerts目录，后缀名为.pem；这个msp就可以发给联盟中心技术人员。</li>
+<li>为所有将要新建的 peer 节点新建证书；为peer节点生成私钥，用ca证书签署后放入peer节点的msp/signcerts目录；</li>
+<li>为每个peer节点生成tls私钥，用tlsca签署后放入peer节点的tls目录，server.crt是签署后的证书 ,server.key是私钥， ca.crt是组织的ca公钥。</li>
+<li>每个peer节点新建config.yaml文件，在里面制定 ClientOUIdentifier PeerOUIdentifier</li>
+<li>为所有要使用区块链的用户席间证书；每个用户生成自己的私钥，用组织ca签署后放入用户的msp/signcerts目录</li>
+<li>为每个用户生成tls私钥，用tlsca签署后放入用户的tls目录，client.crt是签署后的证书 ,client.key是私钥， ca.crt是组织的ca公钥。</li>
+</ol>
+<hr>
+<p>联盟成员生成证书的方法：</p>
+<h3 id="1-生成椭圆加密根证书步骤"><a href="#1-生成椭圆加密根证书步骤" class="headerlink" title="1. 生成椭圆加密根证书步骤"></a>1. 生成椭圆加密根证书步骤</h3><ul>
+<li>生成私钥</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl ecparam -name prime256v1 -genkey -out ca-key_.pem</span><br></pre></td></tr></table></figure>
+<ul>
+<li>私钥转换成pk8格式</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl pkcs8 -inform PEM -outform PEM -topk8 -nocrypt -<span class="keyword">in</span> ca-key_.pem -out ca-key.pem</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建生成证书请求</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl req -config openssl.cnf -new -key ca-key.pem -out cert-req.csr</span><br></pre></td></tr></table></figure>
+<ul>
+<li>生成自签名证书</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">openssl x509 -req   -extfile openssl.cnf -extensions usr_cert  -in cert-req.csr -out ca-cert.pem -signkey ca-key.pem  -CAcreateserial -days 3650</span><br></pre></td></tr></table></figure>
+<h3 id="2-查看"><a href="#2-查看" class="headerlink" title="2. 查看"></a>2. 查看</h3><ul>
+<li>查看cert-req.csr</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl req -<span class="keyword">in</span> cert-req.csr -text</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看ca-cert.pem</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl x509 -<span class="keyword">in</span> ca-cert.pem -text -noout</span><br></pre></td></tr></table></figure>
+<h3 id="3-加载ca-cert-pem证书-开启ca服务"><a href="#3-加载ca-cert-pem证书-开启ca服务" class="headerlink" title="3. 加载ca-cert.pem证书,开启ca服务."></a>3. 加载ca-cert.pem证书,开启ca服务.</h3><ul>
+<li>导入ca-cert.pem证书和ca-key.pem秘钥</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mv ca-cert.pem ca-key.pem <span class="variable">$GOPATH</span>/src/github.com/hyperledger/fabric-ca/docker/server/fabric-ca-server</span><br></pre></td></tr></table></figure>
+<ul>
+<li>开启ca服务</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="variable">$GOPATH</span>/src/github.com/hyperledger/fabric-ca/docker/server/</span><br><span class="line">docker-compose up</span><br></pre></td></tr></table></figure>
+<ul>
+<li>客户端申请证书</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">fabric-ca-client enroll -u http://admin:adminpw@localhost:7054</span><br></pre></td></tr></table></figure>
+<p>openssl.conf</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[ req ]</span><br><span class="line">default_md              = sha256</span><br><span class="line">default_keyfile         = ca-key.pem</span><br><span class="line">distinguished_name      = req_distinguished_name</span><br><span class="line">prompt = no</span><br><span class="line">x509_extensions = v3_ca</span><br><span class="line">req_extensions  = v3_req</span><br><span class="line">x509_extensions = usr_cert</span><br><span class="line">[ req_distinguished_name ]</span><br><span class="line">C=US</span><br><span class="line">ST=North Carolina</span><br><span class="line">L=Raleigh</span><br><span class="line">O=Example</span><br><span class="line">CN=Example.com</span><br><span class="line">[ usr_cert ]</span><br><span class="line">basicConstraints=critical,CA:true,pathlen:1</span><br><span class="line">keyUsage=critical, keyCertSign,cRLSign</span><br><span class="line">subjectKeyIdentifier=hash</span><br><span class="line">[ v3_req ]</span><br><span class="line">basicConstraints=critical,CA:true,pathlen:1</span><br><span class="line">keyUsage=critical, keyCertSign,cRLSign</span><br><span class="line">subjectKeyIdentifier=hash</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2019/11/15/fabric-Architecture/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">fabric Architecture 体系结构</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2019/11/11/Fabric-production-env-make-msp-and-tls-by-CA/">
+        <span class="next-text nav-default">Fabric production env make msp and tls by CA </span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2021
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

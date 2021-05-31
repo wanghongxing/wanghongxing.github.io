@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="hongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/page/3/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> hongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">hongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <section id="posts" class="posts">
+    
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2019/04/21/Hyperledger-Fabric-02-Glossary/">Hyperledger Fabric Glossary</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-04-21
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>Terminology is important, so that all Fabric users and developers agree on what we mean by each specific term. What is chaincode, for example. So we’ll point you there, whenever you want to reassure yourself. Of course, feel free to read the entire thing in one sitting if you like, it’s pretty enlightening!</p>
+<p>专业术语很重要，所以所有”Fabric”项目用户和开发人员同意我们所说的每个特定术语的含义，举个例子：如什么是链码，因此我们将引导你到术语说明，让你随时可以消除对术语理解的疑虑，当然，如果你愿意的话可以自由的阅读整个文档，非常有启发！</p>
+<p>Anchor Peer - 锚节点</p>
+<p>A peer node on a channel that all other peers can discover and communicate with. Each Member on a channel has an anchor peer (or multiple anchor peers to prevent single point of failure), allowing for peers belonging to different Members to discover all existing peers on a channel.</p>
+<p>锚节点是通道中能被所有对等节点探测、并能与之进行通信的一种对等节点。通道中的每个成员都有一个（或多个，以防单点故障）锚节点，允许属于不同成员身份的节点来发现通道中存在的其它节点。</p>
+<p>Block - 区块</p>
+<p>An ordered set of transactions that is cryptographically linked to the preceding block(s) on a channel.</p>
+<p>在一个通道上，（区块是）一组有序交易的集合。区块往往通过密码学手段（Hash 值）连接到前导区块。</p>
+<p>Zhu Jiang：区块是一组有序的交易集合，在通道中经过加密（哈希加密）后与前序区块连接。</p>
+<p>Chain - 链</p>
+<p>The ledger’s chain is a transaction log structured as hash-linked blocks of transactions. Peers receive blocks of transactions from the ordering service, mark the block’s transactions as valid or invalid based on endorsement policies and concurrency violations, and append the block to the hash chain on the peer’s file system.</p>
+<p>chain就是block之间以hash连接为结构的交易日志。peer从order service接收交易block，并根据背书策略和并发冲突标记block上的交易是否有效，然后将该block追加到peer文件系统中的hash chain上。</p>
+<p>Zhu Jiang:账本的链是一个交易区块经过“哈希连接”结构化的交易日志。对等节点从排序服务收到交易区块，基于背书策略和并发冲突来标注区块的交易为有效或者无效状态，并且将区块追加到对等节点文件系统的哈希链中。</p>
+<p>Chaincode - 链码</p>
+<p>Chaincode is software, running on a ledger, to encode assets and the transaction instructions (business logic) for modifying the assets.</p>
+<p>链码是一个运行在账本上的软件，它可以对资产进行编码，其中的交易指令（或者叫业务逻辑）也可以用来修改资产。</p>
+<p>Channel - 通道</p>
+<p>A channel is a private blockchain overlay on a Fabric network, allowing for data isolation and confidentiality. A channel-specific ledger is shared across the peers in the channel, and transacting parties must be properly authenticated to a channel in order to interact with it. Channels are defined by a Configuration-Block.</p>
+<p>通道是构建在“Fabric”网络上的私有区块链，实现了数据的隔离和保密。通道特定的账本在通道中是与所有对等节点共享的，并且交易方必须通过该通道的正确验证才能与账本进行交互。通道是由一个“配置块”来定义的。</p>
+<p>Commitment - 提交</p>
+<p>Each Peer on a channel validates ordered blocks of transactions and then commits (writes-appends) the blocks to its replica of the channel Ledger. Peers also mark each transaction in each block as valid or invalid.</p>
+<p>一个通道中的每个对等节点都会验证交易的有序区块，然后将区块提交（写或追加）至该通道上账本的各个副本。对等节点也会标记每个区块中的每笔交易的状态是有效或者无效。</p>
+<p>Concurrency Control Version Check - 并发控制版本检查（CCVC）</p>
+<p>Concurrency Control Version Check is a method of keeping state in sync across peers on a channel. Peers execute transactions in parallel, and before commitment to the ledger, peers check that the data read at execution time has not changed. If the data read for the transaction has changed between execution time and commitment time, then a Concurrency Control Version Check violation has occurred, and the transaction is marked as invalid on the ledger and values are not updated in the state database.</p>
+<p>CCVC是保持通道中各对等节点间状态同步的一种方法。对等节点并行的执行交易，在交易提交至账本之前，对等节点会检查交易在执行期间读到的数据是否被修改。如果读取的数据在执行和提交之间被改变，就会引发CCVC冲突，该交易就会在账本中被标记为无效，而且值不会更新到状态数据库中。</p>
+<p>Configuration Block - 配置区块</p>
+<p>Contains the configuration data defining members and policies for a system chain (ordering service) or channel. Any configuration modifications to a channel or overall network (e.g. a member leaving or joining) will result in a new configuration block being appended to the appropriate chain. This block will contain the contents of the genesis block, plus the delta.</p>
+<p>包含为系统链（排序服务）或通道定义成员和策略的配置数据。对某个通道或整个网络的配置修改（比如，成员离开或加入）都将导致生成一个新的配置区块并追加到适当的链上。这个配置区块会包含创始区块的内容加上增量。</p>
+<p>Consensus - 共识</p>
+<p>A broader term overarching the entire transactional flow, which serves to generate an agreement on the order and to confirm the correctness of the set of transactions constituting a block.</p>
+<p>共识是贯穿整个交易流程的广义术语，其用于产生一个对于排序的同意书和确认构成区块的交易集的正确性。</p>
+<p>Current State - 当前状态</p>
+<p>The current state of the ledger represents the latest values for all keys ever included in its chain transaction log. Peers commit the latest values to ledger current state for each valid transaction included in a processed block. Since current state represents all latest key values known to the channel, it is sometimes referred to as World State. Chaincode executes transaction proposals against current state data.</p>
+<p>ledger的current state表示其chain交易log中所有key的最新值。peer会将处理过的block中的每个交易对应的修改value提交到ledger的current state，由于current state表示channel所知的所有最新的k-v，所以current state也被称为World State。Chaincode执行交易proposal就是针对的current state。</p>
+<p>Dynamic Membership - 动态成员</p>
+<p>Fabric supports the addition-removal of members, peers, and ordering service nodes, without compromising the operationality of the overall network. Dynamic membership is critical when business relationships adjust and entities need to be added-removed for various reasons.</p>
+<p>Fabric支持动态添加-移除members、peers和ordering服务节点，而不会影响整个网络的操作性。当业务关系调整或因各种原因需添加-移除实体时，Dynamic Membership至关重要。</p>
+<p>Endorsement - 背书</p>
+<p>Refers to the process where specific peer nodes execute a transaction and return a YES-NO response to the client application that generated the transaction proposal. Chaincode applications have corresponding endorsement policies, in which the endorsing peers are specified.</p>
+<p>Endorsement 是指一个peer执行一个交易并返回YES-NO给生成交易proposal的client app 的过程。chaincode具有相应的endorsement policies，其中指定了endorsing peer。</p>
+<p>Endorsement policy - 背书策略</p>
+<p>Defines the peer nodes on a channel that must execute transactions attached to a specific chaincode application, and the required combination of responses (endorsements). A policy could require that a transaction be endorsed by a minimum number of endorsing peers, a minimum percentage of endorsing peers, or by all endorsing peers that are assigned to a specific chaincode application. Policies can be curated based on the application and the desired level of resilience against misbehavior (deliberate or not) by the endorsing peers. A distinct endorsement policy for install and instantiate transactions is also required.</p>
+<p>Endorsement policy定义了依赖于特定chaincode执行交易的channel上的peer和响应结果（endorsements）的必要组合条件（即返回Yes或No的条件）。Endorsement policy可指定对于某一chaincode，可以对交易背书的最小背书节点数或者最小背书节点百分比。背书策略由背书节点基于应用程序和对抵御不良行为的期望水平来组织管理。在install和instantiate Chaincode（deploy tx）时需要指定背书策略。</p>
+<p>Fabric-ca</p>
+<p>Fabric-ca is the default Certificate Authority component, which issues PKI-based certificates to network member organizations and their users. The CA issues one root certificate (rootCert) to each member, one enrollment certificate (eCert) to each authorized user, and a number of transaction certificates (tCerts) for each eCert.</p>
+<p>Fabric-ca是默认的证书管理组件，它向网络成员及其用户颁发基于PKI的证书。CA为每个成员颁发一个根证书（rootCert），为每个授权用户颁发一个注册证书（eCert），为每个注册证书颁发大量交易证书（tCerts）。</p>
+<p>Genesis Block - 初始区块</p>
+<p>The configuration block that initializes a blockchain network or channel, and also serves as the first block on a chain.</p>
+<p>Genesis Block是初始化区块链网络或channel的配置区块，也是链上的第一个区块。</p>
+<p>Gossip Protocol - Gossip协议</p>
+<p>The gossip data dissemination protocol performs three functions: 1) manages peer discovery and channel membership; 2) disseminates ledger data across all peers on the channel; 3) syncs ledger state across all peers on the channel. Refer to the Gossip topic for more details.</p>
+<p>Gossip数据传输协议有三项功能：1）管理peer发现和channel成员；2）channel上的所有peer间广播账本数据；3）channel上的所有peer间同步账本数据。</p>
+<p>Initialize - 初始化</p>
+<p>A method to initialize a chaincode application.</p>
+<p>一个初始化chaincode程序的方法。</p>
+<p>Install - 安装</p>
+<p>The process of placing a chaincode on a peer’s file system.</p>
+<p>将chaincode放到peer的文件系统的过程。（译注：即将ChaincodeDeploymentSpec信息存到chaincodeInstallPath-chaincodeName.chainVersion文件中）</p>
+<p>Instantiate - 实例化</p>
+<p>The process of starting a chaincode container.</p>
+<p>启动chaincode容器的过程。（译注：在lccc中将ChaincodeData保存到state中，然后deploy Chaincode并执行Init方法）</p>
+<p>Invoke - 调用</p>
+<p>Used to call chaincode functions. Invocations are captured as transaction proposals, which then pass through a modular flow of endorsement, ordering, validation, committal. The structure of invoke is a function and an array of arguments.</p>
+<p>用于调用chaincode内的函数。Chaincode invoke就是一个交易proposal，然后执行模块化的流程（背书、共识、 验证、 提交）。invoke的结构就是一个函数和一个参数数组。</p>
+<p>Leading Peer - 主导节点</p>
+<p>Each Member can own multiple peers on each channel that it subscribes to. One of these peers is serves as the leading peer for the channel, in order to communicate with the network ordering service on behalf of the member. The ordering service “delivers” blocks to the leading peer(s) on a channel, who then distribute them to other peers within the same member cluster.</p>
+<p>每一个Member在其订阅的channel上可以拥有多个peer，其中一个peer会作为channel的leading peer代表该Member与ordering service通信。ordering service将block传递给leading peer，该peer再将此block分发给同一member下的其他peer。</p>
+<p>Ledger - 账本</p>
+<p>A ledger is a channel’s chain and current state data which is maintained by each peer on the channel.</p>
+<p>Ledger是个channel的chain和由channel中每个peer维护的world state。（这个解释有点怪）</p>
+<p>Member - 成员</p>
+<p>A legally separate entity that owns a unique root certificate for the network. Network components such as peer nodes and application clients will be linked to a member.</p>
+<p>拥有网络唯一根证书的合法独立实体。像peer节点和app client这样的网络组件会链接到一个Member。</p>
+<p>Membership Service Provider - MSP</p>
+<p>The Membership Service Provider (MSP) refers to an abstract component of the system that provides credentials to clients, and peers for them to participate in a Hyperledger Fabric network. Clients use these credentials to authenticate their transactions, and peers use these credentials to authenticate transaction processing results (endorsements). While strongly connected to the transaction processing components of the systems, this interface aims to have membership services components defined, in such a way that alternate implementations of this can be smoothly plugged in without modifying the core of transaction processing components of the system.</p>
+<p>MSP是指为client和peer提供证书的系统抽象组件。Client用证书来认证他们的交易；peer用证书认证其交易背书。该接口与系统的交易处理组件密切相关，旨在使已定义的成员身份服务组件以这种方式顺利插入而不会修改系统的交易处理组件的核心。</p>
+<p>Membership Services - 成员服务</p>
+<p>Membership Services authenticates, authorizes, and manages identities on a permissioned blockchain network. The membership services code that runs in peers and orderers both authenticates and authorizes blockchain operations. It is a PKI-based implementation of the Membership Services Provider (MSP) abstraction.</p>
+<p>成员服务在许可的区块链网络上认证、授权和管理身份。在peer和order中运行的成员服务的代码都会认证和授权区块链操作。它是基于PKI的MSP实现。</p>
+<p>The fabric-ca component is an implementation of membership services to manage identities. In particular, it handles the issuance and revocation of enrollment certificates and transaction certificates.</p>
+<p>fabric-ca组件实现了成员服务，来管理身份。特别的，它处理ECert和TCert的颁发和撤销。</p>
+<p>An enrollment certificate is a long-term identity credential; a transaction certificate is a short-term identity credential which is both anonymous and un-linkable.</p>
+<p>ECert是长期的身份凭证；TCert是短期的身份凭证，是匿名和不可链接的。</p>
+<p>Ordering Service - 排序服务或共识服务</p>
+<p>A defined collective of nodes that orders transactions into a block. The ordering service exists independent of the peer processes and orders transactions on a first-come-first-serve basis for all channel’s on the network. The ordering service is designed to support pluggable implementations beyond the out-of-the-box SOLO and Kafka varieties. The ordering service is a common binding for the overall network; it contains the cryptographic identity material tied to each Member.</p>
+<p>将交易排序放入block的节点的集合。ordering service独立于peer流程之外，并以先到先得的方式为网络上所有的channel作交易排序。ordering service支持可插拔实现，目前默认实现了SOLO和Kafka。ordering service是整个网络的公用binding，包含与每个Member相关的加密材料。</p>
+<p>Peer - 节点</p>
+<p>A network entity that maintains a ledger and runs chaincode containers in order to perform read-write operations to the ledger. Peers are owned and maintained by members.</p>
+<p>一个网络实体，维护ledger并运行Chaincode容器来对ledger执行read-write操作。peer由Member拥有和维护。</p>
+<p>Policy - 策略</p>
+<p>There are policies for endorsement, validation, block committal, chaincode management and network-channel management.</p>
+<p>有背书策略，校验策略，区块提交策略，Chaincode管理策略和网络-通道管理策略。</p>
+<p>Proposal - 提案</p>
+<p>A request for endorsement that is aimed at specific peers on a channel. Each proposal is either an instantiate or an invoke (read-write) request.</p>
+<p>一种针对channel中某peer的背书请求。每个proposal要么是Chaincode instantiate要么是Chaincode invoke。</p>
+<p>Query - 查询</p>
+<p>A query requests the value of a key(s) against the current state.</p>
+<p>对于current state中某个key的value的查询请求。</p>
+<p>Software Development Kit - SDK</p>
+<p>The Hyperledger Fabric client SDK provides a structured environment of libraries for developers to write and test chaincode applications. The SDK is fully configurable and extensible through a standard interface. Components, including cryptographic algorithms for signatures, logging frameworks and state stores, are easily swapped in and out of the SDK. The SDK API uses protocol buffers over gRPC for transaction processing, membership services, node traversal and event handling applications to communicate across the fabric. The SDK comes in multiple flavors - Node.js, Java. and Python.</p>
+<p>SDK为开发人员提供了一个结构化的库环境，用于编写和测试链码应用程序。SDK完全可以通过标准接口实现配置和扩展，像签名的加密算法、日志框架和state存储这样的组件都可以轻松地实现替换。SDK API使用gRPC进行交易处理，成员服务、节点遍历以及事件处理都是据此与fabric通信。目前SDK支持Node.js、Java和Python。</p>
+<p>State Database - stateDB</p>
+<p>Current state data is stored in a state database for efficient reads and queries from chaincode. These databases include levelDB and couchDB.</p>
+<p>为了从Chaincode中高效的读写，Current state 数据存储在stateDB中，包括levelDB和couchDB。</p>
+<p>System Chain - 系统链</p>
+<p>Contains a configuration block defining the network at a system level. The system chain lives within the ordering service, and similar to a channel, has an initial configuration containing information such as: MSP information, policies, and configuration details. Any change to the overall network (e.g. a new org joining or a new ordering node being added) will result in a new configuration block being added to the system chain.</p>
+<p>包含在系统级定义网络的配置区块。系统链存在于ordering service中，与channel类似，具有包含以下信息的初始配置：MSP信息、策略和信息配置。对整个网络的任何变化（例如新的Org加入或者添加新的Ordering节点）将导致新的配置区块被添加到系统链。</p>
+<p>The system chain can be thought of as the common binding for a channel or group of channels. For instance, a collection of financial institutions may form a consortium (represented through the system chain), and then proceed to create channels relative to their aligned and varying business agendas.</p>
+<p>系统链可看做是一个channel或一组channel的公用binding。例如，金融机构的集合可以形成一个财团（以system chain表示），然后根据其相同或不同的业务创建channel。</p>
+<p>Transaction - 交易</p>
+<p>An invoke or instantiate operation. Invokes are requests to read-write data from the ledger. Instantiate is a request to start a chaincode container on a peer.</p>
+<p>Chaincode的invoke或instantiate操作。Invoke是从ledger中请求read-write set；Instantiate是请求在peer上启动Chaincode容器。</p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2019/04/21/Hyperledger-Fabric-03-Key-Concepts/">Hyperledger Fabric Key Concepts</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-04-21
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>介绍（Introduction）</p>
+<p>Hyperledger Fabric is a platform for distributed ledger solutions underpinned by a modular architecture delivering high degrees of confidentiality, resiliency, flexibility, and scalability. It is designed to support pluggable implementations of different components and accommodate the complexity and intricacies that exist across the economic ecosystem.<br>Hyperledger Fabric是一个用于分布式账本的解决方案平台，其基础是提供高度机密性、弹性、灵活性和可伸缩性的模块化架构。它的设计目的是支持不同组件的可插入实现，并适应经济生态系统中存在的复杂性和精细之处。</p>
+<p>We recommend first-time users begin by going through the rest of the introduction below in order to gain familiarity with how blockchains work and with the specific features and components of Hyperledger Fabric.<br>我们建议初次用户从下面的介绍开始，以便熟悉区块链是如何工作的，以及Hyperledger Fabric的特定特性和组件。</p>
+<p>Once comfortable — or if you’re already familiar with blockchain and Hyperledger Fabric — go to Getting Started and from there explore the demos, technical specifications, APIs, etc.<br>一旦合适或你已经熟悉了区块链和Hyperledger Fabric，那么你可以从开始着手那里探索演示、技术规范、API等等。</p>
+<p>什么是区块链 （What is a Blockchain）?</p>
+<p>一种分布式账本（A Distributed Ledger）</p>
+<p>At the heart of a blockchain network is a distributed ledger that records all the transactions that take place on the network.<br>区块链网络的核心是一个分布式帐本，记录网络上发生的所有交易。</p>
+<p>A blockchain ledger is often described as decentralized because it is replicated across many network participants, each of whom collaborate in its maintenance. We’ll see that decentralization and collaboration are powerful attributes that mirror the way businesses exchange goods and services in the real world.<br>区块链帐本通常被描述为分散管理的，因为它在许多网络参与者之间复制，每个参与者在维护工作中协作。我们将看到，分散化和协作是反映真实世界中企业交换商品和服务的强大属性。</p>
+<p>In addition to being decentralized and collaborative, the information recorded to a blockchain is append-only, using cryptographic techniques that guarantee that once a transaction has been added to the ledger it cannot be modified. This property of “immutability” makes it simple to determine the provenance of information because participants can be sure information has not been changed after the fact. It’s why blockchains are sometimes described as systems of proof.<br>除了分散管理和协作外，记录到区块链的信息是只能添加，使用加密技术可以确保事务一旦添加到帐本中，就不能进行修改。这种“不可变性”的特性使得确定信息的来源变得很简单，因为参与者可以确定信息在事后没有被更改。这就是为什么区块链有时被描述为证明系统。</p>
+<p>智能合约 (Smart Contracts)</p>
+<p>To support the consistent update of information — and to enable a whole host of ledger functions (transacting, querying, etc) — a blockchain network uses smart contracts to provide controlled access to the ledger.<br>为了支持信息的一致更新——并支持所有帐本功能(交易、查询等)——区块链网络使用智能合约提供对帐本的受控访问。</p>
+<p>Smart contracts are not only a key mechanism for encapsulating information and keeping it simple across the network, they can also be written to allow participants to execute certain aspects of transactions automatically.<br>智能合约不仅是封装信息并使其在网络上保持简单的关键机制，还可以编写它们来允许参与者在某些方面自动执行交易。</p>
+<p>A smart contract can, for example, be written to stipulate the cost of shipping an item where the shipping charge changes depending on how quickly the item arrives. With the terms agreed to by both parties and written to the ledger, the appropriate funds change hands automatically when the item is received.<br>例如，一份智能合约可以规定货物的运输成本，运费取决于货物到达的速度。双方同意条款并记入帐本，当货物收到时，相应的资金自动易手。</p>
+<p>共识 (Consensus)</p>
+<p>The process of keeping the ledger transactions synchronized across the network — to ensure that ledgers update only when transactions are approved by the appropriate participants, and that when ledgers do update, they update with the same transactions in the same order — is called consensus.<br>使帐本交易在网络上保持同步的过程——确保帐本只有在交易得到适当的参与者批准时才进行更新，以及当帐本进行更新时，它们以相同的排序对相同的交易进行更新——称为共识。</p>
+<p>You’ll learn a lot more about ledgers, smart contracts and consensus later. For now, it’s enough to think of a blockchain as a shared, replicated transaction system which is updated via smart contracts and kept consistently synchronized through a collaborative process called consensus.<br>稍后你将了解更多关于账本、智能合约和共识的内容。现在，只要将区块链看作是一个共享的、复制的交易系统就足够了，它通过智能合约进行更新，并通过称为共识的协作过程保持一致的同步。</p>
+<p>为什么区块链有用 (Why is a Blockchain useful)?</p>
+<p>当前的记录系统 (Today’s Systems of Record)</p>
+<p>The transactional networks of today are little more than slightly updated versions of networks that have existed since business records have been kept. The members of a business network transact with each other, but they maintain separate records of their transactions. And the things they’re transacting — whether it’s Flemish tapestries in the 16th century or the securities of today — must have their provenance established each time they’re sold to ensure that the business selling an item possesses a chain of title verifying their ownership of it.<br>当前的交易型网络不过是自保留业务记录以来已经存在的网络的略微更新版本。业务网络的成员彼此进行交易，但他们保持各自的交易记录。他们交易的物品——无论是16世纪的佛兰德挂毯还是今天的证券——每次出售时都必须确定其出处，以确保出售物品的企业拥有一系列产权，以证明其所有权。</p>
+<p>What you’re left with is a business network that looks like this:<br>剩下的就是这样一个商业网络：</p>
+<p>Modern technology has taken this process from stone tablets and paper folders to hard drives and cloud platforms, but the underlying structure is the same. Unified systems for managing the identity of network participants do not exist, establishing provenance is so laborious it takes days to clear securities transactions (the world volume of which is numbered in the many trillions of dollars), contracts must be signed and executed manually, and every database in the system contains unique information and therefore represents a single point of failure.<br>现代技术已经将这一过程从石板和纸质文件夹转移到硬盘和云平台，但其底层结构是相同的。用统一的系统来管理网络参与者身份并不存在，确立出处是如此费力以致需要很多天去理清证券交易（世界的交易量是数万亿美元)，合同必须手动签署和执行，每个数据库系统中包含独特的信息,因此代表了存在单点故障。</p>
+<p>It’s impossible with today’s fractured approach to information and process sharing to build a system of record that spans a business network, even though the needs of visibility and trust are clear.<br>如今，尽管可见性和信任的需求是明确的，但信息和流程共享的方式是破碎的，要建立一个跨越业务网络的记录系统是不可能的。</p>
+<p>区块链差异 (The Blockchain Difference)</p>
+<p>What if, instead of the rat’s nest of inefficiencies represented by the “modern” system of transactions, business networks had standard methods for establishing identity on the network, executing transactions, and storing data? What if establishing the provenance of an asset could be determined by looking through a list of transactions that, once written, cannot be changed, and can therefore be trusted?<br>如果业务网络不再是“现代”交易系统所代表的低效之巢，而是拥有在网络上建立身份、执行交易和存储数据的标准方法？如果可以通过查看一组交易来确定资产的来源，这些交易一旦被写入，就不能更改，因此可以信任呢?</p>
+<p>That business network would look more like this:<br>这个商业网络看起来更像这样:</p>
+<p>This is a blockchain network, wherein every participant has their own replicated copy of the ledger. In addition to ledger information being shared, the processes which update the ledger are also shared. Unlike today’s systems, where a participant’s private programs are used to update their private ledgers, a blockchain system has shared programs to update shared ledgers.<br>这是一个区块链网络，每个参与者都有自己复制的帐本副本。除了帐本信息共享外，账本的更新过程也是共享的。不像当前的系统，参与者的私有程序被用来更新他们的私有账本，区块链系统已经共享了程序来更新共享账本。</p>
+<p>With the ability to coordinate their business network through a shared ledger, blockchain networks can reduce the time, cost, and risk associated with private information and processing while improving trust and visibility.<br>借助通过共享帐本协调业务网络的能力，区块链网络可以减少与私有信息和处理相关的时间、成本和风险，同时提高信任和可见性。</p>
+<p>You now know what blockchain is and why it’s useful. There are a lot of other details that are important, but they all relate to these fundamental ideas of the sharing of information and processes.<br>现在你知道什么是区块链，以及它为什么有用。还有很多其他重要的细节，但它们都与共享信息和流程的基本思想有关。</p>
+<p>什么是 （What is） Hyperledger Fabric?</p>
+<p>The Linux Foundation founded the Hyperledger project in 2015 to advance cross-industry blockchain technologies. Rather than declaring a single blockchain standard, it encourages a collaborative approach to developing blockchain technologies via a community process, with intellectual property rights that encourage open development and the adoption of key standards over time.<br>Linux基金会在2015年建立了Hyperledger项目，以推进跨行业区块链技术。它不是宣布一个单一的区块链标准，而是鼓励通过社区过程协作的方式来开发区块链技术，并拥有鼓励开放开发的知识产权和随着时间推移关键标准的采用。</p>
+<p>Hyperledger Fabric is one of the blockchain projects within Hyperledger. Like other blockchain technologies, it has a ledger, uses smart contracts, and is a system by which participants manage their transactions.<br>Hyperledger Fabric是Hyperledger的区块链项目之一。像其他区块链技术一样，它有一个帐本，使用智能合约，并且是一个参与者管理他们的交易的系统。</p>
+<p>Where Hyperledger Fabric breaks from some other blockchain systems is that it is private and permissioned. Rather than an open permissionless system that allows unknown identities to participate in the network (requiring protocols like “proof of work” to validate transactions and secure the network), the members of a Hyperledger Fabric network enroll through a trusted Membership Service Provider (MSP).<br>Hyperledger Fabric网络与其他区块链系统的不同之处在于它是私有的并且要许可的。Hyperledger Fabric的成员通过受信任的<strong>会员服务提供者(MSP)</strong>注册，而不是允许未知身份参与网络(需要“工作证明”之类的协议来验证交易并保护网络)的开放免许可系统。</p>
+<p>Hyperledger Fabric also offers several pluggable options. Ledger data can be stored in multiple formats, consensus mechanisms can be swapped in and out, and different MSPs are supported.<br>Hyperledger Fabric还提供了几个可插入选项。账本数据可以以多种格式存储，共识机制可以被换进和换去，并且支持不同的MSP。</p>
+<p>Hyperledger Fabric also offers the ability to create channels, allowing a group of participants to create a separate ledger of transactions. This is an especially important option for networks where some participants might be competitors and not want every transaction they make — a special price they’re offering to some participants and not others, for example — known to every participant. If two participants form a channel, then those participants — and no others — have copies of the ledger for that channel.<br>Hyperledger Fabric还提供了创建通道（channels）的功能，允许一组参与者创建单独的交易帐本。对于网络来说，这是一个特别重要的选项，因为有些参与者可能是竞争对手，并不希望他们所做的每一笔交易——例如他们提供给某些参与者的一个特殊价格，而没给其他参与者——让每个参与者都知道。如果两个参与者组成一个通道，那么这两个参与者——而不是其他参与者——就拥有该通道的帐本副本。</p>
+<p>共享账本 (Shared Ledger)</p>
+<p>Hyperledger Fabric has a ledger subsystem comprising two components: the world state and the transaction log. Each participant has a copy of the ledger to every Hyperledger Fabric network they belong to.<br>Hyperledger Fabric具有一个帐本子系统，它由两个组件组成：世界状态和交易日志。每个参与者都有一份他们所属Hyperledger Fabric网络的帐本副本。</p>
+<p>The world state component describes the state of the ledger at a given point in time. It’s the database of the ledger. The transaction log component records all transactions which have resulted in the current value of the world state; it’s the update history for the world state. The ledger, then, is a combination of the world state database and the transaction log history.<br>世界状态组件描述了在给定时间点上的帐本状态。这是账本的数据库。交易日志组件记录导致世界状态当前值的所有交易；这是世界状态的更新历史。因此帐本是世界状态数据库和交易日志历史记录的组合。</p>
+<p>The ledger has a replaceable data store for the world state. By default, this is a LevelDB key-value store database. The transaction log does not need to be pluggable. It simply records the before and after values of the ledger database being used by the blockchain network.<br>帐本为世界状态有一个可替换的数据存储。默认情况下，这是一个LevelDB键值存储数据库。交易日志不需要是可插入的。它只记录区块链网络使用的账本数据库的前后值。</p>
+<p>智能合约 (Smart Contracts)</p>
+<p>Hyperledger Fabric smart contracts are written in chaincode and are invoked by an application external to the blockchain when that application needs to interact with the ledger. In most cases, chaincode interacts only with the database component of the ledger, the world state (querying it, for example), and not the transaction log.<br>Hyperledger Fabric智能合约是用链代码编写的，当应用程序需要与帐本交互时，由位于区块链外部的应用程序调用。在大多数情况下，链代码只与帐本的数据库组件世界状态(例如查询它)进行交互，而不与交易日志进行交互。</p>
+<p>Chaincode can be implemented in several programming languages. Currently, Go and Node are supported.<br>链代码可以用几种编程语言实现。目前支持Go和Node。（Java在 v1.3版已经支持）</p>
+<p>隐私 (Privacy)</p>
+<p>Depending on the needs of a network, participants in a Business-to-Business (B2B) network might be extremely sensitive about how much information they share. For other networks, privacy will not be a top concern.<br>根据网络的需要，B2B网络的参与者可能对他们共享的信息非常敏感。对于其他网络来说，隐私不会是首要问题。</p>
+<p>Hyperledger Fabric supports networks where privacy (using channels) is a key operational requirement as well as networks that are comparatively open.<br>Hyperledger Fabric支持网络，其中隐私（使用通道）是一个关键的操作需求，以及相对开放的网络。</p>
+<p>共识 (Consensus)</p>
+<p>Transactions must be written to the ledger in the order in which they occur, even though they might be between different sets of participants within the network. For this to happen, the order of transactions must be established and a method for rejecting bad transactions that have been inserted into the ledger in error (or maliciously) must be put into place.<br>交易必须按照发生的顺序写入帐本，即使它们可能在网络中的不同参与者组之间。要做到这一点，必须建立交易的排序，并且必须采用一种方法来拒绝错误地(或恶意地)插入到帐本中的不良交易。</p>
+<p>This is a thoroughly researched area of computer science, and there are many ways to achieve it, each with different trade-offs. For example, PBFT (Practical Byzantine Fault Tolerance) can provide a mechanism for file replicas to communicate with each other to keep each copy consistent, even in the event of corruption. Alternatively, in Bitcoin, ordering happens through a process called mining where competing computers race to solve a cryptographic puzzle which defines the order that all processes subsequently build upon.<br>这是一个对计算机科学进行了深入研究的领域，有很多方法可以实现它，每个方法都有不同的权衡。例如，PBFT(实用的拜占庭容错)可以提供一种机制，让文件副本相互通信，以保持每个副本的一致性，即使在发生损坏的情况下也是如此。或者，在比特币中，排序是通过一种被称为“挖矿”的过程进行的，在这种过程中，相互竞争的计算机竞相解决一个密码难题，这个难题定义了所有进程随后所建立的顺序。</p>
+<p>Hyperledger Fabric has been designed to allow network starters to choose a consensus mechanism that best represents the relationships that exist between participants. As with privacy, there is a spectrum of needs; from networks that are highly structured in their relationships to those that are more peer-to-peer.<br>Hyperledger Fabric被设计用来允许网络初学者选择一个最能代表参与者之间存在关系的共识机制。与隐私一样，人们的需求也不尽相同;从关系高度结构化的网络到更对等的网络。</p>
+<p>We’ll learn more about the Hyperledger Fabric consensus mechanisms, which currently include SOLO and Kafka.<br>我们将学习更多关于Hyperledger Fabric的共识机制，目前包括SOLO和Kafka。</p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2019/04/21/Hyperledger-Fabric-01-Introduction/">Hyperledger Fabric 介绍（Introduction）</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-04-21
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>介绍 (Introduction)</p>
+<p>In general terms, a blockchain is an immutable transaction ledger, maintained within a distributed network of peer nodes. These nodes each maintain a copy of the ledger by applying transactions that have been validated by a consensus protocol, grouped into blocks that include a hash that bind each block to the preceding block.<br>一般来说，区块链是一个不可变的交易账本，维护在对等节点组成的分布式网络中。这些节点每个都会维护一份交易记录的账本副本，这些交易记录都已通过共识协议验证并组到了区块中，每个区块都包含关联到前一个区块的哈希值。</p>
+<p>The first and most widely recognized application of blockchain is the Bitcoin cryptocurrency, though others have followed in its footsteps. Ethereum, an alternative cryptocurrency, took a different approach, integrating many of the same characteristics as Bitcoin but adding smart contracts to create a platform for distributed applications. Bitcoin and Ethereum fall into a class of blockchain that we would classify as public permissionless blockchain technology. Basically, these are public networks, open to anyone, where participants interact anonymously.<br>第一个也是最广泛认知的区块链应用是比特币加密货币，其他应用跟随了它的脚步。以太坊是采用了不同方法的另一种加密货币，集成了许多与比特币相同的特性, 但添加了智能合同, 以创建一个分布式应用程序平台。比特币和以太坊属于同一类区块链, 我们将其归类为公共免许可区块链技术。基本上, 这些都运行在公共网络, 对任何人开放, 参与者可以匿名进行交互。</p>
+<p>As the popularity of Bitcoin, Ethereum and a few other derivative technologies grew, interest in applying the underlying technology of the blockchain, distributed ledger and distributed application platform to more innovative enterprise use cases also grew. However, many enterprise use cases require performance characteristics that the permissionless blockchain technologies are unable (presently) to deliver. In addition, in many use cases, the identity of the participants is a hard requirement, such as in the case of financial transactions where Know-Your-Customer (KYC) and Anti-Money Laundering (AML) regulations must be followed.<br>随着比特币的流行，以及以太坊和其他一些衍生技术的发展，对将区块链、分布式账本和分布式应用平台的基础技术应用于更具创新性的企业用例的兴趣也在增长。 然而许多企业用例需要履行的特征是免许可区块链技术无法（目前）给予的。 另外在许多用例中，参与者的身份是一项硬性要求，例如在必须遵循“了解客户”（KYC）和反洗钱（AML）法规的金融交易。</p>
+<p>For enterprise use, we need to consider the following requirements:<br>为了企业用户，我们需要考虑下面的需求：</p>
+<p>•    Participants must be identified/identifiable<br>参与者必须可识别且被识别<br>•    Networks need to be permissioned<br>网络需要获得许可<br>•    High transaction throughput performance<br>高性能的交易吞吐量<br>•    Low latency of transaction confirmation<br>低延迟的交易确认<br>•    Privacy and confidentiality of transactions and data pertaining to business transactions<br>与业务交易相关的交易和数据的隐私和机密性</p>
+<p>While many early blockchain platforms are currently being adapted for enterprise use, Hyperledger Fabric has been designed for enterprise use from the outset. The following sections describe how Hyperledger Fabric (Fabric) differentiates itself from other blockchain platforms and describes some of the motivation for its architectural decisions.<br>虽然许多早期的区块链平台目前正在变得适合企业使用，但Hyperledger Fabric从一开始就被设计用于企业用户。 以下部分描述了Hyperledger Fabric如何将自己与其他区块链平台区分开来，并描述了其架构决策的一些动机。</p>
+<p>Hyperledger Fabric （中文直译就是超级账本织物）</p>
+<p>Hyperledger Fabric is an open source enterprise-grade permissioned distributed ledger technology (DLT) platform, designed for use in enterprise contexts, that delivers some key differentiating capabilities over other popular distributed ledger or blockchain platforms.<br>Hyperledger Fabric是开源的企业级要许可的分布式账本技术（DLT）平台，被设计用于企业环境，提供了一些关键的超过其他流行分布式账本或区块链平台的差异化能力。</p>
+<p>One key point of differentiation is that Hyperledger was established under the Linux Foundation, which itself has a long and very successful history of nurturing open source projects under open governance that grow strong sustaining communities and thriving ecosystems. Hyperledger is governed by a diverse technical steering committee, and the Hyperledger Fabric project by a diverse set of maintainers from multiple organizations. It has a development community that has grown to over 35 organizations and nearly 200 developers since its earliest commits.<br>差异化的一个关键点是Hyperledger是在Linux基金会下建立的，该基金会本身在开放式管理下培育开源项目的历史悠久且非常成功，这些项目可以发展强大的持续社区和蓬勃发展的生态系统。 Hyperledger由多元化技术指导委员会和Hyperledger Fabric项目管理，该项目由来自多个组织的各种维护人员组成。 它拥有一个自最早提交以来已经发展到超过35个组织和近200个开发人员的开发社区。</p>
+<p>Fabric has a highly modular and configurable architecture, enabling innovation, versatility and optimization for a broad range of industry use cases including banking, finance, insurance, healthcare, human resources, supply chain and even digital music delivery.<br>Fabric具有高度模块化和可配置的架构，可为各种行业使用用例包括银行、金融、保险、医疗保健、人力资源、供应链甚至数字音乐提供创新、多功能性和优化。</p>
+<p>Fabric is the first distributed ledger platform to support smart contracts authored in general-purpose programming languages such as Java, Go and Node.js, rather than constrained domain-specific languages (DSL). This means that most enterprises already have the skill set needed to develop smart contracts, and no additional training to learn a new language or DSL is needed.<br>Fabric是第一个支持用比如Java、Go和Node.js这样多种编程语言创建智能合约的分布式账本平台，而不是受限制于特定领域语言（DSL）。 这意味着大多数企业已经拥有开发智能合约所需的技能，并且不需要额外的培训来学习新的语言或DSL。</p>
+<p>The Fabric platform is also permissioned, meaning that, unlike with a public permissionless network, the participants are known to each other, rather than anonymous and therefore fully untrusted. This means that while the participants may not fully trust one another (they may, for example, be competitors in the same industry), a network can be operated under a governance model that is built off of what trust does exist between participants, such as a legal agreement or framework for handling disputes.<br>Fabric平台也是要许可的，这意味着与公共免许可网络不同，参与者彼此了解，不是匿名导致完全不受信任。 这意味着虽然参与者可能彼此不完全信任（例如，他们可能是同一行业中的竞争者），但网络可以在管理模型下运行，该模型基于参与者之间存在信任，例如有处理纠纷的法律协议或框架。</p>
+<p>One of the most important of the platform’s differentiators is its support for pluggable consensus protocols that enable the platform to be more effectively customized to fit particular use cases and trust models. For instance, when deployed within a single enterprise, or operated by a trusted authority, fully byzantine fault tolerant consensus might be considered unnecessary and an excessive drag on performance and throughput. In situations such as that, a crash fault-tolerant (CFT) consensus protocol might be more than adequate whereas, in a multi-party, decentralized use case, a more traditional byzantine fault tolerant (BFT) consensus protocol might be required.<br>该平台最重要的区别之一是它支持可插拔的共识协议，使平台能够更有效地进行定制，以适应特定的用例和信任模型。 例如，当部署在单个企业内或由可信任的权威机构运营时，完全拜占庭容错的共识可能被认为是不必要的，并且对性能和吞吐量造成过度拖累。 在诸如此类的情况下，碰撞容错（CFT）共识协议可能绰绰有余，而在多方分散用例中，可能需要更传统的拜占庭容错（BFT）共识协议。</p>
+<p>Fabric can leverage consensus protocols that do not require a native cryptocurrency to incent costly mining or to fuel smart contract execution. Avoidance of a cryptocurrency reduces some significant risk/attack vectors, and absence of cryptographic mining operations means that the platform can be deployed with roughly the same operational cost as any other distributed system.<br>Fabric能利用共识协议，不需要原生加密货币去激励昂贵的挖矿或为智能合约的执行提供燃料。 加密货币的避免会减少一些重要的风险/攻击载体，并且加密挖矿操作的省略意味着可以使用与任何其他分布式系统大致相同的运营成本来部署平台。</p>
+<p>The combination of these differentiating design features makes Fabric one of the better performing platforms available today both in terms of transaction processing and transaction confirmation latency, and it enables privacy and confidentiality of transactions and the smart contracts (what Fabric calls “chaincode”) that implement them.<br>这些差异化的设计特性组合使Fabric成为当今在交易处理和交易确认延迟方面性能更好的运行平台之一，并且它支持交易和实现交易的智能合约(Fabric称为“链代码”)的隐私和机密性。</p>
+<p>Let’s explore these differentiating features in more detail.<br>让我们更详细地探索这些差异化的特性。</p>
+<p>模块化 (Modularity)</p>
+<p>Hyperledger Fabric has been specifically architected to have a modular architecture. Whether it is pluggable consensus, pluggable identity management protocols such as LDAP or OpenID Connect, key management protocols or cryptographic libraries, the platform has been designed at its core to be configured to meet the diversity of enterprise use case requirements.<br>Hyperledger Fabric被专门设计为具有模块化的架构。无论它是可插入的共识、可插入的身份管理协议(如LDAP或OpenID Connect)、密钥管理协议或密码库，平台的核心被设计成能够满足企业用例需求的多样性。</p>
+<p>At a high level, Fabric is comprised of the following modular components:<br>在较高层次上，Fabric由以下模块化组件组成:</p>
+<p>•    A pluggable ordering service establishes consensus on the order of transactions and then broadcasts blocks to peers.<br>可插拔的排序服务建立了交易排序的共识，然后广播区块到对等节点。<br>•    A pluggable membership service provider is responsible for associating entities in the network with cryptographic identities.<br>可插拔的成员资格服务提供者，负责将网络中的实体与加密身份相关联。<br>•    An optional peer-to-peer gossip service disseminates the blocks output by ordering service to other peers.<br>可选的点对点流言服务，通过排序服务向其他节点传播区块的输出。<br>•    Smart contracts (“chaincode”) run within a container environment (e.g. Docker) for isolation. They can be written in standard programming languages but do not have direct access to the ledger state.<br>智能合约(“链代码”)在容器环境(例如Docker)中运行以进行隔离。它们可以用标准编程语言编写，但不能直接访问帐本状态。<br>•    The ledger can be configured to support a variety of DBMSs.<br>帐本可以通过配置来支持各种数据库。<br>•    A pluggable endorsement and validation policy enforcement that can be independently configured per application.<br>可插拔的背书和验证策略实施，可以在每个应用程序中独立配置。</p>
+<p>There is fair agreement in the industry that there is no “one blockchain to rule them all”. Hyperledger Fabric can be configured in multiple ways to satisfy the diverse solution requirements for multiple industry use cases.<br>业界普遍认为，没有“一种区块链可以满足所有行业”。 Hyperledger Fabric可以通过多种方式进行配置，以满足多种行业用例的各种解决方案要求。</p>
+<p>要许可和免许可的区块链对比 (Permissioned vs Permissionless Blockchains)</p>
+<p>In a permissionless blockchain, virtually anyone can participate, and every participant is anonymous. In such a context, there can be no trust other than that the state of the blockchain, prior to a certain depth, is immutable. In order to mitigate this absence of trust, permissionless blockchains typically employ a “mined” native cryptocurrency or transaction fees to provide economic incentive to offset the extraordinary costs of participating in a form of byzantine fault tolerant consensus based on “proof of work” (PoW).<br>在一个免许可的区块链中，几乎任何人都可以参与，每个参与者都是匿名的。 在这样的环境中，除了在某个深度之前区块链的状态是不可变的之外，不存在任何信任。 为了减轻这种信任的缺失，免许可的区块链通常采用“挖矿”的本地加密货币或交易费用来提供经济激励，以抵消参与基于“工作证明”（PoW）的拜占庭容错共识形式的特殊成本。</p>
+<p>Permissioned blockchains, on the other hand, operate a blockchain amongst a set of known, identified and often vetted participants operating under a governance model that yields a certain degree of trust. A permissioned blockchain provides a way to secure the interactions among a group of entities that have a common goal but which may not fully trust each other. By relying on the identities of the participants, a permissioned blockchain can use more traditional crash fault tolerant (CFT) or byzantine fault tolerant (BFT) consensus protocols that do not require costly mining.<br>另一方面，要许可的区块链是在一组已知的、被识别的且经常经过被审查的参与者中操作区块链，这些参与者在一种产生一定程度信任的管理模型下运行。 要许可的区块链提供了一种方法来保护具有共同目标但可能彼此不完全信任的一组实体之间的交互。 通过依赖参与者的身份，要许可的区块链可以使用更传统的碰撞容错（CFT）或拜占庭容错（BFT）共识协议，而不需要昂贵的挖矿。</p>
+<p>Additionally, in such a permissioned context, the risk of a participant intentionally introducing malicious code through a smart contract is diminished. First, the participants are known to one another and all actions, whether submitting application transactions, modifying the configuration of the network or deploying a smart contract are recorded on the blockchain following an endorsement policy that was established for the network and relevant transaction type. Rather than being completely anonymous, the guilty party can be easily identified and the incident handled in accordance with the terms of the governance model.<br>另外，在这种要许可的环境中，参与者通过智能合约故意引入恶意代码的风险降低。 首先，参与者彼此了解并且知道所有动作，无论是提交应用交易，修改网络配置还是部署智能合约，都会带着为网络和相关交易类型建立的背书策略，记录到区块链中。 不是完全匿名，可以很容易地识别有罪方，并根据管理模式的条款处理事件。</p>
+<p>智能合约 (Smart Contracts)</p>
+<p>A smart contract, or what Fabric calls “chaincode”, functions as a trusted distributed application that gains its security/trust from the blockchain and the underlying consensus among the peers. It is the business logic of a blockchain application.<br>智能合约或Fabric称之为“链代码”，作为受信任的分布式应用程序功能，从区块链获得其安全性/信任以及节点之间的基本共识。 它是区块链应用程序的业务逻辑。</p>
+<p>There are three key points that apply to smart contracts, especially when applied to a platform:<br>有三个关键点适用于智能合约，尤其是应用于平台时：</p>
+<p>•    many smart contracts run concurrently in the network,<br>许多智能合约在网络中同时运行，<br>•    they may be deployed dynamically (in many cases by anyone), and<br>它们可以动态部署（在很多情况下是任何人），以及<br>•    application code should be treated as untrusted, potentially even malicious.<br>应用程序代码应视为不受信任，甚至可能是恶意的。</p>
+<p>Most existing smart-contract capable blockchain platforms follow an order-execute architecture in which the consensus protocol:<br>大多数现有的支持智能合约的区块链平台在共识协议中遵循排序执行架构：<br>•    validates and orders transactions then propagates them to all peer nodes,<br>验证并排序交易然后将它们传播到所有对等节点，<br>•    each peer then executes the transactions sequentially.<br>然后，每个节点顺序执行交易。</p>
+<p>The order-execute architecture can be found in virtually all existing blockchain systems, ranging from public/permissionless platforms such as Ethereum (with PoW-based consensus) to permissioned platforms such as Tendermint, Chain, and Quorum.<br>几乎所有现有的区块链系统都可以找到排序执行架构，范围从公共/免许可平台，如以太坊（基于PoW的共识）到要许可平台，如Tendermint，Chain和Quorum。</p>
+<p>Smart contracts executing in a blockchain that operates with the order-execute architecture must be deterministic; otherwise, consensus might never be reached. To address the non-determinism issue, many platforms require that the smart contracts be written in a non-standard, or domain-specific language (such as Solidity) so that non-deterministic operations can be eliminated. This hinders wide-spread adoption because it requires developers writing smart contracts to learn a new language and may lead to programming errors.<br>在区块链中执行的与排序执行架构一起运行的智能合约必须是确定性的; 否则，可能永远不会达成共识。 为了解决非确定性问题，许多平台要求智能合约以非标准或特定领域的语言（例如Solidity）编写，以便可以消除非确定性操作。 这阻碍了智能合约的广泛采用，因为它要求开发人员为编写智能合同而去学习新语言并可能导致编程错误。</p>
+<p>Further, since all transactions are executed sequentially by all nodes, performance and scale is limited. The fact that the smart contract code executes on every node in the system demands that complex measures be taken to protect the overall system from potentially malicious contracts in order to ensure resiliency of the overall system.<br>此外，由于所有节点都顺序执行所有交易，因此性能和规模受限。 智能合约代码在系统中的每个节点上执行的事实要求采取复杂措施来保护整个系统免受潜在恶意合同的影响，以确保整个系统的弹性。</p>
+<p>新方法 (A New Approach)</p>
+<p>Fabric introduces a new architecture for transactions that we call execute-order-validate. It addresses the resiliency, flexibility, scalability, performance and confidentiality challenges faced by the order-execute model by separating the transaction flow into three steps:<br>Fabric为我们称为执行排序序验证（execute-order-validate）的交易引入了一种新的体系结构。 它通过将交易流程分为三个步骤来解决排序执行（order-execute）模型面临的弹性、灵活性、可伸缩性、性能和机密性的挑战：</p>
+<p>•    execute a transaction and check its correctness, thereby endorsing it,<br>执行一个交易并检查其正确性，从而认可它，<br>•    order transactions via a (pluggable) consensus protocol, and<br>通过（可插拔的）共识协议排序交易，以及<br>•    validate transactions against an application-specific endorsement policy before committing them to the ledger<br>在将提交到帐本之前，根据特定于应用程序的背书策略验证交易</p>
+<p>This design departs radically from the order-execute paradigm in that Fabric executes transactions before reaching final agreement on their order.<br>这种设计与排序执行范式有根本上的不同，因为Fabric在交易的排序达成最终协议之前就执行了交易。</p>
+<p>In Fabric, an application-specific endorsement policy specifies which peer nodes, or how many of them, need to vouch for the correct execution of a given smart contract. Thus, each transaction need only be executed (endorsed) by the subset of the peer nodes necessary to satisfy the transaction’s endorsement policy. This allows for parallel execution increasing overall performance and scale of the system. This first phase also eliminates any non-determinism, as inconsistent results can be filtered out before ordering.<br>在Fabric中，应用程序特定的背书策略指定哪些或多少对等节点需要保证正确执行给定的智能合约。 因此每个交易只需要由满足交易的背书策略所必需的对等节点子集来执行（背书）。 这允许并行执行，从而提高系统的整体性能和规模。 在最初阶段也排除了不确定性，因为在排序之前可以滤掉不一致的结果。</p>
+<p>Because we have eliminated non-determinism, Fabric is the first blockchain technology that enables use of standard programming languages. In the 1.1.0 release, smart contracts can be written in either Go or Node.js, while there are plans to support other popular languages including Java in subsequent releases.<br>因为我们已经排除了不确定性，所以Fabric是第一个能够使用标准编程语言的区块链技术。 在1.1.0版本中，智能合约可以用Go或Node.js编写，而有计划在后续版本中支持包括Java的其他流行语言。</p>
+<p>隐私和机密性 (Privacy and Confidentiality)</p>
+<p>As we have discussed, in a public, permissionless blockchain network that leverages PoW for its consensus model, transactions are executed on every node. This means that neither can there be confidentiality of the contracts themselves, nor of the transaction data that they process. Every transaction, and the code that implements it, is visible to every node in the network. In this case, we have traded confidentiality of contract and data for byzantine fault tolerant consensus delivered by PoW.<br>正如我们所讨论的，在一个公共的、免许可的区块链网络中，利用PoW作为其共识模型，交易在每个节点上执行。 这意味着合同本身和他们处理的交易数据都不存在机密性。 每个交易以及实现它的代码对于网络中的每个节点都是可见的。 在这种情况下，我们用PoW提供的拜占庭容错共识来交换合同和数据的机密性。</p>
+<p>This lack of confidentiality can be problematic for many business/enterprise use cases. For example, in a network of supply-chain partners, some consumers might be given preferred rates as a means of either solidifying a relationship, or promoting additional sales. If every participant can see every contract and transaction, it becomes impossible to maintain such business relationships in a completely transparent network – everyone will want the preferred rates!<br>对于许多商业/企业用例而言，这种缺乏机密性可能会有问题。 例如在供应链合作伙伴网络中，某些消费者可能会获得优惠利率，作为巩固关系或促进额外销量的手段。 如果每个参与者都可以看到每个合同和交易，那么就无法在完全透明的网络中维持这种业务关系 - 每个人都希望获得优惠费率！</p>
+<p>As a second example, consider the securities industry, where a trader building a position (or disposing of one) would not want her competitors to know of this, or else they will seek to get in on the game, weakening the trader’s gambit.<br>作为第二个例子，考虑证券行业，交易者买入（或卖出）头寸并不希望她的竞争对手知道这一点，否则他们将寻求跟进，削弱交易者的策略。</p>
+<p>In order to address the lack of privacy and confidentiality for purposes of delivering on enterprise use case requirements, blockchain platforms have adopted a variety of approaches. All have their trade-offs.<br>为了解决实现企业用例要求所缺乏的隐私和机密性，区块链平台采用了多种方法。 所有人都有自己的权衡。</p>
+<p>Encrypting data is one approach to providing confidentiality; however, in a permissionless network leveraging PoW for its consensus, the encrypted data is sitting on every node. Given enough time and computational resource, the encryption could be broken. For many enterprise use cases, the risk that their information could become compromised is unacceptable.<br>加密数据是提供机密性的一种方法; 然而，在利用PoW达成共识的免许可网络中，加密数据位于每个节点上。 如果有足够的时间和计算资源，加密可能会被破解。 对于许多企业用例，其信息可能受到损害的风险是不可接受的。</p>
+<p>Zero knowledge proofs (ZKP) are another area of research being explored to address this problem, the trade-off here being that, presently, computing a ZKP requires considerable time and computational resources. Hence, the trade-off in this case is performance for confidentiality.<br>零知识证明（ZKP）是正在探索解决该问题的另一个研究领域，目前需权衡的是计算ZKP需要相当多的时间和计算资源。 因此在这种情况下需要权衡机密性的性能。</p>
+<p>In a permissioned context that can leverage alternate forms of consensus, one might explore approaches that restrict the distribution of confidential information exclusively to authorized nodes.<br>在可以利用其他形式共识的要许可环境中，对于限制机密信息的分发可以探索一种可能的方法方法是仅限于授权节点。</p>
+<p>Hyperledger Fabric, being a permissioned platform, enables confidentiality through its channel architecture. Basically, participants on a Fabric network can establish a “channel” between the subset of participants that should be granted visibility to a particular set of transactions. Think of this as a network overlay. Thus, only those nodes that participate in a channel have access to the smart contract (chaincode) and data transacted, preserving the privacy and confidentiality of both.<br>Hyperledger Fabric是一个要许可的平台，通过其通道（channel）架构实现机密性。 基本上，Fabric网络上的参与者可以在参与者子集之间建立只有得到许可的特定交易集才可见的“通道”。 这可以认为是一个网络罩子。 因此只有进入通道的节点才能访问智能合约（链代码）和数据交易，从而保护两者的隐私和机密性。</p>
+<p>To improve upon its privacy and confidentiality capabilities, Fabric has added support for private data and is working on zero knowledge proofs (ZKP) available in the future. More on this as it becomes available.<br>为了提高其隐私和机密性能力，Fabric增加了对私有数据的支持，并且正在开发未来可用的零知识证明（ZKP）。 这方面再做得多一点就会变得可用。</p>
+<p>可插拔共识 (Pluggable Consensus)</p>
+<p>The ordering of transactions is delegated to a modular component for consensus that is logically decoupled from the peers that execute transactions and maintain the ledger. Specifically, the ordering service. Since consensus is modular, its implementation can be tailored to the trust assumption of a particular deployment or solution. This modular architecture allows the platform to rely on well-established toolkits for CFT (crash fault-tolerant) or BFT (byzantine fault-tolerant) ordering.<br>交易的排序被委托给模块化组件以实现共识，这在逻辑上与执行交易和维护帐本的节点分离。 具体来说就是排序服务。 由于共识是模块化的，因此可以根据特定部署或解决方案的信任假设来定制其实现。 这种模块化架构允许平台依赖完善的工具包进行CFT（碰撞容错）或BFT（拜占庭容错）来排序。</p>
+<p>In the currently available releases, Fabric offers a CFT ordering service implemented with Kafka and Zookeeper. In subsequent releases, Fabric will deliver a Raft consensus ordering service implemented with etcd/Raft and a fully decentralized BFT ordering service.<br>在当前可用的版本中，Fabric提供了使用Kafka和Zookeeper实现的CFT排序服务。 在随后的版本中，Fabric将提供一个Raft共识排序服务，实现了etcd / Raft和完全分散的BFT排序服务。</p>
+<p>Note also that these are not mutually exclusive. A Fabric network can have multiple ordering services supporting different applications or application requirements.<br>另外请注意，这些并不相互排斥。 Fabric网络可以具有多种排序服务，支持不同的应用或应用需求。</p>
+<p>性能和规模 (Performance and Scalability)</p>
+<p>Performance of a blockchain platform can be affected by many variables such as transaction size, block size, network size, as well as limits of the hardware, etc. The Hyperledger community is currently developing a draft set of measures within the Performance and Scale working group, along with a corresponding implementation of a benchmarking framework called Hyperledger Caliper.<br>区块链平台的性能可能会受到许多变数的影响，例如交易大小、区块大小、网络大小以及硬件限制等。 Hyperledger社区目前正在性能和规模工作组内开发一套度量草案 ，以及相应的叫做Hyperledger Caliper的基准框架实现。</p>
+<p>While that work continues to be developed and should be seen as a definitive measure of blockchain platform performance and scale characteristics, a team from IBM Research has published a peer reviewed paper that evaluated the architecture and performance of Hyperledger Fabric. The paper offers an in-depth discussion of the architecture of Fabric and then reports on the team’s performance evaluation of the platform using a preliminary release of Hyperledger Fabric v1.1.<br>虽然这项工作仍在继续发展中，而且应该被视为区块链平台性能和规模特征的权威度量标准，IBM Research的一个团队发表了一份同行评审文章，评估了Hyperledger Fabric的架构和性能。 文中对Fabric的体系结构进行了深入讨论，然后报告了团队使用Hyperledger Fabric v1.1的初步版本对平台的性能评估。</p>
+<p>The benchmarking efforts that the research team did yielded a significant number of performance improvements for the Fabric v1.1.0 release that more than doubled the overall performance of the platform from the v1.0.0 release levels.<br>研究团队所做的基准测试努力为Fabric v1.1.0版本带来了大量的性能改进，在v1.0.0版本的水平上平台的整体性能提高了一倍以上。</p>
+<p>结论 (Conclusion)</p>
+<p>Any serious evaluation of blockchain platforms should include Hyperledger Fabric in its short list.<br>任何对区块链平台的严格评测都应该在关键名单中包含Hyperledger Fabric。</p>
+<p>Combined, the differentiating capabilities of Fabric make it a highly scalable system for permissioned blockchains supporting flexible trust assumptions that enable the platform to support a wide range of industry use cases ranging from government, to finance, to supply-chain logistics, to healthcare and so much more.<br>Fabric可组合的差异化能力使其成为一个高度可伸缩的要许可区块链系统，用于支持灵活的信任假设，使该平台能够支持从政府到金融、供应链物流、医疗保健和更多的行业用例。</p>
+<p>More importantly, Hyperledger Fabric is the most active of the (currently) ten Hyperledger projects. The community building around the platform is growing steadily, and the innovation delivered with each successive release far out-paces any of the other enterprise blockchain platforms.<br>更重要的是，Hyperledger Fabric是（当前）十个Hyperledger项目中最活跃的。 围绕平台的社区建设正在稳步增长，各个持续版本提供的创新远远超过任何其他企业级区块链平台。</p>
+<p>感谢 (Acknowledgement)</p>
+<p>The preceding is derived from the peer reviewed “Hyperledger Fabric: A Distributed Operating System for Permissioned Blockchains” - Elli Androulaki, Artem Barger, Vita Bortnikov, Christian Cachin, Konstantinos Christidis, Angelo De Caro, David Enyeart, Christopher Ferris, Gennady Laventman, Yacov Manevich, Srinivasan Muralidharan, Chet Murthy, Binh Nguyen, Manish Sethi, Gari Singh, Keith Smith, Alessandro Sorniotti, Chrysoula Stathakopoulou, Marko Vukolic, Sharon Weed Cocco, Jason Yellick<br>前述的内容都来自同行评审“Hyperledger Fabric：一个要许可的区块链分布式操作系统” </p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2018/12/05/python-学画图/">python 学画图</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-12-05
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip install numpy</span><br><span class="line">pip install scipy</span><br><span class="line">sudo apt-get install python-matplotlib</span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2018/12/01/learn-febric-02-Building-Your-First-Network/">learn febric 02 Building Your First Network</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-12-01
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>参照官网：<br><a href="https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html" target="_blank" rel="noopener">https://hyperledger-fabric.readthedocs.io/en/latest/build_network.html</a></p>
+<p> We provide a fully annotated script - byfn.sh - that leverages these Docker images to quickly bootstrap a Hyperledger Fabric network comprised of 4 peers representing two different organizations, and an orderer node. It will also launch a container to run a scripted execution that will join peers to a channel, deploy and instantiate chaincode and drive execution of transactions against the deployed chaincode.</p>
+<p>就是说这个脚本会启动四个 peer，代表两个组织、一个 orderer 节点。它会启动一个容器，容器会执行一个脚本：把 peer 连接到 channel， 部署并实例化链码，然后针对部署的链码发起交易的执行。</p>
+<p>If you choose not to supply a channel name, then the script will use a default name of mychannel. The CLI timeout parameter (specified with the -t flag) is an optional value; if you choose not to set it, then the CLI will give up on query requests made after the default setting of 10 seconds.</p>
+<p>不提供 -c channel 名字，缺省创建mychannel</p>
+<ul>
+<li>Generate Network Artifacts 创建第一个网络</li>
+</ul>
+<p>执行<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">./byfn.sh generate</span><br></pre></td></tr></table></figure></p>
+<p>瞬间执行了好多东西，不知道干啥了</p>
+<p>This first step generates all of the certificates and keys for our various network entities, the genesis block used to bootstrap the ordering service, and a collection of configuration transactions required to configure a Channel.<br>应该是创建了：所有网络实体的证书、密钥，启动ordering 服务的创世块，以及一系列配置Channel所需要的交易配置信息？？</p>
+<ul>
+<li>Bring Up the Network<br>把这个网络跑起来<br>Next, you can bring the network up with one of the following commands:<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">./byfn.sh up</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这个命令会编译Golang链码镜像，然后运行相应的容器。</p>
+<p>The logs will continue from there. This will launch all of the containers, and then drive a complete end-to-end application scenario. </p>
+<p>注意：<br>只能同时启动一个，除非你把当前的删掉并重新创建网络<br>Do not run both of these commands. Only one language can be tried unless you bring down and recreate the network between.</p>
+<p>The above command will compile Golang chaincode images and spin up the corresponding containers. Go is the default chaincode language, however there is also support for Node.js and Java chaincode. If you’d like to run through this tutorial with node chaincode, pass the following command instead:<br>Go是缺省链码开发语言，其实还支持nodejs java, 如果愿意可以加上 -l node 执行nodejs的链码镜像<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># we use the -l flag to specify the chaincode language</span><br><span class="line"># forgoing the -l flag will default to Golang</span><br><span class="line">./byfn.sh up -l java</span><br><span class="line"></span><br><span class="line">./byfn.sh up -l node</span><br></pre></td></tr></table></figure></p>
+<p>跑完后有这么多docker<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CONTAINER ID        IMAGE                                                                                                  COMMAND                  CREATED             STATUS              PORTS                                              NAMES</span><br><span class="line">0ce3814812fd        dev-peer1.org2.example.com-mycc-1.0-26c2ef32838554aac4f7ad6f100aca865e87959c9a126e86d764c8d01f8346ab   &quot;chaincode -peer.add…&quot;   6 minutes ago       Up 7 minutes                                                           dev-peer1.org2.example.com-mycc-1.0</span><br><span class="line">3d53d2a05872        dev-peer0.org1.example.com-mycc-1.0-384f11f484b9302df90b453200cfb25174305fce8f53f4e94d45ee3b6cab0ce9   &quot;chaincode -peer.add…&quot;   7 minutes ago       Up 7 minutes                                                           dev-peer0.org1.example.com-mycc-1.0</span><br><span class="line">72a9c0727267        dev-peer0.org2.example.com-mycc-1.0-15b571b3ce849066b7ec74497da3b27e54e0df1345daff3951b94245ce09c42b   &quot;chaincode -peer.add…&quot;   8 minutes ago       Up 8 minutes                                                           dev-peer0.org2.example.com-mycc-1.0</span><br><span class="line">b045f65f36f4        hyperledger/fabric-tools:latest                                                                        &quot;/bin/bash&quot;              9 minutes ago       Up 9 minutes                                                           cli</span><br><span class="line">84f8c3649564        hyperledger/fabric-peer:latest                                                                         &quot;peer node start&quot;        9 minutes ago       Up 9 minutes        0.0.0.0:9051-&gt;7051/tcp, 0.0.0.0:9053-&gt;7053/tcp     peer0.org2.example.com</span><br><span class="line">ddd5b3942165        hyperledger/fabric-peer:latest                                                                         &quot;peer node start&quot;        9 minutes ago       Up 9 minutes        0.0.0.0:10051-&gt;7051/tcp, 0.0.0.0:10053-&gt;7053/tcp   peer1.org2.example.com</span><br><span class="line">81b3285302bf        hyperledger/fabric-peer:latest                                                                         &quot;peer node start&quot;        9 minutes ago       Up 9 minutes        0.0.0.0:8051-&gt;7051/tcp, 0.0.0.0:8053-&gt;7053/tcp     peer1.org1.example.com</span><br><span class="line">86ebd0fc4588        hyperledger/fabric-orderer:latest                                                                      &quot;orderer&quot;                9 minutes ago       Up 9 minutes        0.0.0.0:7050-&gt;7050/tcp                             orderer.example.com</span><br><span class="line">8b48b3ab2880        hyperledger/fabric-peer:latest                                                                         &quot;peer node start&quot;        9 minutes ago       Up 9 minutes        0.0.0.0:7051-&gt;7051/tcp, 0.0.0.0:7053-&gt;7053/tcp     peer0.org1.example.com</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>停止（或者删除）网络 Bring Down the Network<br>Finally, let’s bring it all down so we can explore the network setup one step at a time. The following will kill your containers, remove the crypto material and four artifacts, and delete the chaincode images from your Docker Registry:<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">./byfn.sh down</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>执行了，啥都删了，那些容器都没有了</p>
+<p>If you’d like to learn more about the underlying tooling and bootstrap mechanics, continue reading. In these next sections we’ll walk through the various steps and requirements to build a fully-functional Hyperledger Fabric network.</p>
+<p>继续阅读，可以学习更多的底层工具、启动引导技术。下面我们走一遍各种方法、需求来创建一个全功能的超级账本网络</p>
+<p>The manual steps outlined below assume that the FABRIC_LOGGING_SPEC in the cli container is set to DEBUG. You can set this by modifying the docker-compose-cli.yaml file in the first-network directory. e.g.<br>后面要把cli 容器设置成 Debug 模式<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cli:</span><br><span class="line">  container_name: cli</span><br><span class="line">  image: hyperledger/fabric-tools:$IMAGE_TAG</span><br><span class="line">  tty: true</span><br><span class="line">  stdin_open: true</span><br><span class="line">  environment:</span><br><span class="line">    - GOPATH=/opt/gopath</span><br><span class="line">    - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock</span><br><span class="line">    - FABRIC_LOGGING_SPEC=DEBUG</span><br><span class="line">    #- FABRIC_LOGGING_SPEC=INFO</span><br></pre></td></tr></table></figure></p>
+<p>我没有找到 FABRIC_LOGGING_SPEC ，看到只有<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#- CORE_LOGGING_LEVEL=DEBUG</span><br><span class="line">- CORE_LOGGING_LEVEL=INFO</span><br></pre></td></tr></table></figure></p>
+<p>但我仍然添加了 FABRIC_LOGGING_SPEC=DEBUG</p>
+<h2 id="加密生成器-Crypto-Generator"><a href="#加密生成器-Crypto-Generator" class="headerlink" title="加密生成器 Crypto Generator"></a>加密生成器 Crypto Generator</h2><p>We will use the cryptogen tool to generate the cryptographic material (x509 certs and signing keys) for our various network entities. These certificates are representative of identities, and they allow for sign/verify authentication to take place as our entities communicate and transact.<br>我们用它生成各种网络实体需要的加密素材（就是证书、密钥）。这些证书是身份的代表：他们用来在实体间通讯和交易的时候做加密/认证。</p>
+<h3 id="加密是怎么工作的-How-does-it-work"><a href="#加密是怎么工作的-How-does-it-work" class="headerlink" title="加密是怎么工作的 How does it work?"></a>加密是怎么工作的 How does it work?</h3><p>Cryptogen consumes a file - crypto-config.yaml - that contains the network topology and allows us to generate a set of certificates and keys for both the Organizations and the components that belong to those Organizations. Each Organization is provisioned a unique root certificate (ca-cert) that binds specific components (peers and orderers) to that Org. By assigning each Organization a unique CA certificate, we are mimicking a typical network where a participating Member would use its own Certificate Authority. Transactions and communications within Hyperledger Fabric are signed by an entity’s private key (keystore), and then verified by means of a public key (signcerts).<br>cryptogen 使用 crypto-config.yml 做配置文件，配置文件中包含了网络拓扑，让我们能为两个组织和他们的组织成员生成一系列证书和密钥。<br>每个组织有一个自己的唯一根证书，根证书绑定组织成员（peers orderers）。<br>由于每个组织一个唯一的CA证书，我们就模拟了一个典型的网络，参与的成员必须使用他们自己组织的CA （证书授权）。<br>超级账本上的交易和通讯采用实体的私钥来签名，并用他自己的公钥校验。</p>
+<p>orderer 名字从配置文件里根据 Specs/Hostname 及 Domain 来确定<br>The naming convention for a network entity is as follows - “{ {.Hostname} }.{ {.Domain} }”. So using our ordering node as a reference point, we are left with an ordering node named - orderer.example.com that is tied to an MSP ID of Orderer. This file contains extensive documentation on the definitions and syntax. You can also refer to the Membership Service Providers (MSP) documentation for a deeper dive on MSP.</p>
+<p>After we run the cryptogen tool, the generated certificates and keys will be saved to a folder titled crypto-config.</p>
+<h2 id="交易配置生成器-Configuration-Transaction-Generator"><a href="#交易配置生成器-Configuration-Transaction-Generator" class="headerlink" title="交易配置生成器 Configuration Transaction Generator"></a>交易配置生成器 Configuration Transaction Generator</h2><p>configtxgen 用来创建四个配置<br>The configtxgen tool is used to create four configuration artifacts:</p>
+<ul>
+<li>orderer 【genesis block】 创世块</li>
+<li>channel 【configuration transaction channel】配置交易（还是交易配置）</li>
+<li>and two 【anchor peer transactions】 - one for each Peer Org. 这个看不懂</li>
+</ul>
+<p>没看懂后面两个<br>The orderer block is the Genesis Block for the ordering service, and the channel configuration transaction file is broadcast to the orderer at Channel creation time. The anchor peer transactions, as the name might suggest, specify each Org’s Anchor Peer on this channel.</p>
+<h3 id="交易配置生成器是怎么工作的-How-does-it-work"><a href="#交易配置生成器是怎么工作的-How-does-it-work" class="headerlink" title="交易配置生成器是怎么工作的 How does it work?"></a>交易配置生成器是怎么工作的 How does it work?</h3><p>这玩意使用 configtx.yaml 作为配置文件，定义了网络中的成员定义。<br>包括三个成员：一个 Orderer 组织，两个 Peer 组织。<br>每个管理并维护连个 peer 节点。<br>这个文件还定义了一个 “联盟” SampleConsortium, 包括两个 Peer 组织<br>Configtxgen consumes a file - configtx.yaml - that contains the definitions for the sample network. There are three members - one Orderer Org (OrdererOrg) and two Peer Orgs (Org1 &amp; Org2) each managing and maintaining two peer nodes. This file also specifies a consortium - SampleConsortium - consisting of our two Peer Orgs. Pay specific attention to the “Profiles” section at the top of this file. You will notice that we have two unique headers. One for the orderer genesis block - TwoOrgsOrdererGenesis - and one for our channel - TwoOrgsChannel.</p>
+<p>These headers are important, as we will pass them in as arguments when we create our artifacts.</p>
+<p><em>Note</em><br>sample联盟是在系统级定义的，然后再 channel 级别引用。 Channels 是联盟的一个概念，所有联盟必须在广义网络范围内定义。<br>这里还有连个值得注意的规范，第一就是为每个组织定义了 anchor peers；第二个就是制定了每个组织的 MSP directory，就是为每个组织 <em>在创世块中</em> 保存根证书。这样，每个网络实体跟 ordering service 通讯都可以用它的数字签名校验了。</p>
+<p>Notice that our SampleConsortium is defined in the system-level profile and then referenced by our channel-level profile. Channels exist within the purview of a consortium, and all consortia must be defined in the scope of the network at large.<br>This file also contains two additional specifications that are worth noting. Firstly, we specify the anchor peers for each Peer Org (peer0.org1.example.com &amp; peer0.org2.example.com). Secondly, we point to the location of the MSP directory for each member, in turn allowing us to store the root certificates for each Org in the orderer genesis block. This is a critical concept. Now any network entity communicating with the ordering service can have its digital signature verified.</p>
+<h2 id="运行工具-Run-the-tools"><a href="#运行工具-Run-the-tools" class="headerlink" title="运行工具 Run the tools"></a>运行工具 Run the tools</h2><p>既可以手动执行来生成证书和各种配置。当然也可以是这使用 byfn.sh 完成这些任务<br>You can manually generate the certificates/keys and the various configuration artifacts using the configtxgen and cryptogen commands. Alternately, you could try to adapt the byfn.sh script to accomplish your objectives.</p>
+<h2 id="手动创建-Manually-generate-the-artifacts"><a href="#手动创建-Manually-generate-the-artifacts" class="headerlink" title="手动创建 Manually generate the artifacts"></a>手动创建 Manually generate the artifacts</h2><p>其实可以参考 byfn.sh 脚本中的 generateCerts 来生成证书，方便期间还是在这里做个说明<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">../bin/cryptogen generate --config=./crypto-config.yaml</span><br></pre></td></tr></table></figure></p>
+<p>结果就是<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">org1.example.com</span><br><span class="line">org2.example.com</span><br></pre></td></tr></table></figure></p>
+<p>证书就生成到 crypto-config 目录，在 first-network/crypto-config<br>生成的目录结构基本和配置文件的目录结构差不多。</p>
+<p>下面，我们告诉 configtxgen 到哪里去找 configtx.yaml<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export FABRIC_CFG_PATH=$PWD</span><br></pre></td></tr></table></figure></p>
+<p>然后，执行  configtxgen 来创建 orderer 创世块:<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">configtxgen -profile TwoOrgsOrdererGenesis -channelID byfn-sys-channel -outputBlock ./channel-artifacts/genesis.block</span><br></pre></td></tr></table></figure></p>
+<p>输出<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2018-12-01 22:29:19.647 CST [common/tools/configtxgen] main -&gt; INFO 001 Loading configuration</span><br><span class="line">2018-12-01 22:29:19.683 CST [common/tools/configtxgen] doOutputBlock -&gt; INFO 002 Generating genesis block</span><br><span class="line">2018-12-01 22:29:19.685 CST [common/tools/configtxgen] doOutputBlock -&gt; INFO 003 Writing genesis block</span><br><span class="line"></span><br><span class="line">#看看结果</span><br><span class="line">ll channel-artifacts</span><br><span class="line">-rw-r--r--   1 whx  staff  12770 12  1 22:29 genesis.block</span><br></pre></td></tr></table></figure></p>
+<h2 id="创建-一个-Channel-Configuration-Transaction"><a href="#创建-一个-Channel-Configuration-Transaction" class="headerlink" title="创建 一个 Channel Configuration Transaction"></a>创建 一个 Channel Configuration Transaction</h2><p>下面创建 channel transaction artifact.<br>确保替换 $CHANNEL_NAME 或者设置 CHANNEL_NAME 为环境变量:</p>
+<h1 id="The-channel-tx-artifact-contains-the-definitions-for-our-sample-channel"><a href="#The-channel-tx-artifact-contains-the-definitions-for-our-sample-channel" class="headerlink" title="The channel.tx artifact contains the definitions for our sample channel"></a>The channel.tx artifact contains the definitions for our sample channel</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export CHANNEL_NAME=mychannel  </span><br><span class="line">configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME</span><br></pre></td></tr></table></figure>
+<p>输出<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2018-12-01 22:34:48.777 CST [common/tools/configtxgen] main -&gt; INFO 001 Loading configuration</span><br><span class="line">2018-12-01 22:34:48.808 CST [common/tools/configtxgen] doOutputChannelCreateTx -&gt; INFO 002 Generating new channel configtx</span><br><span class="line">2018-12-01 22:34:48.812 CST [common/tools/configtxgen] doOutputChannelCreateTx -&gt; INFO 003 Writing new channel tx</span><br><span class="line"></span><br><span class="line">#看下结果</span><br><span class="line">ll channel-artifacts</span><br><span class="line">-rw-r--r--   1 whx  staff    346 12  1 22:34 channel.tx</span><br><span class="line">-rw-r--r--   1 whx  staff  12770 12  1 22:29 genesis.block</span><br></pre></td></tr></table></figure></p>
+<p>下面，我们定义 网络中组织1的 anchor peer<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org1MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org1MSP</span><br><span class="line"></span><br><span class="line">2018-12-01 22:39:15.789 CST [common/tools/configtxgen] main -&gt; INFO 001 Loading configuration</span><br><span class="line">2018-12-01 22:39:15.831 CST [common/tools/configtxgen] doOutputAnchorPeersUpdate -&gt; INFO 002 Generating anchor peer update</span><br><span class="line">2018-12-01 22:39:15.831 CST [common/tools/configtxgen] doOutputAnchorPeersUpdate -&gt; INFO 003 Writing anchor peer update</span><br></pre></td></tr></table></figure></p>
+<p>紧接着就是组织2</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org2MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org2MSP</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2018-12-01 22:39:24.500 CST [common/tools/configtxgen] main -&gt; INFO 001 Loading configuration</span><br><span class="line">2018-12-01 22:39:24.535 CST [common/tools/configtxgen] doOutputAnchorPeersUpdate -&gt; INFO 002 Generating anchor peer update</span><br><span class="line">2018-12-01 22:39:24.535 CST [common/tools/configtxgen] doOutputAnchorPeersUpdate -&gt; INFO 003 Writing anchor peer update</span><br></pre></td></tr></table></figure>
+<p>看看生成的内容<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ll channel-artifacts</span><br><span class="line">-rw-r--r--   1 whx  staff    284 12  1 22:39 Org1MSPanchors.tx</span><br><span class="line">-rw-r--r--   1 whx  staff    284 12  1 22:39 Org2MSPanchors.tx</span><br><span class="line">-rw-r--r--   1 whx  staff    346 12  1 22:34 channel.tx</span><br><span class="line">-rw-r--r--   1 whx  staff  12770 12  1 22:29 genesis.block</span><br></pre></td></tr></table></figure></p>
+<h2 id="启动网络-Start-the-network"><a href="#启动网络-Start-the-network" class="headerlink" title="启动网络 Start the network"></a>启动网络 Start the network</h2><p>We will leverage a script to spin up our network. The docker-compose file references the images that we have previously downloaded, and bootstraps the orderer with our previously generated genesis.block.</p>
+<p>为了剖析每一步的功能，我们一步步通过命令行手动执行。<br>受限我们启动网络<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker-compose -f docker-compose-cli.yaml up -d</span><br><span class="line"></span><br><span class="line">Creating network &quot;net_byfn&quot; with the default driver</span><br><span class="line">Creating volume &quot;net_orderer.example.com&quot; with default driver</span><br><span class="line">Creating volume &quot;net_peer0.org1.example.com&quot; with default driver</span><br><span class="line">Creating volume &quot;net_peer1.org1.example.com&quot; with default driver</span><br><span class="line">Creating volume &quot;net_peer0.org2.example.com&quot; with default driver</span><br><span class="line">Creating volume &quot;net_peer1.org2.example.com&quot; with default driver</span><br><span class="line">Creating orderer.example.com    ... done</span><br><span class="line">Creating peer1.org1.example.com ... done</span><br><span class="line">Creating peer0.org2.example.com ... done</span><br><span class="line">Creating peer0.org1.example.com ... done</span><br><span class="line">Creating peer1.org2.example.com ... done</span><br><span class="line">Creating cli                    ... done</span><br></pre></td></tr></table></figure></p>
+<p>起了 orderer 和 四个 peers<br>如果想看看网络实时日志，就不要加 -d 参数。If you let the logs stream, 就打开第二个 terminal 执行 CLI calls .</p>
+<h2 id="环境变量-Environment-variables"><a href="#环境变量-Environment-variables" class="headerlink" title="环境变量 Environment variables"></a>环境变量 Environment variables</h2><p>下面的 CLI 命令是针对 peer0.org1.example.com 的, 我们需要设定如下四个环境变量用来执行我们的命令。<br>这些变量会带入 CLI 容器, 因为我们操作的时候不用管就行。<br>但是如果想要对不同的 peers 执行命令，就需要修改这四个环境变量<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Environment variables for PEER0</span><br><span class="line"></span><br><span class="line">CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp</span><br><span class="line">CORE_PEER_ADDRESS=peer0.org1.example.com:7051</span><br><span class="line">CORE_PEER_LOCALMSPID=&quot;Org1MSP&quot;</span><br><span class="line">CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt</span><br></pre></td></tr></table></figure></p>
+<h2 id="创建、加入-Channel-Create-amp-Join-Channel"><a href="#创建、加入-Channel-Create-amp-Join-Channel" class="headerlink" title="创建、加入 Channel Create &amp; Join Channel"></a>创建、加入 Channel Create &amp; Join Channel</h2><p>回顾前面使用 configtxgen 创建 channel configuration transaction 。<br>通过使用 configtx.xml 中相同或者不同的 profiles ，我们可以重复创建更多的 channel configuration transactions。<br>然后就可以重复上面介绍的方法在网络中创建其它的channel。<br>我们将使用 docker exec 命令进入 CLI 容器<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker exec -it cli bash</span><br><span class="line"></span><br><span class="line">root@6248103d0d59:/opt/gopath/src/github.com/hyperledger/fabric/peer#</span><br></pre></td></tr></table></figure></p>
+<p>下一步，我们想要把我们前面创建的 channel configuration transaction artifact 发送给 orderer ，作为创建 channel 的请求。<br>我们用 -c 来设置 channel name<br>-f 设置  channel configuration transaction 这里是 channel.tx<br>你可以用你自己的名字<br> with the -f flag. In this case it is channel.tx, however you can mount your own configuration transaction with a different name. Once again we will set the CHANNEL_NAME environment variable within our CLI container so that we don’t have to explicitly pass this argument. Channel names must be all lower case, less than 250 characters long and match the regular expression [a-z][a-z0-9.-]*.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export CHANNEL_NAME=mychannel</span><br><span class="line"></span><br><span class="line"># the channel.tx file is mounted in the channel-artifacts directory within your CLI container</span><br><span class="line"># as a result, we pass the full path for the file</span><br><span class="line"># we also pass the path for the orderer ca-cert in order to verify the TLS handshake</span><br><span class="line"># be sure to export or replace the $CHANNEL_NAME variable appropriately</span><br><span class="line"></span><br><span class="line">peer channel create -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem</span><br><span class="line"></span><br><span class="line">2018-12-02 00:44:23.818 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2018-12-02 00:44:23.887 UTC [cli/common] readBlock -&gt; INFO 002 Received block: 0</span><br><span class="line"></span><br><span class="line">ll</span><br><span class="line">drwxr-xr-x  7 root root   224 Dec  1 14:39 channel-artifacts/</span><br><span class="line">drwxr-xr-x  4 root root   128 Dec  1 14:24 crypto/</span><br><span class="line">-rw-r--r--  1 root root 15778 Dec  2 00:44 mychannel.block</span><br><span class="line">drwxr-xr-x 10 root root   320 Nov 30 06:27 scripts/</span><br></pre></td></tr></table></figure></p>
+<p>这时候当前目录多了一个文件 mychannel.block<br>这就是一个创世块，用来连接 channel 的。</p>
+<p>接下来我们把 peer0.org1.example.com 接入到 channel.<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># By default, this joins ``peer0.org1.example.com`` only</span><br><span class="line"># the &lt;channel-ID.block&gt; was returned by the previous command</span><br><span class="line"># if you have not modified the channel name, you will join with mychannel.block</span><br><span class="line"># if you have created a different channel name, then pass in the appropriately named block</span><br><span class="line"></span><br><span class="line"> peer channel join -b mychannel.block</span><br><span class="line"></span><br><span class="line"> 2018-12-02 00:50:39.672 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2018-12-02 00:50:39.748 UTC [channelCmd] executeJoin -&gt; INFO 002 Successfully submitted proposal to join channel</span><br></pre></td></tr></table></figure></p>
+<p>修改上面的环境变量，可以把其它几个peer 连接到 channel 上。</p>
+<p>我们暂时只把 peer0.org2.example.com 接入 channel ，这样我们就可以更新channel 的  anchor peer definitions .<br>命令如下:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp CORE_PEER_ADDRESS=peer0.org2.example.com:7051 CORE_PEER_LOCALMSPID=&quot;Org2MSP&quot; CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt peer channel join -b mychannel.block</span><br><span class="line">#其实就是在一行中把环境变量直接设置好，带入peer 命令中，分开就是</span><br><span class="line"></span><br><span class="line">export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp </span><br><span class="line"></span><br><span class="line">export CORE_PEER_ADDRESS=peer0.org2.example.com:7051 </span><br><span class="line"></span><br><span class="line">export CORE_PEER_LOCALMSPID=&quot;Org2MSP&quot; </span><br><span class="line"></span><br><span class="line">export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt </span><br><span class="line"></span><br><span class="line">peer channel join -b mychannel.block</span><br><span class="line"></span><br><span class="line"># 结果</span><br><span class="line">2018-12-02 01:00:42.483 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2018-12-02 01:00:42.549 UTC [channelCmd] executeJoin -&gt; INFO 002 Successfully submitted proposal to join channel</span><br></pre></td></tr></table></figure>
+<p>第二个就不用再创建channel了，因为第一个已经创建了，直接使用第一次返回的 mychannel.block 来加入就行了</p>
+<h2 id="更新-anchor-peers"><a href="#更新-anchor-peers" class="headerlink" title="更新 anchor peers"></a>更新 anchor peers</h2><p>anchor peers 是啥意思？没太搞明白<br>channel The following commands are channel updates and they will propagate to the definition of the channel. In essence, we adding additional configuration information on top of the channel’s genesis block. Note that we are not modifying the genesis block, but simply adding deltas into the chain that will define the anchor peers.</p>
+<p>更新 channel definition ，定义 Org1 的 anchor peer 为 peer0.org1.example.com:<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/Org1MSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem</span><br><span class="line"></span><br><span class="line">2018-12-02 02:32:20.264 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2018-12-02 02:32:20.298 UTC [channelCmd] update -&gt; INFO 002 Successfully submitted channel update</span><br></pre></td></tr></table></figure></p>
+<p>然后更新 Org2 的 anchor peer for 为 peer0.org2.example.com. 这次得带着环境变量<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp CORE_PEER_ADDRESS=peer0.org2.example.com:7051 CORE_PEER_LOCALMSPID=&quot;Org2MSP&quot; CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/Org2MSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem</span><br><span class="line"></span><br><span class="line">2018-12-02 02:33:43.892 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2018-12-02 02:33:43.925 UTC [channelCmd] update -&gt; INFO 002 Successfully submitted channel update</span><br></pre></td></tr></table></figure></p>
+<h2 id="安装并实例化-Chaincode-Install-amp-Instantiate-Chaincode"><a href="#安装并实例化-Chaincode-Install-amp-Instantiate-Chaincode" class="headerlink" title="安装并实例化 Chaincode  Install &amp; Instantiate Chaincode"></a>安装并实例化 Chaincode  Install &amp; Instantiate Chaincode</h2><p>应用程序通过 Chaincode 跟账本的区块链交互，因此我们必须在每个 peer 上安装 Chaincode，Chaincode 会执行并且为我们的交易背书，然后在 channel上实例化 chaincode<br>Applications interact with the blockchain ledger through chaincode. As such we need to install the chaincode on every peer that will execute and endorse our transactions, and then instantiate the chaincode on the channel.</p>
+<p>我们首先在四个 peer 节点中的一个安装  Go, Node.js or Java chaincode 例子。<br>这些命令把特殊的源代码添加到 peer 的文件系统中。<br><em>注意</em></p>
+<p>一个Chinacode 名字只能安装一个版本。peer 文件系统中以 chinacode 名字和版本的方式保存源代码;<br>它是语言无关的。实例化的 Chaincode 容器会反应那个语言安装在 peer 中 。</p>
+<p>Golang<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># this installs the Go chaincode. For go chaincode -p takes the relative path from $GOPATH/src</span><br><span class="line">peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/chaincode_example02/go/</span><br><span class="line">2018-12-02 02:46:15.195 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 001 Using default escc</span><br><span class="line">2018-12-02 02:46:15.196 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 002 Using default vscc</span><br><span class="line">2018-12-02 02:46:15.527 UTC [chaincodeCmd] install -&gt; INFO 003 Installed remotely response:&lt;status:200 payload:&quot;OK&quot; &gt;</span><br></pre></td></tr></table></figure></p>
+<p>也需要在 org2 中安装,如果不安装，后面 invoke 提示失败<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 环境变量</span><br><span class="line">CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp CORE_PEER_ADDRESS=peer0.org2.example.com:7051 CORE_PEER_LOCALMSPID=&quot;Org2MSP&quot; CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt peer chaincode install -n mycc -v 1.0 -p github.com/chaincode/chaincode_example02/go/</span><br><span class="line"></span><br><span class="line">2018-12-02 04:32:29.371 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 001 Using default escc</span><br><span class="line">2018-12-02 04:32:29.371 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 002 Using default vscc</span><br><span class="line">2018-12-02 04:32:29.767 UTC [chaincodeCmd] install -&gt; INFO 003 Installed remotely response:&lt;status:200 payload:&quot;OK&quot; &gt;</span><br></pre></td></tr></table></figure></p>
+<p>Nodejs<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># this installs the Node.js chaincode</span><br><span class="line"># make note of the -l flag to indicate &quot;node&quot; chaincode</span><br><span class="line"># for node chaincode -p takes the absolute path to the node.js chaincode</span><br><span class="line">peer chaincode install -n mycc -v 1.0 -l node -p /opt/gopath/src/github.com/chaincode/chaincode_example02/node/</span><br><span class="line"></span><br><span class="line">2018-12-02 02:46:39.551 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 001 Using default escc</span><br><span class="line">2018-12-02 02:46:39.551 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 002 Using default vscc</span><br><span class="line">2018-12-02 02:46:39.571 UTC [chaincodeCmd] install -&gt; INFO 003 Installed remotely response:&lt;status:500 message:&quot;error installing chaincode code mycc:1.0(chaincode /var/hyperledger/production/chaincodes/mycc.1.0 exists)&quot; &gt; payload:&quot;\n b\300\260V&apos;\311\254\013\376\213L\261\235\207\267ia=\340\020\242kh\266\327D\034\354\230\362\014p\022y\032o\010\364\003\022jerror installing chaincode code mycc:1.0(chaincode /var/hyperledger/production/chaincodes/mycc.1.0 exists)\&quot;\006\022\004lscc&quot;</span><br></pre></td></tr></table></figure></p>
+<p>因为已经安装了 go 语言版本，所以安装nodejs版本的提示出错</p>
+<p>Java<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># make note of the -l flag to indicate &quot;java&quot; chaincode</span><br><span class="line"># for java chaincode -p takes the absolute path to the java chaincode</span><br><span class="line">peer chaincode install -n mycc -v 1.0 -l java -p /opt/gopath/src/github.com/chaincode/chaincode_example02/java/</span><br><span class="line"></span><br><span class="line">2018-12-02 02:49:28.758 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 001 Using default escc</span><br><span class="line">2018-12-02 02:49:28.758 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 002 Using default vscc</span><br><span class="line">2018-12-02 02:49:28.809 UTC [chaincodeCmd] install -&gt; INFO 003 Installed remotely response:&lt;status:500 message:&quot;error installing chaincode code mycc:1.0(chaincode /var/hyperledger/production/chaincodes/mycc.1.0 exists)&quot; &gt; payload:&quot;\n \026&apos;\027\260\334\016\371\006x`\237\354P\374\337\017$&#125;\320\261\353\335\234&#125;t\317\241\324Q\263Q\300\022y\032o\010\364\003\022jerror installing chaincode code mycc:1.0(chaincode /var/hyperledger/production/chaincodes/mycc.1.0 exists)\&quot;\006\022\004lscc&quot;</span><br></pre></td></tr></table></figure></p>
+<p>同样，安装java版本的也出错了</p>
+<p>接着，在网络中实例化 chaincode，这将会在网络中初始化 chaincode，设置 chaincode的背书策略，然后为目标 peer 启动一个 chaincode 容器 。<br>注意 -P 参数，这是我们的策略，它指定这个交易背书的 chaincode 验证策略级别<br>下面的命令中可以看到我们的策略是 -P “AND (‘Org1MSP.peer’,’Org2MSP.peer’)”.<br>这意味着这个背书需要 Org1 和 Org2 同时确认。如果我们用了“OR”，就只需要其中一个确认就可以。</p>
+<h3 id="Golang"><a href="#Golang" class="headerlink" title="Golang"></a>Golang</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># be sure to replace the $CHANNEL_NAME environment variable if you have not exported it</span><br><span class="line"># if you did not install your chaincode with a name of mycc, then modify that argument as well</span><br><span class="line"></span><br><span class="line">peer chaincode instantiate -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc -v 1.0 -c &apos;&#123;&quot;Args&quot;:[&quot;init&quot;,&quot;a&quot;, &quot;100&quot;, &quot;b&quot;,&quot;200&quot;]&#125;&apos; -P &quot;AND (&apos;Org1MSP.peer&apos;,&apos;Org2MSP.peer&apos;)&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2018-12-02 02:57:35.533 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 001 Using default escc</span><br><span class="line">2018-12-02 02:57:35.533 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 002 Using default vscc</span><br></pre></td></tr></table></figure>
+<p>##Node.js</p>
+<p> 注意<br>实例化Nodejs chaincode 需要点时间，这个命令不是挂起了，而是他要安装 fabric-shim 层，这个image需要编译<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># be sure to replace the $CHANNEL_NAME environment variable if you have not exported it</span><br><span class="line"># if you did not install your chaincode with a name of mycc, then modify that argument as well</span><br><span class="line"># notice that we must pass the -l flag after the chaincode name to identify the language</span><br><span class="line"></span><br><span class="line">peer chaincode instantiate -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc -l node -v 1.0 -c &apos;&#123;&quot;Args&quot;:[&quot;init&quot;,&quot;a&quot;, &quot;100&quot;, &quot;b&quot;,&quot;200&quot;]&#125;&apos; -P &quot;AND (&apos;Org1MSP.peer&apos;,&apos;Org2MSP.peer&apos;)&quot;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><p>注意<br>这个也需要点时间，因为它需要编译 chaincode 并且下载带有 java 环境的 docker 容器<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">peer chaincode instantiate -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc -l java -v 1.0 -c &apos;&#123;&quot;Args&quot;:[&quot;init&quot;,&quot;a&quot;, &quot;100&quot;, &quot;b&quot;,&quot;200&quot;]&#125;&apos; -P &quot;AND (&apos;Org1MSP.peer&apos;,&apos;Org2MSP.peer&apos;)&quot;</span><br></pre></td></tr></table></figure></p>
+<p>如果你想其它的 peers 跟账本交互，就需要把他们加入到 channel 中，然后在相应的 peer 文件系统中安装同样名字、版本、语言的 chaincode。每个 peer 在于 chaincode 交互前将会启动一个 chaincode 容器。<br>再一次，我们要知道的事实： nodejs 镜像编译起来较慢<br>只要 chaincode 在 channel 中实例化了，我们就可以忘记 l flag。我们只需要传入 channel id 和 chaincode 名字</p>
+<h2 id="查询-Query"><a href="#查询-Query" class="headerlink" title="查询 Query"></a>查询 Query</h2><p>我们来查询一下 a 的值，以确认 chaincode 已经正常实例化、状态数据库也 populated(密布、分步、同步)<br>Let’s query for the value of a to make sure the chaincode was properly instantiated and the state DB was populated. The syntax for query is as follows:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># be sure to set the -C and -n flags appropriately</span><br><span class="line">peer chaincode query -C $CHANNEL_NAME -n mycc -c &apos;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;a&quot;]&#125;&apos;</span><br><span class="line"></span><br><span class="line">100</span><br><span class="line"></span><br><span class="line">peer chaincode query -C $CHANNEL_NAME -n mycc -c &apos;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;b&quot;]&#125;&apos;</span><br><span class="line"></span><br><span class="line">200</span><br></pre></td></tr></table></figure>
+<h2 id="Invoke"><a href="#Invoke" class="headerlink" title="Invoke"></a>Invoke</h2><p>从 a 转移 10 到 b，交易会产生一个新的 block ，然后更新状态数据库<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># be sure to set the -C and -n flags appropriately</span><br><span class="line"></span><br><span class="line">peer chaincode invoke -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c &apos;&#123;&quot;Args&quot;:[&quot;invoke&quot;,&quot;a&quot;,&quot;b&quot;,&quot;10&quot;]&#125;&apos;</span><br><span class="line"></span><br><span class="line"># 提示出错了</span><br><span class="line">Error: could not assemble transaction: ProposalResponsePayloads do not match - proposal response: version:1 response:&lt;status:200 &gt; payload:&quot;\n \343\340\037+\317\374\235L\312NCb\0066!j\234\334\263\255Q?ivn\271G\374\006`\247A\022Y\nE\022\024\n\004lscc\022\014\n\n\n\004mycc\022\002\010\003\022-\n\004mycc\022%\n\007\n\001a\022\002\010\003\n\007\n\001b\022\002\010\003\032\007\n\001a\032\00290\032\010\n\001b\032\003210\032\003\010\310\001\&quot;\013\022\004mycc\032\0031.0&quot; endorsement:&lt;endorser:&quot;\n\007Org1MSP\022\252\006-----BEGIN CERTIFICATE-----\nMIICKDCCAc6gAwIBAgIQBJEnZPvyJFY+mpVRXW5JdTAKBggqhkjOPQQDAjBzMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UEAxMTY2Eu\nb3JnMS5leGFtcGxlLmNvbTAeFw0xODEyMDExNDE5MDBaFw0yODExMjgxNDE5MDBa\nMGoxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T\nYW4gRnJhbmNpc2NvMQ0wCwYDVQQLEwRwZWVyMR8wHQYDVQQDExZwZWVyMC5vcmcx\nLmV4YW1wbGUuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEDvZGZr/QfQz4\nzcevok8uwRC9uKrOBsvPzu6XNKyskxD3r+S0GGw4F/5plNJYH2fwWwdE/Lp630g2\ntu0BSFW6IaNNMEswDgYDVR0PAQH/BAQDAgeAMAwGA1UdEwEB/wQCMAAwKwYDVR0j\nBCQwIoAgIidiMO1ijvL6iOrMvOLhe4ymOnTA6HaIplyPBHJTYvwwCgYIKoZIzj0E\nAwIDSAAwRQIhAI8yVRt8eOG2wzKWfNDc7kAIFVFApmDODCa3E20UWL97AiBZ3ddq\ndc64M/vUnn0EvLmHTfTA+ioOLLeeVHu6Vyz+SA==\n-----END CERTIFICATE-----\n&quot; signature:&quot;0E\002!\000\322\372\375I\276\365\257\333\007\240\345(\367\t\264/\304%\344h\347P\021&#123;\334\357N\037\311\363\226z\002 &amp;\346\336]\207J\217\321\024&amp;!\031\337&#123;\023\203P\031\243\256uj\333&apos;\374\366*D\222\341\231\320&quot; &gt;</span><br></pre></td></tr></table></figure></p>
+<p>然后检查估计是需要在 Org2 上安装 Chaincode,就安装了一下</p>
+<p>重新执行<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">peer chaincode invoke -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c &apos;&#123;&quot;Args&quot;:[&quot;invoke&quot;,&quot;a&quot;,&quot;b&quot;,&quot;10&quot;]&#125;&apos;</span><br><span class="line"></span><br><span class="line">2018-12-02 04:35:50.056 UTC [chaincodeCmd] chaincodeInvokeOrQuery -&gt; INFO 001 Chaincode invoke successful. result: status:200</span><br></pre></td></tr></table></figure></p>
+<p>然后再次查询<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">peer chaincode query -C $CHANNEL_NAME -n mycc -c &apos;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;a&quot;]&#125;&apos;</span><br><span class="line">90</span><br></pre></td></tr></table></figure></p>
+<p>这就执行成功了个<br>然后本着测试的精神继续玩，<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 再转 a=&gt;b 2 </span><br><span class="line">peer chaincode invoke -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c &apos;&#123;&quot;Args&quot;:[&quot;invoke&quot;,&quot;a&quot;,&quot;b&quot;,&quot;2&quot;]&#125;&apos;</span><br><span class="line"></span><br><span class="line">2018-12-02 04:38:16.449 UTC [chaincodeCmd] chaincodeInvokeOrQuery -&gt; INFO 001 Chaincode invoke successful. result: status:200</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">peer chaincode query -C $CHANNEL_NAME -n mycc -c &apos;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;a&quot;]&#125;&apos;</span><br><span class="line">88</span><br><span class="line"></span><br><span class="line"># b=&gt;a 3</span><br><span class="line">peer chaincode invoke -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C $CHANNEL_NAME -n mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c &apos;&#123;&quot;Args&quot;:[&quot;invoke&quot;,&quot;b&quot;,&quot;a&quot;,&quot;3&quot;]&#125;&apos;</span><br><span class="line">2018-12-02 04:40:04.542 UTC [chaincodeCmd] chaincodeInvokeOrQuery -&gt; INFO 001 Chaincode invoke successful. result: status:200</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">peer chaincode query -C $CHANNEL_NAME -n mycc -c &apos;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;a&quot;]&#125;&apos;</span><br><span class="line">91</span><br></pre></td></tr></table></figure></p>
+<p>完美</p>
+<h2 id="这到底都干了些什么-What’s-happening-behind-the-scenes"><a href="#这到底都干了些什么-What’s-happening-behind-the-scenes" class="headerlink" title="这到底都干了些什么 What’s happening behind the scenes?"></a>这到底都干了些什么 What’s happening behind the scenes?</h2><p>注意：</p>
+<p>These steps describe the scenario in which script.sh is run by ‘./byfn.sh up’. Clean your network with ./byfn.sh down and ensure this command is active. Then use the same docker-compose prompt to launch your network again</p>
+<ul>
+<li><p>A script - script.sh - is baked inside the CLI container. The script drives the createChannel command against the supplied channel name and uses the channel.tx file for channel configuration.</p>
+</li>
+<li><p>The output of createChannel is a genesis block - &lt;your_channel_name&gt;.block - which gets stored on the peers’ file systems and contains the channel configuration specified from channel.tx.</p>
+</li>
+<li><p>The joinChannel command is exercised for all four peers, which takes as input the previously generated genesis block. This command instructs the peers to join &lt;your_channel_name&gt; and create a chain starting with &lt;your_channel_name&gt;.block.</p>
+</li>
+<li><p>Now we have a channel consisting of four peers, and two organizations. This is our TwoOrgsChannel profile.</p>
+</li>
+<li><p>peer0.org1.example.com and peer1.org1.example.com belong to Org1; peer0.org2.example.com and peer1.org2.example.com belong to Org2</p>
+</li>
+<li><p>These relationships are defined through the crypto-config.yaml and the MSP path is specified in our docker compose.</p>
+</li>
+<li><p>The anchor peers for Org1MSP (peer0.org1.example.com) and Org2MSP (peer0.org2.example.com) are then updated. We do this by passing the Org1MSPanchors.tx and Org2MSPanchors.tx artifacts to the ordering service along with the name of our channel.</p>
+</li>
+<li><p>A chaincode - chaincode_example02 - is installed on peer0.org1.example.com and peer0.org2.example.com</p>
+</li>
+<li><p>The chaincode is then “instantiated” on peer0.org2.example.com. Instantiation adds the chaincode to the channel, starts the container for the target peer, and initializes the key value pairs associated with the chaincode. The initial values for this example are [“a”,”100” “b”,”200”]. This “instantiation” results in a container by the name of dev-peer0.org2.example.com-mycc-1.0 starting.</p>
+</li>
+<li><p>The instantiation also passes in an argument for the endorsement policy. The policy is defined as -P “AND (‘Org1MSP.peer’,’Org2MSP.peer’)”, meaning that any transaction must be endorsed by a peer tied to Org1 and Org2.</p>
+</li>
+<li><p>A query against the value of “a” is issued to peer0.org1.example.com. The chaincode was previously installed on peer0.org1.example.com, so this will start a container for Org1 peer0 by the name of dev-peer0.org1.example.com-mycc-1.0. The result of the query is also returned. No write operations have occurred, so a query against “a” will still return a value of “100”.</p>
+</li>
+<li><p>An invoke is sent to peer0.org1.example.com to move “10” from “a” to “b”<br>The chaincode is then installed on peer1.org2.example.com</p>
+</li>
+<li><p>A query is sent to peer1.org2.example.com for the value of “a”. This starts a third chaincode container by the name of dev-peer1.org2.example.com-mycc-1.0. A value of 90 is returned, correctly reflecting the previous transaction during which the value for key “a” was modified by 10.#</p>
+</li>
+</ul>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2018/12/01/破解光猫/">破解光猫</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-12-01
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>从<a href="https://blog.csdn.net/kt_ZhangSheng/article/details/80855083" target="_blank" rel="noopener">这里看到</a></p>
+<blockquote>
+<p>进入TEWA-800E的管理页面，发现只能使用默认用户user登陆，而user没有修改路由模式的权限，现在的问题就是想办法登陆超级用户了，查到超级用户账号密码为CUAdmin/CUAdmin。以前似乎可以使用cu.html来登陆，但我试了下，现在（2018年6月底）应该是已经封掉了。<br>Chrome打开光猫登陆页面，默认是192.168.1.1，F12进入开发工具，在source中可以看到user_name固定为user，且提交时还加了对用户名的验证。 找到对应的代码，拷贝到console，修改user_name的值为CUAdmin，去掉用户名的验证。 </p>
+</blockquote>
+<p>就是在console中执行<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">document.getElementById(&apos;user_name&apos;).value= &apos;CUAdmin&apos;;</span><br><span class="line">function submitFrm()</span><br><span class="line">&#123;</span><br><span class="line">  document.getElementById(&apos;loginfrm&apos;).submit();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>就进入管理界面</p>
+<p>上行管理中设置第二个连接为桥接方式，保存就可以了。<br>然后在自己的路由器中设置wlan为ppoe方式，填上用户名密码就行了。</p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2018/11/30/learn-febric-01-install-samples-binaries-docker-images/">learn febric install samples, Binaries and Docker Images</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-11-30
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p><a href="https://hyperledger-fabric.readthedocs.io/en/latest/install.html" target="_blank" rel="noopener">Febric GetStart</a></p>
+<p>新建一个试验项目目录，我起名 febric ,在这个目录里执行如下命令<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl -sSL http://bit.ly/2ysbOFE | bash -s 1.3.0</span><br></pre></td></tr></table></figure></p>
+<p>我自己curl执行错误，就手动下载<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh</span><br></pre></td></tr></table></figure></p>
+<p>保存为bootstrap.sh,然后手动执行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chmod +x bootstrap.sh</span><br><span class="line">./bootstrap.sh  -s 1.3.0</span><br></pre></td></tr></table></figure>
+<p>应该是下载了好多tools在bin目录，这个目录需要设置的path中<br>下载速度比较慢…</p>
+<blockquote>
+<p>The command above downloads and executes a bash script that will download and extract all of the platform-specific binaries you will need to set up your network and place them into the cloned repo you created above. It retrieves the following platform-specific binaries:</p>
+<ul>
+<li>configtxgen,</li>
+<li>configtxlator,</li>
+<li>cryptogen,</li>
+<li>discover,</li>
+<li>idemixgen</li>
+<li>orderer,</li>
+<li>peer, and</li>
+<li>fabric-ca-client<br><code>`</code><br>Finally, the script will download the Hyperledger Fabric docker images from Docker Hub into your local Docker registry and tag them as ‘latest’.</li>
+</ul>
+</blockquote>
+<p>然后最好把～/febric/bin 添加到系统 PATH 中，方便执行</p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2018/11/30/windows-run-spring-boot-as-services/">在windows以服务的方式启动springboot</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-11-30
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>了解一下：<br><a href="https://github.com/kohsuke/winsw" target="_blank" rel="noopener">Windows service wrapper </a><br>这个软件可以把任何程序作为服务运行，首先下载exe执行文件，我的执行文件命名:customs.exe<br>创建customs.xml<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">service</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>Customs<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Customs<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>This runs Spring Boot Customs as a Service.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executable</span>&gt;</span>java<span class="tag">&lt;/<span class="name">executable</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arguments</span>&gt;</span>-Xmx256m -jar  -Dspring.profiles.active=test "c:\jenkins\soft\customs\customs.jar"<span class="tag">&lt;/<span class="name">arguments</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logmode</span>&gt;</span>rotate<span class="tag">&lt;/<span class="name">logmode</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>然后执行安装服务命令<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\jenkins\soft\customs&gt;customs install</span><br><span class="line">2018-11-30 11:11:23,416 INFO  - Installing the service with id &apos;Customs&apos;</span><br></pre></td></tr></table></figure></p>
+<p>启动服务<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">C:\jenkins\soft\customs&gt;customs start</span><br><span class="line">2018-11-30 11:12:42,031 INFO  - Starting the service with id &apos;Customs&apos;</span><br><span class="line"></span><br><span class="line">C:\jenkins\soft\customs&gt;dir</span><br><span class="line"> 驱动器 C 中的卷没有标签。</span><br><span class="line"> 卷的序列号是 BCFA-AA62</span><br><span class="line"></span><br><span class="line"> C:\jenkins\soft\customs 的目录</span><br><span class="line"></span><br><span class="line">2018/11/30  11:12    &lt;DIR&gt;          .</span><br><span class="line">2018/11/30  11:12    &lt;DIR&gt;          ..</span><br><span class="line">2018/11/30  11:12                 0 customs.err.log</span><br><span class="line">2018/11/30  11:06           360,448 customs.exe</span><br><span class="line">2018/11/30  10:37        39,628,558 customs.jar</span><br><span class="line">2018/11/30  11:12               978 customs.out.log</span><br><span class="line">2018/11/30  11:12             1,612 customs.wrapper.log</span><br><span class="line">2018/11/30  11:09               367 customs.xml</span><br></pre></td></tr></table></figure></p>
+<p>其中customs.out.log 是spring boot 的执行日志，customs.err.log是错误日志<br>customs.wrapper.log是service wrapper 的执行日志</p>
+<p>看到目录名是jenkins开头的，其实这个项目是用jenkins做CI的，在windows节点执行，要求windows节点接入的时候用管理员身份执行，项目用maven打包完成后添加一个windows shell任务<br>shell脚本如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rem copy jar to c:\jenkins\customs\customs.jar</span><br><span class="line">copy target\customs-0.0.1-SNAPSHOT.jar c:\jenkins\soft\customs\customs.jar</span><br><span class="line">rem 进入工作目录</span><br><span class="line">cd c:\jenkins\soft\customs</span><br><span class="line"></span><br><span class="line">rem 停止服务</span><br><span class="line">customs stop</span><br><span class="line"></span><br><span class="line">rem 启动服务</span><br><span class="line">customs start</span><br></pre></td></tr></table></figure></p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2018/11/29/mark-down-use/">mark down 的基本用法</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-11-29
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/fabric/">fabric</a>
+            
+          </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <h1 id="标题1"><a href="#标题1" class="headerlink" title="标题1"></a>标题1</h1><p>allala</p>
+<h2 id="标题二"><a href="#标题二" class="headerlink" title="标题二"></a>标题二</h2><p>第二部分</p>
+<h2 id="无序列表：使用星号、加号或是减号作为列表标记"><a href="#无序列表：使用星号、加号或是减号作为列表标记" class="headerlink" title="无序列表：使用星号、加号或是减号作为列表标记"></a>无序列表：使用星号、加号或是减号作为列表标记</h2><ul>
+<li>Red</li>
+<li>Green</li>
+<li>Blue</li>
+</ul>
+<h2 id="有序列表：使用数字接着一个英文句点"><a href="#有序列表：使用数字接着一个英文句点" class="headerlink" title="有序列表：使用数字接着一个英文句点"></a>有序列表：使用数字接着一个英文句点</h2><ol>
+<li>Red</li>
+<li>Green</li>
+<li><p>Blue</p>
+<blockquote>
+<p>aaa<br>bbb</p>
+</blockquote>
+</li>
+<li><p>11</p>
+</li>
+<li>333</li>
+<li style="list-style: none"><input type="checkbox"> 不勾选</li>
+<li style="list-style: none"><input type="checkbox" checked> 勾选</li>
+<li>223</li>
+</ol>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 不勾选</li>
+<li style="list-style: none"><input type="checkbox" checked> 勾选</li>
+</ul>
+<h2 id="强调"><a href="#强调" class="headerlink" title="强调"></a>强调</h2><p>在Markdown中，可以使用 * 和  _  来表示斜体和加粗。</p>
+<h2 id="斜体："><a href="#斜体：" class="headerlink" title="斜体："></a>斜体：</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*Coding，让开发更简单*</span><br><span class="line">_Coding，让开发更简单_</span><br></pre></td></tr></table></figure>
+<p><em>Coding，让开发更简单</em><br><em>Coding，让开发更简单</em></p>
+<h2 id="加粗："><a href="#加粗：" class="headerlink" title="加粗："></a>加粗：</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">**Coding，让开发更简单**</span><br><span class="line">__Coding，让开发更简单__</span><br></pre></td></tr></table></figure>
+<p><strong>Coding，让开发更简单</strong><br><strong>Coding，让开发更简单</strong></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>只要把你的代码块包裹在 “` 之间，你就不需要通过无休止的缩进来标记代码块了。 在围栏式代码块中，你可以指定一个可选的语言标识符，然后我们就可以为它启用语法着色了。 举个例子，这样可以为一段 Ruby 代码着色：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">require</span> <span class="string">'redcarpet'</span></span><br><span class="line">markdown = Redcarpet.new(<span class="string">"Hello World!"</span>)</span><br><span class="line">puts markdown.to_html</span><br></pre></td></tr></table></figure>
+<h2 id="自动链接"><a href="#自动链接" class="headerlink" title="自动链接"></a>自动链接</h2><p>方括号显示说明，圆括号内显示网址， Markdown 会自动把它转成链接，例如：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[超强大的云开发平台Coding](http://coding.net)</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://coding.net" target="_blank" rel="noopener">超强大的云开发平台Coding</a></p>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>在 Markdown 中，可以制作表格，例如：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">First Header | Second Header | Third Header</span><br><span class="line">------------ | ------------- | ------------</span><br><span class="line">Content Cell | Content Cell  | Content Cell</span><br><span class="line">Content Cell | Content Cell  | Content Cell</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+<th>Third Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+</tbody>
+</table>
+<p>分割线</p>
+<p>在 Markdown 中，可以使用 3 个以上『-』符号制作分割线，例如：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是分隔线上部分内容</span><br><span class="line">---</span><br><span class="line">这是分隔线下部分内容</span><br></pre></td></tr></table></figure></p>
+<p>效果图如下：</p>
+<h2 id="这是分隔线上部分内容"><a href="#这是分隔线上部分内容" class="headerlink" title="这是分隔线上部分内容"></a>这是分隔线上部分内容</h2><p>这是分隔线下部分内容</p>
+<p>没有了</p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2018/11/29/hello-world/">hyperledger fabric</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-11-29
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/fabric/">fabric</a>
+            
+          </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+      
+  <nav class="pagination">
+    
+      <a class="prev" href="/page/2/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text">上一页</span>
+      </a>
+    
+    
+  </nav>
+
+
+    
+  </section>
+
+          </div>
+          
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2021
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="hongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/2019/10/30/chaincode-develop-env-setup/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title>  - hongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">hongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-10-30
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#fabric-chaincode-开发环境配置文档"><span class="toc-text">fabric chaincode 开发环境配置文档</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#一、目标"><span class="toc-text">一、目标</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、初始来源"><span class="toc-text">二、初始来源</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、增加chaincode执行脚本"><span class="toc-text">三、增加chaincode执行脚本</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、增加cli中安装chaincode的脚本"><span class="toc-text">四、增加cli中安装chaincode的脚本</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、增加打包chaincode的脚本"><span class="toc-text">五、增加打包chaincode的脚本</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、最终成型的ChainCode开发环境"><span class="toc-text">六、最终成型的ChainCode开发环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#七、调试开发chaincode的步骤"><span class="toc-text">七、调试开发chaincode的步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#（一）启动开发模式的区块链容器"><span class="toc-text">（一）启动开发模式的区块链容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#（二）安装并实例化chaincode"><span class="toc-text">（二）安装并实例化chaincode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#（三）运行chaincode"><span class="toc-text">（三）运行chaincode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#（四）调试chaincode"><span class="toc-text">（四）调试chaincode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#（五）调用chaincode"><span class="toc-text">（五）调用chaincode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#（六）打包chaincode"><span class="toc-text">（六）打包chaincode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#（七）发布chaincode"><span class="toc-text">（七）发布chaincode</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <h1 id="fabric-chaincode-开发环境配置文档"><a href="#fabric-chaincode-开发环境配置文档" class="headerlink" title="fabric chaincode 开发环境配置文档"></a>fabric chaincode 开发环境配置文档</h1><p><strong>版本信息</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>版本</strong></th>
+<th><strong>修改内容</strong></th>
+<th><strong>修改日期</strong></th>
+<th><strong>备注</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>基本框架</td>
+<td>2019-10-28</td>
+<td>王红星</td>
+</tr>
+</tbody>
+</table>
+<h1 id="一、目标"><a href="#一、目标" class="headerlink" title="一、目标"></a>一、目标</h1><p>方便chaincode开发人员快速搭建开发环境，敏捷开发、测试chaincode。</p>
+<h1 id="二、初始来源"><a href="#二、初始来源" class="headerlink" title="二、初始来源"></a>二、初始来源</h1><p>下载fabric-sample工程，把chaincode-docker-dev 改为docker-dev。</p>
+<p>修改docker-dev目录下的docker-compose-simple.yaml文件，为docker-compose.yaml，把chaincode容器中的</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">CORE_PEER_ADDRESS=peer:7051</span><br></pre></td></tr></table></figure>
+<p>改为</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">CORE_PEER_ADDRESS=peer:7052</span><br></pre></td></tr></table></figure>
+<p>把peer容器的ports中添加7052。</p>
+<p> 然后在chaincode目录新建tradetrain目录，新建tradetrain.go文件，把我们现成的chaincode复制进去。</p>
+<p>删除除了chaincode 和 docker-dev目录以外的其它文件。</p>
+<p>修改项目目录为fabric-chaincode，把本目录作为新的git仓库提交。</p>
+<p>这个项目框架基本就完成了。</p>
+<h1 id="三、增加chaincode执行脚本"><a href="#三、增加chaincode执行脚本" class="headerlink" title="三、增加chaincode执行脚本"></a>三、增加chaincode执行脚本</h1><p>创建run_cc.sh,内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span> !/bin/bash</span><br><span class="line"></span><br><span class="line">: $&#123;CC_VERSION:="1.0"&#125;</span><br><span class="line">CC_NAME="tradetrain"</span><br><span class="line">CHANNEL_NAME="myc"</span><br><span class="line">cd $&#123;CC_NAME&#125;</span><br><span class="line">go build </span><br><span class="line">set -x</span><br><span class="line"></span><br><span class="line">CORE_PEER_ADDRESS=peer:7052 CORE_CHAINCODE_ID_NAME=$&#123;CC_NAME&#125;:$&#123;CC_VERSION&#125; ./$&#123;CC_NAME&#125;</span><br></pre></td></tr></table></figure>
+<p>然后修改docker-compose.yaml</p>
+<p>在chaincode容器中添加volumes：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- ./run_cc.sh:/bin/run_cc.sh</span><br></pre></td></tr></table></figure>
+<h1 id="四、增加cli中安装chaincode的脚本"><a href="#四、增加cli中安装chaincode的脚本" class="headerlink" title="四、增加cli中安装chaincode的脚本"></a>四、增加cli中安装chaincode的脚本</h1><p>创建install_cc.sh,这个脚本用来安装、实例化chaincode并执行查询和调用操作，内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line">CC_VERSION=$1</span><br><span class="line">: $&#123;CC_VERSION:="1.0"&#125;</span><br><span class="line">CC_NAME="tradetrain"</span><br><span class="line">CHANNEL_NAME="myc"</span><br><span class="line">SRC_PATH="/opt/gopath/src"</span><br><span class="line">CC_PATH="chaincodedev/chaincode/tradetrain"</span><br><span class="line"></span><br><span class="line">set -x</span><br><span class="line">peer chaincode install -p $&#123;CC_PATH&#125; -n $&#123;CC_NAME&#125; -v $&#123;CC_VERSION&#125;</span><br><span class="line">sleep 5</span><br><span class="line">peer chaincode instantiate -n $&#123;CC_NAME&#125; -v $&#123;CC_VERSION&#125; -c '&#123;"Args":[ "init" , "a", "100" , "b" , "200" ]&#125;' -C $&#123;CHANNEL_NAME&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="五、增加打包chaincode的脚本"><a href="#五、增加打包chaincode的脚本" class="headerlink" title="五、增加打包chaincode的脚本"></a>五、增加打包chaincode的脚本</h1><p>创建package_cc.sh,这个脚本用来安装、实例化chaincode并执行查询和调用操作，内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line">CC_VERSION=$1</span><br><span class="line">: $&#123;CC_VERSION:="1.0"&#125;</span><br><span class="line">SRC_PATH="/opt/gopath/src"</span><br><span class="line">CC_PATH="chaincodedev/chaincode/tradetrain"</span><br><span class="line">CC_NAME="tradetrain"</span><br><span class="line">CHANNEL_NAME="myc"</span><br><span class="line"></span><br><span class="line">peer chaincode package -n $&#123;CC_NAME&#125;  -v $&#123;CC_VERSION&#125; -p $&#123;CC_PATH&#125; $&#123;SRC_PATH&#125;/$&#123;CC_PATH&#125;/$&#123;CC_NAME&#125;-$&#123;CC_VERSION&#125;.out</span><br></pre></td></tr></table></figure>
+<h1 id="六、最终成型的ChainCode开发环境"><a href="#六、最终成型的ChainCode开发环境" class="headerlink" title="六、最终成型的ChainCode开发环境"></a>六、最终成型的ChainCode开发环境</h1><p>├── README.md //说明文档</p>
+<p>├── chaincode</p>
+<p>│   └── tradetrain</p>
+<p>│       ├── tradetrain //我们自己chaincode的二进制文件</p>
+<p>│       └── tradetrain.go  //我们自己chaincode的源代码</p>
+<p>└── docker-devmode</p>
+<p>​    ├── chaincode  </p>
+<p>​    ├── docker-compose.yaml  //开发环境的容器配置文件</p>
+<p>​    ├── install_cc.sh  //安装chaincode的脚本</p>
+<p>​    ├── msp    //证书目录</p>
+<p>​    ├── myc.tx //通道配置</p>
+<p>​    ├── orderer.block  </p>
+<p>​    ├── run_cc.sh  //执行chaincode的脚本</p>
+<p>​    ├── package_cc.sh  //打包chaincode的脚本</p>
+<p>​    └── script.sh  //cli每次启动后初始化网络和channel的脚本</p>
+<h1 id="七、调试开发chaincode的步骤"><a href="#七、调试开发chaincode的步骤" class="headerlink" title="七、调试开发chaincode的步骤"></a>七、调试开发chaincode的步骤</h1><p>每次要调试chaincode的时候，需要按照如下步骤进行</p>
+<h2 id="（一）启动开发模式的区块链容器"><a href="#（一）启动开发模式的区块链容器" class="headerlink" title="（一）启动开发模式的区块链容器"></a>（一）启动开发模式的区块链容器</h2><p>打开第一个终端窗口，进入docker-dev目录，执行：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure>
+<h2 id="（二）安装并实例化chaincode"><a href="#（二）安装并实例化chaincode" class="headerlink" title="（二）安装并实例化chaincode"></a>（二）安装并实例化chaincode</h2><p>打开第二个终端窗口，进入docker-dev目录，执行如下代码进入chaincode容器</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker-compose exec cli bash</span><br></pre></td></tr></table></figure>
+<p> 然后执行: </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./install_cc.sh</span><br></pre></td></tr></table></figure>
+<p>或者手动执行：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">peer chaincode install -p chaincodedev/chaincode/tradetrain -n tradetrain -v 1.0</span><br><span class="line"></span><br><span class="line">peer chaincode instantiate -n tradetrain -v 1.0 -c '&#123;"Args":["init","a","100","b","200"]&#125;' -C myc</span><br></pre></td></tr></table></figure>
+<p>如果当前容器没有执行过清除命令（docker-compose down）的话，下次调试/测试不需要执行安装实例化。</p>
+<p>注意：接下来我们需要选择到底是测试chaincode还是调试；如果测试，请执行第三步《运行chaincode》；如果要调试，请执行第四部《调试chaincode》。</p>
+<h2 id="（三）运行chaincode"><a href="#（三）运行chaincode" class="headerlink" title="（三）运行chaincode"></a>（三）运行chaincode</h2><p>打开第三个终端窗口，进入docker-dev目录，执行如下代码进入chaincode容器</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker-compose exec chaincode bash</span><br></pre></td></tr></table></figure>
+<p> 然后在chaincode容器中执行：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/bin/run_cc.sh</span><br></pre></td></tr></table></figure>
+<p>或者手动执行：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd tradetrain</span><br><span class="line">go build </span><br><span class="line">CORE_PEER_ADDRESS=peer:7052 CORE_CHAINCODE_ID_NAME=tradetrain:0 ./tradetrain</span><br></pre></td></tr></table></figure>
+<h2 id="（四）调试chaincode"><a href="#（四）调试chaincode" class="headerlink" title="（四）调试chaincode"></a>（四）调试chaincode</h2><p>首先确保你的电脑安装了最新的go环境，并确保你的操作系统的环境变量有正确的GOROOT GOPATH。</p>
+<p>使用vscode打开项目，确保项目目录下创建了.vscode目录，然后在.vscode 目录下创建launch.json</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="attr">  "version":</span> <span class="string">"0.2.0"</span><span class="string">,</span></span><br><span class="line"><span class="attr">  "configurations":</span> <span class="string">[</span></span><br><span class="line">    <span class="string">&#123;</span></span><br><span class="line"><span class="attr">      "name":</span> <span class="string">"Launch file"</span><span class="string">,</span></span><br><span class="line"><span class="attr">      "type":</span> <span class="string">"go"</span><span class="string">,</span></span><br><span class="line"><span class="attr">      "request":</span> <span class="string">"launch"</span><span class="string">,</span></span><br><span class="line"><span class="attr">      "mode":</span> <span class="string">"debug"</span><span class="string">,</span></span><br><span class="line"><span class="attr">      "program":</span> <span class="string">"$&#123;file&#125;"</span><span class="string">,</span></span><br><span class="line"><span class="attr">      "env":</span> <span class="string">&#123;</span></span><br><span class="line"><span class="attr">        "CORE_PEER_ADDRESS":</span> <span class="string">"localhost:7052"</span> <span class="string">,</span></span><br><span class="line"><span class="attr">        "CORE_CHAINCODE_ID_NAME":</span> <span class="string">"tradetrain:1.0"</span><span class="string">,</span></span><br><span class="line">      <span class="string">&#125;</span></span><br><span class="line">    <span class="string">&#125;</span></span><br><span class="line">  <span class="string">]</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>然后在vscode中打开chaincode文件（tradetrain.go），打开左方的调试选项卡，然后点击调试工具栏中的“开始调试”按钮就可以调试chaincode。</p>
+<p>修改完chaincode后，需要停止并重新启动调试。</p>
+<h2 id="（五）调用chaincode"><a href="#（五）调用chaincode" class="headerlink" title="（五）调用chaincode"></a>（五）调用chaincode</h2><p>打开第二个终端窗口，可以执行如下命令来查询、调用chaincode来测试：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">peer chaincode invoke -n tradetrain -c '&#123;"Args":["save", "a", "20"]&#125;' -C myc</span><br><span class="line"></span><br><span class="line">peer chaincode query -n tradetrain -c '&#123;"Args":["load","a"]&#125;' -C myc</span><br></pre></td></tr></table></figure>
+<h2 id="（六）打包chaincode"><a href="#（六）打包chaincode" class="headerlink" title="（六）打包chaincode"></a>（六）打包chaincode</h2><p>打开第二个终端窗口，进入docker-dev目录，执行如下代码进入chaincode容器</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker-compose exec chaincode bash</span><br></pre></td></tr></table></figure>
+<p>然后在chaincode容器中执行：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/bin/pacage_cc.sh</span><br></pre></td></tr></table></figure>
+<p>或者手动执行：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">peer chaincode package -n tradetrain -p chaincodedev/chaincode/tradetrain /opt/gopath/src/chaincodedev/chaincode/tradetrain/tradetrain-1.0.out -v 1.0</span><br></pre></td></tr></table></figure>
+<h2 id="（七）发布chaincode"><a href="#（七）发布chaincode" class="headerlink" title="（七）发布chaincode"></a>（七）发布chaincode</h2><p>把上一步打包好的chaincode 文件发送给各组织的技术运维人员并协调安装升级。</p>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2019/10/30/fabric-baseos-baseimage-basejvm/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">fabric baseos baseimage basejvm</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2019/10/29/chaincode-develop-experience/">
+        <span class="next-text nav-default">chaincode develop experience</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2021
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

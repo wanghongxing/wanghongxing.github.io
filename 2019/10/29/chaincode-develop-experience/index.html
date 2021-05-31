@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="chaincode develop experience">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="hongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/2019/10/29/chaincode-develop-experience/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> chaincode develop experience - hongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">hongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          chaincode develop experience
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-10-29
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-获得调用的参数"><span class="toc-text">1.获得调用的参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-增删改查State-DB"><span class="toc-text">2. 增删改查State DB</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-增改数据PutState-key-string-value-byte-error"><span class="toc-text">2.1 增改数据PutState(key string, value []byte) error</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-删除数据DelState-key-string-error"><span class="toc-text">2.2 删除数据DelState(key string) error</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-查询数据GetState-key-string-byte-error"><span class="toc-text">2.3 查询数据GetState(key string) ([]byte, error)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-复合键的处理"><span class="toc-text">3. 复合键的处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-生成复合键CreateCompositeKey-objectType-string-attributes-string-string-error"><span class="toc-text">3.1 生成复合键CreateCompositeKey(objectType string, attributes []string) (string, error)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-拆分复合键SplitCompositeKey-compositeKey-string-string-string-error"><span class="toc-text">3.2 拆分复合键SplitCompositeKey(compositeKey string) (string, []string, error)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-部分复合键的查询GetStateByPartialCompositeKey-objectType-string-keys-string-StateQueryIteratorInterface-error"><span class="toc-text">3.3 部分复合键的查询GetStateByPartialCompositeKey(objectType string, keys []string) (StateQueryIteratorInterface, error)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-获得当前用户GetCreator-byte-error"><span class="toc-text">4. 获得当前用户GetCreator() ([]byte, error)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-高级查询"><span class="toc-text">5.高级查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-Key区间查询GetStateByRange-startKey-endKey-string-StateQueryIteratorInterface-error"><span class="toc-text">5.1 Key区间查询GetStateByRange(startKey, endKey string) (StateQueryIteratorInterface, error)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-富查询GetQueryResult-query-string-StateQueryIteratorInterface-error"><span class="toc-text">5.2 富查询GetQueryResult(query string) (StateQueryIteratorInterface, error)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3历史数据查询GetHistoryForKey-key-string-HistoryQueryIteratorInterface-error"><span class="toc-text">5.3历史数据查询GetHistoryForKey(key string) (HistoryQueryIteratorInterface, error)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4部分复合键查询GetStateByPartialCompositeKey-objectType-string-keys-string-StateQueryIteratorInterface-error"><span class="toc-text">5.4部分复合键查询GetStateByPartialCompositeKey(objectType string, keys []string) (StateQueryIteratorInterface, error)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-调用另外的链上代码-InvokeChaincode-chaincodeName-string-args-byte-channel-string-pb-Response"><span class="toc-text">6.调用另外的链上代码 InvokeChaincode(chaincodeName string, args [][]byte, channel string) pb.Response</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-获得提案对象Proposal属性"><span class="toc-text">7.获得提案对象Proposal属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-获得签名的提案GetSignedProposal-pb-SignedProposal-error"><span class="toc-text">7.1 获得签名的提案GetSignedProposal() (*pb.SignedProposal, error)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2获得Transient对象-GetTransient-map-string-byte-error"><span class="toc-text">7.2获得Transient对象 GetTransient() (map[string][]byte, error)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3获得交易时间戳GetTxTimestamp-timestamp-Timestamp-error"><span class="toc-text">7.3获得交易时间戳GetTxTimestamp() (*timestamp.Timestamp, error)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-获得Binding对象-GetBinding-byte-error"><span class="toc-text">7.4 获得Binding对象 GetBinding() ([]byte, error)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-事件设置SetEvent-name-string-payload-byte-error"><span class="toc-text">8.事件设置SetEvent(name string, payload []byte) error</span></a></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <p>在环境搭建好后，我们就可以进行Fabric的开发工作了。Fabric的开发主要分成2部分，ChainCode链上代码开发和基于SDK的Application开发。我们这里先讲ChainCode的开发。Fabric的链上代码支持Java或者Go语言进行开发，因为Fabric本身是Go开发的，所以深蓝建议还是用Go进行ChainCode的开发。</p>
+<p>ChainCode的Go代码需要定义一个SimpleChaincode这样一个struct，然后在该struct上定义Init和Invoke两个函数，然后还要定义一个main函数，作为ChainCode的启动入口。以下是ChainCode的模板：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">   <span class="string">"github.com/hyperledger/fabric/core/chaincode/shim"</span></span><br><span class="line">   pb <span class="string">"github.com/hyperledger/fabric/protos/peer"</span></span><br><span class="line">   <span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> SimpleChaincode <span class="keyword">struct</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">   err := shim.Start(<span class="built_in">new</span>(SimpleChaincode))</span><br><span class="line">   <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">      fmt.Printf(<span class="string">"Error starting Simple chaincode: %s"</span>, err)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *SimpleChaincode)</span> <span class="title">Init</span><span class="params">(stub shim.ChaincodeStubInterface)</span> <span class="title">pb</span>.<span class="title">Response</span></span> &#123;</span><br><span class="line">   <span class="keyword">return</span> shim.Success(<span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *SimpleChaincode)</span> <span class="title">Invoke</span><span class="params">(stub shim.ChaincodeStubInterface)</span> <span class="title">pb</span>.<span class="title">Response</span></span> &#123;</span><br><span class="line">   function, args := stub.GetFunctionAndParameters()</span><br><span class="line">   fmt.Println(<span class="string">"invoke is running "</span> + function)</span><br><span class="line">   <span class="keyword">if</span> function == <span class="string">"test1"</span> &#123;<span class="comment">//自定义函数名称</span></span><br><span class="line">      <span class="keyword">return</span> t.test1(stub, args)<span class="comment">//定义调用的函数</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> shim.Error(<span class="string">"Received unknown function invocation"</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *SimpleChaincode)</span> <span class="title">test1</span><span class="params">(stub shim.ChaincodeStubInterface, args []<span class="keyword">string</span>)</span> <span class="title">pb</span>.<span class="title">Response</span></span>&#123;</span><br><span class="line">   <span class="keyword">return</span> shim.Success([]<span class="keyword">byte</span>(<span class="string">"Called test1"</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 这里我们可以看到，在Init和Invoke的时候，都会传入参数stub shim.ChaincodeStubInterface，这个参数提供的接口为我们编写ChainCode的业务逻辑提供了大量实用的方法。下面一一讲解：</p>
+<h2 id="1-获得调用的参数"><a href="#1-获得调用的参数" class="headerlink" title="1.获得调用的参数"></a>1.获得调用的参数</h2><p>前面给出的ChainCode的模板中，我们已经可以看到，在Invoke的时候，由传入的参数来决定我们具体调用了哪个方法，所以需要先使用GetFunctionAndParameters解析调用的时候传入的参数。除了这个方法以外，接口还提供了另外几个方法，不过其本质都是一样的。</p>
+<ul>
+<li>GetArgs() [][]byte 以byte数组的数组的形式获得传入的参数列表</li>
+<li>GetStringArgs() []string 以字符串数组的形式获得传入的参数列表</li>
+<li>GetFunctionAndParameters() (string, []string) 将字符串数组的参数分为两部分，数组第一个字是Function，剩下的都是Parameter</li>
+<li>GetArgsSlice() ([]byte, error) 以byte切片的形式获得参数列表</li>
+</ul>
+<h2 id="2-增删改查State-DB"><a href="#2-增删改查State-DB" class="headerlink" title="2. 增删改查State DB"></a>2. 增删改查State DB</h2><p>对于ChainCode来说，核心的操作就是对State Database的增删改查，对此Fabric接口提供了3个对State DB的操作方法。</p>
+<h3 id="2-1-增改数据PutState-key-string-value-byte-error"><a href="#2-1-增改数据PutState-key-string-value-byte-error" class="headerlink" title="2.1 增改数据PutState(key string, value []byte) error"></a>2.1 增改数据PutState(key string, value []byte) error</h3><p>对于State DB来说，增加和修改数据是统一的操作，因为State DB是一个Key Value数据库，如果我们指定的Key在数据库中已经存在，那么就是修改操作，如果Key不存在，那么就是插入操作。对于实际的系统来说，我们的Key可能是单据编号，或者系统分配的自增ID+实体类型作为前缀，而Value则是一个对象经过JSON序列号后的字符串。比如说我们定义一个Student的Struct，然后插入一个学生数据，对于的代码应该是这样的：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> Student <span class="keyword">struct</span> &#123;</span><br><span class="line">   Id <span class="keyword">int</span></span><br><span class="line">   Name <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t *SimpleChaincode)</span> <span class="title">testStateOp</span><span class="params">(stub shim.ChaincodeStubInterface, args []<span class="keyword">string</span>)</span> <span class="title">pb</span>.<span class="title">Response</span></span>&#123;</span><br><span class="line">   student1:=Student&#123;<span class="number">1</span>,<span class="string">"Devin Zeng"</span>&#125;</span><br><span class="line">   key:=<span class="string">"Student:"</span>+strconv.Itoa(student1.Id)<span class="comment">//Key格式为 Student:&#123;Id&#125;</span></span><br><span class="line">   studentJsonBytes, err := json.Marshal(student1)<span class="comment">//Json序列号</span></span><br><span class="line">   <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> shim.Error(err.Error())</span><br><span class="line">   &#125;</span><br><span class="line">   err= stub.PutState(key,studentJsonBytes)</span><br><span class="line">   <span class="keyword">if</span>(err!=<span class="literal">nil</span>)&#123;</span><br><span class="line">      <span class="keyword">return</span> shim.Error(err.Error())</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> shim.Success([]<span class="keyword">byte</span>(<span class="string">"Saved Student!"</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-删除数据DelState-key-string-error"><a href="#2-2-删除数据DelState-key-string-error" class="headerlink" title="2.2 删除数据DelState(key string) error"></a>2.2 删除数据DelState(key string) error</h3><p>这个也很好理解，根据Key删除State DB的数据。如果根据Key找不到对于的数据，删除失败。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">err= stub.DelState(key)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">   <span class="keyword">return</span> shim.Error(<span class="string">"Failed to delete Student from DB, key is: "</span>+key)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-查询数据GetState-key-string-byte-error"><a href="#2-3-查询数据GetState-key-string-byte-error" class="headerlink" title="2.3 查询数据GetState(key string) ([]byte, error)"></a>2.3 查询数据GetState(key string) ([]byte, error)</h3><p>因为我们是Key Value数据库，所以根据Key来对数据库进行查询，是一件很常见，很高效的操作。返回的数据是byte数组，我们需要转换为string，然后再Json反序列化，可以得到我们想要的对象。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">dbStudentBytes,err:= stub.GetState(key)</span><br><span class="line"><span class="keyword">var</span> dbStudent Student;</span><br><span class="line">err=json.Unmarshal(dbStudentBytes,&amp;dbStudent)<span class="comment">//反序列化</span></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">   <span class="keyword">return</span> shim.Error(<span class="string">"&#123;\"Error\":\"Failed to decode JSON of: "</span> + <span class="keyword">string</span>(dbStudentBytes)+ <span class="string">"\" to Student&#125;"</span>)</span><br><span class="line">&#125;</span><br><span class="line">fmt.Println(<span class="string">"Read Student from DB, name:"</span>+dbStudent.Name)</span><br></pre></td></tr></table></figure>
+<p><em>【注意：不能在一个ChainCode函数中PutState后又马上GetState，这个时候GetState是没有最新值的，因为在这时Transaction并没有完成，还没有提交到StateDB里面】</em></p>
+<h2 id="3-复合键的处理"><a href="#3-复合键的处理" class="headerlink" title="3. 复合键的处理"></a>3. 复合键的处理</h2><h3 id="3-1-生成复合键CreateCompositeKey-objectType-string-attributes-string-string-error"><a href="#3-1-生成复合键CreateCompositeKey-objectType-string-attributes-string-string-error" class="headerlink" title="3.1 生成复合键CreateCompositeKey(objectType string, attributes []string) (string, error)"></a>3.1 生成复合键CreateCompositeKey(objectType string, attributes []string) (string, error)</h3><p>前面在进行数据库的增删改查的时候，都需要用到Key，而我们使用的是我们自己定义的Key格式：{StructName}:{Id}，这是有单主键Id还比较简单，如果我们有多个列做联合主键怎么办？实际上，ChainCode也为我们提供了生成Key的方法CreateCompositeKey，通过这个方法，我们可以将联合主键涉及到的属性都传进去，并声明了对象的类型即可。<br>以选课表为例，里面包含了以下属性：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">type ChooseCourse struct &#123;</span><br><span class="line">   CourseNumber string //开课编号</span><br><span class="line">   StudentId int //学生ID</span><br><span class="line">   Confirm bool //是否确认</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中CourseNumber+StudentId构成了这个对象的联合主键，我们要获得生成的复核主键，那么可写为：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cc:=ChooseCourse&#123;&quot;CS101&quot;,123,true&#125;  </span><br><span class="line">var key1,_= stub.CreateCompositeKey(&quot;ChooseCourse&quot;,[]string&#123;cc.CourseNumber,strconv.Itoa(cc.StudentId)&#125;)</span><br><span class="line">fmt.Println(key1)</span><br></pre></td></tr></table></figure></p>
+<p>【注：其实Fabric就是用U+0000来把各个字段分割开的，因为这个字符太特殊，所以很适合做分割】</p>
+<h3 id="3-2-拆分复合键SplitCompositeKey-compositeKey-string-string-string-error"><a href="#3-2-拆分复合键SplitCompositeKey-compositeKey-string-string-string-error" class="headerlink" title="3.2 拆分复合键SplitCompositeKey(compositeKey string) (string, []string, error)"></a>3.2 拆分复合键SplitCompositeKey(compositeKey string) (string, []string, error)</h3><p>既然有组合那么就有拆分，当我们从数据库中获得了一个复合键的Key之后，怎么知道其具体是由哪些字段组成的呢。其实就是用U+0000把这个复合键再Split开，得到结果中第一个是objectType，剩下的就是复合键用到的列的值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">objType,attrArray,_:= stub.SplitCompositeKey(key1)</span><br><span class="line">fmt.Println(&quot;Object:&quot;+objType+&quot; ,Attributes:&quot;+strings.Join(attrArray,&quot;|&quot;))</span><br></pre></td></tr></table></figure>
+<h3 id="3-3-部分复合键的查询GetStateByPartialCompositeKey-objectType-string-keys-string-StateQueryIteratorInterface-error"><a href="#3-3-部分复合键的查询GetStateByPartialCompositeKey-objectType-string-keys-string-StateQueryIteratorInterface-error" class="headerlink" title="3.3 部分复合键的查询GetStateByPartialCompositeKey(objectType string, keys []string) (StateQueryIteratorInterface, error)"></a>3.3 部分复合键的查询GetStateByPartialCompositeKey(objectType string, keys []string) (StateQueryIteratorInterface, error)</h3><p>这里其实是一种对Key进行前缀匹配的查询，也就是说，我们虽然是部分复合键的查询，但是不允许拿后面部分的复合键进行匹配，必须是前面部分。</p>
+<h2 id="4-获得当前用户GetCreator-byte-error"><a href="#4-获得当前用户GetCreator-byte-error" class="headerlink" title="4. 获得当前用户GetCreator() ([]byte, error)"></a>4. 获得当前用户GetCreator() ([]byte, error)</h2><p>这个方法可以获得调用这个ChainCode的客户端的用户的证书，这里虽然返回的是byte数组，但是其实是一个字符串，内容格式如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">-----BEGIN CERTIFICATE----- </span><br><span class="line">MIICGjCCAcCgAwIBAgIRAMVe0+QZL+67Q+R2RmqsD90wCgYIKoZIzj0EAwIwczEL </span><br><span class="line">MAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG </span><br><span class="line">cmFuY2lzY28xGTAXBgNVBAoTEG9yZzEuZXhhbXBsZS5jb20xHDAaBgNVBAMTE2Nh </span><br><span class="line">Lm9yZzEuZXhhbXBsZS5jb20wHhcNMTcwODEyMTYyNTU1WhcNMjcwODEwMTYyNTU1 </span><br><span class="line">WjBbMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMN </span><br><span class="line">U2FuIEZyYW5jaXNjbzEfMB0GA1UEAwwWVXNlcjFAb3JnMS5leGFtcGxlLmNvbTBZ </span><br><span class="line">MBMGByqGSM49AgEGCCqGSM49AwEHA0IABN7WqfFwWWKynl9SI87byp0SZO6QU1hT </span><br><span class="line">JRatYysXX5MJJRzvvVsSTsUzQh5jmgwkPbFcvk/x4W8lj5d2Tohff+WjTTBLMA4G </span><br><span class="line">A1UdDwEB/wQEAwIHgDAMBgNVHRMBAf8EAjAAMCsGA1UdIwQkMCKAIO2os1zK9BKe </span><br><span class="line">Lb4P8lZOFU+3c0S5+jHnEILFWx2gNoLkMAoGCCqGSM49BAMCA0gAMEUCIQDAIDHK </span><br><span class="line">gPZsgZjzNTkJgglZ7VgJLVFOuHgKWT9GbzhwBgIgE2YWoDpG0HuhB66UzlA+6QzJ </span><br><span class="line">+jvM0tOVZuWyUIVmwBM= </span><br><span class="line">-----END CERTIFICATE-----</span><br></pre></td></tr></table></figure></p>
+<p>我们常见的需求是在ChainCode中获得当前用户的信息，方便进行权限管理。那么我们怎么获得当前用户呢？我们可以把这个证书的字符串转换为Certificate对象。一旦转换成这个对象，我们就可以通过Subject获得当前用户的名字。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func (t *SimpleChaincode) testCertificate(stub shim.ChaincodeStubInterface, args []string) pb.Response&#123;</span><br><span class="line">   creatorByte,_:= stub.GetCreator()</span><br><span class="line">   certStart := bytes.IndexAny(creatorByte, &quot;-----BEGIN&quot;)</span><br><span class="line">   if certStart == -1 &#123;</span><br><span class="line">      fmt.Errorf(&quot;No certificate found&quot;)</span><br><span class="line">   &#125;</span><br><span class="line">   certText := creatorByte[certStart:]</span><br><span class="line">   bl, _ := pem.Decode(certText)</span><br><span class="line">   if bl == nil &#123;</span><br><span class="line">      fmt.Errorf(&quot;Could not decode the PEM structure&quot;)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   cert, err := x509.ParseCertificate(bl.Bytes)</span><br><span class="line">   if err != nil &#123;</span><br><span class="line">      fmt.Errorf(&quot;ParseCertificate failed&quot;)</span><br><span class="line">   &#125;</span><br><span class="line">   uname:=cert.Subject.CommonName</span><br><span class="line">   fmt.Println(&quot;Name:&quot;+uname)</span><br><span class="line">   return shim.Success([]byte(&quot;Called testCertificate &quot;+uname))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="5-高级查询"><a href="#5-高级查询" class="headerlink" title="5.高级查询"></a>5.高级查询</h2><p>前面提到的GetState只是最基本的根据Key查询值的操作，但是对于很多时候，我们需要查询返回的是一个集合，比如我要知道某个区间的Key对于所有对象，或者我们需要对Value对象内部的属性进行查询。</p>
+<h3 id="5-1-Key区间查询GetStateByRange-startKey-endKey-string-StateQueryIteratorInterface-error"><a href="#5-1-Key区间查询GetStateByRange-startKey-endKey-string-StateQueryIteratorInterface-error" class="headerlink" title="5.1 Key区间查询GetStateByRange(startKey, endKey string) (StateQueryIteratorInterface, error)"></a>5.1 Key区间查询GetStateByRange(startKey, endKey string) (StateQueryIteratorInterface, error)</h3><p>提供了对某个区间的Key进行查询的接口，适用于任何State DB。由于返回的是一个StateQueryIteratorInterface接口，我们需要通过这个接口再做一个for循环，才能读取返回的信息，所有我们可以独立出一个方法，专门将该接口返回的数据以string的byte数组形式返回。这是我们的转换方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func getListResult(resultsIterator shim.StateQueryIteratorInterface) ([]byte,error)&#123;</span><br><span class="line"></span><br><span class="line">   defer resultsIterator.Close()</span><br><span class="line">   // buffer is a JSON array containing QueryRecords</span><br><span class="line">   var buffer bytes.Buffer</span><br><span class="line">   buffer.WriteString(&quot;[&quot;)</span><br><span class="line"></span><br><span class="line">   bArrayMemberAlreadyWritten := false</span><br><span class="line">   for resultsIterator.HasNext() &#123;</span><br><span class="line">      queryResponse, err := resultsIterator.Next()</span><br><span class="line">      if err != nil &#123;</span><br><span class="line">         return nil, err</span><br><span class="line">      &#125;</span><br><span class="line">      // Add a comma before array members, suppress it for the first array member</span><br><span class="line">      if bArrayMemberAlreadyWritten == true &#123;</span><br><span class="line">         buffer.WriteString(&quot;,&quot;)</span><br><span class="line">      &#125;</span><br><span class="line">      buffer.WriteString(&quot;&#123;\&quot;Key\&quot;:&quot;)</span><br><span class="line">      buffer.WriteString(&quot;\&quot;&quot;)</span><br><span class="line">      buffer.WriteString(queryResponse.Key)</span><br><span class="line">      buffer.WriteString(&quot;\&quot;&quot;)</span><br><span class="line"></span><br><span class="line">      buffer.WriteString(&quot;, \&quot;Record\&quot;:&quot;)</span><br><span class="line">      // Record is a JSON object, so we write as-is</span><br><span class="line">      buffer.WriteString(string(queryResponse.Value))</span><br><span class="line">      buffer.WriteString(&quot;&#125;&quot;)</span><br><span class="line">      bArrayMemberAlreadyWritten = true</span><br><span class="line">   &#125;</span><br><span class="line">   buffer.WriteString(&quot;]&quot;)</span><br><span class="line">   fmt.Printf(&quot;queryResult:\n%s\n&quot;, buffer.String())</span><br><span class="line">   return buffer.Bytes(), nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>比如我们要查询编号从1号到3号的所有学生，那么我们的查询代码可以这么写：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func (t *SimpleChaincode) testRangeQuery(stub shim.ChaincodeStubInterface, args []string) pb.Response&#123;</span><br><span class="line">   resultsIterator,err:= stub.GetStateByRange(&quot;Student:1&quot;,&quot;Student:3&quot;)</span><br><span class="line">   if err!=nil&#123;</span><br><span class="line">      return shim.Error(&quot;Query by Range failed&quot;)</span><br><span class="line">   &#125;</span><br><span class="line">   students,err:=getListResult(resultsIterator)</span><br><span class="line">   if err!=nil&#123;</span><br><span class="line">      return shim.Error(&quot;getListResult failed&quot;)</span><br><span class="line">   &#125;</span><br><span class="line">   return shim.Success(students)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="5-2-富查询GetQueryResult-query-string-StateQueryIteratorInterface-error"><a href="#5-2-富查询GetQueryResult-query-string-StateQueryIteratorInterface-error" class="headerlink" title="5.2 富查询GetQueryResult(query string) (StateQueryIteratorInterface, error)"></a>5.2 富查询GetQueryResult(query string) (StateQueryIteratorInterface, error)</h3><p>这是一个“富查询”，是对Value的内容进行查询，如果是LevelDB，那么是不支持，只有CouchDB时才能用这个方法。<br>关于传入的query这个字符串，其实是CouchDB所使用的Mango查询，我们可以在官方博客了解到一些信息：<a href="https://blog.couchdb.org/2016/08/03/feature-mango-query/" target="_blank" rel="noopener">https://blog.couchdb.org/2016/08/03/feature-mango-query/</a> 其基本语法可以在<a href="https://github.com/cloudant/mango" target="_blank" rel="noopener">https://github.com/cloudant/mango</a> 这里看到。<br>比如我们仍然以前面的Student为例，我们要按Name来进行查询，那么我们的代码可以写为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func (t *SimpleChaincode) testRichQuery(stub shim.ChaincodeStubInterface, args []string) pb.Response&#123;</span><br><span class="line">   name:=&quot;Devin Zeng&quot;//这里按理来说应该是参数传入</span><br><span class="line">   queryString := fmt.Sprintf(&quot;&#123;\&quot;selector\&quot;:&#123;\&quot;Name\&quot;:\&quot;%s\&quot;&#125;&#125;&quot;, name)</span><br><span class="line">   resultsIterator,err:= stub.GetQueryResult(queryString)//必须是CouchDB才行</span><br><span class="line">   if err!=nil&#123;</span><br><span class="line">      return shim.Error(&quot;Rich query failed&quot;)</span><br><span class="line">   &#125;</span><br><span class="line">   students,err:=getListResult(resultsIterator)</span><br><span class="line">   if err!=nil&#123;</span><br><span class="line">      return shim.Error(&quot;Rich query failed&quot;)</span><br><span class="line">   &#125;</span><br><span class="line">   return shim.Success(students)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="5-3历史数据查询GetHistoryForKey-key-string-HistoryQueryIteratorInterface-error"><a href="#5-3历史数据查询GetHistoryForKey-key-string-HistoryQueryIteratorInterface-error" class="headerlink" title="5.3历史数据查询GetHistoryForKey(key string) (HistoryQueryIteratorInterface, error)"></a>5.3历史数据查询GetHistoryForKey(key string) (HistoryQueryIteratorInterface, error)</h3><p>对同一个数据（也就是Key相同）的更改，会记录到区块链中，我们可以通过GetHistoryForKey方法获得这个对象在区块链中记录的更改历史，包括是在哪个TxId，修改的数据，修改的时间戳，以及是否是删除等。比如之前的Student:1这个对象，我们更改和删除过数据，现在要查询这个对象的更改记录，那么对应代码为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func (t *SimpleChaincode) testHistoryQuery(stub shim.ChaincodeStubInterface, args []string) pb.Response&#123;</span><br><span class="line">   student1:=Student&#123;1,&quot;Devin Zeng&quot;&#125;</span><br><span class="line">   key:=&quot;Student:&quot;+strconv.Itoa(student1.Id)</span><br><span class="line">   it,err:= stub.GetHistoryForKey(key)</span><br><span class="line">   if err!=nil&#123;</span><br><span class="line">      return shim.Error(err.Error())</span><br><span class="line">   &#125;</span><br><span class="line">   var result,_= getHistoryListResult(it)</span><br><span class="line">   return shim.Success(result)</span><br><span class="line">&#125;</span><br><span class="line">func getHistoryListResult(resultsIterator shim.HistoryQueryIteratorInterface) ([]byte,error)&#123;</span><br><span class="line"></span><br><span class="line">   defer resultsIterator.Close()</span><br><span class="line">   // buffer is a JSON array containing QueryRecords</span><br><span class="line">   var buffer bytes.Buffer</span><br><span class="line">   buffer.WriteString(&quot;[&quot;)</span><br><span class="line"></span><br><span class="line">   bArrayMemberAlreadyWritten := false</span><br><span class="line">   for resultsIterator.HasNext() &#123;</span><br><span class="line">      queryResponse, err := resultsIterator.Next()</span><br><span class="line">      if err != nil &#123;</span><br><span class="line">         return nil, err</span><br><span class="line">      &#125;</span><br><span class="line">      // Add a comma before array members, suppress it for the first array member</span><br><span class="line">      if bArrayMemberAlreadyWritten == true &#123;</span><br><span class="line">         buffer.WriteString(&quot;,&quot;)</span><br><span class="line">      &#125;</span><br><span class="line">      item,_:= json.Marshal( queryResponse)</span><br><span class="line">      buffer.Write(item)</span><br><span class="line">      bArrayMemberAlreadyWritten = true</span><br><span class="line">   &#125;</span><br><span class="line">   buffer.WriteString(&quot;]&quot;)</span><br><span class="line">   fmt.Printf(&quot;queryResult:\n%s\n&quot;, buffer.String())</span><br><span class="line">   return buffer.Bytes(), nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="5-4部分复合键查询GetStateByPartialCompositeKey-objectType-string-keys-string-StateQueryIteratorInterface-error"><a href="#5-4部分复合键查询GetStateByPartialCompositeKey-objectType-string-keys-string-StateQueryIteratorInterface-error" class="headerlink" title="5.4部分复合键查询GetStateByPartialCompositeKey(objectType string, keys []string) (StateQueryIteratorInterface, error)"></a>5.4部分复合键查询GetStateByPartialCompositeKey(objectType string, keys []string) (StateQueryIteratorInterface, error)</h3><p>这个我在前面3.3已经说过了，只是因为那个函数即是复合键的，也是高级查询的，所以我在这里给这个函数留了一个位置。</p>
+<h2 id="6-调用另外的链上代码-InvokeChaincode-chaincodeName-string-args-byte-channel-string-pb-Response"><a href="#6-调用另外的链上代码-InvokeChaincode-chaincodeName-string-args-byte-channel-string-pb-Response" class="headerlink" title="6.调用另外的链上代码 InvokeChaincode(chaincodeName string, args [][]byte, channel string) pb.Response"></a>6.调用另外的链上代码 InvokeChaincode(chaincodeName string, args [][]byte, channel string) pb.Response</h2><p>这个比较好理解，就是在我们的链上代码中调用别人已经部署好的链上代码。比如官方提供的example02，我们要在代码中去实现a-&gt;b的转账，那么我们的代码应该如下：<br>func (t *SimpleChaincode) testInvokeChainCode(stub shim.ChaincodeStubInterface, args []string) pb.Response{<br>   trans:=[][]byte{[]byte(“invoke”),[]byte(“a”),[]byte(“b”),[]byte(“11”)}<br>   response:= stub.InvokeChaincode(“mycc”,trans,”mychannel”)<br>   fmt.Println(response.Message)<br>   return shim.Success([]byte( response.Message))<br>}<br>这里需要注意，我们使用的是example02的链上代码的实例名mycc，而不是代码的名字example02.</p>
+<h2 id="7-获得提案对象Proposal属性"><a href="#7-获得提案对象Proposal属性" class="headerlink" title="7.获得提案对象Proposal属性"></a>7.获得提案对象Proposal属性</h2><h3 id="7-1-获得签名的提案GetSignedProposal-pb-SignedProposal-error"><a href="#7-1-获得签名的提案GetSignedProposal-pb-SignedProposal-error" class="headerlink" title="7.1 获得签名的提案GetSignedProposal() (*pb.SignedProposal, error)"></a>7.1 获得签名的提案GetSignedProposal() (*pb.SignedProposal, error)</h3><p>从客户端发现背书节点的Transaction或者Query都是一个提案，GetSignedProposal获得当前的提案对象包括客户端对这个提案的签名。提案的内容如果直接打印出来感觉就像是乱码，其内包含了提案Header，Payload和Extension，里面更包含了复杂的结构，这里不讲，以后可以写一篇博客专门研究提案对象。</p>
+<h3 id="7-2获得Transient对象-GetTransient-map-string-byte-error"><a href="#7-2获得Transient对象-GetTransient-map-string-byte-error" class="headerlink" title="7.2获得Transient对象 GetTransient() (map[string][]byte, error)"></a>7.2获得Transient对象 GetTransient() (map[string][]byte, error)</h3><p>Transient是在提案中Payload对象中的一个属性，也就是ChaincodeProposalPayload.TransientMap</p>
+<h3 id="7-3获得交易时间戳GetTxTimestamp-timestamp-Timestamp-error"><a href="#7-3获得交易时间戳GetTxTimestamp-timestamp-Timestamp-error" class="headerlink" title="7.3获得交易时间戳GetTxTimestamp() (*timestamp.Timestamp, error)"></a>7.3获得交易时间戳GetTxTimestamp() (*timestamp.Timestamp, error)</h3><p>交易时间戳也是在提案对象中获取的，提案对象的Header部分，也就是proposal.Header.ChannelHeader.Timestamp</p>
+<h3 id="7-4-获得Binding对象-GetBinding-byte-error"><a href="#7-4-获得Binding对象-GetBinding-byte-error" class="headerlink" title="7.4 获得Binding对象 GetBinding() ([]byte, error)"></a>7.4 获得Binding对象 GetBinding() ([]byte, error)</h3><p>这个Binding对象也是从提案对象中提取并组合出来的，其中包含proposal.Header中的SignatureHeader.Nonce,SignatureHeader.Creator和ChannelHeader.Epoch。关于Proposal对象确实很8复杂，我目前了解的并不对，接下来得详细研究。</p>
+<h2 id="8-事件设置SetEvent-name-string-payload-byte-error"><a href="#8-事件设置SetEvent-name-string-payload-byte-error" class="headerlink" title="8.事件设置SetEvent(name string, payload []byte) error"></a>8.事件设置SetEvent(name string, payload []byte) error</h2><p>当ChainCode提交完毕，会通过Event的方式通知Client。而通知的内容可以通过SetEvent设置。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">func (t *SimpleChaincode) testEvent(stub shim.ChaincodeStubInterface, args []string) pb.Response&#123;</span><br><span class="line">   tosend := &quot;Event send data is here!&quot;</span><br><span class="line">   err := stub.SetEvent(&quot;evtsender&quot;, []byte(tosend))</span><br><span class="line">   if err != nil &#123;</span><br><span class="line">      return shim.Error(err.Error())</span><br><span class="line">   &#125;</span><br><span class="line">   return shim.Success(nil)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>事件设置完毕后，需要在客户端也做相应的修改。</p>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2019/10/30/chaincode-develop-env-setup/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default"></span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2019/10/25/chaincode-develop/">
+        <span class="next-text nav-default">chaincode develop</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2021
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

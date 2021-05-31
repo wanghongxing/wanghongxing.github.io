@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="Fabric CA 环境的集成">
+
+
+
+
+  <meta name="keywords" content="fabric, CA, hongxing">
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="hongxing">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="http://wanghongxing.github.io/2019/11/11/Fabric-CA-integrate/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> Fabric CA 环境的集成 - hongxing </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">hongxing</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">hongxing</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Fabric CA 环境的集成
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-11-11
+        </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-修改docker-compose文件，增加CA容器"><span class="toc-text">1.修改docker-compose文件，增加CA容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-修改network-setup-sh启动脚本，将CA容器启动的参数带入"><span class="toc-text">2.修改network_setup.sh启动脚本，将CA容器启动的参数带入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-使用CA-Client生成新用户"><span class="toc-text">3.使用CA Client生成新用户</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3注册认证管理员"><span class="toc-text">3.3注册认证管理员</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注册新用户"><span class="toc-text">注册新用户</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-编写ChainCode验证当前用户"><span class="toc-text">4.编写ChainCode验证当前用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-设置新用户的证书和私钥文件夹，验证新用户的可用性"><span class="toc-text">5.设置新用户的证书和私钥文件夹，验证新用户的可用性</span></a></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#fabric-ca-tls生成"><span class="toc-text">fabric ca tls生成</span></a>
+    </li></div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <p>Fabric的所有例子都没有CA Server，都是由cryptogen这个工具根据crypto-config.yaml而生成的。但是在实际生产环境中，我们肯定不能这么做，我们应该为每个Org建立一个CA，由CA来管理其中的用户。下面我们就试着讲Fabric CA集成到整个Fabric网络中，并用CA Client生成新用户，最终使用新用户调用ChainCode，验证新用户的合法性。我们仍然以官方的e2e_cli为例，关于这个例子的环境搭建。</p>
+<h2 id="1-修改docker-compose文件，增加CA容器"><a href="#1-修改docker-compose文件，增加CA容器" class="headerlink" title="1.修改docker-compose文件，增加CA容器"></a>1.修改docker-compose文件，增加CA容器</h2><p>我们就以给org1这个组织增加CA容器为例，打开e2e_cli文件夹中的docker-compose-cli.yaml ，增加以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ca0: </span><br><span class="line">  image: hyperledger/fabric-ca </span><br><span class="line">  environment: </span><br><span class="line">    - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server </span><br><span class="line">    - FABRIC_CA_SERVER_CA_NAME=ca0 </span><br><span class="line">    - FABRIC_CA_SERVER_TLS_ENABLED=false </span><br><span class="line">  ports: </span><br><span class="line">    - &quot;7054:7054&quot; </span><br><span class="line">  command: sh -c &apos;fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/$&#123;PRIVATE_KEY&#125; -b admin:adminpw -d&apos; </span><br><span class="line">  volumes: </span><br><span class="line">    - ./crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config </span><br><span class="line">  container_name: ca0</span><br></pre></td></tr></table></figure>
+<p>这里我们注意到，Fabric CA Server启动的时候，带了3个重要的参数：ca.certfile 指定了CA的根证书，ca.keyfile 指定了接下来给新用户签发证书时的私钥，这里我们使用变量${PRIVATE_KEY}代替，这是因为每次network_setup的时候，私钥的名字是不一样的，所以需要从启动脚本中传入。另外就是-b参数，指定了CA Client连接CA Server时使用的用户名密码。 </p>
+<h2 id="2-修改network-setup-sh启动脚本，将CA容器启动的参数带入"><a href="#2-修改network-setup-sh启动脚本，将CA容器启动的参数带入" class="headerlink" title="2.修改network_setup.sh启动脚本，将CA容器启动的参数带入"></a>2.修改network_setup.sh启动脚本，将CA容器启动的参数带入</h2><p>接下来我们需要修改network_setup.sh文件，因为前面我们使用了变量${PRIVATE_KEY}，所以这里我们需要读取变量并带入docker-compose 启动的时候。具体修改如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function networkUp () &#123; </span><br><span class="line">    if [ -f &quot;./crypto-config&quot; ]; then </span><br><span class="line">       echo &quot;crypto-config directory already exists.&quot; </span><br><span class="line">    else </span><br><span class="line">       #Generate all the artifacts that includes org certs, orderer genesis block, </span><br><span class="line">      # channel configuration transaction </span><br><span class="line">       source generateArtifacts.sh $CH_NAME </span><br><span class="line">    fi </span><br><span class="line">folder=&quot;crypto-config/peerOrganizations/org1.example.com/ca&quot; </span><br><span class="line">privName=&quot;&quot; </span><br><span class="line">for file_a in $&#123;folder&#125;/* </span><br><span class="line">do </span><br><span class="line">    temp_file=`basename $file_a`</span><br><span class="line"></span><br><span class="line">    if [ $&#123;temp_file##*.&#125; != &quot;pem&quot; ];then </span><br><span class="line">       privName=$temp_file </span><br><span class="line">    fi </span><br><span class="line">done </span><br><span class="line">    echo $privName </span><br><span class="line">    if [ &quot;$&#123;IF_COUCHDB&#125;&quot; == &quot;couchdb&quot; ]; then </span><br><span class="line">      CHANNEL_NAME=$CH_NAME TIMEOUT=$CLI_TIMEOUT docker-compose -f $COMPOSE_FILE -f $COMPOSE_FILE_COUCH up -d 2&gt;&amp;1 </span><br><span class="line">    else </span><br><span class="line">      CHANNEL_NAME=$CH_NAME TIMEOUT=$CLI_TIMEOUT PRIVATE_KEY=$privName docker-compose -f $COMPOSE_FILE up -d 2&gt;&amp;1 </span><br><span class="line">    fi </span><br><span class="line">    if [ $? -ne 0 ]; then </span><br><span class="line">        echo &quot;ERROR !!!! Unable to pull the images &quot; </span><br><span class="line">        exit 1 </span><br><span class="line">     fi </span><br><span class="line">    docker logs -f cli </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里脚本的逻辑很简单，就是去crypto-config/peerOrganizations/org1.example.com/ca这个文件夹中去遍历文件，找到私钥文件的文件名，并把文件名赋值给privName，然后在docker-compse的启动时，指定到PRIVATE_KEY即可。</p>
+<h2 id="3-使用CA-Client生成新用户"><a href="#3-使用CA-Client生成新用户" class="headerlink" title="3.使用CA Client生成新用户"></a>3.使用CA Client生成新用户</h2><p>只需要经过前面2步，我们给Org1设置的CA Server就算完成了。</p>
+<h3 id="3-3注册认证管理员"><a href="#3-3注册认证管理员" class="headerlink" title="3.3注册认证管理员"></a>3.3注册认证管理员</h3><p>我们首先需要以管理员身份使用CA Client连接到CA Server，并生成相应的文件。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">export FABRIC_CA_CLIENT_HOME=$HOME/ca</span><br><span class="line">fabric-ca-client enroll -u http://admin:adminpw@localhost:7054</span><br></pre></td></tr></table></figure>
+<p>这个时候我们可以去$HOME/ca目录，看到CA Client创建了一个fabric-ca-client-config.yaml文件和一个msp文件夹。config可以去修改一些组织信息之类的。</p>
+<h3 id="注册新用户"><a href="#注册新用户" class="headerlink" title="注册新用户"></a>注册新用户</h3><p>接下来我们想新建一个叫devin的用户，那么需要先执行这个命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fabric-ca-client register --id.name devin --id.type user --id.affiliation org1.department1 --id.attrs &apos;hf.Revoker=true,foo=bar&apos;</span><br></pre></td></tr></table></figure>
+<p>系统会返回一个该用户的密码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">2017/09/05 22:20:41 [INFO] User provided config file: /home/studyzy/ca/fabric-ca-client-config.yaml </span><br><span class="line">2017/09/05 22:20:41 [INFO] Configuration file location: /home/studyzy/ca/fabric-ca-client-config.yaml </span><br><span class="line">Password: GOuMzkcGgGzq</span><br></pre></td></tr></table></figure>
+<p>我们拿到这个密码以后就可以再次使用enroll命令，给devin这个用户生成msp的私钥和证书：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fabric-ca-client enroll -u http://devin:GOuMzkcGgGzq@localhost:7054 -M $FABRIC_CA_CLIENT_HOME/devinmsp</span><br><span class="line">现在新用户devin的私钥和证书就在$HOME/ca/devinmsp目录下，我们可以使用tree命令查看一下：</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">devinmsp/ </span><br><span class="line">├── cacerts </span><br><span class="line">│   └── localhost-7054.pem </span><br><span class="line">├── keystore </span><br><span class="line">│   └── a044e43ad1fd7cdfd1fd995abaef53895534bd70e8cdfdb665430d12665f2041_sk </span><br><span class="line">└── signcerts </span><br><span class="line">    └── cert.pem</span><br></pre></td></tr></table></figure>
+<h2 id="4-编写ChainCode验证当前用户"><a href="#4-编写ChainCode验证当前用户" class="headerlink" title="4.编写ChainCode验证当前用户"></a>4.编写ChainCode验证当前用户</h2><p>由于官方提供的example02并没有关于当前用户的信息的代码，所以我们需要编写自己的ChainCode。</p>
+<p>这里我们主要是用到ChainCode接口提供的GetCreator方法，具体完整的ChainCode如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">   &quot;github.com/hyperledger/fabric/core/chaincode/shim&quot;</span><br><span class="line">   pb &quot;github.com/hyperledger/fabric/protos/peer&quot;</span><br><span class="line">   &quot;fmt&quot;</span><br><span class="line">   &quot;encoding/pem&quot;</span><br><span class="line">   &quot;crypto/x509&quot;</span><br><span class="line">   &quot;bytes&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">type SimpleChaincode struct &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">   err := shim.Start(new(SimpleChaincode))</span><br><span class="line">   if err != nil &#123;</span><br><span class="line">      fmt.Printf(&quot;Error starting Simple chaincode: %s&quot;, err)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response &#123;</span><br><span class="line">   return shim.Success(nil)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response &#123;</span><br><span class="line">   function, args := stub.GetFunctionAndParameters()</span><br><span class="line">   fmt.Println(&quot;invoke is running &quot; + function)</span><br><span class="line">   if function == &quot;cert&quot; &#123;//自定义函数名称</span><br><span class="line">      return t.testCertificate(stub, args)//定义调用的函数</span><br><span class="line">   &#125;</span><br><span class="line">   return shim.Error(&quot;Received unknown function invocation&quot;)</span><br><span class="line">&#125;</span><br><span class="line">func (t *SimpleChaincode) testCertificate(stub shim.ChaincodeStubInterface, args []string) pb.Response&#123;</span><br><span class="line">   creatorByte,_:= stub.GetCreator()</span><br><span class="line">   certStart := bytes.IndexAny(creatorByte, &quot;-----&quot;)// Devin:I don&apos;t know why sometimes -----BEGIN is invalid, so I use -----</span><br><span class="line">   if certStart == -1 &#123;</span><br><span class="line">      fmt.Errorf(&quot;No certificate found&quot;)</span><br><span class="line">   &#125;</span><br><span class="line">   certText := creatorByte[certStart:]</span><br><span class="line">   bl, _ := pem.Decode(certText)</span><br><span class="line">   if bl == nil &#123;</span><br><span class="line">      fmt.Errorf(&quot;Could not decode the PEM structure&quot;)</span><br><span class="line">   &#125;</span><br><span class="line">   fmt.Println(string(certText))</span><br><span class="line">   cert, err := x509.ParseCertificate(bl.Bytes)</span><br><span class="line">   if err != nil &#123;</span><br><span class="line">      fmt.Errorf(&quot;ParseCertificate failed&quot;)</span><br><span class="line">   &#125;</span><br><span class="line">   fmt.Println(cert)</span><br><span class="line">   uname:=cert.Subject.CommonName</span><br><span class="line">   fmt.Println(&quot;Name:&quot;+uname)</span><br><span class="line">   return shim.Success([]byte(&quot;Called testCertificate &quot;+uname))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">我们只需要在~/go/src/github.com/hyperledger/fabric/examples/chaincode/go目录下新建一个文件夹，比如test1，然后新建一个文件test1.go并粘贴上面的代码进去即可。</span><br></pre></td></tr></table></figure>
+<p>现在ChainCode已经开发完成，我们需要部署并测试该ChainCode的正确性，下面是部署步骤：</p>
+<p>首先登陆到cli中：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker exec -it cli bash</span><br></pre></td></tr></table></figure>
+<p>然后在cli下面执行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">peer chaincode install -n test1 -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/test1</span><br><span class="line"></span><br><span class="line">ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem</span><br><span class="line"></span><br><span class="line">peer chaincode instantiate -o orderer.example.com:7050 --tls true --cafile $ORDERER_CA -C mychannel -n test1 -v 1.0 -c &apos;&#123;&quot;Args&quot;:[]&#125;&apos;</span><br><span class="line"></span><br><span class="line">peer chaincode query -C mychannel -n test1 -c &apos;&#123;&quot;Args&quot;:[&quot;cert&quot;]&#125;&apos;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">系统返回结果，说明我们当前的用户是Admin@org1.example.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@2d1735e72642:/opt/gopath/src/github.com/hyperledger/fabric/peer# peer chaincode query -C mychannel -n test1 -c &apos;&#123;&quot;Args&quot;:[&quot;cert&quot;]&#125;&apos; </span><br><span class="line">2017-09-05 14:40:23.175 UTC [msp] GetLocalMSP -&gt; DEBU 001 Returning existing local MSP </span><br><span class="line">2017-09-05 14:40:23.176 UTC [msp] GetDefaultSigningIdentity -&gt; DEBU 002 Obtaining default signing identity </span><br><span class="line">2017-09-05 14:40:23.176 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 003 Using default escc </span><br><span class="line">2017-09-05 14:40:23.176 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 004 Using default vscc </span><br><span class="line">2017-09-05 14:40:23.176 UTC [msp/identity] Sign -&gt; DEBU 005 Sign: plaintext: 0A95070A6708031A0B08D7EEBACD0510...07120574657374311A060A0463657274 </span><br><span class="line">2017-09-05 14:40:23.176 UTC [msp/identity] Sign -&gt; DEBU 006 Sign: digest: B4BB1EE5E6EBA63E50C85831C8820FB0B4490C55F23C247EDE5529DDAB23C273 </span><br><span class="line">Query Result: Called testCertificate Admin@org1.example.com </span><br><span class="line">2017-09-05 14:40:23.195 UTC [main] main -&gt; INFO 007 Exiting.....</span><br></pre></td></tr></table></figure>
+<h2 id="5-设置新用户的证书和私钥文件夹，验证新用户的可用性"><a href="#5-设置新用户的证书和私钥文件夹，验证新用户的可用性" class="headerlink" title="5.设置新用户的证书和私钥文件夹，验证新用户的可用性"></a>5.设置新用户的证书和私钥文件夹，验证新用户的可用性</h2><p>因为我们是给org1设置的CA，用户devin也是在org1下，所以需要把~/ca/devinmsp下面的文件转移到org1下面。org1的用户证书和私钥文件夹在：</p>
+<p>~/go/src/github.com/hyperledger/fabric/examples/e2e_cli/crypto-config/peerOrganizations/org1.example.com/users</p>
+<p>我们需要新建文件夹devin用于保存新用户的证书和私钥，我们新建一个Ubuntu的命令行窗口，前面已经登录您的cli的窗口保留，我们接下来还会用。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd ~/go/src/github.com/hyperledger/fabric/examples/e2e_cli/crypto-config/peerOrganizations/org1.example.com/users</span><br><span class="line"></span><br><span class="line">mkdir devin</span><br><span class="line"></span><br><span class="line">cp ~/ca/devinmsp/ devin/msp –R</span><br></pre></td></tr></table></figure>
+<p><strong>不知道什么原因，Fabric在使用的时候需要用到msp文件夹下的admincerts文件夹，但是CA Client在生成的时候并没有这个文件夹，所以我们需要从signcerts这个文件夹中拷贝一个过来</strong>，运行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir devin/msp/admincerts</span><br><span class="line"></span><br><span class="line">cp devin/msp/signcerts/cert.pem devin/msp/admincerts/</span><br></pre></td></tr></table></figure>
+<p>好现在我们的新用户的所有证书准备完毕，tree devin看看结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">devin/ </span><br><span class="line">└── msp </span><br><span class="line">    ├── admincerts </span><br><span class="line">    │   └── cert.pem </span><br><span class="line">    ├── cacerts </span><br><span class="line">    │   └── localhost-7054.pem </span><br><span class="line">    ├── keystore </span><br><span class="line">    │   └── a044e43ad1fd7cdfd1fd995abaef53895534bd70e8cdfdb665430d12665f2041_sk </span><br><span class="line">    └── signcerts </span><br><span class="line">        └── cert.pem</span><br></pre></td></tr></table></figure>
+<p>接下来切换到cli窗口，我们把当前cli的用户msp文件夹切换成devin的文件夹，具体命令是：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/devin/msp</span><br></pre></td></tr></table></figure>
+<p>现在我们再来运行一下ChainCode：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">peer chaincode query -C mychannel -n test1 -c &apos;&#123;&quot;Args&quot;:[&quot;cert&quot;]&#125;&apos;</span><br></pre></td></tr></table></figure>
+<p>我们可以看到结果已经变化了，用户已经由Admin变成了devin：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@2d1735e72642:/opt/gopath/src/github.com/hyperledger/fabric/peer# peer chaincode query -C mychannel -n test1 -c &apos;&#123;&quot;Args&quot;:[&quot;cert&quot;]&#125;&apos; </span><br><span class="line">2017-09-05 14:53:17.497 UTC [msp] GetLocalMSP -&gt; DEBU 001 Returning existing local MSP </span><br><span class="line">2017-09-05 14:53:17.497 UTC [msp] GetDefaultSigningIdentity -&gt; DEBU 002 Obtaining default signing identity </span><br><span class="line">2017-09-05 14:53:17.497 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 003 Using default escc </span><br><span class="line">2017-09-05 14:53:17.497 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 004 Using default vscc </span><br><span class="line">2017-09-05 14:53:17.497 UTC [msp/identity] Sign -&gt; DEBU 005 Sign: plaintext: 0AE3070A6808031A0C08DDF4BACD0510...07120574657374311A060A0463657274 </span><br><span class="line">2017-09-05 14:53:17.497 UTC [msp/identity] Sign -&gt; DEBU 006 Sign: digest: 21EE9B77A231E22ACB5FDD59C668C1A6E300833A820901DF9E896E22C00FC00F </span><br><span class="line">Query Result: Called testCertificate devin </span><br><span class="line">2017-09-05 14:53:17.508 UTC [main] main -&gt; INFO 007 Exiting.....</span><br></pre></td></tr></table></figure>
+<p><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></p>
+<p>以上就是关于Fabric CA环境集成的简单测试。关于CA Server有配置文件在CA Server容器内部，可以针对不同的org信息进行修改。而CA Client也有配置文件，也可以在enroll之前进行修改。关于具体的修改方法，参考官方文档：<a href="http://hyperledger-fabric-ca.readthedocs.io/en/latest/" target="_blank" rel="noopener">http://hyperledger-fabric-ca.readthedocs.io/en/latest/</a></p>
+<hr>
+<h1 id="fabric-ca-tls生成"><a href="#fabric-ca-tls生成" class="headerlink" title="fabric ca tls生成"></a>fabric ca tls生成</h1><p>其实 跟msp生成一样的，都是要开启一个server端 ，只不过 enroll 时，命令多加上</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-d --enrollment.profile tls</span><br></pre></td></tr></table></figure>
+<p>比如：登记orderer节点:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fabric-ca-client enroll -d --enrollment.profile tls -u http://orderer:orderer-password@localhost:8054 -c fabric-ca-client-config-orderer.yaml</span><br></pre></td></tr></table></figure>
+<p> 注意：加上 配置文件</p>
+<p> <a href="https://bitshuo.com/topic/5ae2c65c93163eb52a348d8a" target="_blank" rel="noopener">https://bitshuo.com/topic/5ae2c65c93163eb52a348d8a</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mv ./OrdererTLS/tlscacerts/tls-10-*-60-*-8054.pem ./OrdererTLS/ca.crt</span><br><span class="line">mv ./OrdererTLS/signcerts/cert.pem ./OrdererTLS/server.crt</span><br><span class="line">mv ./OrdererTLS/keystore/****_sk ./OrdererTLS/server.key</span><br><span class="line"></span><br><span class="line">mkdir ./OrdereMSP/tlscacerts</span><br><span class="line">cp ./OrdererTLS/ca.crt ./OrdereMSP/tlscacerts</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/fabric/">fabric</a>
+            
+              <a href="/tags/CA/">CA</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2019/11/11/Fabric-production-env-make-msp-and-tls-by-CA/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Fabric production env make msp and tls by CA </span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2019/10/30/fabric-baseos-baseimage-basejvm/">
+        <span class="next-text nav-default">fabric baseos baseimage basejvm</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:wanghongxing@gmail.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/wanghongxing" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2018 - 
+    
+    2021
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wanghongxing</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>
