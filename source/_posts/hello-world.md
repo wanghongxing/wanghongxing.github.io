@@ -29,6 +29,24 @@ $ hexo generate
 
 More info: [Generating](https://hexo.io/docs/generating.html)
 
+
+
+### 初始化 
+
+git init .
+
+增加 theme
+git submodule add git@github.com:theme-next/hexo-theme-next themes/next
+
+git commit -m "init"
+
+### 推送到远程仓
+
+git remote add origin git@github.com:wanghongxing/wanghongxing.github.io.git
+git push --set-upstream origin src
+
+
+
 ### Deploy to remote sites
 
 ``` bash
