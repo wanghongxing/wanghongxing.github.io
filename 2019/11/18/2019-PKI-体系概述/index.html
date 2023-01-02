@@ -17,28 +17,28 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"wanghongxing.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"wanghongxing.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="传统密码学 换位加密法； 替换加密法；  现代密码学加密基元加密基元就是一些基础的密码学算法，通过它们才能够构建更多的密码学算法、协议、应用程序。  说明：  散列函数（散列（hash）、指纹、消息摘要、摘要算法、杂凑函数）：把任意长度的输入消息数据转化成固定长度的输出数据的一种密码算法。 消息验证代码：验证数据完整性，即数据没有被篡改。 数字签名：RSA私钥加密，公钥解密，结合散列函数。验证消息">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PKI 体系概述">
-<meta property="og:url" content="http://wanghongxing.github.io/2019/11/18/PKI-%E4%BD%93%E7%B3%BB%E6%A6%82%E8%BF%B0/index.html">
-<meta property="og:site_name" content="hongxing">
+<meta property="og:url" content="http://wanghongxing.github.io/2019/11/18/2019-PKI-%E4%BD%93%E7%B3%BB%E6%A6%82%E8%BF%B0/index.html">
+<meta property="og:site_name" content="红星科技">
 <meta property="og:description" content="传统密码学 换位加密法； 替换加密法；  现代密码学加密基元加密基元就是一些基础的密码学算法，通过它们才能够构建更多的密码学算法、协议、应用程序。  说明：  散列函数（散列（hash）、指纹、消息摘要、摘要算法、杂凑函数）：把任意长度的输入消息数据转化成固定长度的输出数据的一种密码算法。 消息验证代码：验证数据完整性，即数据没有被篡改。 数字签名：RSA私钥加密，公钥解密，结合散列函数。验证消息">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://wanghongxing.github.io/2019/11/18/images/encode-01.png">
-<meta property="og:image" content="http://wanghongxing.github.io/2019/11/18/images/encode-02.png">
-<meta property="og:image" content="http://wanghongxing.github.io/2019/11/18/images/encode-03.png">
-<meta property="og:image" content="http://wanghongxing.github.io/2019/11/18/images/encode-04.png">
-<meta property="og:image" content="http://wanghongxing.github.io/2019/11/18/images/encode-05.png">
+<meta property="og:image" content="http://wanghongxing.github.io/images/encode-01.png">
+<meta property="og:image" content="http://wanghongxing.github.io/images/encode-02.png">
+<meta property="og:image" content="http://wanghongxing.github.io/images/encode-03.png">
+<meta property="og:image" content="http://wanghongxing.github.io/images/encode-04.png">
+<meta property="og:image" content="http://wanghongxing.github.io/images/encode-05.png">
 <meta property="article:published_time" content="2019-11-18T03:04:34.000Z">
-<meta property="article:modified_time" content="2023-01-02T10:54:49.062Z">
+<meta property="article:modified_time" content="2023-01-02T11:15:31.413Z">
 <meta property="article:author" content="wanghongxing">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://wanghongxing.github.io/2019/11/18/images/encode-01.png">
+<meta name="twitter:image" content="http://wanghongxing.github.io/images/encode-01.png">
 
-<link rel="canonical" href="http://wanghongxing.github.io/2019/11/18/PKI-%E4%BD%93%E7%B3%BB%E6%A6%82%E8%BF%B0/">
+<link rel="canonical" href="http://wanghongxing.github.io/2019/11/18/2019-PKI-%E4%BD%93%E7%B3%BB%E6%A6%82%E8%BF%B0/">
 
 
 <script id="page-configurations">
@@ -51,7 +51,7 @@
   };
 </script>
 
-  <title>PKI 体系概述 | hongxing</title>
+  <title>PKI 体系概述 | 红星科技</title>
   
 
 
@@ -102,7 +102,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">hongxing</h1>
+      <h1 class="site-title">红星科技</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -121,11 +121,6 @@
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -161,7 +156,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="http://wanghongxing.github.io/2019/11/18/PKI-%E4%BD%93%E7%B3%BB%E6%A6%82%E8%BF%B0/">
+    <link itemprop="mainEntityOfPage" href="http://wanghongxing.github.io/2019/11/18/2019-PKI-%E4%BD%93%E7%B3%BB%E6%A6%82%E8%BF%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -170,7 +165,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hongxing">
+      <meta itemprop="name" content="红星科技">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -191,7 +186,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-02 18:54:49" itemprop="dateModified" datetime="2023-01-02T18:54:49+08:00">2023-01-02</time>
+                <time title="Modified: 2023-01-02 19:15:31" itemprop="dateModified" datetime="2023-01-02T19:15:31+08:00">2023-01-02</time>
               </span>
 
           
@@ -210,7 +205,7 @@
 <li>替换加密法；</li>
 </ul>
 <h1 id="现代密码学加密基元"><a href="#现代密码学加密基元" class="headerlink" title="现代密码学加密基元"></a>现代密码学加密基元</h1><p>加密基元就是一些基础的密码学算法，通过它们才能够构建更多的密码学算法、协议、应用程序。</p>
-<p><img src="../images/encode-01.png" alt="encode-01"></p>
+<p><img src="/images/encode-01.png" alt="encode-01"></p>
 <p>说明：</p>
 <ul>
 <li><strong>散列函数（散列（hash）、指纹、消息摘要、摘要算法、杂凑函数）</strong>：把任意长度的输入消息数据转化成固定长度的输出数据的一种密码算法。</li>
@@ -222,17 +217,17 @@
 <li><strong>ECDHE_RSA</strong>： ECDHE 算法：密钥协商，RSA 算法：身份验证（数字签名）。</li>
 <li><strong>ECDHE_ECDSA</strong>：ECDHE 算法：密钥协商，ECDSA 算法：身份验证（数字签名）。</li>
 </ul>
-<h1 id="密钥管理"><a href="#密钥管理" class="headerlink" title="密钥管理"></a>密钥管理</h1><p><img src="../images/encode-02.png" alt="encode-01"></p>
+<h1 id="密钥管理"><a href="#密钥管理" class="headerlink" title="密钥管理"></a>密钥管理</h1><p><img src="/images/encode-02.png" alt="encode-01"></p>
 <p>密钥管理模式：</p>
 <ul>
 <li>无中心模式；</li>
 <li>有中心模式；</li>
 </ul>
 <h1 id="PKI-的本质是把非对称密钥管理标准化"><a href="#PKI-的本质是把非对称密钥管理标准化" class="headerlink" title="PKI 的本质是把非对称密钥管理标准化"></a>PKI 的本质是把非对称密钥管理标准化</h1><p>PKI 是 Public Key Infrastructure 的缩写，其主要功能是绑定证书持有者的身份和相关的密钥对（通过为公钥及相关的用户身份信息签发数字证书），为用户提供方便的证书申请、证书作废、证书获取、证书状态查询的途径，并利用数字证书及相关的各种服务（证书发布，黑名单发布，时间戳服务等）实现通信中各实体的身份认证、完整性、抗抵赖性和保密性。</p>
-<p><img src="../images/encode-03.png" alt="encode-01"></p>
+<p><img src="/images/encode-03.png" alt="encode-01"></p>
 <p><strong>数字证书</strong>：解决公钥与用户映射关系问题；</p>
 <p><strong>CA</strong>：解决数字证书签发问题；</p>
-<p><img src="../images/encode-04.png" alt="encode-01"></p>
+<p><img src="/images/encode-04.png" alt="encode-01"></p>
 <ul>
 <li><strong>KMC</strong>：解决私钥的备份与恢复问题；</li>
 <li><strong>双证书机制</strong>：「签名证书及私钥」只用于签名验签，「加密证书及私钥」只用于加密解密。</li>
@@ -241,7 +236,7 @@
 <li><strong>RA</strong>：方便证书业务远程办理、方便证书管理流程与应用系统结合。</li>
 <li><strong>电子认证服务机构</strong>：保证 CA 系统在数字证书管理方面的规范性、合规性和安全性。</li>
 </ul>
-<h1 id="数字证书分类"><a href="#数字证书分类" class="headerlink" title="数字证书分类"></a>数字证书分类</h1><p><img src="../images/encode-05.png" alt="encode-01"></p>
+<h1 id="数字证书分类"><a href="#数字证书分类" class="headerlink" title="数字证书分类"></a>数字证书分类</h1><p><img src="/images/encode-05.png" alt="encode-01"></p>
 <h2 id="基于数字证书可以实现四种基本安全功能"><a href="#基于数字证书可以实现四种基本安全功能" class="headerlink" title="基于数字证书可以实现四种基本安全功能"></a>基于数字证书可以实现四种基本安全功能</h2><ol>
 <li>身份认证；</li>
 <li>保密性；</li>
@@ -267,8 +262,8 @@
       <i class="fa fa-chevron-left"></i> 破解光猫
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/01/02/hello-world/" rel="next" title="Hello World">
-      Hello World <i class="fa fa-chevron-right"></i>
+    <a href="/2020/11/18/2020-11-18-ipfs-cluster%20%E6%B5%8B%E8%AF%95/" rel="next" title="ipfs-cluster 测试">
+      ipfs-cluster 测试 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -342,7 +337,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -384,7 +379,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">wanghongxing</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
 
         
@@ -410,7 +405,7 @@
 <script src="/js/motion.js"></script>
 
 
-<script src="/js/schemes/pisces.js"></script>
+<script src="/js/schemes/muse.js"></script>
 
 
 <script src="/js/next-boot.js"></script>

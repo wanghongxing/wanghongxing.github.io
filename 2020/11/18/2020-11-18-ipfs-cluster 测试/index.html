@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"wanghongxing.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="123echo &quot;a&quot;&gt;test.txtecho &quot;b&quot;&gt;test2.txtecho &quot;c&quot;&gt;test3.txt  master: 12345678910111213# ipfs --api &#x2F;ip4&#x2F;127.0.0.1&#x2F;tcp&#x2F;9095 add test3.txt added QmetGxZTgo8tYAKQH1KLs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ipfs-cluster 测试">
+<meta property="og:url" content="http://wanghongxing.github.io/2020/11/18/2020-11-18-ipfs-cluster%20%E6%B5%8B%E8%AF%95/index.html">
+<meta property="og:site_name" content="红星科技">
+<meta property="og:description" content="123echo &quot;a&quot;&gt;test.txtecho &quot;b&quot;&gt;test2.txtecho &quot;c&quot;&gt;test3.txt  master: 12345678910111213# ipfs --api &#x2F;ip4&#x2F;127.0.0.1&#x2F;tcp&#x2F;9095 add test3.txt added QmetGxZTgo8tYAKQH1KLs">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-18T03:04:34.000Z">
+<meta property="article:modified_time" content="2023-01-02T12:04:31.446Z">
+<meta property="article:author" content="wanghongxing">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://wanghongxing.github.io/2020/11/18/2020-11-18-ipfs-cluster%20%E6%B5%8B%E8%AF%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title>ipfs-cluster 测试 | 红星科技</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">红星科技</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="http://wanghongxing.github.io/2020/11/18/2020-11-18-ipfs-cluster%20%E6%B5%8B%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星科技">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ipfs-cluster 测试
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-11-18 11:04:34" itemprop="dateCreated datePublished" datetime="2020-11-18T11:04:34+08:00">2020-11-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-01-02 20:04:31" itemprop="dateModified" datetime="2023-01-02T20:04:31+08:00">2023-01-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;a&quot;</span>&gt;test.txt</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;b&quot;</span>&gt;test2.txt</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;c&quot;</span>&gt;test3.txt</span><br></pre></td></tr></table></figure>
+
+<p>master:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ipfs --api /ip4/127.0.0.1/tcp/9095 add test3.txt</span></span><br><span class="line"> added QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7 test3.txt</span><br><span class="line"> </span><br><span class="line"><span class="comment"># ipfs --api /ip4/127.0.0.1/tcp/9095 pin ls</span></span><br><span class="line">QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7 recursive</span><br><span class="line"></span><br><span class="line"><span class="comment"># ipfs-cluster-ctl pin ls</span></span><br><span class="line">QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7 |  | PIN | Repl. Factor: -1 | Allocations: [everywhere] | Recursive | Metadata: no | Exp: ∞</span><br><span class="line"></span><br><span class="line"><span class="comment">#ipfs pin ls</span></span><br><span class="line">QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn recursive</span><br><span class="line">QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7 recursive</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+<p><strong>注：QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn 是一个空的文件目录，每个初始化的节点都有。</strong></p>
+<p>在另外两台服务器上都执行 pin ls，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ipfs --api /ip4/127.0.0.1/tcp/9095 pin ls</span></span><br><span class="line">QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7 recursive</span><br><span class="line"><span class="comment"># ipfs pin ls</span></span><br><span class="line">QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn recursive</span><br><span class="line">QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7 recursive</span><br></pre></td></tr></table></figure>
+
+<p>说明使用cluster add的时候在所有的节点都已经同步保存了。</p>
+<p>whx:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ipfs add test.txt</span></span><br><span class="line">added Qmbvkmk9LFsGneteXk3G7YLqtLVME566ho6ibaQZZVHaC9 test.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># ipfs --api /ip4/127.0.0.1/tcp/9095 pin ls</span></span><br><span class="line">QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7 recursive</span><br><span class="line"></span><br><span class="line"><span class="comment"># ipfs pin ls</span></span><br><span class="line">QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7 recursive</span><br><span class="line">QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn recursive</span><br><span class="line">Qmbvkmk9LFsGneteXk3G7YLqtLVME566ho6ibaQZZVHaC9 recursive</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>说明普通的add命令只在本机pin</p>
+<p>whx：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ipfs --api /ip4/127.0.0.1/tcp/9095 pin add Qmbvkmk9LFsGneteXk3G7YLqtLVME566ho6ibaQZZVHaC9</span></span><br><span class="line">pinned Qmbvkmk9LFsGneteXk3G7YLqtLVME566ho6ibaQZZVHaC9 recursively</span><br><span class="line"><span class="comment"># ipfs --api /ip4/127.0.0.1/tcp/9095 pin ls</span></span><br><span class="line">QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7 recursive</span><br><span class="line">Qmbvkmk9LFsGneteXk3G7YLqtLVME566ho6ibaQZZVHaC9 recursive</span><br></pre></td></tr></table></figure>
+
+<p>在另外两台服务器上都执行 pin ls，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ipfs --api /ip4/127.0.0.1/tcp/9095 pin ls</span></span><br><span class="line">Qmbvkmk9LFsGneteXk3G7YLqtLVME566ho6ibaQZZVHaC9 recursive</span><br><span class="line">QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7 recursive</span><br></pre></td></tr></table></figure>
+
+<p>说明使用 ipfs add 以后需要用 cluster 的 pin add 来让 cluster 保存了。</p>
+<p>whx:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ipfs --api /ip4/127.0.0.1/tcp/9095 pin rm  Qmbvkmk9LFsGneteXk3G7YLqtLVME566ho6ibaQZZVHaC9</span></span><br><span class="line">unpinned Qmbvkmk9LFsGneteXk3G7YLqtLVME566ho6ibaQZZVHaC9</span><br><span class="line"><span class="comment"># ipfs --api /ip4/127.0.0.1/tcp/9095 pin ls</span></span><br><span class="line">QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7 recursive</span><br></pre></td></tr></table></figure>
+
+<p>执行删除操作后，pin ls看不到该文件了。</p>
+<p>master:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ipfs --api /ip4/127.0.0.1/tcp/9095 pin add Qmbvkmk9LFsGneteXk3G7YLqtLVME566ho6ibaQZZVHaC9</span></span><br><span class="line">pinned Qmbvkmk9LFsGneteXk3G7YLqtLVME566ho6ibaQZZVHaC9 recursively</span><br><span class="line"></span><br><span class="line"><span class="comment"># ipfs --api /ip4/127.0.0.1/tcp/9095 pin ls</span></span><br><span class="line">Qmbvkmk9LFsGneteXk3G7YLqtLVME566ho6ibaQZZVHaC9 recursive</span><br><span class="line">QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7 recursive</span><br></pre></td></tr></table></figure>
+
+<p>在master上执行pin add 后该文件又出现了。（难到这个在存储里还有，重新pin add 后又出现了）</p>
+<p>worker:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ipfs add test2.txt</span></span><br><span class="line">added QmR9pC5uCF3UExca8RSrCVL8eKv7nHMpATzbEQkAHpXmVM test2.txt</span><br><span class="line"><span class="comment"># ipfs --api /ip4/127.0.0.1/tcp/9095 pin ls</span></span><br><span class="line">QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7 recursive</span><br><span class="line">Qmbvkmk9LFsGneteXk3G7YLqtLVME566ho6ibaQZZVHaC9 recursive</span><br><span class="line"><span class="comment"># ipfs pin ls</span></span><br><span class="line">QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7 recursive</span><br><span class="line">QmR9pC5uCF3UExca8RSrCVL8eKv7nHMpATzbEQkAHpXmVM recursive</span><br><span class="line">QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn recursive</span><br><span class="line">Qmbvkmk9LFsGneteXk3G7YLqtLVME566ho6ibaQZZVHaC9 recursive</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>whx:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ipfs cat QmR9pC5uCF3UExca8RSrCVL8eKv7nHMpATzbEQkAHpXmVM</span></span><br><span class="line">b</span><br><span class="line"><span class="comment"># ipfs pin ls</span></span><br><span class="line">QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7 recursive</span><br><span class="line">QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn recursive</span><br><span class="line">Qmbvkmk9LFsGneteXk3G7YLqtLVME566ho6ibaQZZVHaC9 recursive</span><br></pre></td></tr></table></figure>
+
+<p>说明可以看不同节点增加的文件，但是并没有pin。</p>
+<p>whx:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ipfs --api /ip4/127.0.0.1/tcp/9095 pin add QmR9pC5uCF3UExca8RSrCVL8eKv7nHMpATzbEQkAHpXmVM</span></span><br><span class="line">pinned QmR9pC5uCF3UExca8RSrCVL8eKv7nHMpATzbEQkAHpXmVM recursively</span><br><span class="line"><span class="comment"># ipfs --api /ip4/127.0.0.1/tcp/9095 pin ls</span></span><br><span class="line">QmR9pC5uCF3UExca8RSrCVL8eKv7nHMpATzbEQkAHpXmVM recursive</span><br><span class="line">Qmbvkmk9LFsGneteXk3G7YLqtLVME566ho6ibaQZZVHaC9 recursive</span><br><span class="line">QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7 recursive</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p> 在任意一台服务器上</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># ipfs --api /ip4/127.0.0.1/tcp/9095 cat QmR9pC5uCF3UExca8RSrCVL8eKv7nHMpATzbEQkAHpXmVM</span><br><span class="line">b</span><br><span class="line"># ipfs --api /ip4/127.0.0.1/tcp/9095 pin rm QmR9pC5uCF3UExca8RSrCVL8eKv7nHMpATzbEQkAHpXmVM</span><br><span class="line">unpinned QmR9pC5uCF3UExca8RSrCVL8eKv7nHMpATzbEQkAHpXmVM</span><br><span class="line"># ipfs --api /ip4/127.0.0.1/tcp/9095 cat QmR9pC5uCF3UExca8RSrCVL8eKv7nHMpATzbEQkAHpXmVM</span><br><span class="line">b</span><br><span class="line"># ipfs --api /ip4/127.0.0.1/tcp/9095 pin ls</span><br><span class="line">Qmbvkmk9LFsGneteXk3G7YLqtLVME566ho6ibaQZZVHaC9 recursive</span><br><span class="line">QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7 recursive</span><br><span class="line"># ipfs cat QmR9pC5uCF3UExca8RSrCVL8eKv7nHMpATzbEQkAHpXmVM</span><br><span class="line">b</span><br></pre></td></tr></table></figure>
+
+<p>这时候删除了都能看，然后在一台清除gc</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ipfs repo gc</span></span><br><span class="line">removed QmWLX2v5rnFeAbFyP4VPkDKLVVk91LncD6S648Ce4GgGgz</span><br><span class="line">removed QmevuAKVMG3Pr6nTp2oy9MzuPhZuZMxRfFApbfzk5zafr6</span><br><span class="line">removed QmV7XXZAUrBaE76Susmd4gRLzziK5QH1EigHqgma8adKf9</span><br><span class="line">removed QmWgtt1onrFVgqwAuYBWQ2HNkxJtBgnDzqWRVZQzpWeDUj</span><br><span class="line">removed QmWNGqp2zsw6nLr6aySK3UAQkTkoYozMNszwcz1bWmuckX</span><br><span class="line">removed QmR9pC5uCF3UExca8RSrCVL8eKv7nHMpATzbEQkAHpXmVM</span><br><span class="line">removed QmT9PmBnECcLRCu4hYmbijCca6k7ocdagGqUFpH9gWf5Cn</span><br><span class="line">removed QmaoaDnyHfZYEXjCuX59bgzA2YbgXMUKuSARdS3GHgbxoN</span><br><span class="line"><span class="comment"># ipfs cat QmR9pC5uCF3UExca8RSrCVL8eKv7nHMpATzbEQkAHpXmVM</span></span><br><span class="line">b</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>一台上清除gc后依然能看，下面在所有服务器上清除</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ipfs repo gc</span></span><br><span class="line">removed QmWLX2v5rnFeAbFyP4VPkDKLVVk91LncD6S648Ce4GgGgz</span><br><span class="line">removed QmevuAKVMG3Pr6nTp2oy9MzuPhZuZMxRfFApbfzk5zafr6</span><br><span class="line">removed QmV7XXZAUrBaE76Susmd4gRLzziK5QH1EigHqgma8adKf9</span><br><span class="line">removed QmWgtt1onrFVgqwAuYBWQ2HNkxJtBgnDzqWRVZQzpWeDUj</span><br><span class="line">removed QmWNGqp2zsw6nLr6aySK3UAQkTkoYozMNszwcz1bWmuckX</span><br><span class="line">removed QmPphhXAJkNKktecNqsbRf3zXXdsSA4fM9DS4LMaWFmbti</span><br><span class="line">removed QmR9pC5uCF3UExca8RSrCVL8eKv7nHMpATzbEQkAHpXmVM</span><br><span class="line">removed QmT9PmBnECcLRCu4hYmbijCca6k7ocdagGqUFpH9gWf5Cn</span><br><span class="line">removed QmaoaDnyHfZYEXjCuX59bgzA2YbgXMUKuSARdS3GHgbxoN</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>清除完以后就看不到文件了，说明只要gc还没有清除，文件就都还能看。</p>
+<hr>
+<p>测试  <code>replication_factor_min</code> 和 <code>replication_factor_max</code></p>
+<p>~/.ipfs-cluster/service.json 文件中 <code>replication_factor_min</code> 和 <code>replication_factor_max</code> 均为默认值 -1</p>
+<p>集群中每个节点都存了一份文件副本。这不是我们想要的，需要继续实验如何控制副本数。</p>
+<p>修改 ~/.ipfs-cluster/service.json 文件中的两个配置项： <code>replication_factor_min</code> 和 <code>replication_factor_max</code>。</p>
+<ul>
+<li>replication_factor_min 代表存储该文件的集群最小节点数，可以理解为副本数下线，-1 代表全部。本次实验中设置为 1.</li>
+<li>replication_factor_max 代表存储该文件的集群最大阶段属，可以理解为副本数上限，-1 代表全部。本次实验中设置为 1.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">jq &quot;.cluster.replication_factor_min = 2&quot; $&#123;IPFS_CLUSTER_PATH&#125;/service.json |jq &quot;.cluster.replication_factor_max = 3&quot; &gt; $&#123;IPFS_CLUSTER_PATH&#125;/tmp.service.json</span><br><span class="line">mv -f $&#123;IPFS_CLUSTER_PATH&#125;/tmp.service.json $&#123;IPFS_CLUSTER_PATH&#125;/service.json</span><br><span class="line">grep replication_factor $&#123;IPFS_CLUSTER_PATH&#125;/service.json </span><br><span class="line">systemctl restart ipfs-cluster</span><br><span class="line">systemctl status ipfs-cluster</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>随机生成100M的大文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/urandom of=test1.file count=100000 bs=1024</span><br><span class="line">dd if=/dev/urandom of=test2.file count=100000 bs=1024</span><br><span class="line">dd if=/dev/urandom of=test3.file count=100000 bs=1024</span><br></pre></td></tr></table></figure>
+
+<p>添加文件并查看ipfs存储</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># ipfs --api /ip4/127.0.0.1/tcp/9095 add test1.file</span><br><span class="line">added QmaVdYFJP88SzYtDayfiU4xbzCTmStmB6Ug4ihtJV7Nzgg test1.file</span><br><span class="line">#  du -sh /data/*</span><br><span class="line">101M	/data/ipfs</span><br><span class="line">44K	/data/ipfs-cluster</span><br></pre></td></tr></table></figure>
+
+<p>所有三台服务器上存储内容一致.</p>
+<p>清理所有存储</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># ipfs --api /ip4/127.0.0.1/tcp/9095 pin rm QmVFxmvDaBBGBFUMPLSRL9mb4N6Xm8xEYnCuy5m85gPAaP</span><br><span class="line">unpinned QmVFxmvDaBBGBFUMPLSRL9mb4N6Xm8xEYnCuy5m85gPAaP</span><br><span class="line"># ipfs --api /ip4/127.0.0.1/tcp/9095 pin rm QmavpLffUr1iY2QfhsbMoHrm9tb8rrjoPGP8erwFW2M3tX</span><br><span class="line">unpinned QmavpLffUr1iY2QfhsbMoHrm9tb8rrjoPGP8erwFW2M3tX</span><br><span class="line"># ipfs --api /ip4/127.0.0.1/tcp/9095 pin rm QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7</span><br><span class="line">unpinned QmetGxZTgo8tYAKQH1KLsY13MxqeVHbxYVmvzBzJAKU6Z7</span><br><span class="line">#  ipfs --api /ip4/127.0.0.1/tcp/9095 pin rm Qmbvkmk9LFsGneteXk3G7YLqtLVME566ho6ibaQZZVHaC9</span><br><span class="line">unpinned Qmbvkmk9LFsGneteXk3G7YLqtLVME566ho6ibaQZZVHaC9</span><br><span class="line"># ipfs repo gc</span><br><span class="line"># du -sh /data/*</span><br><span class="line">352K	/data/ipfs</span><br><span class="line">48K	/data/ipfs-cluster</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>重新设定复制因子</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">jq &quot;.cluster.replication_factor_min = 1&quot; $&#123;IPFS_CLUSTER_PATH&#125;/service.json |jq &quot;.cluster.replication_factor_max = 2&quot; &gt; $&#123;IPFS_CLUSTER_PATH&#125;/tmp.service.json</span><br><span class="line">mv -f $&#123;IPFS_CLUSTER_PATH&#125;/tmp.service.json $&#123;IPFS_CLUSTER_PATH&#125;/service.json</span><br><span class="line">grep replication_factor $&#123;IPFS_CLUSTER_PATH&#125;/service.json </span><br><span class="line">systemctl restart ipfs-cluster</span><br><span class="line">systemctl status ipfs-cluster</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>添加文件并查看ipfs存储</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">whx: <span class="comment"># ipfs --api /ip4/127.0.0.1/tcp/9095 add test1.file</span></span><br><span class="line">added QmaVdYFJP88SzYtDayfiU4xbzCTmStmB6Ug4ihtJV7Nzgg test1.file</span><br><span class="line"></span><br><span class="line">whx: <span class="comment">#  du -sh /data/*</span></span><br><span class="line">100M	/data/ipfs</span><br><span class="line">68K	/data/ipfs-cluster</span><br><span class="line"></span><br><span class="line">master: <span class="comment"># du -hs /data/*</span></span><br><span class="line">101M	/data/ipfs</span><br><span class="line">68K	/data/ipfs-cluster</span><br><span class="line"></span><br><span class="line">worker: <span class="comment"># du -hs /data/*</span></span><br><span class="line">972K	/data/ipfs</span><br><span class="line">68K	/data/ipfs-cluster</span><br></pre></td></tr></table></figure>
+
+<p>添加第二个文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">whx: <span class="comment"># ipfs --api /ip4/127.0.0.1/tcp/9095 add test2.file</span></span><br><span class="line">added QmNzEZywMY6M79wZ6TWuaUU5LFfGDgiqxbrF6mxMdJnjjY test2.file</span><br><span class="line">whx: <span class="comment"># du -hs /data/*</span></span><br><span class="line">200M	/data/ipfs</span><br><span class="line">68K	/data/ipfs-cluster</span><br><span class="line"></span><br><span class="line">worker : <span class="comment"># du -hs /data/*</span></span><br><span class="line">101M	/data/ipfs</span><br><span class="line">68K	/data/ipfs-cluster</span><br><span class="line"></span><br><span class="line">master: <span class="comment"># du -hs /data/*</span></span><br><span class="line">101M	/data/ipfs</span><br><span class="line">68K	/data/ipfs-cluster</span><br></pre></td></tr></table></figure>
+
+<p>结论：每个文件保存了两份</p>
+<p>在master上新增文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">master: <span class="comment"># ipfs --api /ip4/127.0.0.1/tcp/9095 add test3.file</span></span><br><span class="line"></span><br><span class="line">whx: <span class="comment"># du -hs /data/*</span></span><br><span class="line">200M	/data/ipfs</span><br><span class="line">68K	/data/ipfs-cluster</span><br><span class="line"></span><br><span class="line">worker: <span class="comment"># du -hs /data/*</span></span><br><span class="line">200M	/data/ipfs</span><br><span class="line">68K	/data/ipfs-cluster</span><br><span class="line"></span><br><span class="line">master: <span class="comment"># du -hs /data/*</span></span><br><span class="line">200M	/data/ipfs</span><br><span class="line">68K	/data/ipfs-cluster</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这时候三台服务器持平</p>
+<p>在worker上操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">dd if=/dev/urandom of=test4.file count=100000 bs=1024</span><br><span class="line">dd if=/dev/urandom of=test5.file count=100000 bs=1024</span><br><span class="line">dd if=/dev/urandom of=test6.file count=100000 bs=1024</span><br><span class="line">ipfs --api /ip4/127.0.0.1/tcp/9095 add test4.file</span><br><span class="line">ipfs --api /ip4/127.0.0.1/tcp/9095 add test5.file</span><br><span class="line">ipfs --api /ip4/127.0.0.1/tcp/9095 add test6.file</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>完成后所有服务器存储容量一致：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># du -hs /data/*</span><br><span class="line">399M	/data/ipfs</span><br><span class="line">72K	/data/ipfs-cluster</span><br></pre></td></tr></table></figure>
+
+<p>继续增加</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/dev/urandom of=test7.file count=100000 bs=1024</span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/dev/urandom of=test8.file count=100000 bs=1024</span><br><span class="line">ipfs --api /ip4/127.0.0.1/tcp/9095 add test7.file</span><br><span class="line">ipfs --api /ip4/127.0.0.1/tcp/9095 add test8.file</span><br><span class="line"></span><br><span class="line">whx: <span class="comment"># du -hs /data/*</span></span><br><span class="line">598M	/data/ipfs</span><br><span class="line">76K	/data/ipfs-cluster</span><br><span class="line">worker: <span class="comment"># du -hs /data/*</span></span><br><span class="line">500M	/data/ipfs</span><br><span class="line">76K	/data/ipfs-cluster</span><br><span class="line">master: <span class="comment"># du -hs /data/*</span></span><br><span class="line">499M	/data/ipfs</span><br><span class="line">76K	/data/ipfs-cluster</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>说明cluster尽量在节点之间保持平衡</p>
+<hr>
+<p>使用ipfs-cluster-ctl添加</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># dd if=/dev/urandom of=test9.file count=100000 bs=1024</span></span><br><span class="line"><span class="comment"># ipfs-cluster-ctl add  --rmin 1 --rmax 1 test9.file</span></span><br><span class="line">added QmdTZ9vhg9ocqgPE7frdYGAZHFkF8cYM51dLWzxx9y4nSW test9.file</span><br><span class="line">whx: <span class="comment"># du -hs /data/*</span></span><br><span class="line">598M	/data/ipfs</span><br><span class="line">76K	/data/ipfs-cluster</span><br><span class="line">worker: <span class="comment"># du -hs /data/*</span></span><br><span class="line">500M	/data/ipfs</span><br><span class="line">76K	/data/ipfs-cluster</span><br><span class="line">master: <span class="comment"># du -hs /data/*</span></span><br><span class="line">599M	/data/ipfs</span><br><span class="line">76K	/data/ipfs-cluster</span><br></pre></td></tr></table></figure>
+
+<p>单独增加一个后，增加到master</p>
+<p>继续</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># dd if=/dev/urandom of=test10.file count=100000 bs=1024</span></span><br><span class="line"><span class="comment"># ipfs-cluster-ctl add  --rmin 1 --rmax 1 test10.file</span></span><br><span class="line">added QmeNha17eq2MfJugthsu9KWdcb18aGKjHbP6LV5rJzXjYo test10.file</span><br><span class="line">whx: <span class="comment"># du -hs /data/*</span></span><br><span class="line">598M	/data/ipfs</span><br><span class="line">76K	/data/ipfs-cluster</span><br><span class="line">worker: <span class="comment"># du -hs /data/*</span></span><br><span class="line">600M	/data/ipfs</span><br><span class="line">76K	/data/ipfs-cluster</span><br><span class="line">master: <span class="comment"># du -hs /data/*</span></span><br><span class="line">599M	/data/ipfs</span><br><span class="line">76K	/data/ipfs-cluster</span><br></pre></td></tr></table></figure>
+
+<p>这时候所有服务器存储容量保持平衡。</p>
+<hr>
+<p>测试别的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ipfs add usage-ipfs.txt</span></span><br><span class="line">added Qmefd5f3y8z7SDyr9SrTeGZvWYueAJaijmmfCBYxFEdwhx usage-ipfs.txt</span><br><span class="line"><span class="comment"># ipfs-cluster-ctl pin add --name whx --replication 1 Qmefd5f3y8z7SDyr9SrTeGZvWYueAJaijmmfCBYxFEdwhx</span></span><br><span class="line">Qmefd5f3y8z7SDyr9SrTeGZvWYueAJaijmmfCBYxFEdwhx | whx:</span><br><span class="line">    &gt; whx                  : PINNED | 2021-05-13T06:19:34.061276362Z</span><br><span class="line">    &gt; 12D3KooWDWcqJD1y6JtSByN1N8zRphLkc7UbFvhd1BeKpG9MxdPe : REMOTE | 2021-05-13T06:19:34.065641318Z</span><br><span class="line">    &gt; 12D3KooWNTfChtCFYH8kHkrMQttJcFTKRXrFbg6yMFN6uGt3fpWV : REMOTE | 2021-05-13T06:19:34.065641318Z</span><br><span class="line"> </span><br><span class="line"> <span class="comment"># ipfs-cluster-ctl pin ls Qmefd5f3y8z7SDyr9SrTeGZvWYueAJaijmmfCBYxFEdwhx</span></span><br><span class="line">Qmefd5f3y8z7SDyr9SrTeGZvWYueAJaijmmfCBYxFEdwhx | whx | PIN | Repl. Factor: 1--1 | Allocations: [12D3KooWAdivuLNnoka4H3hNRCjnHxeBNVhUBwQ1YR1HBmUnjLTT] | Recursive | Metadata: no | Exp: ∞</span><br><span class="line"></span><br><span class="line"><span class="comment"># ipfs-cluster-ctl status Qmefd5f3y8z7SDyr9SrTeGZvWYueAJaijmmfCBYxFEdwhx</span></span><br><span class="line">Qmefd5f3y8z7SDyr9SrTeGZvWYueAJaijmmfCBYxFEdwhx | whx:</span><br><span class="line">    &gt; whx                  : PINNED | 2021-05-13T06:27:04.864319281Z</span><br><span class="line">    &gt; 12D3KooWDWcqJD1y6JtSByN1N8zRphLkc7UbFvhd1BeKpG9MxdPe : REMOTE | 2021-05-13T06:27:04.864091368Z</span><br><span class="line">    &gt; 12D3KooWNTfChtCFYH8kHkrMQttJcFTKRXrFbg6yMFN6uGt3fpWV : REMOTE | 2021-05-13T06:27:04.864091368Z</span><br><span class="line">    </span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+
+
+<p>测试curl方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># curl -X POST &quot;http://127.0.0.1:4001/api/v0/pin/ls&quot; |jq</span><br><span class="line">&#123;</span><br><span class="line">  &quot;Keys&quot;: &#123;</span><br><span class="line">    &quot;QmNzEZywMY6M79wZ6TWuaUU5LFfGDgiqxbrF6mxMdJnjjY&quot;: &#123;</span><br><span class="line">      &quot;Type&quot;: &quot;recursive&quot;</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"># curl -X POST &quot;http://127.0.0.1:9095/api/v0/pin/ls&quot; |jq</span><br><span class="line">&#123;</span><br><span class="line">  &quot;Keys&quot;: &#123;</span><br><span class="line">    &quot;QmNzEZywMY6M79wZ6TWuaUU5LFfGDgiqxbrF6mxMdJnjjY&quot;: &#123;</span><br><span class="line">      &quot;Type&quot;: &quot;recursive&quot;</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line">curl -X GET  &quot;http://127.0.0.1:9094/id&quot;</span><br><span class="line">curl -X GET  &quot;http://127.0.0.1:9094/version&quot;</span><br><span class="line">curl -X GET  &quot;http://127.0.0.1:9094/peers&quot;</span><br><span class="line">curl -X GET  &quot;http://127.0.0.1:9094/pins&quot;</span><br><span class="line"></span><br><span class="line">curl -X POST  &quot;http://127.0.0.1:9094/add&quot;</span><br><span class="line"></span><br><span class="line">curl -X GET  &quot;http://127.0.0.1:9094/pins/QmQcCo8MqRjAwUMeZCcALb91aZc9NFCswPwakQbgQb5oH9&quot;</span><br></pre></td></tr></table></figure>
+
+<p>add method param</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">replication</span><br><span class="line">name</span><br><span class="line">mode</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ipfs --api /ip4/127.0.0.1/tcp/9095 cat</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<p>As a final tip, this table provides a quick summary of methods available.</p>
+<table>
+<thead>
+<tr>
+<th align="left">METHOD</th>
+<th align="left">ENDPOINT</th>
+<th align="left">COMMENT</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>GET</code></td>
+<td align="left"><code>/id</code></td>
+<td align="left">Cluster peer information</td>
+</tr>
+<tr>
+<td align="left"><code>GET</code></td>
+<td align="left"><code>/version</code></td>
+<td align="left">Cluster version</td>
+</tr>
+<tr>
+<td align="left"><code>GET</code></td>
+<td align="left"><code>/peers</code></td>
+<td align="left">Cluster peers</td>
+</tr>
+<tr>
+<td align="left"><code>DELETE</code></td>
+<td align="left"><code>/peers/&#123;peerID&#125;</code></td>
+<td align="left">Remove a peer</td>
+</tr>
+<tr>
+<td align="left"><code>POST</code></td>
+<td align="left"><code>/add</code></td>
+<td align="left">Add content to the cluster</td>
+</tr>
+<tr>
+<td align="left"><code>GET</code></td>
+<td align="left"><code>/allocations</code></td>
+<td align="left">List of pins and their allocations (pinset)</td>
+</tr>
+<tr>
+<td align="left"><code>GET</code></td>
+<td align="left"><code>/allocations/&#123;cid&#125;</code></td>
+<td align="left">Show a single pin and its allocations (from the pinset)</td>
+</tr>
+<tr>
+<td align="left"><code>GET</code></td>
+<td align="left"><code>/pins</code></td>
+<td align="left">Local status of all tracked CIDs</td>
+</tr>
+<tr>
+<td align="left"><code>POST</code></td>
+<td align="left"><code>/pins/sync</code></td>
+<td align="left">Sync local status from IPFS</td>
+</tr>
+<tr>
+<td align="left"><code>GET</code></td>
+<td align="left"><code>/pins/&#123;cid&#125;</code></td>
+<td align="left">Local status of single CID</td>
+</tr>
+<tr>
+<td align="left"><code>POST</code></td>
+<td align="left"><code>/pins/&#123;cid&#125;</code></td>
+<td align="left">Pin a CID</td>
+</tr>
+<tr>
+<td align="left"><code>POST</code></td>
+<td align="left"><code>/pins/&#123;ipfs|ipns|ipld&#125;/&lt;path&gt;</code></td>
+<td align="left">Pin using an IPFS path</td>
+</tr>
+<tr>
+<td align="left"><code>DELETE</code></td>
+<td align="left"><code>/pins/&#123;cid&#125;</code></td>
+<td align="left">Unpin a CID</td>
+</tr>
+<tr>
+<td align="left"><code>DELETE</code></td>
+<td align="left"><code>/pins/&#123;ipfs|ipns|ipld&#125;/&lt;path&gt;</code></td>
+<td align="left">Unpin using an IPFS path</td>
+</tr>
+<tr>
+<td align="left"><code>POST</code></td>
+<td align="left"><code>/pins/&#123;cid&#125;/sync</code></td>
+<td align="left">Sync a CID</td>
+</tr>
+<tr>
+<td align="left"><code>POST</code></td>
+<td align="left"><code>/pins/&#123;cid&#125;/recover</code></td>
+<td align="left">Recover a CID</td>
+</tr>
+<tr>
+<td align="left"><code>POST</code></td>
+<td align="left"><code>/pins/recover</code></td>
+<td align="left">Recover all pins in the receiving Cluster peer</td>
+</tr>
+<tr>
+<td align="left"><code>GET</code></td>
+<td align="left"><code>/monitor/metrics</code></td>
+<td align="left">Get a list of metric types known to the peer</td>
+</tr>
+<tr>
+<td align="left"><code>GET</code></td>
+<td align="left"><code>/monitor/metrics/&#123;metric&#125;</code></td>
+<td align="left">Get a list of current metrics seen by this peer</td>
+</tr>
+<tr>
+<td align="left"><code>GET</code></td>
+<td align="left"><code>/health/alerts</code></td>
+<td align="left">Display a list of alerts (metric expiration events)</td>
+</tr>
+<tr>
+<td align="left"><code>GET</code></td>
+<td align="left"><code>/health/graph</code></td>
+<td align="left">Get connection graph</td>
+</tr>
+<tr>
+<td align="left"><code>GET</code></td>
+<td align="left"><code>/health/alerts</code></td>
+<td align="left">Get connection graph</td>
+</tr>
+<tr>
+<td align="left"><code>POST</code></td>
+<td align="left"><code>/ipfs/gc</code></td>
+<td align="left">Perform GC in the IPFS nodes</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/18/2019-PKI-%E4%BD%93%E7%B3%BB%E6%A6%82%E8%BF%B0/" rel="prev" title="PKI 体系概述">
+      <i class="fa fa-chevron-left"></i> PKI 体系概述
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/18/2020-12-18-ipfs/" rel="next" title="IPFS 测试">
+      IPFS 测试 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">wanghongxing</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wanghongxing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
