@@ -20,15 +20,20 @@
     var CONFIG = {"hostname":"wanghongxing.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="红星科技">
-<meta property="og:url" content="http://wanghongxing.github.io/archives/2020/11/index.html">
+  <meta name="description" content="Spinning Up 项目简介这个是一个热心网友翻译的，英文原版。Spinning Up 是大名鼎鼎的Open AI推出的免费强化学习教学项目。不仅提供了详细的理论介绍，同时还有完整的练习代码，真的不不愧是学习深度强化学习的良心之作。 源代码 安装准备python环境 123conda create -n spinningup python&#x3D;3.6conda activate spinningu">
+<meta property="og:type" content="website">
+<meta property="og:title" content="20230108 openai 初学">
+<meta property="og:url" content="http://wanghongxing.github.io/temp/20230108-openai-%E5%88%9D%E5%AD%A6.html">
 <meta property="og:site_name" content="红星科技">
+<meta property="og:description" content="Spinning Up 项目简介这个是一个热心网友翻译的，英文原版。Spinning Up 是大名鼎鼎的Open AI推出的免费强化学习教学项目。不仅提供了详细的理论介绍，同时还有完整的练习代码，真的不不愧是学习深度强化学习的良心之作。 源代码 安装准备python环境 123conda create -n spinningup python&#x3D;3.6conda activate spinningu">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-01-08T09:50:03.000Z">
+<meta property="article:modified_time" content="2023-01-19T13:15:10.873Z">
 <meta property="article:author" content="wanghongxing">
+<meta property="article:tag" content="openai">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://wanghongxing.github.io/archives/2020/11/">
+<link rel="canonical" href="http://wanghongxing.github.io/temp/20230108-openai-%E5%88%9D%E5%AD%A6">
 
 
 <script id="page-configurations">
@@ -41,7 +46,8 @@
   };
 </script>
 
-  <title>Archive | 红星科技</title>
+  <title>20230108 openai 初学 | 红星科技
+</title>
   
 
 
@@ -138,53 +144,62 @@
       <div class="main-inner">
         <div class="content-wrap">
           
+  
+  
 
-          <div class="content archive">
+          <div class="content page posts-expand">
             
 
+    
+    
+    
+    <div class="post-block" lang="zh-cn">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">20230108 openai 初学
+</h1>
+
+<div class="post-meta">
   
-  
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">Um..! 13 posts in total. Keep on posting.</span>
-      </div>
+
+</div>
+
+</header>
 
       
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
-    </div>
+      
+      
+      <div class="post-body">
+          <p><a target="_blank" rel="noopener" href="https://spinningup.readthedocs.io/zh_CN/latest/user/introduction.html">Spinning Up 项目简介</a>这个是一个热心网友翻译的，<a target="_blank" rel="noopener" href="https://spinningup.openai.com/en/latest/index.html">英文原版</a>。Spinning Up 是大名鼎鼎的Open AI推出的免费强化学习教学项目。不仅提供了详细的理论介绍，同时还有完整的练习代码，真的不不愧是学习深度强化学习的良心之作。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/openai/spinningup">源代码</a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>准备python环境</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda create -n spinningup python=3.6</span><br><span class="line">conda activate spinningup</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<p>安装 OpenMPI</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew install openmpi</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-11-18T11:04:34+08:00"
-              content="2020-11-18">
-          11-18
-        </time>
+
+
+<p>安装spinningup</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/openai/spinningup.git</span><br><span class="line">cd spinningup</span><br><span class="line">pip install -e .</span><br></pre></td></tr></table></figure>
+
+<p>命令行启动</p>
+<p>spinup/run.py直接启动，<code>python -m spinup.run [algo] [experiment flags]</code></p>
+<p> 设置命令行参数</p>
+<p>参数使用前都会先过一下eval，所以可以采用dict的方式传参数<code>--key dict(v1=value_1, v2=value_2)</code> 相当于<code>--key:v1 value_1 --key:v2 value_2</code></p>
+<p>在脚本引入运行</p>
+<p>所有算法都可以直接引入运行<code>from spinup import ppo</code></p>
+
       </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/11/18/2020-11-18-ipfs-cluster%20%E6%B5%8B%E8%AF%95/" itemprop="url">
-            <span itemprop="name">ipfs-cluster 测试</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+      
+      
     </div>
-  </div>
-  
-  
-  
+    
 
-  
-
+    
+    
+    
 
 
           </div>
@@ -235,6 +250,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -145,6 +145,290 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="http://wanghongxing.github.io/2023/01/20/20230120-convert-dvd-to-mp4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星科技">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/20/20230120-convert-dvd-to-mp4/" class="post-title-link" itemprop="url">macbook把dvd视频提取转换成mp4视频</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-01-20 20:09:11" itemprop="dateCreated datePublished" datetime="2023-01-20T20:09:11+08:00">2023-01-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-01-27 14:17:15" itemprop="dateModified" datetime="2023-01-27T14:17:15+08:00">2023-01-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>有很多旧的dvd，都是早年给小孩的刻的DVD碟片。时间久了，碟片机都扔了，光驱也快淘汰了。当下最方便的还是用手机看，决定弄一份出来存到硬盘上，然后转换成方便手机观看的格式。</p>
+<p>手机支持观看的格式，基本都是h264或者h265编码的mp4文件。找了很多工具，都是收费或者免费只能导出一半，这个钱还是不愿意花，自己用弄 ffmpeg。</p>
+<p>本方案需要有dvd光驱或者dvd writer，如果老旧光盘读取有问题，就需要dvd player，那就应该走video capture方案，这个后面有时间买个dvd player后再弄（ps：吐槽一下，买的那些个绿色的dvd rewriter盘片，基本都读不出来，只有清华紫光的有保障）。</p>
+<h3 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install ffmpeg</span><br></pre></td></tr></table></figure>
+
+<h3 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h3><p>把碟片查到硬盘，其实就是把dvd碟片中的VIDEO_TS目录下内容复制到硬盘上，因为我有好多碟片，就一张一张复制，每张都改成碟片刻录的日期。</p>
+<p>其中有一张碟片的VTS_01_4.VOB复制不出来了。</p>
+<p>看网上说需要用ddrescue来挽救。</p>
+<p>GNU ddrescue是一个用于磁盘、CD-ROM与其他数字存储媒体的资料恢复工具。其将原始存储区块从一个设备或文件复制到另一个，同时以智能方式处理读取错误，透过从部分读取的区块中截取尚称良好的扇区来最小化资料损失。 GNU ddrescue是用C++编程语言编写的，并以开源软件的形式提供，最初于2004年发布。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install ddrescue</span><br></pre></td></tr></table></figure>
+
+<p>Locate the drive using <code>diskutil list</code>. </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/dev/disk3 (external, physical):</span><br><span class="line">   #:                       TYPE NAME                    SIZE       IDENTIFIER</span><br><span class="line">   0:                            PRJ_20090118           *4.4 GB     disk3</span><br></pre></td></tr></table></figure>
+
+<p>Unmount the disk </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">diskutil unmount /dev/disk3   </span><br></pre></td></tr></table></figure>
+
+<p>Start a rescue operation of the disk into an image. Make sure the location of <code>Rescue.dmg</code> is replaced with your desired location.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /usr/local/bin/ddrescue -v -n -c 4096 /dev/disk3 Rescue.dmg Rescue.log</span><br></pre></td></tr></table></figure>
+
+<p><em>注：因为死了，就强制kill &amp;把光驱电源线，重新插入后发现disk3 变成了disk2。不知道什么鬼</em></p>
+<p>上面个直接就死给我看了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /usr/local/bin/ddrescue -c 4096 -d -r 3 -v /dev/disk2  Rescue.dmg Rescue.log</span><br></pre></td></tr></table></figure>
+
+<p>提示我 <code>ddrescue: Direct disc access not available.</code>。</p>
+<p>查了半天，说macos不支持direct access，可以通过raw方式；</p>
+<p>再查raw方式，发现macos的raw格式disk是通过/dev/rdisk*来的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /usr/local/bin/ddrescue  -r1 -b2048  /dev/rdisk2  Rescue.dmg Rescue.log</span><br></pre></td></tr></table></figure>
+
+<p>经过一晚上折腾，放弃了，太慢了，12个小时才恢复10多M的坏块。</p>
+<h3 id="试一试编码"><a href="#试一试编码" class="headerlink" title="试一试编码"></a>试一试编码</h3><p>先从网上找几个使用例子</p>
+<h4 id="h264"><a href="#h264" class="headerlink" title="h264"></a>h264</h4><p><a target="_blank" rel="noopener" href="https://dev.to/ko31/how-to-convert-dvd-to-mov-with-ffmpeg-fli">How to convert DVD to mp4 with ffmpeg</a>  <a target="_blank" rel="noopener" href="https://dev.to/ko31">Ko Takagi</a> <em>Posted on 2021年4月17日 Updated on 2022年8月8日</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i VTS_01_1.VOB -b:v 1500k -r 30 -vcodec h264 \</span><br><span class="line">-strict -2 -acodec aac -ar 44100 -f mp4 convert.mp4</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ffmpeg -i &quot;concat:VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB&quot; \</span><br><span class="line">-b:v 1500k -r 30 -vcodec h264 -strict -2 -acodec aac -ar 44100 -f mp4 convert.mp4</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>就是单个转换和多个拼接一起转换；这兄弟指定了视频、音频码率。</p>
+<p>试一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i VTS_01_1.VOB -b:v 1500k -r 30 -vcodec h264 \</span><br><span class="line">-strict -2 -acodec aac -ar 44100 -f mp4 VTS_01_1-1500k.mp4</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-rwxrwxrwx   1 whx  staff   977M  9 21  2008 VTS_01_1.VOB</span><br><span class="line">-rw-r--r--   1 whx  staff   194M  1 20 20:26 VTS_01_1-1500k.mp4</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>期间有提示错误</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[mpeg @ 0x7fd5c0816400] stream 1 : no PTS found at end of file, duration not <span class="built_in">set</span></span><br><span class="line">[ac3 @ 0x7fd5c081ca00] incomplete frame8kB time=00:16:28.91 bitrate=1628.7kbits/s dup=4945 drop=0 speed=2.92x</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>我估计应该是文件应该一起来转换。</p>
+<p>不过看文件大小，vob文件977M ,生成的mp4文件 194M。</p>
+<p>其中<code>bitrate=1628.7kbits/s</code>应该指码率是1628k。</p>
+<p>再试一下4个一起</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i <span class="string">&quot;concat:VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB|VTS_01_4.VOB&quot;</span> \</span><br><span class="line">-b:v 1500k -r 30 -vcodec h264 -strict -2 -acodec aac -ar 44100 -f mp4 all-h264-1500k.mp4</span><br><span class="line"></span><br><span class="line">-rwxrwxrwx   1 whx  staff   977M  9 21  2008 VTS_01_1.VOB</span><br><span class="line">-rwxrwxrwx   1 whx  staff   977M  9 22  2008 VTS_01_2.VOB</span><br><span class="line">-rwxrwxrwx   1 whx  staff   977M  9 22  2008 VTS_01_3.VOB</span><br><span class="line">-rwxrwxrwx   1 whx  staff   977M  9 22  2008 VTS_01_4.VOB</span><br><span class="line">-rwxrwxrwx   1 whx  staff   170M  9 22  2008 VTS_01_5.VOB</span><br><span class="line">-rw-r--r--   1 whx  staff   781M  1 20 21:00 all-h264-1500k.mp4</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="h265"><a href="#h265" class="headerlink" title="h265"></a>h265</h4><p>我想试试不限制码率，只指定编码方式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i <span class="string">&quot;concat:VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB|VTS_01_4.VOB&quot;</span> \</span><br><span class="line">-vcodec libx265 all-x265.mp4</span><br><span class="line"></span><br><span class="line">Output <span class="comment">#0, mp4, to &#x27;all-x265.mp4&#x27;:</span></span><br><span class="line">  Metadata:</span><br><span class="line">    encoder         : Lavf58.76.100</span><br><span class="line">  Stream <span class="comment">#0:0: Video: hevc (hev1 / 0x31766568), yuv420p(tv, bt470bg, top coded first (swapped)), 720x576 [SAR 16:15 DAR 4:3], q=2-31, 25 fps, 12800 tbn</span></span><br><span class="line">    Metadata:</span><br><span class="line">      encoder         : Lavc58.134.100 libx265</span><br><span class="line">    Side data:</span><br><span class="line">      cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A</span><br><span class="line">  Stream <span class="comment">#0:1: Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 128 kb/s</span></span><br><span class="line">    Metadata:</span><br><span class="line">      encoder         : Lavc58.134.100 aac</span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">-rw-r--r--   1 whx  staff   265M  1 20 21:38 all-x265.mp4</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>H265编码比较费 CPU，反正慢的要死。期间看到</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">frame=85892 fps= 48 q=34.4 size=  231936kB time=00:57:15.47 bitrate= 553.1kbits/s speed=1.93x</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>貌似码率是553k，最终文件大小265M还是比较喜人。</p>
+<p><strong>but</strong>：播放的时候quick time player不识别。</p>
+<p>查询说Quicktime Player和iOS不再支持hev1 tag的mp4/mov。</p>
+<p>回看输出<code>Stream #0:0: Video: hevc (hev1 / 0x31766568)</code>，这儿应该指输出hev1.</p>
+<p>二者大致有如下不同：</p>
+<p>‘hvc1’ stores all parameter sets inside the MP4 container below the sample description boxes.<br>‘hev1’ stores all parameter sets in band (inside the HEVC stream).<br>我决定试试，只转一个vob，免得太慢。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i <span class="string">&quot;concat:VTS_01_1.VOB&quot;</span> \</span><br><span class="line">-vcodec libx265  -vtag hvc1 VTS_01_1-x265-hvc1.mp4</span><br><span class="line"></span><br><span class="line">Output <span class="comment">#0, mp4, to &#x27;VTS_01_1-x265-hvc1.mp4&#x27;:</span></span><br><span class="line">  Metadata:</span><br><span class="line">    encoder         : Lavf58.76.100</span><br><span class="line">  Stream <span class="comment">#0:0: Video: hevc (hvc1 / 0x31637668), yuv420p(tv, bt470bg, top coded first (swapped)), 720x576 [SAR 16:15 DAR 4:3], q=2-31, 25 fps, 12800 tbn</span></span><br><span class="line">    Metadata:</span><br><span class="line">      encoder         : Lavc58.134.100 libx265</span><br><span class="line">    Side data:</span><br><span class="line">      cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A</span><br><span class="line">  Stream <span class="comment">#0:1: Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 128 kb/s</span></span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">-rwxrwxrwx   1 whx  staff   977M  9 21  2008 VTS_01_1.VOB</span><br><span class="line">-rw-r--r--   1 whx  staff   194M  1 20 20:26 VTS_01_1-1500k.mp4</span><br><span class="line">-rw-r--r--   1 whx  staff    73M  1 20 22:25 VTS_01_1-x265-hvc1.mp4</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>压缩率完美。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i &quot;concat:VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB|VTS_01_4.VOB&quot; \</span><br><span class="line">-vcodec libx265  -vtag hvc1  all-x265.mp4</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>闲着没事就试试，弄完了再试试别的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -codecs |grep EV |grep H.26</span><br><span class="line"></span><br><span class="line"> DEV.L. flv1                 FLV / Sorenson Spark / Sorenson H.263 (Flash Video) (decoders: flv ) (encoders: flv )</span><br><span class="line"> DEV.L. h261                 H.261</span><br><span class="line"> DEV.L. h263                 H.263 / H.263-1996, H.263+ / H.263-1998 / H.263 version 2</span><br><span class="line"> DEV.L. h263p                H.263+ / H.263-1998 / H.263 version 2</span><br><span class="line"> DEV.LS h264                 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 (encoders: libx264 libx264rgb h264_videotoolbox )</span><br><span class="line"> DEV.L. hevc                 H.265 / HEVC (High Efficiency Video Coding) (encoders: libx265 hevc_videotoolbox )</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>EV 就是过滤视频编码。</p>
+<h4 id="不指定那么多繁琐的参数试试看"><a href="#不指定那么多繁琐的参数试试看" class="headerlink" title="不指定那么多繁琐的参数试试看"></a>不指定那么多繁琐的参数试试看</h4><p>开始测试h264有那么多参数，试着少点参数转h264试试看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i &quot;concat:VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB|VTS_01_4.VOB&quot; \</span><br><span class="line">-vcodec h264 all-h264.mp4</span><br><span class="line"></span><br><span class="line">frame=64350 fps= 83 q=28.0 size=  443648kB time=00:42:53.82 bitrate=1412.0kbits/s speed=3.34x</span><br><span class="line"></span><br><span class="line">-rw-r--r--   1 whx  staff   636M  1 20 22:02 all-h264.mp4</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>h264码率大概在1412k，播放效果不错。</p>
+<h3 id="批量转换"><a href="#批量转换" class="headerlink" title="批量转换"></a>批量转换</h3><p>因为碟片多，让我一个一个的复制显然不是程序猿的作风，弄脚本~</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##这个是查找所有的VOB文件然后转换成h265编码的mp4文件</span></span><br><span class="line">find ./ -name <span class="string">&#x27;*.VOB&#x27;</span> -<span class="built_in">exec</span> bash -c <span class="string">&#x27;ffmpeg -i $0  -vcodec libx265  -vtag hvc1   $&#123;0/VOB/mp4&#125;&#x27;</span> &#123;&#125; \;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="试试GPU"><a href="#试试GPU" class="headerlink" title="试试GPU"></a>试试GPU</h3><p>电脑是2015年的macbook pro 15寸 ,CPU 2.5 GHz 四核Intel Core i7 ,显卡AMD Radeon R9 M370X 2 GB。貌似可以试试GPU性能。</p>
+<h4 id="试试h264"><a href="#试试h264" class="headerlink" title="试试h264"></a>试试h264</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i VTS_02_1.VOB -c:v h264_videotoolbox  whx-h264-gpu.mp4</span><br></pre></td></tr></table></figure>
+
+<p>速度贼啦啦快，但是效果惨不忍睹，基本上可到的都是马赛克。</p>
+<p>换成1M码率，试试看：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i VTS_02_1.VOB -c:v h264_videotoolbox  -b:v 1000k whx-h264-gpu-1m.mp4</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>速度贼快，效果还好</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i VTS_02_1.VOB -c:v h264_videotoolbox  -b:v 500k whx-h264-gpu-500k.mp4</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>换成500k码率，速度更快，效果又不行了。</p>
+<p>换成1500k码率：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i VTS_01_1.VOB -c:v h264_videotoolbox  -b:v 1500k whx-h264-gpu-1500k.mp4</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>速度挺快，效果很好。</p>
+<h4 id="试试h265"><a href="#试试h265" class="headerlink" title="试试h265"></a>试试h265</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i VTS_01_1.VOB -c:v h265_videotoolbox  -vtag hvc1  whx-x265-gpu.mp4</span><br><span class="line"></span><br><span class="line">[hevc_videotoolbox @ 0x7f87d8058a00] Error: cannot create compression session: -12908</span><br><span class="line">[hevc_videotoolbox @ 0x7f87d8058a00] Try -allow_sw 1. The hardware encoder may be busy, or not supported.</span><br><span class="line">Error initializing output stream 0:0 -- Error while opening encoder for output stream #0:0 - maybe incorrect parameters such as bit_rate, rate, width or height</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i VTS_02_1.VOB -c:v hevc_videotoolbox  -b:v 1000k  -vtag hvc1  whx-x265-gpu.mp4</span><br><span class="line"></span><br><span class="line">[hevc_videotoolbox @ 0x7f78eb80f200] Error: cannot create compression session: -12908</span><br><span class="line">[hevc_videotoolbox @ 0x7f78eb80f200] Try -allow_sw 1. The hardware encoder may be busy, or not supported.</span><br><span class="line">Error initializing output stream 0:0 -- Error while opening encoder for output stream #0:0 - maybe incorrect parameters such as bit_rate, rate, width or height</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这样h265的gpu编码就失败了。</p>
+<p>应该是这个显卡太老了不支持h265的硬解码。</p>
+<h4 id="gpu的优缺点"><a href="#gpu的优缺点" class="headerlink" title="gpu的优缺点"></a>gpu的优缺点</h4><p>优点：速度贼快</p>
+<p>缺点：文件太大</p>
+<h4 id="使用gps批量命令"><a href="#使用gps批量命令" class="headerlink" title="使用gps批量命令"></a>使用gps批量命令</h4><p>虽然硬盘占用大，但是速度快，决定公用gpu</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">find ./ -name &#x27;*.VOB&#x27; -exec bash -c &#x27;ffmpeg -i $0 -c:v h264_videotoolbox  -b:v 1500k $&#123;0/VOB/mp4&#125;&#x27; &#123;&#125; \;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="摄像机里面的视频文件处理"><a href="#摄像机里面的视频文件处理" class="headerlink" title="摄像机里面的视频文件处理"></a>摄像机里面的视频文件处理</h3><p>摄像机里还有大量拍的视频，都是MPEG2编码的，为了用方便用手机，就复制到硬盘上，然后转换成h265。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">##这个是查找所有的 MPG 文件然后转换成h265编码的mp4文件</span><br><span class="line">find . -name &#x27;*.MPG&#x27; -exec bash -c &#x27;ffmpeg -i $0  -vcodec libx265  -vtag hvc1   $&#123;0/MPG/mp4&#125;&#x27; &#123;&#125; \;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="试着把生成的文件加上日期后缀"><a href="#试着把生成的文件加上日期后缀" class="headerlink" title="试着把生成的文件加上日期后缀"></a>试着把生成的文件加上日期后缀</h4><p>摄像机里面复制出来的 MPG 文件都是数字名称没法看出来具体年月，，但是复制出来的在电脑上的创建日期是保留的，修改一下脚本，把年月日记录在转换后的文件名上。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">set +x</span><br><span class="line">convertFile()&#123;</span><br><span class="line">	prefix=`date  -r $&#123;0&#125; &quot;+%Y年%m月%d日%H点%M分%S&quot;`</span><br><span class="line">	#fname= $&#123;0/.MPG/-$&#123;prefix&#125;.mp4&#125;</span><br><span class="line">   echo &quot;文件名： $1 $&#123;prefix&#125;&quot;</span><br><span class="line">  ffmpeg -i $0  -vcodec libx265  -vtag hvc1  $&#123;0/.MPG/-$&#123;prefix&#125;.mp4&#125;</span><br><span class="line">&#125;</span><br><span class="line">export -f convertFile</span><br><span class="line">find . -name &#x27;*.MPG&#x27; -exec bash -c &#x27;convertFile $&#123;0&#125;&#x27; &#123;&#125; \;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="http://wanghongxing.github.io/2023/01/18/20230118-IntelliJ-IDEA-%E6%8E%A5%E5%8F%A3%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星科技">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/18/20230118-IntelliJ-IDEA-%E6%8E%A5%E5%8F%A3%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7/" class="post-title-link" itemprop="url">IntelliJ IDEA 接口调试工具</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-01-18 10:47:36" itemprop="dateCreated datePublished" datetime="2023-01-18T10:47:36+08:00">2023-01-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-01-19 09:41:26" itemprop="dateModified" datetime="2023-01-19T09:41:26+08:00">2023-01-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p> 我的应用采用的是ruoyi-vue-pro，无意中发现带了很多http后缀的文件，搜了一下看了<a target="_blank" rel="noopener" href="https://www.cnblogs.com/FraserYu/">日拱一兵</a>   <a target="_blank" rel="noopener" href="https://www.cnblogs.com/FraserYu/p/12290061.html">IntelliJ IDEA的这个接口调试工具真是太好用了！</a>这篇blog，知道了是 IntelliJ IDEA 的 <code>HTTP Client</code>,就拿来研究了一下。</p>
+<h3 id="新建http-client"><a href="#新建http-client" class="headerlink" title="新建http client"></a>新建http client</h3><p>在idea中新建文件中找到HTTP Request.</p>
+<p><img src="../images/ideal_http_client_menu.png" alt="截屏2023-01-18 10.50.17"></p>
+<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><p><em>注：很多都是拿ruoyi-vue-pro的例子</em></p>
+<p>环境变量需要定义在环境文件中，环境文件有两种：</p>
+<ol>
+<li>创建名为 <code>http-client.env.json</code> 的环境文件(其实里面就是保存 JSON 数据)，该文件里可以定义用在整个项目上的所有常规变量</li>
+<li>也可以创建名为<code>http-client.private.env.json</code>， 看文件名你应该也猜到这是保存敏感数据的，比如密码，token等，该文件默认是被加入到 VCS 的 ignore文件中的，同时优先级高于其他环境文件， 也就是说，该文件的变量会覆盖其他环境文件中的变量值</li>
+</ol>
+<p>里面的文件内容就像这样</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;local&quot;: &#123;</span><br><span class="line">    &quot;baseUrl&quot;: &quot;http://127.0.0.1:48080/platform/admin-api&quot;,</span><br><span class="line">    &quot;token&quot;: &quot;test1&quot;,</span><br><span class="line">    &quot;adminTenentId&quot;: &quot;1&quot;,</span><br><span class="line"></span><br><span class="line">    &quot;appApi&quot;: &quot;http://127.0.0.1:48080/platform/app-api&quot;,</span><br><span class="line">    &quot;appToken&quot;: &quot;test1&quot;,</span><br><span class="line">    &quot;appTenentId&quot;: &quot;1&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;gateway&quot;: &#123;</span><br><span class="line">    &quot;baseUrl&quot;: &quot;http://127.0.0.1:8888/platform/admin-api&quot;,</span><br><span class="line">    &quot;token&quot;: &quot;test1&quot;,</span><br><span class="line">    &quot;adminTenentId&quot;: &quot;1&quot;,</span><br><span class="line"></span><br><span class="line">    &quot;appApi&quot;: &quot;http://127.0.0.1:8888/platform/app-api&quot;,</span><br><span class="line">    &quot;appToken&quot;: &quot;test1&quot;,</span><br><span class="line">    &quot;appTenentId&quot;: &quot;1&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><em><strong>注：下面的用例都是参照<a target="_blank" rel="noopener" href="https://www.cnblogs.com/FraserYu/">日拱一兵</a>  来弄。</strong></em></p>
+<h3 id="使用-response-handler-脚本"><a href="#使用-response-handler-脚本" class="headerlink" title="使用 response handler 脚本"></a>使用 response handler 脚本</h3><p>我们要让登录成功后的所有请求都自动携带成功返回的 Token，这样不用我们每次都手动将其添加到header中，我直接把返回的json信息中的accessToken写入环境变量，就是用’&gt;’开头，后面用类似于模板标签的方式框住 js 脚本</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt; &#123;%</span><br><span class="line">client.global.set(&quot;token&quot;, response.body.data.accessToken);</span><br><span class="line"></span><br><span class="line">%&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编辑-HTTP-request-文件"><a href="#编辑-HTTP-request-文件" class="headerlink" title="编辑 HTTP request 文件"></a>编辑 HTTP request 文件</h3><p>我们模拟实际项目中场景来编辑文件</p>
+<ol>
+<li>用户登录，成功后获取 Token，通常是 POST 请求</li>
+<li>用户后续访问行为都要在请求头中携带登录成功返回的 Token</li>
+</ol>
+<p>通过点击 Add Request，选择相应的方法就可以编写啦</p>
+<h4 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">### 请求 /login 接口 =&gt; 成功（无验证码)</span><br><span class="line">POST &#123;&#123;baseUrl&#125;&#125;/system/auth/login</span><br><span class="line">Content-Type: application/json</span><br><span class="line">tenant-id: &#123;&#123;adminTenentId&#125;&#125;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;username&quot;: &quot;admin&quot;,</span><br><span class="line">  &quot;password&quot;: &quot;admin123&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&gt; &#123;%</span><br><span class="line">client.global.set(&quot;token&quot;, response.body.data.accessToken);</span><br><span class="line"> %&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>执行</p>
+<p><img src="../images/idea_http_client_run.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">http://&#123;&#123;baseUrl&#125;&#125;/system/auth/login</span><br><span class="line"></span><br><span class="line">HTTP/1.1 200 </span><br><span class="line">Vary: Origin</span><br><span class="line">Vary: Access-Control-Request-Method</span><br><span class="line">Vary: Access-Control-Request-Headers</span><br><span class="line">trace-id: </span><br><span class="line">X-Content-Type-Options: nosniff</span><br><span class="line">X-XSS-Protection: 1; mode=block</span><br><span class="line">Cache-Control: no-cache, no-store, max-age=0, must-revalidate</span><br><span class="line">Pragma: no-cache</span><br><span class="line">Expires: 0</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Date: Wed, 18 Jan 2023 02:43:41 GMT</span><br><span class="line">Keep-Alive: timeout=60</span><br><span class="line">Connection: keep-alive</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;code&quot;: 200,</span><br><span class="line">  &quot;data&quot;: &#123;</span><br><span class="line">    &quot;userId&quot;: 1,</span><br><span class="line">    &quot;accessToken&quot;: &quot;85f67291fcb54d65b9dffd35098ceafb&quot;,</span><br><span class="line">    &quot;refreshToken&quot;: &quot;c14484195eec4d8ca0548e22ff6858a5&quot;,</span><br><span class="line">    &quot;expiresTime&quot;: &quot;2023-01-18 11:13:41&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;message&quot;: &quot;&quot;</span><br><span class="line">&#125;</span><br><span class="line">Response file saved.</span><br><span class="line">&gt; 2023-01-18T104341.200.json</span><br><span class="line"></span><br><span class="line">Response code: 200; Time: 138ms; Content length: 180 bytes</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="然后后续使用这个token"><a href="#然后后续使用这个token" class="headerlink" title="然后后续使用这个token"></a>然后后续使用这个token</h4><p>获取权限信息这里需要使用刚才返回的 token</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">### 请求 /get-permission-info 接口 =&gt; 成功</span><br><span class="line">GET &#123;&#123;baseUrl&#125;&#125;/system/auth/get-permission-info</span><br><span class="line">Authorization: Bearer &#123;&#123;token&#125;&#125;</span><br><span class="line">tenant-id: &#123;&#123;adminTenentId&#125;&#125;</span><br><span class="line"></span><br><span class="line">### 请求 /list-menus 接口 =&gt; 成功</span><br><span class="line">GET &#123;&#123;baseUrl&#125;&#125;/system/auth/list-menus</span><br><span class="line">Authorization: Bearer &#123;&#123;token&#125;&#125;</span><br><span class="line">#Authorization: Bearer a6aa7714a2e44c95aaa8a2c5adc2a67a</span><br><span class="line">tenant-id: &#123;&#123;adminTenentId&#125;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>执行结果虽然没有显示发送的header，但是可以看到认证成功了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">http://&#123;&#123;baseUrl&#125;&#125;/system/auth/get-permission-info</span><br><span class="line"></span><br><span class="line">HTTP/1.1 200 </span><br><span class="line">Vary: Origin</span><br><span class="line">Vary: Access-Control-Request-Method</span><br><span class="line">Vary: Access-Control-Request-Headers</span><br><span class="line">trace-id: </span><br><span class="line">X-Content-Type-Options: nosniff</span><br><span class="line">X-XSS-Protection: 1; mode=block</span><br><span class="line">Cache-Control: no-cache, no-store, max-age=0, must-revalidate</span><br><span class="line">Pragma: no-cache</span><br><span class="line">Expires: 0</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Date: Wed, 18 Jan 2023 02:43:56 GMT</span><br><span class="line">Keep-Alive: timeout=60</span><br><span class="line">Connection: keep-alive</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;code&quot;: 200,</span><br><span class="line">  &quot;data&quot;: &#123;</span><br><span class="line">    &quot;user&quot;: &#123;</span><br><span class="line">      &quot;id&quot;: 1,</span><br><span class="line">      &quot;nickname&quot;: &quot;老王&quot;,</span><br><span class="line">      &quot;avatar&quot;: &quot;http://127.0.0.1:48080/platform/admin-api/infra/file/5/get/ef30195d8b2cd33a1d8233dfe6ea5881ca868b94b5dcf93be8cb78ba5151b8c7.jpg&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;roles&quot;: [</span><br><span class="line">      &quot;common&quot;,</span><br><span class="line">      &quot;super_admin&quot;,</span><br><span class="line">      &quot;ACTUATOR&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;permissions&quot;: [</span><br><span class="line">      &quot;&quot;,</span><br><span class="line">      &quot;infra:config:create&quot;,</span><br><span class="line">      &quot;bpm:task-assign-rule:create&quot;,</span><br><span class="line">      &quot;system:user:query&quot;,</span><br><span class="line">      &quot;system:error-code:query&quot;,</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="完事"><a href="#完事" class="headerlink" title="完事"></a>完事</h3><p>到这里基本差不多了，后续对需要测试的接口一个个写就行了，方便的地方就是一直在idea中写，不用打开postman。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
     <link itemprop="mainEntityOfPage" href="http://wanghongxing.github.io/2023/01/07/20230107macos%E5%AE%89%E8%A3%85Anaconda/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -742,7 +1026,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-03 23:18:44" itemprop="dateModified" datetime="2023-01-03T23:18:44+08:00">2023-01-03</time>
+                <time title="Modified: 2023-01-19 09:42:29" itemprop="dateModified" datetime="2023-01-19T09:42:29+08:00">2023-01-19</time>
               </span>
 
           
@@ -1213,234 +1497,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="http://wanghongxing.github.io/2018/10/10/2018-%E5%9B%BD%E5%AF%86%E5%95%86%E5%AF%86%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星科技">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/10/10/2018-%E5%9B%BD%E5%AF%86%E5%95%86%E5%AF%86%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D/" class="post-title-link" itemprop="url">国密商密什么意思</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-10-10 10:20:34" itemprop="dateCreated datePublished" datetime="2018-10-10T10:20:34+08:00">2018-10-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-03 23:17:51" itemprop="dateModified" datetime="2023-01-03T23:17:51+08:00">2023-01-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="国密商密什么意思"><a href="#国密商密什么意思" class="headerlink" title="国密商密什么意思"></a>国密商密什么意思</h1><p>国密算法即国家密码局认定的国产密码算法，即商用密码。<br>国际算法由美国的安全局发布，是现今最通用的商用密码算法。</p>
-<p>美国国家标准局</p>
-<p>美国国家安全局</p>
-<h2 id="商密-国际商用加密算法"><a href="#商密-国际商用加密算法" class="headerlink" title="商密-国际商用加密算法"></a>商密-国际商用加密算法</h2><p>一般说商密是指商用密码。更多是我们更加耳熟能详的的密码学标准。诸如AES、DAS、RSA、ECC椭圆曲线系列等加密算法。</p>
-<h2 id="国密-中国国家商用密码算法"><a href="#国密-中国国家商用密码算法" class="headerlink" title="国密-中国国家商用密码算法"></a>国密-中国国家商用密码算法</h2><p>国密是中国国家密码局认定和颁发的密码算法标准，SM 是一个系列，常用的包括SM1、SM2、SM3、SM4。</p>
-<p>经中央机构编制委员会批准,原<strong>国家密码管理委员会办公室</strong>更名为<strong>国家密码管理局</strong></p>
-<p><strong>《商用密码管理条例》</strong></p>
-<p>《行业标准公告》2012-3-21</p>
-<h2 id="为啥有了商密还要有国密"><a href="#为啥有了商密还要有国密" class="headerlink" title="为啥有了商密还要有国密"></a>为啥有了商密还要有国密</h2><p>为什么有了商密还要国密。主要原因可能包括：</p>
-<p>1、一部分商密的设计中涉及到的一些具体步骤主要是老美的一些强力部门负责的。里面是不是有个什么漏洞啊、后门啊什么的不清楚。</p>
-<p>2、国密是自己人弄的，对于原理和实现细节一清二楚。用起来放心。<br>目前国密主要是对国内的产品，有些特殊的产品国家会强制使用。</p>
-<p>密码学目前主要包括有</p>
-<ul>
-<li>对称加密算法。常见的包括DES、3DES、AES、SM1等。</li>
-<li>非对加密算法。常见的包括RSA、ECC、SM2等。</li>
-<li>消息摘要算法。最常见的就是md5、SHA系列、SM3。</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="http://wanghongxing.github.io/2018/04/29/2018-mark-down-use/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星科技">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/04/29/2018-mark-down-use/" class="post-title-link" itemprop="url">mark down 的基本用法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-04-29 15:01:48" itemprop="dateCreated datePublished" datetime="2018-04-29T15:01:48+08:00">2018-04-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-03 23:19:20" itemprop="dateModified" datetime="2023-01-03T23:19:20+08:00">2023-01-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/fabric/" itemprop="url" rel="index"><span itemprop="name">fabric</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="标题1"><a href="#标题1" class="headerlink" title="标题1"></a>标题1</h1><p>allala</p>
-<h2 id="标题二"><a href="#标题二" class="headerlink" title="标题二"></a>标题二</h2><p>第二部分</p>
-<h2 id="无序列表：使用星号、加号或是减号作为列表标记"><a href="#无序列表：使用星号、加号或是减号作为列表标记" class="headerlink" title="无序列表：使用星号、加号或是减号作为列表标记"></a>无序列表：使用星号、加号或是减号作为列表标记</h2><ul>
-<li>Red</li>
-<li>Green</li>
-<li>Blue</li>
-</ul>
-<h2 id="有序列表：使用数字接着一个英文句点"><a href="#有序列表：使用数字接着一个英文句点" class="headerlink" title="有序列表：使用数字接着一个英文句点"></a>有序列表：使用数字接着一个英文句点</h2><ol>
-<li><p>Red</p>
-</li>
-<li><p>Green</p>
-</li>
-<li><p>Blue</p>
-<blockquote>
-<p>aaa<br>bbb</p>
-</blockquote>
-</li>
-<li><p>11</p>
-</li>
-<li><p>333</p>
-</li>
-<li><p><input disabled="" type="checkbox">  不勾选</p>
-</li>
-<li><p><input checked="" disabled="" type="checkbox">  勾选</p>
-</li>
-<li><p>223</p>
-</li>
-</ol>
-<ul>
-<li><input disabled="" type="checkbox"> 不勾选</li>
-<li><input checked="" disabled="" type="checkbox"> 勾选</li>
-</ul>
-<h2 id="强调"><a href="#强调" class="headerlink" title="强调"></a>强调</h2><p>在Markdown中，可以使用 * 和  _  来表示斜体和加粗。</p>
-<h2 id="斜体："><a href="#斜体：" class="headerlink" title="斜体："></a>斜体：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*Coding，让开发更简单*</span><br><span class="line">_Coding，让开发更简单_</span><br></pre></td></tr></table></figure>
-<p><em>Coding，让开发更简单</em><br><em>Coding，让开发更简单</em></p>
-<h2 id="加粗："><a href="#加粗：" class="headerlink" title="加粗："></a>加粗：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">**Coding，让开发更简单**</span><br><span class="line">__Coding，让开发更简单__</span><br></pre></td></tr></table></figure>
-
-<p><strong>Coding，让开发更简单</strong><br><strong>Coding，让开发更简单</strong></p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>只要把你的代码块包裹在 “` 之间，你就不需要通过无休止的缩进来标记代码块了。 在围栏式代码块中，你可以指定一个可选的语言标识符，然后我们就可以为它启用语法着色了。 举个例子，这样可以为一段 Ruby 代码着色：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span> <span class="string">&#x27;redcarpet&#x27;</span></span><br><span class="line">markdown = <span class="title class_">Redcarpet</span>.<span class="title function_">new</span>(<span class="string">&quot;Hello World!&quot;</span>)</span><br><span class="line">puts markdown.<span class="property">to_html</span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="自动链接"><a href="#自动链接" class="headerlink" title="自动链接"></a>自动链接</h2><p>方括号显示说明，圆括号内显示网址， Markdown 会自动把它转成链接，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[超强大的云开发平台Coding](http://coding.net)</span><br></pre></td></tr></table></figure>
-<p><a target="_blank" rel="noopener" href="http://coding.net/">超强大的云开发平台Coding</a></p>
-<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>在 Markdown 中，可以制作表格，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">First Header | Second Header | Third Header</span><br><span class="line">------------ | ------------- | ------------</span><br><span class="line">Content Cell | Content Cell  | Content Cell</span><br><span class="line">Content Cell | Content Cell  | Content Cell</span><br></pre></td></tr></table></figure>
-
-
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-<th>Third Header</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-</tbody></table>
-<p>分割线</p>
-<p>在 Markdown 中，可以使用 3 个以上『-』符号制作分割线，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这是分隔线上部分内容</span><br><span class="line">---</span><br><span class="line">这是分隔线下部分内容</span><br></pre></td></tr></table></figure>
-<p>效果图如下：</p>
-<h2 id="这是分隔线上部分内容"><a href="#这是分隔线上部分内容" class="headerlink" title="这是分隔线上部分内容"></a>这是分隔线上部分内容</h2><p>这是分隔线下部分内容</p>
-<p>没有了</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1510,7 +1566,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1519,7 +1575,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
