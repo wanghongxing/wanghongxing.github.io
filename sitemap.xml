@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hongxing.tech/20230127-%E5%AD%A6%E4%B9%A0-numpy/</loc>
+    
+    <lastmod>2023-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://hongxing.tech/20230118-IntelliJ-IDEA-%E6%8E%A5%E5%8F%A3%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7/</loc>
     
     <lastmod>2023-01-27</lastmod>
@@ -139,7 +148,7 @@
 
   <url>
     <loc>https://hongxing.tech/</loc>
-    <lastmod>2023-01-27</lastmod>
+    <lastmod>2023-02-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -147,77 +156,91 @@
   
   <url>
     <loc>https://hongxing.tech/tags/fabric/</loc>
-    <lastmod>2023-01-27</lastmod>
+    <lastmod>2023-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://hongxing.tech/tags/blockchain/</loc>
-    <lastmod>2023-01-27</lastmod>
+    <lastmod>2023-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://hongxing.tech/tags/openssl/</loc>
-    <lastmod>2023-01-27</lastmod>
+    <lastmod>2023-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://hongxing.tech/tags/%E5%AE%89%E5%85%A8/</loc>
-    <lastmod>2023-01-27</lastmod>
+    <lastmod>2023-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://hongxing.tech/tags/%E6%B5%8B%E8%AF%95/</loc>
-    <lastmod>2023-01-27</lastmod>
+    <lastmod>2023-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://hongxing.tech/tags/%E6%8E%A5%E5%8F%A3%E8%B0%83%E8%AF%95/</loc>
-    <lastmod>2023-01-27</lastmod>
+    <lastmod>2023-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://hongxing.tech/tags/ffmpeg/</loc>
-    <lastmod>2023-01-27</lastmod>
+    <lastmod>2023-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://hongxing.tech/tags/dvd/</loc>
-    <lastmod>2023-01-27</lastmod>
+    <lastmod>2023-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://hongxing.tech/tags/mp4/</loc>
-    <lastmod>2023-01-27</lastmod>
+    <lastmod>2023-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://hongxing.tech/tags/h264/</loc>
-    <lastmod>2023-01-27</lastmod>
+    <lastmod>2023-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://hongxing.tech/tags/h265/</loc>
-    <lastmod>2023-01-27</lastmod>
+    <lastmod>2023-02-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hongxing.tech/tags/python/</loc>
+    <lastmod>2023-02-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hongxing.tech/tags/numpy/</loc>
+    <lastmod>2023-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -226,7 +249,7 @@
   
   <url>
     <loc>https://hongxing.tech/categories/fabric/</loc>
-    <lastmod>2023-01-27</lastmod>
+    <lastmod>2023-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

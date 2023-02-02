@@ -160,6 +160,194 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2018-%E5%9B%BD%E5%AF%86%E6%94%B9%E9%80%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018-%E5%9B%BD%E5%AF%86%E6%94%B9%E9%80%A0/" class="post-title-link" itemprop="url">fabric 国密改造</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-10-30 11:20:34" itemprop="dateCreated datePublished" datetime="2018-10-30T11:20:34+08:00">2018-10-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-01-03 23:17:32" itemprop="dateModified" datetime="2023-01-03T23:17:32+08:00">2023-01-03</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>fabric 国密改造</p>
+<p>代码仓库（限制权限的私人仓库）</p>
+<p>国密改造补丁：<code>ssh://gitlabs.my118.com:9022/wanghongxing/fabric-sm-patch.git</code></p>
+<p>国密版代码：<code>ssh://git@gitlabs.my118.com:9022/wanghongxing/fabric.git</code></p>
+<p>java sdk 国密版代码仓库 <code>ssh://git@gitlabs.my118.com:9022/blockchain/fabric-sdk-java.git</code></p>
+<p>fabric国密改造包括：源代码改造、sdk改造、ca改造。</p>
+<h2 id="Fabric源代码改造的大致清单"><a href="#Fabric源代码改造的大致清单" class="headerlink" title="Fabric源代码改造的大致清单"></a>Fabric源代码改造的大致清单</h2><h3 id="主要涉及一下目录及文件"><a href="#主要涉及一下目录及文件" class="headerlink" title="主要涉及一下目录及文件"></a>主要涉及一下目录及文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">bccsp/factory/gmfactory.go                    </span><br><span class="line">bccsp/factory/nopkcs11.go                     </span><br><span class="line">bccsp/factory/pkcs11.go                       </span><br><span class="line">bccsp/gm/fileks.go                            </span><br><span class="line">bccsp/gm/impl.go                              </span><br><span class="line">bccsp/gm/keys.go                              </span><br><span class="line">bccsp/gm/sm2.go                               </span><br><span class="line">bccsp/gm/sm2key.go                            </span><br><span class="line">bccsp/gm/sm3sig.go                            </span><br><span class="line">bccsp/sm2opts.go                              </span><br><span class="line">bccsp/utils/keys.go                           </span><br><span class="line">cmd/common/signer/signer.go                   </span><br><span class="line">common/tools/cryptogen/ca/generator.go        </span><br><span class="line">common/tools/cryptogen/ca/generatorsm.go      </span><br><span class="line">common/tools/cryptogen/csp/csp.go             </span><br><span class="line">common/tools/cryptogen/csp/cspsm.go           </span><br><span class="line">common/tools/cryptogen/main.go                </span><br><span class="line">common/tools/cryptogen/mainsm.go              </span><br><span class="line">common/tools/cryptogen/msp/generator.go       </span><br><span class="line">common/tools/cryptogen/msp/generatorsm.go     </span><br><span class="line">core/chaincode/shim/ext/attrmgr/attrmgr.go    </span><br><span class="line">core/chaincode/shim/ext/cid/cid.go            </span><br><span class="line">core/chaincode/shim/ext/cid/interfaces.go     </span><br><span class="line">core/common/validation/msgvalidation.go            </span><br><span class="line">msp/cert.go                                   </span><br><span class="line">msp/identities.go                             </span><br><span class="line">msp/mspimpl.go                                </span><br><span class="line">msp/mspimplsetup.go                           </span><br><span class="line">msp/mspimplvalidate.go       </span><br><span class="line">vendor/github.com/wanghongxing/crypto/sm/sm2/</span><br><span class="line">vendor/github.com/wanghongxing/crypto/sm/sm3/</span><br><span class="line">vendor/github.com/wanghongxing/crypto/sm/sm4/</span><br><span class="line">vendor/github.com/wanghongxing/crypto/x509/</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="大致功能"><a href="#大致功能" class="headerlink" title="大致功能"></a>大致功能</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#bccsp中功过SW方式切换成国密</span></span><br><span class="line"> bccsp/factory/          </span><br><span class="line"><span class="comment">#基本国密bccsp库 </span></span><br><span class="line"> bccsp/gm/    </span><br><span class="line"><span class="comment">#bccsp中增加sm2的常量 </span></span><br><span class="line"> bccsp/sm2opts.go                              </span><br><span class="line"> bccsp/utils/keys.go       </span><br><span class="line"><span class="comment">#消息验证增加国密 </span></span><br><span class="line"> core/common/validation/msgvalidation.go       </span><br><span class="line"><span class="comment">#msp证书对国密的支持 </span></span><br><span class="line"> msp/cert.go                                   </span><br><span class="line"> msp/identities.go                             </span><br><span class="line"> msp/</span><br><span class="line"><span class="comment">#国密算法，第三方拿过来修改了包名</span></span><br><span class="line"> vendor/github.com/wanghongxing/crypto/sm/</span><br><span class="line"><span class="comment">#国密x509证书 ，第三方拿过来修改了包名 </span></span><br><span class="line"> vendor/github.com/wanghongxing/crypto/x509/</span><br><span class="line"><span class="comment">#discover国密支持 </span></span><br><span class="line"> cmd/common/signer/signer.go       </span><br><span class="line"><span class="comment">#生成证书工具改造 </span></span><br><span class="line"> common/tools/cryptogen/   </span><br><span class="line"><span class="comment">#chaincode中访问证书支持国密 </span></span><br><span class="line"> core/chaincode/shim/ext/attrmgr/attrmgr.go    </span><br><span class="line"> core/chaincode/shim/ext/cid/cid.go            </span><br><span class="line"> core/chaincode/shim/ext/cid/interfaces.go    </span><br><span class="line"> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="fabric国密补丁工程"><a href="#fabric国密补丁工程" class="headerlink" title="fabric国密补丁工程"></a>fabric国密补丁工程</h2><p>fabric 官方源代码 fabric1.4.2 下能正常apply入原始项目中，到了fabric1.4.4以后，msp/mspimplvalidate.go 文件不能打入布丁，手动修改后正常.</p>
+<p>为了保证以后版本能够正常打入官方发布版本，决定每个版本进行修订，修订包名称定为：</p>
+<p>fabric-x.x.x-000xxxx.patch</p>
+<p>同时依赖的crypto/sm crypto/x509决定克隆到自己的 git 目录下，确保版本稳定。</p>
+<h3 id="1-4-4-补丁"><a href="#1-4-4-补丁" class="headerlink" title="1.4.4 补丁"></a>1.4.4 补丁</h3><p>整理后三个patch包如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fabric-1.4.4-0001-china-crypto-standards-support-1.4.4.patch</span><br><span class="line">fabric-1.4.4-0002-gm-ecdsa-chaincode.patch</span><br><span class="line">fabric-1.4.4-0003-change-discover-support-gm.patch</span><br></pre></td></tr></table></figure>
+
+<p>分别完成了基本的国密支持、chaincode中证书支持国密、discover中证书支持国密。</p>
+<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><p>从fabric官方签出1.4.4的代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout v1.4.4</span><br></pre></td></tr></table></figure>
+
+<p>然后把patch文件复制到fabric父目录下，然后执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git am ../fabric-sm-patch/fabric-1.4.4-0001-china-crypto-standards-support-1.4.4.patch</span><br><span class="line">git am ../fabric-sm-patch/fabric-1.4.4-0002-gm-ecdsa-chaincode.patch</span><br><span class="line">git am ../fabric-sm-patch/fabric-1.4.4-0003-change-discover-support-gm.patch</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-6-1-4-7-版本"><a href="#1-4-6-1-4-7-版本" class="headerlink" title="1.4.6/1.4.7 版本"></a>1.4.6/1.4.7 版本</h3><p>整理后有一个patch包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fabric-1.4.7-0001-china-crypto-standards-support-1.4.7.patch</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用方法-1"><a href="#使用方法-1" class="headerlink" title="使用方法"></a>使用方法</h4><p>从官方签出1.4.7代码(注，1.4.7还没有打tag，所以暂时用release-1.4)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git chekcout release-1.4</span><br></pre></td></tr></table></figure>
+
+<p>或者(注，1.4.7还没有打tag，所以暂时用v1.4.6)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout v1.4.6</span><br></pre></td></tr></table></figure>
+
+<p>然后把patch文件复制到fabric父目录下，然后执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git am ../fabric-sm-patch/fabric-1.4.7-0001-china-crypto-standards-support-1.4.7.patch</span><br></pre></td></tr></table></figure>
+
+<h2 id="fabric国密版本编译"><a href="#fabric国密版本编译" class="headerlink" title="fabric国密版本编译"></a>fabric国密版本编译</h2><h3 id="编译环境建立"><a href="#编译环境建立" class="headerlink" title="编译环境建立"></a>编译环境建立</h3><p>fabirc的编译需要在ubuntu虚拟机里进行编译，所以先要安装virtualbox和vagrant，安装完以后理论上就可以进入devenv目录目录运行虚拟机。</p>
+<p>但是，因为我们伟大的qiang，所以要想编译环境运行好，就先要装fan qiang软件。</p>
+<p>我安装了:</p>
+<p>小飞机Shadowsocks,这个是作为翻墙用的，但是它只监听127.0.0.1，为了让虚拟机的软件用，我们还要转另外一个东东“privoxy”,让这个东东监听ipv4的端口，我用它监听8118端口，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">brew install privoxy</span><br><span class="line"><span class="comment">#修改配置文件vim /usr/local/etc/privoxy/config</span></span><br><span class="line">listen-address  0.0.0.0:8118</span><br><span class="line">forward-socks5 / localhost:1080 .</span><br></pre></td></tr></table></figure>
+
+<p>然后修改fabric 的 devenv/Vagrant文件，在这行<code>Vagrant.configure(&#39;2&#39;) do |config|</code>后面添加着两行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># config.proxy.http     = &quot;http://10.0.0.9:8118/&quot;</span><br><span class="line"># config.proxy.https    = &quot;http://10.0.0.9:8118/&quot;</span><br></pre></td></tr></table></figure>
+
+<p>注意，#去掉以后起作用，加上就不起作用了，为什么要说加上#不起作用呢？不加不久完了吗？</p>
+<p>问题就在这里：</p>
+<p>下载github google之类的东东，需要打开；</p>
+<p>下载ubuntu系统之类的软件，需要关闭；</p>
+<p>就是这么麻烦，如果你的fan qiang线路特别好，就一直打开。否则最简单的就是关闭的时候执行到一半不行了，就打开；打开的时候执行到一半不行了，就关闭。周而复始吧～（fuck）</p>
+<p>建好了墙，按理说就可以直接开启虚拟机了，慢～先把Vagrant中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$script</span> = &lt;&lt;<span class="string">SCRIPT</span></span><br><span class="line"><span class="string">set -x</span></span><br><span class="line"><span class="string">echo &quot;127.0.0.1 couchdb&quot; | tee -a /etc/hosts</span></span><br><span class="line"><span class="string">cd #&#123;SRCMOUNT&#125;/fabric/devenv</span></span><br><span class="line"><span class="string">./setup.sh</span></span><br><span class="line"><span class="string">SCRIPT</span></span><br></pre></td></tr></table></figure>
+
+<p>其中./setup.sh这行注释掉，因为在虚拟机启动的时候它就调用，出错了后你都不知道干啥好，出不去进不来的，就像被卡在门缝中一样。</p>
+<p>把它注释掉后，进入虚拟机后自己手动执行。</p>
+<p>下面启动虚拟机</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant up</span><br></pre></td></tr></table></figure>
+
+<p>第一次的话需要下载镜像，启动完成后执行进入。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant ssh</span><br></pre></td></tr></table></figure>
+
+<p>然后开始慢慢的执行devenv/setup.sh</p>
+<p>执行出错后，慢慢手动开关代理，然后粘贴命令执行就行，最后这个东西执行完了之后，编译环境就算创建完了。</p>
+<h3 id="编译fabric执行程序"><a href="#编译fabric执行程序" class="headerlink" title="编译fabric执行程序"></a>编译fabric执行程序</h3><p>直接执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make native</span><br></pre></td></tr></table></figure>
+
+<p>这个会把fabric 可执行程序编译好后放在.build/bin/目录下，包括常用的cryptogen configtxgen configtxlator</p>
+<h3 id="编译docker镜像"><a href="#编译docker镜像" class="headerlink" title="编译docker镜像"></a>编译docker镜像</h3><p>直接执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make docker</span><br></pre></td></tr></table></figure>
+
+<p>这个一般网络不行都会出错，出错以后如果是下载github google之类的错误就打开代理，否则就关闭代理。</p>
+<p>如果提示找不到.build/xxx/gotools/目录下的什么文件，这就是在代理切换的过程中，因为脚本文件把创建目录作为执行完的标记，所以没有执行成功下次也不会执行。解决办法就是删除它提示找不到文件的那个目录，大概率就是.build/docker/gotools目录。反正就是github google需要qiang，ubuntu系统文件不能用qiang，因为这些网站dns失败，我也没有细究，手动解决就OK。</p>
+<h3 id="打包镜像文件"><a href="#打包镜像文件" class="headerlink" title="打包镜像文件"></a>打包镜像文件</h3><p>为了方便大家使用，编译好之后需要把可执行程序和镜像保存起来供大家用，如下命令把所有可执行文件复制到fabric/devenv/bin，然后把镜像保存到:</p>
+<p>fabric/devenv/fabric-gm-1.4.7-20200506.tar.gz</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> /vagrant/bin/</span><br><span class="line"><span class="built_in">cp</span> .build/bin/* /vagrant/bin/</span><br><span class="line"></span><br><span class="line">docker save $(docker images | sed <span class="string">&#x27;1d&#x27;</span> | awk <span class="string">&#x27;&#123;print $1 &quot;:&quot; $2 &#125;&#x27;</span>) | \</span><br><span class="line">	gzip -c &gt; /vagrant/fabric-gm-1.4.7-20200506.tar.gz</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="java-sdk国密改造"><a href="#java-sdk国密改造" class="headerlink" title="java sdk国密改造"></a>java sdk国密改造</h2><p>代码仓库 <code>ssh://git@gitlabs.my118.com:9022/blockchain/fabric-sdk-java.git</code></p>
+<h3 id="改造思路"><a href="#改造思路" class="headerlink" title="改造思路"></a>改造思路</h3><p>fabric java sdk使用 bouncycastle 作为加密库，因为bouncycastle 本身已经支持国密的算法，所以只用在fabric java sdk中添加对加密算法、hash算法、证书类型的判断即可。</p>
+<p><strong>但是：</strong>因为bouncycastle必须手动加载早java security系统中，所以应用程序应该在启动的时候调用如下代码加载<code>Security.addProvider(new BouncyCastleProvider());</code>。否则就会提示类似于不可识别的证书、不支持的算法等莫名其妙的错误提示。</p>
+<h3 id="Config改造"><a href="#Config改造" class="headerlink" title="Config改造"></a>Config改造</h3><p>java sdk启动的时候在 config.properties 文件查找配置选项，比较有用的几个是：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># security level determines the elliptic curve used to generate keys. Valid values are 256 ( curve is P-256 )</span></span><br><span class="line"><span class="comment"># and 384 ( curve is secp384r1 )</span></span><br><span class="line"><span class="attr">org.hyperledger.fabric.sdk.crypto.security_level</span> = <span class="string">256</span></span><br><span class="line"><span class="comment"># hash algorithm determines the message digest used when creating a signature. Valid values are</span></span><br><span class="line"><span class="comment"># SHA2 ( digest is SHA-256 ) and SHA3 ( digest is SHA-3 )</span></span><br><span class="line"><span class="attr">org.hyperledger.fabric.sdk.crypto.hash_algorithm</span> = <span class="string">SHA2</span></span><br><span class="line"><span class="comment"># The format for the certificate PEM files used by the SDK, Fabric and Fabric-ca components.</span></span><br><span class="line"><span class="comment"># currently X.509 is the only valid format supported. This entry is here to allow for future support</span></span><br><span class="line"><span class="comment"># org.hyperledger.fabric.sdk.crypto.certificate_format = X.509</span></span><br><span class="line"><span class="comment"># The algorithm used to generate a signature. Valid values are listed in the JCA Standard Algorithm Name Documentation</span></span><br><span class="line"><span class="comment"># e.g. http://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#Signature</span></span><br><span class="line"><span class="attr">org.hyperledger.fabric.sdk.crypto.default_signature_algorithm</span> = <span class="string">SHA256withECDSA</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>上面的配置是缺省的椭圆曲线配置，为了满足国密支持，我们需要支持如下配置</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">org.hyperledger.fabric.sdk.crypto.default_signature_algorithm</span> = <span class="string">SM3withSM2</span></span><br><span class="line"><span class="attr">org.hyperledger.fabric.sdk.hash_algorithm</span> = <span class="string">SM3</span></span><br><span class="line"><span class="attr">org.hyperledger.fabric.sdk.security_level</span>=<span class="string">255</span></span><br></pre></td></tr></table></figure>
+
+<p>security_level=255 是为了避免跟椭圆曲线冲突。</p>
+<p>相应的我们需要在Config.java文件中修改加密曲线配置，增加<code>255=sm2p256v1</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//defaultProperty(SECURITY_CURVE_MAPPING, &quot;256=secp256r1:384=secp384r1&quot;);</span></span><br><span class="line">  defaultProperty(SECURITY_CURVE_MAPPING, <span class="string">&quot;256=secp256r1:384=secp384r1:255=sm2p256v1&quot;</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这样系统看到<code>security_level=255</code> 就知道使用 sm2p256v1 加密曲线。</p>
+<h3 id="加密套件修改"><a href="#加密套件修改" class="headerlink" title="加密套件修改"></a>加密套件修改</h3><h4 id="验证证书"><a href="#验证证书" class="headerlink" title="验证证书"></a>验证证书</h4><p>在验证证书的时候CertPathValidator 不能使用缺省的，需要使用bouncycastle 提供的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//CertPathValidator certValidator = CertPathValidator.getInstance(</span></span><br><span class="line">		CertPathValidator.getDefaultType()); <span class="comment">// PKIX</span></span><br><span class="line"><span class="type">CertPathValidator</span> <span class="variable">certValidator</span> <span class="operator">=</span> CertPathValidator.getInstance(\</span><br><span class="line">		CertPathValidator.getDefaultType(), <span class="string">&quot;BC&quot;</span>); <span class="comment">// PKIX</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="配置哈希算法"><a href="#配置哈希算法" class="headerlink" title="配置哈希算法"></a>配置哈希算法</h4><p>需要添加sm3的判断</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">setHashAlgorithm</span><span class="params">(String algorithm)</span> <span class="keyword">throws</span> InvalidArgumentException &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// whx: 添加SM3</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (isNullOrEmpty(algorithm)</span><br><span class="line">            || !(<span class="string">&quot;SHA2&quot;</span>.equals(algorithm)</span><br><span class="line">            || <span class="string">&quot;SHA3&quot;</span>.equals(algorithm)</span><br><span class="line">            || <span class="string">&quot;SM3&quot;</span>.equals(algorithm)</span><br><span class="line">    )) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">InvalidArgumentException</span>(<span class="string">&quot;Illegal Hash function family: &quot;</span></span><br><span class="line">                + algorithm + <span class="string">&quot; - must be either SHA2 or SHA3 or SM3&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    hashAlgorithm = algorithm;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="椭圆曲线证书转换的时候"><a href="#椭圆曲线证书转换的时候" class="headerlink" title="椭圆曲线证书转换的时候"></a>椭圆曲线证书转换的时候</h4><p>标准算法转换的时候有这么一句，在国密里面要注释掉，否则验证签名会失败。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sigs = preventMalleability(sigs, curveN);</span><br></pre></td></tr></table></figure>
+
+<h4 id="证书工厂配置"><a href="#证书工厂配置" class="headerlink" title="证书工厂配置"></a>证书工厂配置</h4><p>修改为之支持x509，由 bouncycastle 提供。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//            cf = CertificateFactory.getInstance(CERTIFICATE_FORMAT);</span><br><span class="line">            cf = CertificateFactory.getInstance(&quot;X509&quot;, &quot;BC&quot;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="增加固定的sha256"><a href="#增加固定的sha256" class="headerlink" title="增加固定的sha256"></a>增加固定的sha256</h4><p>因为在提交交易的时候，交易的哈希是固定的sha256，但做签名的时候根据证书使用，所以在这里添加一个sha256,在交易提交的时候调用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//whx 做一个固定的sha256哈希</span><br><span class="line">@Override</span><br><span class="line">public byte[] hashSha256(byte[] input) &#123;</span><br><span class="line">    Digest digest = new SHA256Digest();</span><br><span class="line">    byte[] retValue = new byte[digest.getDigestSize()];</span><br><span class="line">    digest.update(input, 0, input.length);</span><br><span class="line">    digest.doFinal(retValue, 0);</span><br><span class="line">    return retValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>提交交易的时候：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="title function_">TransactionContext</span><span class="params">(Channel channel, User user, CryptoSuite cryptoPrimitives)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">byte</span>[] txh = cryptoPrimitives.hashSha256(comp.toByteArray());</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>config.properties 作为java sdk的配置文件，缺省在jar执行文件的当前目录，如果没有，就是按照标准的椭圆曲线证书支持；否则，就必须单独做配置文件，如下是标准的国密算法配置内容：</p>
+<p>上面的配置是缺省的椭圆曲线配置，为了满足国密支持，我们需要支持如下配置</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">org.hyperledger.fabric.sdk.crypto.default_signature_algorithm</span> = <span class="string">SM3withSM2</span></span><br><span class="line"><span class="attr">org.hyperledger.fabric.sdk.hash_algorithm</span> = <span class="string">SM3</span></span><br><span class="line"><span class="attr">org.hyperledger.fabric.sdk.security_level</span>=<span class="string">255</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
     <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2018-%E5%9B%BD%E5%AF%86%E5%95%86%E5%AF%86%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -534,7 +722,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -543,7 +731,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
