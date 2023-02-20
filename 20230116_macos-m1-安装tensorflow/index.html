@@ -20,19 +20,21 @@
     var CONFIG = {"hostname":"hongxing.tech","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="从这里看到  进入TEWA-800E的管理页面，发现只能使用默认用户user登陆，而user没有修改路由模式的权限，现在的问题就是想办法登陆超级用户了，查到超级用户账号密码为CUAdmin&#x2F;CUAdmin。以前似乎可以使用cu.html来登陆，但我试了下，现在（2018年6月底）应该是已经封掉了。Chrome打开光猫登陆页面，默认是192.168.1.1，F12进入开发工具，在source中可以看">
+  <meta name="description" content="安装arm64 macos的minicondaminiconda下载 1234567chmod +x .&#x2F;Miniforge3-MacOSX-arm64.sh.&#x2F;Miniforge3-MacOSX-arm64.shsource ~&#x2F;miniforge3&#x2F;bin&#x2F;activateconda create -n tf python&#x3D;&#x3D;3.9conda activate tf     安装tensorf">
 <meta property="og:type" content="article">
-<meta property="og:title" content="破解光猫">
-<meta property="og:url" content="https://hongxing.tech/2018-%E7%A0%B4%E8%A7%A3%E5%85%89%E7%8C%AB/index.html">
+<meta property="og:title" content="macos m1 安装tensorflow">
+<meta property="og:url" content="https://hongxing.tech/20230116_macos-m1-%E5%AE%89%E8%A3%85tensorflow/index.html">
 <meta property="og:site_name" content="红星">
-<meta property="og:description" content="从这里看到  进入TEWA-800E的管理页面，发现只能使用默认用户user登陆，而user没有修改路由模式的权限，现在的问题就是想办法登陆超级用户了，查到超级用户账号密码为CUAdmin&#x2F;CUAdmin。以前似乎可以使用cu.html来登陆，但我试了下，现在（2018年6月底）应该是已经封掉了。Chrome打开光猫登陆页面，默认是192.168.1.1，F12进入开发工具，在source中可以看">
+<meta property="og:description" content="安装arm64 macos的minicondaminiconda下载 1234567chmod +x .&#x2F;Miniforge3-MacOSX-arm64.sh.&#x2F;Miniforge3-MacOSX-arm64.shsource ~&#x2F;miniforge3&#x2F;bin&#x2F;activateconda create -n tf python&#x3D;&#x3D;3.9conda activate tf     安装tensorf">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2018-12-01T05:46:48.000Z">
-<meta property="article:modified_time" content="2023-01-02T10:54:49.033Z">
+<meta property="article:published_time" content="2023-02-16T12:24:35.000Z">
+<meta property="article:modified_time" content="2023-02-18T04:22:46.288Z">
 <meta property="article:author" content="wanghongxing">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="tensorflow">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://hongxing.tech/2018-%E7%A0%B4%E8%A7%A3%E5%85%89%E7%8C%AB/">
+<link rel="canonical" href="https://hongxing.tech/20230116_macos-m1-%E5%AE%89%E8%A3%85tensorflow/">
 
 
 <script id="page-configurations">
@@ -45,7 +47,7 @@
   };
 </script>
 
-  <title>破解光猫 | 红星</title>
+  <title>macos m1 安装tensorflow | 红星</title>
   
 
 
@@ -165,7 +167,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2018-%E7%A0%B4%E8%A7%A3%E5%85%89%E7%8C%AB/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20230116_macos-m1-%E5%AE%89%E8%A3%85tensorflow/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +180,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          破解光猫
+          macos m1 安装tensorflow
         </h1>
 
         <div class="post-meta">
@@ -188,14 +190,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-12-01 13:46:48" itemprop="dateCreated datePublished" datetime="2018-12-01T13:46:48+08:00">2018-12-01</time>
+              <time title="Created: 2023-02-16 20:24:35" itemprop="dateCreated datePublished" datetime="2023-02-16T20:24:35+08:00">2023-02-16</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-02 18:54:49" itemprop="dateModified" datetime="2023-01-02T18:54:49+08:00">2023-01-02</time>
+                <time title="Modified: 2023-02-18 12:22:46" itemprop="dateModified" datetime="2023-02-18T12:22:46+08:00">2023-02-18</time>
               </span>
 
           
@@ -209,14 +211,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>从<a target="_blank" rel="noopener" href="https://blog.csdn.net/kt_ZhangSheng/article/details/80855083">这里看到</a></p>
-<blockquote>
-<p>进入TEWA-800E的管理页面，发现只能使用默认用户user登陆，而user没有修改路由模式的权限，现在的问题就是想办法登陆超级用户了，查到超级用户账号密码为CUAdmin/CUAdmin。以前似乎可以使用cu.html来登陆，但我试了下，现在（2018年6月底）应该是已经封掉了。<br>Chrome打开光猫登陆页面，默认是192.168.1.1，F12进入开发工具，在source中可以看到user_name固定为user，且提交时还加了对用户名的验证。 找到对应的代码，拷贝到console，修改user_name的值为CUAdmin，去掉用户名的验证。 </p>
-</blockquote>
-<p>就是在console中执行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">document.getElementById(&#x27;user_name&#x27;).value= &#x27;CUAdmin&#x27;;</span><br><span class="line">function submitFrm()</span><br><span class="line">&#123;</span><br><span class="line">  document.getElementById(&#x27;loginfrm&#x27;).submit();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>就进入管理界面</p>
-<p>上行管理中设置第二个连接为桥接方式，保存就可以了。<br>然后在自己的路由器中设置wlan为ppoe方式，填上用户名密码就行了。</p>
+        <h2 id="安装arm64-macos的miniconda"><a href="#安装arm64-macos的miniconda" class="headerlink" title="安装arm64 macos的miniconda"></a>安装arm64 macos的<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=miniconda&spm=1001.2101.3001.7020">miniconda</a></h2><p><a target="_blank" rel="noopener" href="https://github.com/conda-forge/miniforge/#download">miniconda下载</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">chmod +x ./Miniforge3-MacOSX-arm64.sh</span><br><span class="line">./Miniforge3-MacOSX-arm64.sh</span><br><span class="line">source ~/miniforge3/bin/activate</span><br><span class="line"></span><br><span class="line">conda create -n tf python==3.9</span><br><span class="line">conda activate tf</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="安装tensorflow"><a href="#安装tensorflow" class="headerlink" title="安装tensorflow"></a>安装tensorflow</h2><p>默认安装2.8版本的tensorflow，也可以指定版本。最好默认</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">conda install -c apple tensorflow-deps</span><br><span class="line">python -m pip install tensorflow-macos</span><br><span class="line">python -m pip install tensorflow-metal</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在这里看tensorflow入门，在这里就可以看文档：</p>
+<p><a target="_blank" rel="noopener" href="https://colab.research.google.com/github/tensorflow/docs-l10n/blob/master/site/zh-cn/tutorials/keras/text_classification.ipynb?hl=zh-cn">https://colab.research.google.com/github/tensorflow/docs-l10n/blob/master/site/zh-cn/tutorials/keras/text_classification.ipynb?hl=zh-cn</a></p>
+<p>告诉我可以用 google colab玩，就安装一下。</p>
+<p>安装jupyter</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda install jupyter notebook</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>支持google的 colab</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pip install jupyter_http_over_ws</span><br><span class="line">jupyter serverextension enable --py jupyter_http_over_ws</span><br><span class="line">jupyter notebook   --NotebookApp.allow_origin=&#x27;https://colab.research.google.com&#x27;   --port=8888   --NotebookApp.port_retries=0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后再右上角的connect种连接本地的jupyter。就可以在网页上运行python。</p>
+<p>看看url地址貌似运行的github上的代码，我就把<a target="_blank" rel="noopener" href="http://github.com/tensorflow/docs-i10n">http://github.com/tensorflow/docs-i10n</a> 这个代码仓库</p>
+<p>clone了，然后就可以用 <a target="_blank" rel="noopener" href="https://colab.research.google.com/github/wanghongxing/docs-l10n/blob/master/site/zh-cn/tutorials/keras/text_classification.ipynb?hl=zh-cn#scrollTo=6-tTFS04dChr">https://colab.research.google.com/github/wanghongxing/docs-l10n/blob/master/site/zh-cn/tutorials/keras/text_classification.ipynb?hl=zh-cn#scrollTo=6-tTFS04dChr</a> 这个地址来学习tensorflow的文本分类例子。这时候是自己的代码仓库，感觉很厉害的样子。</p>
+<p>执行之前别忘了安装 matplotlib，<code>pip install matplotlib</code></p>
 
     </div>
 
@@ -225,6 +240,10 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/tensorflow/" rel="tag"># tensorflow</a>
+          </div>
 
         
 
@@ -232,12 +251,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2018-11-30-windows-run-spring-boot-as-services/" rel="prev" title="在windows以服务的方式启动springboot">
-      <i class="fa fa-chevron-left"></i> 在windows以服务的方式启动springboot
+    <a href="/20230127-%E5%AD%A6%E4%B9%A0-numpy/" rel="prev" title="20230127 学习 numpy">
+      <i class="fa fa-chevron-left"></i> 20230127 学习 numpy
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020-firewall%20%E9%98%B2%E7%81%AB%E5%A2%99%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="next" title="firewall 防火墙常用命令">
-      firewall 防火墙常用命令 <i class="fa fa-chevron-right"></i>
+    <a href="/20230218-docker%E6%96%B9%E5%BC%8F%E5%AE%89%E8%A3%85ElasticSearch/" rel="next" title="20230218 docker方式安装ElasticSearch">
+      20230218 docker方式安装ElasticSearch <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -297,6 +316,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85arm64-macos%E7%9A%84miniconda"><span class="nav-number">1.</span> <span class="nav-text">安装arm64 macos的miniconda</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85tensorflow"><span class="nav-number">2.</span> <span class="nav-text">安装tensorflow</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
