@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://hongxing.tech/20230221-macbook-m1-%E5%AE%89%E8%A3%85-brew-%E5%8F%8A-redis-%E8%B8%A9%E5%9D%91/</loc>
+    <lastmod>2023-02-21</lastmod>
+  </url>
+  <url>
     <loc>https://hongxing.tech/20230220-macbook-m1-nvm%E5%AE%89%E8%A3%85node/</loc>
-    <lastmod>2023-02-20</lastmod>
+    <lastmod>2023-02-21</lastmod>
   </url>
   <url>
     <loc>https://hongxing.tech/20230218-docker%E6%96%B9%E5%BC%8F%E5%AE%89%E8%A3%85ElasticSearch/</loc>
@@ -11,10 +15,6 @@
   <url>
     <loc>https://hongxing.tech/20230116_macos-m1-%E5%AE%89%E8%A3%85tensorflow/</loc>
     <lastmod>2023-02-18</lastmod>
-  </url>
-  <url>
-    <loc>https://hongxing.tech/20230127-%E5%AD%A6%E4%B9%A0-numpy/</loc>
-    <lastmod>2023-01-27</lastmod>
   </url>
   <url>
     <loc>https://hongxing.tech/20230118-IntelliJ-IDEA-%E6%8E%A5%E5%8F%A3%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7/</loc>

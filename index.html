@@ -160,6 +160,93 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20230221-macbook-m1-%E5%AE%89%E8%A3%85-brew-%E5%8F%8A-redis-%E8%B8%A9%E5%9D%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20230221-macbook-m1-%E5%AE%89%E8%A3%85-brew-%E5%8F%8A-redis-%E8%B8%A9%E5%9D%91/" class="post-title-link" itemprop="url">20230221 macbook m1 安装 brew 及 redis 踩坑</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-02-21 12:20:53 / Modified: 13:25:06" itemprop="dateCreated datePublished" datetime="2023-02-21T12:20:53+08:00">2023-02-21</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>因为笔记本是用以前的时间仓恢复回来的，所以brew啥的都是x64架构的，需要重新安装brew。</p>
+<h2 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a>Homebrew</h2><p>x86_64 和 ARM64 版本的 homebrew 的安装目录是不一样的</p>
+<p>x86_64 安装目录：<code>/usr/local/homebrew</code></p>
+<p>ARM64 安装目录：<code>/opt/homebrew</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>这是后电脑上有了两套brew,</p>
+<h2 id="切换命令"><a href="#切换命令" class="headerlink" title="切换命令"></a>切换命令</h2><p>为了方便在x64和arm64之间来回切换就参照 <a target="_blank" rel="noopener" href="https://wuyanxin.com/post/mac-m1-brew-both-support-aarm64-and-x86_64.html">Mac M1 安装 Homebrew 最佳实践</a> 做了</p>
+<p>文件 <code>~/.brew_arm</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>文件 <code>~/.brew_intel</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval &quot;$(/usr/local/homebrew/bin/brew shellenv)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>将下面代码加入到 <code>.zshrc</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># homebrew</span><br><span class="line">alias brew_arm=&#x27;source ~/.brew_arm&#x27;</span><br><span class="line">alias brew_intel=&quot;source ~/.brew_intel&quot;</span><br></pre></td></tr></table></figure>
+
+<p>切换命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew_intel # 切换到 x86_64</span><br><span class="line">brew_arm # 切换到 arm64</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><p>切换到arm64 安装了新的redis，版本是7.x .</p>
+<p>然后再 idea 中调试运行spring boot程序就会卡在中间，打开调试信息看 貌似 redisson 一直不停地连接、close，估计是redis有问题。</p>
+<p>先停止redis <code>brew services stop redis</code>,然后卸载 <code>brew uninstall redis</code>.</p>
+<p>切换到 x64环境 brew_intel, 然后重新安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ brew install redis</span><br><span class="line">$ which redis-server</span><br><span class="line">/usr/local/bin/redis-server   #这就是x64版本</span><br><span class="line"></span><br><span class="line">$ brew services start redis</span><br><span class="line"></span><br><span class="line">$ file /usr/local/bin/redis-server</span><br><span class="line">/usr/local/bin/redis-server: Mach-O 64-bit executable x86_64 # 确认是x64</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后idea中调试就正常了。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
     <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20230220-macbook-m1-nvm%E5%AE%89%E8%A3%85node/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -183,10 +270,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2023-02-20 13:33:40 / Modified: 13:40:04" itemprop="dateCreated datePublished" datetime="2023-02-20T13:33:40+08:00">2023-02-20</time>
+              <time title="Created: 2023-02-20 13:33:40" itemprop="dateCreated datePublished" datetime="2023-02-20T13:33:40+08:00">2023-02-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-02-21 10:22:49" itemprop="dateModified" datetime="2023-02-21T10:22:49+08:00">2023-02-21</time>
+              </span>
 
           
 
@@ -199,9 +292,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>arm 芯片，用 nvm 安装老版本的node 会提示安装不上，或者提示某个依赖的组件不支持arm64。这时候就需要安装 x64 版本的node。</p>
-<p>具体办法就是在访达中找到应用文件夹，右键点击iterm.ap，继续点击显示简介，最后 叉选上 使用Rosetta打开。</p>
-<p>然后重新打开命令行，在命令行下重新<code>nvm install 12.20.12</code> 就可以了。</p>
+          <h2 id="如何安装-v14-及以下的老版本-Node"><a href="#如何安装-v14-及以下的老版本-Node" class="headerlink" title="如何安装 v14 及以下的老版本 Node"></a>如何安装 v14 及以下的老版本 Node</h2><p>安装 Node 的部分写的很简单，因为按这个步骤，一般不会出问题。而当你用 nvm 尝试去安装 v14 及以下的 Node 版本时，大概率会报错，而我们在工作中恰恰又可能依赖 v14 及以下的 lts 版本。那么为什么会报错呢？究其原因还是因为低版本的 node 并不是基于 arm64 架构的，所以不适配 M1 芯片。在这里教大家两个方法，就能成功安装上低版本 Node。</p>
+<p>arm 芯片，用 nvm 安装老版本的node 会提示安装不上，或者提示某个依赖的组件不支持arm64。这时候就需要安装 x64 版本的node。</p>
+<h3 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h3><p>具体办法就是通过 Rosetta2 来启动终端，这样通过 Rosetta2 转译到 x86 架构中执行安装，也一样可以安装成功。</p>
+<ul>
+<li>在 finder 中，点击应用程序，并在实用工具中找到iterm.app</li>
+<li>右键终端，点击显示简介</li>
+<li>选择 使用Rosetta 打开</li>
+</ul>
+<p>然后重新打开 itern，在命令行下重新<code>nvm install 12.20.12</code> 就可以了。</p>
+<p>弄完以后就不用把 iterm 运行在 Rosetta下。</p>
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>在终端中，输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">arch</span> -x86_64 zsh</span><br></pre></td></tr></table></figure>
+
+<p>通过这个命令可以让 shell 运行在Rosetta2下。<br>之后你可以通过 <code>nvm install 12.20.12</code> 来安装低版本 Node。<br>在此之后，您可以不用在 Rosetta2 中就可以使用安装的可执行文件，也就是说，您可以将 Node v15与其他节点版本互换使用。</p>
 
       
     </div>
@@ -419,64 +523,6 @@
 <p>clone了，然后就可以用 <a target="_blank" rel="noopener" href="https://colab.research.google.com/github/wanghongxing/docs-l10n/blob/master/site/zh-cn/tutorials/keras/text_classification.ipynb?hl=zh-cn#scrollTo=6-tTFS04dChr">https://colab.research.google.com/github/wanghongxing/docs-l10n/blob/master/site/zh-cn/tutorials/keras/text_classification.ipynb?hl=zh-cn#scrollTo=6-tTFS04dChr</a> 这个地址来学习tensorflow的文本分类例子。这时候是自己的代码仓库，感觉很厉害的样子。</p>
 <p>执行之前别忘了安装 matplotlib，<code>pip install matplotlib</code></p>
 
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20230127-%E5%AD%A6%E4%B9%A0-numpy/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/20230127-%E5%AD%A6%E4%B9%A0-numpy/" class="post-title-link" itemprop="url">20230127 学习 numpy</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-01-27 15:04:12 / Modified: 15:04:43" itemprop="dateCreated datePublished" datetime="2023-01-27T15:04:12+08:00">2023-01-27</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
       
     </div>
 
