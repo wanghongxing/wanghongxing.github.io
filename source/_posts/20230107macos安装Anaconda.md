@@ -169,3 +169,11 @@ python -m pip install paddlepaddle==2.3.2 -i https://pypi.tuna.tsinghua.edu.cn/s
 ```
 
 这时候 paddle2.3.2 环境正常。
+
+```
+arch -x86_64 bash
+
+```
+
+
+

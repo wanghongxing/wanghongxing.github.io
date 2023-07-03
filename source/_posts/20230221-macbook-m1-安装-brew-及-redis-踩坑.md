@@ -59,9 +59,9 @@ brew_arm # 切换到 arm64
 
 ## redis
 
-切换到arm64 安装了新的redis，版本是7.x .
+切换到arm64 安装了新的redis `brew install redis`，版本是7.x .
 
-然后再 idea 中调试运行spring boot程序就会卡在中间，打开调试信息看 貌似 redisson 一直不停地连接、close，估计是redis有问题。
+然后再 idea 中调试运行spring boot程序就会卡在中间，打开调试信息看 貌似 redisson 一直不停地连接、close，估计是arm 版本的redis有问题。
 
 先停止redis `brew services stop redis`,然后卸载 `brew uninstall redis`.
 
