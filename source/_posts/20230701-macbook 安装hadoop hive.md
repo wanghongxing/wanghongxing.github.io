@@ -161,7 +161,12 @@ sbin/stop-all.sh
 rm -rf tmp/dfs
 
 sbin/start-all.sh
+
 ```
+
+
+
+至此，hadoop看着么有问题。
 
 -----
 
@@ -188,7 +193,7 @@ export PATH=$PATH:HIVE_HOME/bin
 ```
 create database hivestore;
 
-CREATE USER  'hardoop'@'%'  IDENTIFIED BY '123456';
+ CREATE USER  'hardoop'@'%'  IDENTIFIED BY 'WhxHeart12#';
 
 GRANT ALL PRIVILEGES ON  *.* TO 'hardoop'@'%' WITH GRANT OPTION;
 
@@ -330,7 +335,7 @@ wordcount:
 
 ```
 
-为了tag名字明显点，就 `git checkout -b whx`这样做出来的镜像tag就是自己了。
+ 
 
 另外Dockerfile是从debian 来做，安装arm64版jdk比较麻烦，因为改成openjdk11,同时把jdk相应的安装去掉了，顺便把hardoop升级到3.2.3
 
@@ -384,3 +389,8 @@ ENTRYPOINT ["/entrypoint.sh"]
 
 ```
 
+这个弄好后hadoop没有问题，但是加上 hive后总是有问题。
+
+
+
+拿出intel芯片的macbook，这样搞。

@@ -60,9 +60,7 @@ JWT_SECRET=QuOVtWS0j6Xp+uGMHD7HkkmH51mxR4VKrsWXH+lsdDM=
 
 
 ```
-GOOGLE_CLIENT_ID=188169271168-29g68velgfait43an7esvhhodoarrpcf.apps.googleusercontent.com
-
-GOOGLE_CLIENT_SECRET=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
+ 
 
 
 ```
@@ -73,12 +71,12 @@ GOOGLE_CLIENT_SECRET=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
 
 
 
-ip: 18.222.252.155
+ip:  
 
 
 
 ```
-ssh -i ~/.ssh/whx1.pem   ubuntu@18.222.252.155
+ssh -i ~/.ssh/whx1.pem   ubuntu@***
 
 ```
 
@@ -114,16 +112,16 @@ touch .env
 final .env:
 
 ```
-OPENAI_API_KEY=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
+OPENAI_API_KEY=sk-***
 
 PINECONE_API_KEY=0ea02c8f-76cb-4354-a9ce-1581191c0dba
 PINECONE_ENVIRONMENT=asia-southeast1-gcp-free
 PINECONE_INDEX_NAME=whx
-MONGODB_URI=mongodb+srv://wanghongxing:tftRqhgEUcljfHcP@cluster0.fkmmpud.mongodb.net/?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://wanghongxing:*****@cluster0.fkmmpud.mongodb.net/?retryWrites=true&w=majority
 
 GOOGLE_CLIENT_ID=188169271168-29g68velgfait43an7esvhhodoarrpcf.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=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
+GOOGLE_CLIENT_SECRET=GOCSPX-****__qpsDR
 NEXTAUTH_URL=http://pdf-chatbot.guyuai.com
-JWT_SECRET=QuOVtWS0j6Xp+uGMHD7HkkmH51mxR4VKrsWXH+lsdDM=
+JWT_SECRET=****
 ```
 
