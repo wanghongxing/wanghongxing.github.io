@@ -193,7 +193,7 @@ export PATH=$PATH:HIVE_HOME/bin
 ```
 create database hivestore;
 
- CREATE USER  'hardoop'@'%'  IDENTIFIED BY 'WhxHeart12#';
+ CREATE USER  'hardoop'@'%'  IDENTIFIED BY '123456';
 
 GRANT ALL PRIVILEGES ON  *.* TO 'hardoop'@'%' WITH GRANT OPTION;
 
