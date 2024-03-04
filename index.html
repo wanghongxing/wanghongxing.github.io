@@ -185,7 +185,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2024-03-04 09:39:55 / Modified: 09:43:44" itemprop="dateCreated datePublished" datetime="2024-03-04T09:39:55+08:00">2024-03-04</time>
+              <time title="Created: 2024-03-04 09:39:55 / Modified: 09:55:20" itemprop="dateCreated datePublished" datetime="2024-03-04T09:39:55+08:00">2024-03-04</time>
             </span>
 
           
@@ -200,13 +200,17 @@
 
       
           <p>解决 访问http自动跳转到https的问题</p>
-<p>先访问http域名，然后点击地址栏所测那个“不安全”的警告，弹出对话框中选择网站设置，</p>
+<p>1、先访问http域名，然后点击地址栏所测那个“不安全”的警告，弹出对话框中选择网站设置，</p>
 <p><img src="../images/2024-03-04-09.37.38.png" alt="2024-03-04-09.37.38"></p>
-<p>然后再下面的不安全内容后面的下拉框中选择<strong>允许</strong></p>
+<p>2、然后再下面的不安全内容后面的下拉框中选择<strong>允许</strong></p>
 <p><img src="../images/2024-03-04-09.37.47.png" alt="2024-03-04-09.37.47"></p>
-<p>在地址栏输入: chrome://net-internals/#hsts</p>
-<p>找到底部Delete domain security policies一栏，输入想处理的域名，点击delete。</p>
-<p>搞定了，再次访问http域名不再自动跳转https了。</p>
+<p>3、在地址栏输入: chrome://net-internals/#hsts</p>
+<img src="../images/截屏2024-03-04 09.53.37.png" alt="截屏2024-03-04 09.53.37" style="zoom: 67%;" />
+
+<p>4、找到底部Delete domain security policies一栏，输入想处理的域名，点击delete。</p>
+<img src="../images/截屏2024-03-04 09.53.51.png" alt="截屏2024-03-04 09.53.51" style="zoom:67%;" />
+
+<p>5、搞定了，再次访问http域名不再自动跳转https了。</p>
 
       
     </div>
