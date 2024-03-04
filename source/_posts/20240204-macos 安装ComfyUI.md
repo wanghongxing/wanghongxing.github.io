@@ -1,5 +1,6 @@
-macos 安装ComfyUI
-
+---
+title: macos 安装ComfyUI
+---
 
 
  https://github.com/comfyanonymous/ComfyUI

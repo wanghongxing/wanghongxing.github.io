@@ -1,3 +1,8 @@
+---
+title: 2023-0701-macbook 安装hadoop hive
+---
+
+
 macbook 安装hadoop hive
 
 ```

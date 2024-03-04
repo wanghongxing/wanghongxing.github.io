@@ -1,4 +1,6 @@
-apple silicon Install pytorch nightly
+---
+title: apple silicon Install pytorch nightly
+---
 
 https://developer.apple.com/metal/pytorch/
 

@@ -1,3 +1,7 @@
+---
+title: 20240207-学习stable diffusion webui扩展
+---
+
 ##  ControlNet 安装骨架动作绘图 
 
 [Ivon的部落格](https://ivonblog.com/posts/stable-diffusion-webui-manuals/extensions/controlnet/)

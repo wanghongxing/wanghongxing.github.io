@@ -1,5 +1,6 @@
-stable diffusion 提示词收集
-
+---
+title: stable diffusion 提示词收集
+---
 
 
 

@@ -1,3 +1,7 @@
+---
+title: 20240218-Stable Diffusion 基础
+---
+
 Stable Diffusion 基础
 
 Stable Diffusion（SD）模型是由Stability AI和LAION等公司共同开发的**生成式模型**，总共有**1B左右的参数量**，可以用于文生图，图生图，图像inpainting，ControlNet控制生成，图像超分等丰富的任务

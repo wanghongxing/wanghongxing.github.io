@@ -1,3 +1,7 @@
+---
+title: 20240205-Stable diffusion webui 使用sdXL_v10VAEFix.safetensors 模型时候提示  Downloading VAEApprox model TimeoutError
+---
+
 # Stable diffusion webui 使用sdXL_v10VAEFix.safetensors 模型时候提示  Downloading VAEApprox model TimeoutError
 
 使用sdXL_v10VAEFix.safetensors 模型时候提示  Downloading VAEApprox model to:  stable-diffusion-webui/models/VAE-approx/vaeapprox-sdxl.pt，大致是下载vaeapprox-sdxl.pt 文件失败。

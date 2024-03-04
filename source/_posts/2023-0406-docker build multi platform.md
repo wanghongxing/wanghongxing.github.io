@@ -1,3 +1,7 @@
+---
+title: 2023-0406-docker build multi platform
+---
+
 docker build multi platform
 
 macbook arm版生成镜像时候是arm64 架构的，没法在服务器运行，为了给服务器打镜像。

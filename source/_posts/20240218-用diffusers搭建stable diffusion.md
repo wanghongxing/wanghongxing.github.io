@@ -1,4 +1,6 @@
-20240218-用diffusers搭建stable diffusion
+---
+title: 20240218-用diffusers搭建stable diffusion
+---
 
 参照  [diffusers api](https://huggingface.co/docs/diffusers/api/pipelines/stable_diffusion/text2img#diffusers.StableDiffusionPipeline.__call__.negative_prompt)
 

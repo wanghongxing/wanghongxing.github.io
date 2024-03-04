@@ -1,3 +1,8 @@
+---
+title: 2023-0808-vagrant-centos7-硬盘扩容
+
+---
+
 vagrant centos7 硬盘扩容
 
 

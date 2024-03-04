@@ -1,3 +1,8 @@
+---
+title: 20240204-apple silicon install stable diffusion webui速度慢的解决办法
+---
+
+
 apple silicon install stable diffusion webui 后运行速度特别慢，参照 https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/7453
 
 下载新的webui-user.sh文件，其实就是增加了三行

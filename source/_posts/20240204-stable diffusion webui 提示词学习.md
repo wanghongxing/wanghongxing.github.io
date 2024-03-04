@@ -1,3 +1,7 @@
+---
+title: 20240204-stable diffusion webui 提示词学习
+---
+
 参考 [Ivon的部落格](https://ivonblog.com/posts/stable-diffusion-webui-manuals/prompts/general-prompt-guide/)
 
 

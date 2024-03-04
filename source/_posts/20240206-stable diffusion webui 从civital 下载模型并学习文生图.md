@@ -1,3 +1,7 @@
+---
+title: 20240206-stable diffusion webui 从civital 下载模型并学习文生图
+---
+
 civital 下载模型并学习之二
 
 # Meow Mix - Realistic & Versatile
