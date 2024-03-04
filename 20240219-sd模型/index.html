@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hongxing.tech","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="20240219-sd模型 常见的模型有以下几类：  Base 模型： 就是最常见的 AI 文生图模型，输入一段文字指令，AI 会根据你的指令生成图片。较常见的有 Stable Diffusion v1.5，Stable Diffusion XL 等。 LoRA 模型： 你可以简单将其理解为一种滤镜模型。通过它能生成更特殊的图片，比如在 Workflow 中加载线稿 LoRA 模型，就可以生成线稿">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红星">
+<meta property="og:url" content="https://hongxing.tech/20240219-sd%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="红星">
+<meta property="og:description" content="20240219-sd模型 常见的模型有以下几类：  Base 模型： 就是最常见的 AI 文生图模型，输入一段文字指令，AI 会根据你的指令生成图片。较常见的有 Stable Diffusion v1.5，Stable Diffusion XL 等。 LoRA 模型： 你可以简单将其理解为一种滤镜模型。通过它能生成更特殊的图片，比如在 Workflow 中加载线稿 LoRA 模型，就可以生成线稿">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-02-19T07:41:45.417Z">
+<meta property="article:modified_time" content="2024-02-19T07:55:02.205Z">
+<meta property="article:author" content="wanghongxing">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://hongxing.tech/20240219-sd%E6%A8%A1%E5%9E%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title> | 红星</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">红星</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240219-sd%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-02-19 15:41:45 / Modified: 15:55:02" itemprop="dateCreated datePublished" datetime="2024-02-19T15:41:45+08:00">2024-02-19</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>20240219-sd模型</p>
+<p>常见的模型有以下几类：</p>
+<ul>
+<li><strong>Base 模型：</strong> 就是最常见的 AI 文生图模型，输入一段文字指令，AI 会根据你的指令生成图片。较常见的有 Stable Diffusion v1.5，Stable Diffusion XL 等。</li>
+<li><strong>LoRA 模型：</strong> 你可以简单将其理解为一种滤镜模型。通过它能生成更特殊的图片，比如在 Workflow 中加载线稿 LoRA 模型，就可以生成线稿风格的图片。甚至还有一些 LoRA 模型能让 AI 生成特定样貌的人物，比如一些名人的 LoRA，加载这种模型后，就可以生成特定的名人。但需要注意，这种模型没法脱离 Base 模型使用，这就意味着你需要先下载 Base 模型，然后再下载对应的 LoRA 模型才行。</li>
+<li><strong>Inpainting 模型：</strong> 如果你想要修改某张图片，比如去掉某个物体，或者修复某个物体，那么你就需要使用 Inpainting 模型。这种模型输入一张图片，然后输入一个遮罩，AI 会根据遮罩修复图片。这个模型可以单独使用。</li>
+<li><strong>Upscale 模型：</strong> 如果你想将一张图片放大，那么你就需要使用 Upscale 模型。这种模型输入一张图片，然后输入一个倍数，AI 会根据倍数放大图片。这个模型也可以单独使用。</li>
+<li><strong>ControlNet 模型：</strong> 如果你想控制图片中某个物体出现的位置，或者人物的站姿，那么你就需要使用 ControlNet 模型。但需要注意这个模型和 LoRA 类似，不能脱离 Base 模型使用。</li>
+<li><strong>图生视频模型：</strong> 这种模型输入一段文字指令，AI 会根据你的指令将图片转为视频。</li>
+</ul>
+<p>AI 生图模型需要大量的计算资源，如果你的电脑配置不够，那么即使你下载了模型，也可能无法运行，或者运行起来会很慢，生成一张图片可能要 30 ～ 40 秒。按照前面提到的类型，不同类型的模型对电脑配置的要求也不同。</p>
+<p>对配置影响最大的应该是 Base、Inpainting 还有图生视频模型。目前，市面上没有一个官方统一的 AI 模型运行配置要求，但根据我的经验：</p>
+<ul>
+<li>Base &amp; Inpainting 模型：<ul>
+<li>如果你是 Windows 电脑，显存小于 6G，或者是 M 系列的 MacBook 内存小于 16G，我会推荐你使用 Stable Diffusion v1.5 或者基于此模型微调后的模型。</li>
+<li>如果你的电脑配置比较好，显存大于 8G，或者 M 系列的 MacBook 内存大于 16G，我则会推荐你使用 Stable Diffusion XL 或者基于此模型微调后的模型。</li>
+</ul>
+</li>
+<li>如果你想使用图生视频模型，或者图片生视频模型，那么你的显存最好大于 16G，且最好使用 Nvidia 的显卡。不然基本很难将模型运行起来。</li>
+</ul>
+<p>如果你是初学者，我会推荐你使用 DreamShaper 这个模型，它有基于 SDv1.5 的 Base 模型，也有基于 SDXL 的版本。同时配套也很不错。有 Inpainting 模型，也有 LCM 模型等。而且生成的效果也很不错。</p>
+<h2 id="DreamShaper-系列模型"><a href="#DreamShaper-系列模型" class="headerlink" title="DreamShaper 系列模型"></a>DreamShaper 系列模型</h2><p>如果只推荐一个模型的话，我会推荐 DreamShaper，首先它的成像质量不差，整体质感有点像 Midjourney。</p>
+<p>其次，它的 SD v1.5 版本模型大小也不是很大，甚至比基础模型还要小一点点。</p>
+<p>最后，也是我最喜欢的一点，它的配套模型比较丰富。有 LCM、Inpainting 模型，还有基于 SDXL Turbo 微调的模型。 对于电脑配置较差的朋友，我推荐你们使用 SD v1.5 的模型，即它的 V8.0 版本。</p>
+<h4 id="DreamShaper-XL"><a href="#DreamShaper-XL" class="headerlink" title="DreamShaper XL"></a>DreamShaper XL</h4><p><a target="_blank" rel="noopener" href="https://civitai.com/models/112902/dreamshaper-xl">https://civitai.com/models/112902/dreamshaper-xl</a></p>
+<h2 id="Realistic-风格模型"><a href="#Realistic-风格模型" class="headerlink" title="Realistic 风格模型"></a>Realistic 风格模型</h2><p>如果你主要是以生成人像为主，那么 Realistic 风格模型是一个不错的选择。他们生成的人像质量比较高，且看起来更加真实。以下是两个基于 SD v1.5 微调的模型。</p>
+<p><a target="_blank" rel="noopener" href="https://civitai.com/models/43331/majicmix-realistic">https://civitai.com/models/43331/majicmix-realistic</a></p>
+<p>一般你会看到两种后缀的模型：</p>
+<ul>
+<li><strong>safetensors</strong>：这种模型一般用的是 numpy 格式保存，这就意味着它只保存了张量数据，没有任何代码，加载这类文件会更安全和更快。</li>
+<li><strong>ckpt</strong>：这种文件是序列化过的，这意味着它们可能会包含一些恶意代码，加载这类模型就可能会带来安全风险。</li>
+</ul>
+<p>所以在上述的案例中，我会推荐你下载 safetensors 格式的模型。</p>
+<p>另外，我建议你在搜索模型的时候，需要看看是不是该模型的官方发的，一般我会看模型的下载数，一般下载数越多的模型，越有可能是官方发的。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/20240218-%E7%94%A8diffusers%E6%90%AD%E5%BB%BAstable%20diffusion/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/20240226pytorch%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DreamShaper-%E7%B3%BB%E5%88%97%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">DreamShaper 系列模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DreamShaper-XL"><span class="nav-number">1.0.1.</span> <span class="nav-text">DreamShaper XL</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Realistic-%E9%A3%8E%E6%A0%BC%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">Realistic 风格模型</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">wanghongxing</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wanghongxing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

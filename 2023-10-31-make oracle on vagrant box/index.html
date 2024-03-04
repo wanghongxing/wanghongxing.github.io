@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hongxing.tech","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="make oracle on vagrant box https:&#x2F;&#x2F;geraldonit.com&#x2F;2018&#x2F;06&#x2F;11&#x2F;creating-an-oracle-database-vagrant-box&#x2F; 根据  生成两个vm，使用oraclelinux&#x2F;7 ， 分别是192.168.56.10 192.168.56.11 12345678910111213141516171819202122232">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红星">
+<meta property="og:url" content="https://hongxing.tech/2023-10-31-make%20oracle%20on%20vagrant%20box/index.html">
+<meta property="og:site_name" content="红星">
+<meta property="og:description" content="make oracle on vagrant box https:&#x2F;&#x2F;geraldonit.com&#x2F;2018&#x2F;06&#x2F;11&#x2F;creating-an-oracle-database-vagrant-box&#x2F; 根据  生成两个vm，使用oraclelinux&#x2F;7 ， 分别是192.168.56.10 192.168.56.11 12345678910111213141516171819202122232">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-06T01:48:29.596Z">
+<meta property="article:modified_time" content="2023-11-06T01:48:29.596Z">
+<meta property="article:author" content="wanghongxing">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://hongxing.tech/2023-10-31-make%20oracle%20on%20vagrant%20box/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title> | 红星</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">红星</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2023-10-31-make%20oracle%20on%20vagrant%20box/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-11-06 09:48:29" itemprop="dateCreated datePublished" datetime="2023-11-06T09:48:29+08:00">2023-11-06</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>make oracle on vagrant box</p>
+<p><a target="_blank" rel="noopener" href="https://geraldonit.com/2018/06/11/creating-an-oracle-database-vagrant-box/">https://geraldonit.com/2018/06/11/creating-an-oracle-database-vagrant-box/</a></p>
+<p>根据 </p>
+<p>生成两个vm，使用oraclelinux/7 ， 分别是192.168.56.10 192.168.56.11</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># -*- mode: ruby -*-</span></span><br><span class="line"><span class="comment"># vi: set ft=ruby :</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Vagrantfile API/syntax version. Don&#x27;t touch unless you know what you&#x27;re doing!</span></span><br><span class="line"><span class="attr">VAGRANTFILE_API_VERSION</span> = <span class="string">&quot;2&quot;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Box metadata location and box name</span></span><br><span class="line"><span class="attr">BOX_URL</span> = <span class="string">&quot;https://oracle.github.io/vagrant-projects/boxes&quot;</span></span><br><span class="line"><span class="attr">BOX_NAME</span> = <span class="string">&quot;oraclelinux/7&quot;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># UI object for printing information</span></span><br><span class="line"><span class="attr">ui</span> = <span class="string">Vagrant::UI::Prefixed.new(Vagrant::UI::Colored.new, &quot;vagrant&quot;)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Define constants</span></span><br><span class="line"><span class="attr">Vagrant.configure(VAGRANTFILE_API_VERSION)</span> <span class="string">do |config|</span></span><br><span class="line"><span class="comment">  # Use vagrant-env plugin if available</span></span><br><span class="line">  <span class="attr">if</span> <span class="string">Vagrant.has_plugin?(&quot;vagrant-env&quot;)</span></span><br><span class="line">    <span class="attr">config.env.load(&quot;.env.local&quot;,</span> <span class="string">&quot;.env&quot;) # enable the plugin</span></span><br><span class="line">  <span class="attr">end</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # VM name</span></span><br><span class="line">  <span class="attr">VM_NAME</span> = <span class="string">default_s(&#x27;VM_NAME&#x27;, &#x27;oracle11g-vagrant-whx&#x27;)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # Memory for the VM (in MB, 2048 MB = 2 GB)</span></span><br><span class="line">  <span class="attr">VM_MEMORY</span> = <span class="string">default_i(&#x27;VM_MEMORY&#x27;, 4096)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # VM time zone</span></span><br><span class="line"><span class="comment">  # If not specified, will be set to match host time zone (if possible)</span></span><br><span class="line">  <span class="attr">VM_SYSTEM_TIMEZONE</span> = <span class="string">default_s(&#x27;VM_SYSTEM_TIMEZONE&#x27;, host_tz)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # Listener port</span></span><br><span class="line">  <span class="attr">VM_LISTENER_PORT</span> = <span class="string">default_i(&#x27;VM_LISTENER_PORT&#x27;, 1521)</span></span><br><span class="line">  <span class="attr">VM_LISTENER_HOST_PORT</span> = <span class="string">default_i(&#x27;VM_LISTENER_HOST_PORT&#x27;, 1521)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # Oracle Database password for SYS and SYSTEM accounts</span></span><br><span class="line"><span class="comment">  # If left blank, the password will be generated automatically</span></span><br><span class="line">  <span class="attr">VM_ORACLE_PWD</span> = <span class="string">default_s(&#x27;VM_ORACLE_PWD&#x27;, &#x27;&#x27;)</span></span><br><span class="line"><span class="attr">end</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Convenience methods</span></span><br><span class="line"><span class="attr">def</span> <span class="string">default_s(key, default)</span></span><br><span class="line">  <span class="attr">ENV[key]</span> <span class="string">&amp;&amp; ! ENV[key].empty? ? ENV[key] : default</span></span><br><span class="line"><span class="attr">end</span></span><br><span class="line"></span><br><span class="line"><span class="attr">def</span> <span class="string">default_i(key, default)</span></span><br><span class="line">  <span class="attr">default_s(key,</span> <span class="string">default).to_i</span></span><br><span class="line"><span class="attr">end</span></span><br><span class="line"></span><br><span class="line"><span class="attr">def</span> <span class="string">host_tz</span></span><br><span class="line"><span class="comment">  # get host time zone for setting VM time zone</span></span><br><span class="line"><span class="comment">  # if host time zone isn&#x27;t an integer hour offset from GMT, fall back to UTC</span></span><br><span class="line">  <span class="attr">offset_sec</span> = <span class="string">Time.now.gmt_offset</span></span><br><span class="line">  <span class="attr">if</span> <span class="string">(offset_sec % (60 * 60)) == 0</span></span><br><span class="line">    <span class="attr">offset_hr</span> = <span class="string">((offset_sec / 60) / 60)</span></span><br><span class="line">    <span class="attr">timezone_suffix</span> = <span class="string">offset_hr &gt;= 0 ? &quot;-#&#123;offset_hr.to_s&#125;&quot; : &quot;+#&#123;(-offset_hr).to_s&#125;&quot;</span></span><br><span class="line">    <span class="attr">&#x27;Etc/GMT&#x27;</span> <span class="string">+ timezone_suffix</span></span><br><span class="line">  <span class="attr">else</span></span><br><span class="line">    <span class="attr">&#x27;UTC&#x27;</span></span><br><span class="line">  <span class="attr">end</span></span><br><span class="line"><span class="attr">end</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Vagrant.configure(VAGRANTFILE_API_VERSION)</span> <span class="string">do |config|</span></span><br><span class="line">  <span class="attr">config.vm.box</span> = <span class="string">BOX_NAME</span></span><br><span class="line">  <span class="attr">config.vm.box_url</span> = <span class="string">&quot;#&#123;BOX_URL&#125;/#&#123;BOX_NAME&#125;.json&quot;</span></span><br><span class="line">  <span class="attr">config.vm.define</span> <span class="string">VM_NAME</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # Provider-specific configuration</span></span><br><span class="line">  <span class="attr">config.vm.provider</span> <span class="string">&quot;virtualbox&quot; do |v|</span></span><br><span class="line">    <span class="attr">v.memory</span> = <span class="string">VM_MEMORY</span></span><br><span class="line">    <span class="attr">v.name</span> = <span class="string">VM_NAME</span></span><br><span class="line">  <span class="attr">end</span></span><br><span class="line">  <span class="attr">config.vm.provider</span> :<span class="string">libvirt do |v|</span></span><br><span class="line">    <span class="attr">v.memory</span> = <span class="string">VM_MEMORY</span></span><br><span class="line">  <span class="attr">end</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">config.vm.network</span> :<span class="string">private_network, ip: &quot;192.168.56.10&quot;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # add proxy configuration from host env - optional</span></span><br><span class="line">  <span class="attr">if</span> <span class="string">Vagrant.has_plugin?(&quot;vagrant-proxyconf&quot;)</span></span><br><span class="line">    <span class="attr">ui.info</span> <span class="string">&quot;Getting Proxy Configuration from Host...&quot;</span></span><br><span class="line">    <span class="attr">has_proxy</span> = <span class="string">false</span></span><br><span class="line">    <span class="attr">[&quot;http_proxy&quot;,</span> <span class="string">&quot;HTTP_PROXY&quot;].each do |proxy_var|</span></span><br><span class="line">      <span class="attr">if</span> <span class="string">proxy = ENV[proxy_var]</span></span><br><span class="line">        <span class="attr">ui.info</span> <span class="string">&quot;HTTP proxy: &quot; + proxy</span></span><br><span class="line">        <span class="attr">config.proxy.http</span> = <span class="string">proxy</span></span><br><span class="line">        <span class="attr">has_proxy</span> = <span class="string">true</span></span><br><span class="line">        <span class="attr">break</span></span><br><span class="line">      <span class="attr">end</span></span><br><span class="line">    <span class="attr">end</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">[&quot;https_proxy&quot;,</span> <span class="string">&quot;HTTPS_PROXY&quot;].each do |proxy_var|</span></span><br><span class="line">      <span class="attr">if</span> <span class="string">proxy = ENV[proxy_var]</span></span><br><span class="line">        <span class="attr">ui.info</span> <span class="string">&quot;HTTPS proxy: &quot; + proxy</span></span><br><span class="line">        <span class="attr">config.proxy.https</span> = <span class="string">proxy</span></span><br><span class="line">        <span class="attr">has_proxy</span> = <span class="string">true</span></span><br><span class="line">        <span class="attr">break</span></span><br><span class="line">      <span class="attr">end</span></span><br><span class="line">    <span class="attr">end</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">if</span> <span class="string">has_proxy</span></span><br><span class="line"><span class="comment">      # Only consider no_proxy if we have proxies defined.</span></span><br><span class="line">      <span class="attr">no_proxy</span> = <span class="string">&quot;&quot;</span></span><br><span class="line">      <span class="attr">[&quot;no_proxy&quot;,</span> <span class="string">&quot;NO_PROXY&quot;].each do |proxy_var|</span></span><br><span class="line">        <span class="attr">if</span> <span class="string">ENV[proxy_var]</span></span><br><span class="line">          <span class="attr">no_proxy</span> = <span class="string">ENV[proxy_var]</span></span><br><span class="line">          <span class="attr">ui.info</span> <span class="string">&quot;No proxy: &quot; + no_proxy</span></span><br><span class="line">          <span class="attr">no_proxy</span> <span class="string">+= &quot;,&quot;</span></span><br><span class="line">          <span class="attr">break</span></span><br><span class="line">        <span class="attr">end</span></span><br><span class="line">      <span class="attr">end</span></span><br><span class="line">      <span class="attr">config.proxy.no_proxy</span> = <span class="string">no_proxy + &quot;localhost,127.0.0.1&quot;</span></span><br><span class="line">    <span class="attr">end</span></span><br><span class="line">  <span class="attr">else</span></span><br><span class="line">    <span class="attr">[&quot;http_proxy&quot;,</span> <span class="string">&quot;HTTP_PROXY&quot;, &quot;https_proxy&quot;, &quot;HTTPS_PROXY&quot;].each do |proxy_var|</span></span><br><span class="line">      <span class="attr">if</span> <span class="string">ENV[proxy_var]</span></span><br><span class="line">        <span class="attr">ui.warn</span> <span class="string">&#x27;To enable proxies in your VM, install the vagrant-proxyconf plugin&#x27;</span></span><br><span class="line">        <span class="attr">break</span></span><br><span class="line">      <span class="attr">end</span></span><br><span class="line">    <span class="attr">end</span></span><br><span class="line">  <span class="attr">end</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # VM hostname</span></span><br><span class="line">  <span class="attr">config.vm.hostname</span> = <span class="string">VM_NAME</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # Oracle port forwarding</span></span><br><span class="line">  <span class="attr">config.vm.network</span> <span class="string">&quot;forwarded_port&quot;, guest: VM_LISTENER_PORT, host: VM_LISTENER_HOST_PORT</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # Provision everything on the first run</span></span><br><span class="line">  <span class="attr">config.vm.provision</span> <span class="string">&quot;shell&quot;, path: &quot;scripts/install.sh&quot;, env:</span></span><br><span class="line">    <span class="attr">&#123;</span></span><br><span class="line">       <span class="attr">&quot;SYSTEM_TIMEZONE&quot;</span>     =<span class="string">&gt; VM_SYSTEM_TIMEZONE,</span></span><br><span class="line">       <span class="attr">&quot;LISTENER_PORT&quot;</span>       =<span class="string">&gt; VM_LISTENER_PORT,</span></span><br><span class="line">       <span class="attr">&quot;ORACLE_PWD&quot;</span>          =<span class="string">&gt; VM_ORACLE_PWD</span></span><br><span class="line">    <span class="attr">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">end</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>安装依赖</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum install binutils  compat-libstdc++-33  compat-libstdc++-33.i686  gcc   gcc-c++  glibc  glibc.i686  glibc-devel  glibc-devel.i686  ksh  libgcc   libgcc.i686  libstdc++ libstdc++.i686 libstdc++-devel  libstdc++-devel.i686  libaio  libaio.i686  libaio-devel  libaio-devel.i686  libXext libXext.i686 libXtst libXtst.i686 libX11 libX11.i686  libXau  libXau.i686 libxcb  libxcb.i686   libXi  libXi.i686  make  sysstat  unixODBC unixODBC-devel  zlib-devel  elfutils-libelf-devel -y</span><br><span class="line"></span><br><span class="line">yum install -y xorg-x11-xauth xorg-x11-font-utils xorg-x11-fonts-* xorg-x11-fonts-Type1</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p> 修改/etc/ssh/sshd_config</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X11forwarding yes</span><br><span class="line">X11UseLocalhost no</span><br><span class="line">X11DisplayOffset 10</span><br></pre></td></tr></table></figure>
+
+
+
+<p>退出终端</p>
+<p>生成进入x终端的脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">PORT=$(vagrant ssh-config | grep Port | grep -o <span class="string">&#x27;[0-9]\+&#x27;</span>)</span><br><span class="line"></span><br><span class="line">IDFILE=$(vagrant ssh-config |grep IdentityFile|awk  <span class="string">&#x27;&#123;print $2&#125;&#x27;</span>)</span><br><span class="line">ssh -Y  \</span><br><span class="line">    -o UserKnownHostsFile=/dev/null \</span><br><span class="line">    -o StrictHostKeyChecking=no \</span><br><span class="line">    -o <span class="string">&quot;XAuthLocation=/opt/X11/bin/xauth&quot;</span> \</span><br><span class="line">    -i <span class="variable">$IDFILE</span> \</span><br><span class="line">    vagrant@localhost \</span><br><span class="line">    -p <span class="variable">$PORT</span> \</span><br><span class="line">    <span class="string">&quot;<span class="variable">$@</span>&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>XQuartz中启动terminal，执行命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./whx.sh</span><br><span class="line">echo $DISPLAY</span><br><span class="line"></span><br><span class="line">cd /data/database</span><br><span class="line">./runInstaller</span><br></pre></td></tr></table></figure>
+
+<p>root用户执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/home/vagrant/app/oraInventory/orainstRoot.sh</span><br><span class="line">/home/vagrant/app/vagrant/product/11.2.0/dbhome_1/root.sh</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="master设置："><a href="#master设置：" class="headerlink" title="master设置："></a>master设置：</h3><p>设置sid： whx</p>
+<p>设置密码：zaq1XSW2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">export ORACLE_SID=whx</span><br><span class="line">export ORACLE_BASE=/home/vagrant/app/vagrant</span><br><span class="line">export ORACLE_HOME=/home/vagrant/app/vagrant/product/11.2.0/dbhome_1</span><br><span class="line"></span><br><span class="line">PATH=$PATH:$ORACLE_HOME/bin</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="slaver设置"><a href="#slaver设置" class="headerlink" title="slaver设置"></a>slaver设置</h3><p>设置sid： orcl</p>
+<p>设置密码：zaq1XSW2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">export ORACLE_SID=orcl</span><br><span class="line">export ORACLE_BASE=/home/vagrant/app/vagrant</span><br><span class="line">export ORACLE_HOME=/home/vagrant/app/vagrant/product/11.2.0/dbhome_1</span><br><span class="line"></span><br><span class="line">PATH=$PATH:$ORACLE_HOME/bin </span><br></pre></td></tr></table></figure>
+
+<p>启动oracle</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dbstart  $ORACLE_HOME</span><br></pre></td></tr></table></figure>
+
+<h3 id="下面开始试着主从复制"><a href="#下面开始试着主从复制" class="headerlink" title="下面开始试着主从复制"></a>下面开始试着主从复制</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hooly/p/8178570.html">https://www.cnblogs.com/hooly/p/8178570.html</a></p>
+<p>进入主从，分别执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sqlplus / as sysdba</span><br><span class="line">alter system set aq_tm_processes=2 scope=both;   ---启用对队列消息的时间监视</span><br><span class="line">alter system set global_names=true scope=both;   ---设置全局名称为true</span><br><span class="line">alter system set undo_retention=3600 scope=both;   --设置回滚段时间,默认是900</span><br><span class="line">alter system set streams_pool_size=25M scope=spfile; --sga设置为自动调整情况下不需设置该参数</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>设置主数据库（whx ）为归档mode （以as sysdba身份，可在sqlplus中执行）</strong></p>
+<p>（以as sysdba身份，可在sqlplus中执行）</p>
+<p> 查是否归档,如是归档,请忽略第3点 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; archive log list;</span><br><span class="line"></span><br><span class="line">Database log mode	       No Archive Mode</span><br><span class="line">Automatic archival	       Disabled</span><br><span class="line">Archive destination	       USE_DB_RECOVERY_FILE_DEST</span><br><span class="line">Oldest online log sequence     6</span><br><span class="line">Current log sequence	       8</span><br></pre></td></tr></table></figure>
+
+<p>归档设置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">shutdown immediate;</span><br><span class="line">startup mount;</span><br><span class="line">alter database archivelog;</span><br><span class="line">alter system set LOG_ARCHIVE_DEST_1=&#x27;LOCATION=/home/vagrant/app/archive&#x27;;  ---设置归档目录 （执行此句后，在Windows系统文件夹中看看arc文件夹有没有创建成功，如果没有，则手动创建，在执行此语句）</span><br><span class="line">alter database open;</span><br><span class="line">alter system switch logfile; --相应目录检查是否生成arc文件 （如果提示数据库没开启，则先执行alter database open;）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>主/从数据新建stream管理用户(在主从数据库都执行以下操作)</strong> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sqlplus / as sysdba;</span><br><span class="line">create tablespace tbs_stream datafile &#x27;/home/vagrant/app/vagrant/oradata/whx/tbs_stream01.dbf&#x27; size 2000m autoextend on maxsize unlimited segment space management auto; ---创建主环境的Stream专用表空间</span><br><span class="line">execute dbms_logmnr_d.set_tablespace(&#x27;tbs_stream&#x27;); --将logminer的数据字典从system表空间转移到新建的表空间，防止撑满system表空间</span><br><span class="line">create user strmadmin identified by strmadmin default tablespace tbs_stream temporary tablespace temp;  --创建用户</span><br><span class="line">grant dba to strmadmin;  --直接给dba权限.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sqlplus / as sysdba;</span><br><span class="line">create tablespace tbs_stream datafile &#x27;/home/vagrant/app/vagrant/oradata/orcl/tbs_stream01.dbf&#x27; size 2000m autoextend on maxsize unlimited segment space management auto; ---创建主环境的Stream专用表空间</span><br><span class="line">execute dbms_logmnr_d.set_tablespace(&#x27;tbs_stream&#x27;); --将logminer的数据字典从system表空间转移到新建的表空间，防止撑满system表空间</span><br><span class="line">create user strmadmin identified by strmadmin default tablespace tbs_stream temporary tablespace temp;  --创建用户</span><br><span class="line">grant dba to strmadmin;  --直接给dba权限.</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>主数据库新建连接从数据库的link</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">create public database link orcl connect to strmadmin IDENTIFIED BY strmadmin</span><br><span class="line">using &#x27;(DESCRIPTION =</span><br><span class="line">(ADDRESS_LIST =</span><br><span class="line">(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.56.11)(PORT = 1521))</span><br><span class="line">)</span><br><span class="line">(CONNECT_DATA =</span><br><span class="line">(SID= orcl)</span><br><span class="line">)</span><br><span class="line">)&#x27;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>从数据库新建连接主数据库的link</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">create public database link whx connect to strmadmin IDENTIFIED BY strmadmin</span><br><span class="line">using &#x27;(DESCRIPTION =</span><br><span class="line">(ADDRESS_LIST =</span><br><span class="line">(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.56.10)(PORT = 1521))</span><br><span class="line">)</span><br><span class="line">(CONNECT_DATA =</span><br><span class="line">(SID = whx)</span><br><span class="line">)</span><br><span class="line">)&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>select sysdate from dual@whx</p>
+<p><strong>主数据库流队列创建 （可在plsql中的SQL中执行，登录名应为strmadmin）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">connect strmadmin/strmadmin  </span><br><span class="line">begin</span><br><span class="line">dbms_streams_adm.set_up_queue(queue_table =&gt; &#x27;whx_queue_table&#x27;,queue_name =&gt; &#x27;whx_queue&#x27;);</span><br><span class="line">end;</span><br><span class="line">/</span><br></pre></td></tr></table></figure>
+
+<p>提示：PL/SQL procedure successfully completed.</p>
+<p><strong>从数据库流队列创建</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">connect strmadmin/strmadmin  --以strmadmin身份，登录从数据库。</span><br><span class="line">begin</span><br><span class="line">dbms_streams_adm.set_up_queue(queue_table =&gt; &#x27;orcl_queue_table&#x27;,queue_name =&gt; &#x27;orcl_queue&#x27;);</span><br><span class="line">end;</span><br><span class="line">/</span><br></pre></td></tr></table></figure>
+
+<p>提示：PL/SQL procedure successfully completed.</p>
+<p><strong>主数据库创建捕获进程</strong> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">connect strmadmin/strmadmin</span><br><span class="line"></span><br><span class="line">begin</span><br><span class="line">dbms_streams_adm.add_schema_rules(</span><br><span class="line">schema_name =&gt; &#x27;strmadmin&#x27;,</span><br><span class="line">streams_type =&gt; &#x27;capture&#x27;,</span><br><span class="line">streams_name =&gt; &#x27;capture_whx&#x27;,</span><br><span class="line">queue_name =&gt; &#x27;strmadmin.whx_queue&#x27;,</span><br><span class="line">include_dml =&gt; true,</span><br><span class="line">include_ddl =&gt; true,</span><br><span class="line">include_tagged_lcr =&gt; false,</span><br><span class="line">source_database =&gt; null,</span><br><span class="line">inclusion_rule =&gt; true);</span><br><span class="line">end;</span><br><span class="line">/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>提示：PL/SQL procedure successfully completed.</p>
+<p><strong>从数据库实例化strmadmin用户  （这两个路径须一致）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">exp strmadmin/strmadmin@whx file=&#x27;/home/vagrant/crm.dmp&#x27; object_consistent=y rows=y</span><br><span class="line">exp strmadmin/strmadmin@orcl file=&#x27;/home/vagrant/crm.dmp&#x27; object_consistent=y rows=y</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这个执行失败</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EXP-00056: ORACLE error 12154 encountered</span><br><span class="line">ORA-12154: TNS:could not resolve the connect identifier specified</span><br><span class="line">EXP-00000: Export terminated unsuccessfully</span><br></pre></td></tr></table></figure>
+
+<p>修改 /home/vagrant/app/vagrant/product/11.2.0/dbhome_1/network/admin/tnsnames.ora增加 WHX部分内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ORCL =</span><br><span class="line">  (DESCRIPTION =</span><br><span class="line">    (ADDRESS = (PROTOCOL = TCP)(HOST = oracle11g-vagrant-slave)(PORT = 1521))</span><br><span class="line">    (CONNECT_DATA =</span><br><span class="line">      (SERVER = DEDICATED)</span><br><span class="line">      (SERVICE_NAME = orcl)</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">WHX =</span><br><span class="line">  (DESCRIPTION =</span><br><span class="line">    (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.56.10)(PORT = 1521))</span><br><span class="line">    (CONNECT_DATA =</span><br><span class="line">      (SID = whx)</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后导出正常。</p>
+<p>在从数据库新建strmadmin </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">imp strmadmin/strmadmin@orcl file=&#x27;/home/vagrant/crm.dmp&#x27; ignore=y commit=y streams_instantiation=y full=y</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Import: Release 11.2.0.1.0 - Production on Tue Oct 31 23:08:12 2023</span><br><span class="line"></span><br><span class="line">Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Connected to: Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production</span><br><span class="line">With the Partitioning, OLAP, Data Mining and Real Application Testing options</span><br><span class="line"></span><br><span class="line">Export file created by EXPORT:V11.02.00 via conventional path</span><br><span class="line">import done in US7ASCII character set and AL16UTF16 NCHAR character set</span><br><span class="line">import server uses AL32UTF8 character set (possible charset conversion)</span><br><span class="line">. importing STRMADMIN&#x27;s objects into STRMADMIN</span><br><span class="line">. . importing table        &quot;AQ$_WHX_QUEUE_TABLE_C&quot;          0 rows imported</span><br><span class="line">. . importing table        &quot;AQ$_WHX_QUEUE_TABLE_G&quot;          0 rows imported</span><br><span class="line">. . importing table        &quot;AQ$_WHX_QUEUE_TABLE_H&quot;</span><br><span class="line">Note: table contains ROWID column, values may be obsolete          0 rows imported</span><br><span class="line">. . importing table        &quot;AQ$_WHX_QUEUE_TABLE_I&quot;</span><br><span class="line">Note: table contains ROWID column, values may be obsolete          0 rows imported</span><br><span class="line">. . importing table        &quot;AQ$_WHX_QUEUE_TABLE_L&quot;          0 rows imported</span><br><span class="line">. . importing table        &quot;AQ$_WHX_QUEUE_TABLE_S&quot;          1 rows imported</span><br><span class="line">. . importing table        &quot;AQ$_WHX_QUEUE_TABLE_T&quot;          0 rows imported</span><br><span class="line">. . importing table              &quot;WHX_QUEUE_TABLE&quot;          0 rows imported</span><br><span class="line">Import terminated successfully without warnings.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>主数据库创建传播进程</strong> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">connect strmadmin/strmadmin</span><br><span class="line">begin</span><br><span class="line">dbms_streams_adm.add_schema_propagation_rules(</span><br><span class="line">schema_name =&gt; &#x27;strmadmin&#x27;,</span><br><span class="line">streams_name =&gt; &#x27;whx_to_orcl&#x27;,</span><br><span class="line">source_queue_name =&gt; &#x27;strmadmin.whx_queue&#x27;,</span><br><span class="line">destination_queue_name =&gt; &#x27;strmadmin.orcl_queue@orcl&#x27;,</span><br><span class="line">include_dml =&gt; true,</span><br><span class="line">include_ddl =&gt; true,</span><br><span class="line">include_tagged_lcr =&gt; false,</span><br><span class="line">source_database =&gt; &#x27;whx&#x27;,</span><br><span class="line">inclusion_rule =&gt; true);</span><br><span class="line">end;</span><br><span class="line">/</span><br></pre></td></tr></table></figure>
+
+
+
+<p>注意：此段语句执行可能会报错，如果报错，不用管，继续执行后面的。</p>
+<p>修改propagation休眠时间为0，表示实时传播LCR，latency以秒为单位 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">begin</span><br><span class="line">dbms_aqadm.alter_propagation_schedule(</span><br><span class="line">queue_name =&gt; &#x27;whx_queue&#x27;,</span><br><span class="line">destination =&gt; &#x27;orcl&#x27;,</span><br><span class="line">latency =&gt; 0);</span><br><span class="line">end;</span><br><span class="line">/</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>从数据创建应用进程</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">connect strmadmin/strmadmin</span><br><span class="line">begin</span><br><span class="line">dbms_streams_adm.add_schema_rules(</span><br><span class="line">schema_name =&gt; &#x27;strmadmin&#x27;,</span><br><span class="line">streams_type =&gt; &#x27;apply&#x27;,</span><br><span class="line">streams_name =&gt; &#x27;apply_orcl&#x27;,</span><br><span class="line">queue_name =&gt; &#x27;strmadmin.orcl_queue&#x27;,</span><br><span class="line">include_dml =&gt; true,</span><br><span class="line">include_ddl =&gt; true,</span><br><span class="line">include_tagged_lcr =&gt; false,</span><br><span class="line">source_database =&gt; &#x27;whx&#x27;,</span><br><span class="line">inclusion_rule =&gt; true);</span><br><span class="line">end;</span><br><span class="line">/</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>启动Stream</strong></p>
+<p>从数据库启动应用进程 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">connect strmadmin/strmadmin</span><br><span class="line">begin</span><br><span class="line">dbms_apply_adm.start_apply(</span><br><span class="line">apply_name =&gt; &#x27;apply_orcl&#x27;);</span><br><span class="line">end;</span><br><span class="line">/</span><br></pre></td></tr></table></figure>
+
+<p>主数据库启动捕获进程 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">begin</span><br><span class="line">dbms_capture_adm.start_capture(</span><br><span class="line">capture_name =&gt; &#x27;capture_whx&#x27;);</span><br><span class="line">end;</span><br><span class="line">/</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>现在就可以进行测试了，在whx用户中作何一个测试表新增数据,删除数据,增加表,修改表结构,进行同步测试</strong></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023-1020-oracle%E5%AD%A6%E4%B9%A0/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023-1110-kettle%E5%AD%A6%E4%B9%A0/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#master%E8%AE%BE%E7%BD%AE%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">master设置：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#slaver%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">slaver设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E9%9D%A2%E5%BC%80%E5%A7%8B%E8%AF%95%E7%9D%80%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">下面开始试着主从复制</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">wanghongxing</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wanghongxing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

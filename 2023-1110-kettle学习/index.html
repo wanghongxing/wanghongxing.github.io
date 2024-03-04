@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hongxing.tech","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="20231110-kettle学习 kettle用repositories 新建一个数据库的仓库，记着要把启动命令中增加  “-Dfile.encoding&#x3D;UTF-8”,否则打开文件的时候会出现 Invalid byte 1 of 1-byte UTF-8 sequence.  然后新建的转换和作业就保存到数据库中 linux服务器操作 把pdi解压缩后复制到&#x2F;usr&#x2F;local&#x2F;data-in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红星">
+<meta property="og:url" content="https://hongxing.tech/2023-1110-kettle%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="红星">
+<meta property="og:description" content="20231110-kettle学习 kettle用repositories 新建一个数据库的仓库，记着要把启动命令中增加  “-Dfile.encoding&#x3D;UTF-8”,否则打开文件的时候会出现 Invalid byte 1 of 1-byte UTF-8 sequence.  然后新建的转换和作业就保存到数据库中 linux服务器操作 把pdi解压缩后复制到&#x2F;usr&#x2F;local&#x2F;data-in">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-10T06:09:00.414Z">
+<meta property="article:modified_time" content="2023-11-14T01:24:28.965Z">
+<meta property="article:author" content="wanghongxing">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://hongxing.tech/2023-1110-kettle%E5%AD%A6%E4%B9%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title> | 红星</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">红星</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2023-1110-kettle%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-11-10 14:09:00" itemprop="dateCreated datePublished" datetime="2023-11-10T14:09:00+08:00">2023-11-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-11-14 09:24:28" itemprop="dateModified" datetime="2023-11-14T09:24:28+08:00">2023-11-14</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>20231110-kettle学习</p>
+<p>kettle用repositories</p>
+<p>新建一个数据库的仓库，记着要把启动命令中增加  “-Dfile.encoding=UTF-8”,否则打开文件的时候会出现 Invalid byte 1 of 1-byte UTF-8 sequence.</p>
+<p> 然后新建的转换和作业就保存到数据库中</p>
+<p>linux服务器操作</p>
+<p>把pdi解压缩后复制到<code>/usr/local/data-integration</code> 目录</p>
+<p>设置环境变量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export KETTLE_HOME=/usr/local/data-integration</span><br></pre></td></tr></table></figure>
+
+<p>把windows下做好的 repositories.xml 文件复制到<code>/usr/local/data-integration/.kettle</code></p>
+<p> 目录下</p>
+<p>查看repository:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./kitchen.sh -listrep</span><br><span class="line"> List of repositories:</span><br><span class="line">#1 : birepo [bi-databases]  id=KettleDatabaseRepository</span><br><span class="line"> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>查看所有的job</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./kitchen.sh -rep:birepo  -user:admin -pass:admin   -listjobs</span><br><span class="line">2023/11/10 17:40:59 - Kitchen - Start of run.</span><br><span class="line">2023/11/10 17:40:59 - RepositoriesMeta - Reading repositories XML file: /usr/local/data-integration/.kettle/repositories.xml</span><br><span class="line">zgcw</span><br></pre></td></tr></table></figure>
+
+
+
+<p>查看所有的trans</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./pan.sh -rep:birepo  -user:admin -pass:admin   -listtrans</span><br><span class="line">2023/11/10 17:43:09 - Pan - 开始运行.</span><br><span class="line">2023/11/10 17:43:09 - RepositoriesMeta - Reading repositories XML file: /usr/local/data-integration/.kettle/repositories.xml</span><br><span class="line">car_transfer_info</span><br><span class="line">market</span><br></pre></td></tr></table></figure>
+
+<p>执行转换：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ ./pan.sh -rep:birepo  -user:admin -pass:admin   -trans:market</span><br><span class="line">2023/11/10 17:45:35 - Pan - 开始运行.</span><br><span class="line">2023/11/10 17:45:35 - RepositoriesMeta - Reading repositories XML file: /usr/local/data-integration/.kettle/repositories.xml</span><br><span class="line">2023/11/10 17:45:36 - market - 为了转换解除补丁开始  [market]</span><br><span class="line">2023/11/10 17:45:36 - read_from_market.0 - Finished reading query, closing connection</span><br><span class="line">2023/11/10 17:45:36 - read_from_market.0 - 完成处理 (I=443, O=0, R=0, W=443, U=0, E=0)</span><br><span class="line">2023/11/10 17:45:37 - write_to_market.0 - 完成处理 (I=443, O=0, R=443, W=443, U=0, E=0)</span><br><span class="line">2023/11/10 17:45:37 - Pan - 完成!</span><br><span class="line">2023/11/10 17:45:37 - Pan - 开始=2023/11/10 17:45:36.601, 停止=2023/11/10 17:45:37.081</span><br><span class="line">2023/11/10 17:45:37 - Pan - 0 秒后处理结束.</span><br><span class="line">2023/11/10 17:45:37 - market -</span><br><span class="line">2023/11/10 17:45:37 - market - 进程 read_from_market.0 成功结束, 处理了 443 行. ( - 行/秒)</span><br><span class="line">2023/11/10 17:45:37 - market - 进程 write_to_market.0 成功结束, 处理了 443 行. ( - 行/秒)</span><br></pre></td></tr></table></figure>
+
+<p>执行转换</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ ./pan.sh -rep:birepo  -user:admin -pass:admin   -trans:car_transfer_info</span><br><span class="line">2023/11/10 17:46:18 - Pan - 开始运行.</span><br><span class="line">2023/11/10 17:46:18 - RepositoriesMeta - Reading repositories XML file: /usr/local/data-integration/.kettle/repositories.xml</span><br><span class="line">2023/11/10 17:46:18 - car_transfer_info - 为了转换解除补丁开始  [car_transfer_info]</span><br><span class="line">2023/11/10 17:46:19 - get_lastast_time_of_car_transfer.0 - Finished reading query, closing connection</span><br><span class="line">2023/11/10 17:46:19 - get_lastast_time_of_car_transfer.0 - 完成处理 (I=1, O=0, R=0, W=1, U=0, E=0)</span><br><span class="line">2023/11/10 17:46:19 - read_modifed_record.0 - Finished reading query, closing connection</span><br><span class="line">2023/11/10 17:46:19 - read_modifed_record.0 - 完成处理 (I=17, O=0, R=1, W=17, U=0, E=0)</span><br><span class="line">2023/11/10 17:46:19 - update_car_transfer_info.0 - 完成处理 (I=17, O=15, R=17, W=17, U=2, E=0)</span><br><span class="line">2023/11/10 17:46:19 - Pan - 完成!</span><br><span class="line">2023/11/10 17:46:19 - Pan - 开始=2023/11/10 17:46:18.994, 停止=2023/11/10 17:46:19.542</span><br><span class="line">2023/11/10 17:46:19 - Pan - 0 秒后处理结束.</span><br><span class="line">2023/11/10 17:46:19 - car_transfer_info -</span><br><span class="line">2023/11/10 17:46:19 - car_transfer_info - 进程 get_lastast_time_of_car_transfer.0 成功结束, 处理了 1 行. ( - 行/秒)</span><br><span class="line">2023/11/10 17:46:19 - car_transfer_info - 进程 read_modifed_record.0 成功结束, 处理了 17 行. ( - 行/秒)</span><br><span class="line">2023/11/10 17:46:19 - car_transfer_info - 进程 update_car_transfer_info.0 成功结束, 处理了 17 行. ( - 行/秒)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>执行job</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">$ ./kitchen.sh -rep:birepo  -user:admin -pass:admin   -job:zgcw</span><br><span class="line">2023/11/10 17:54:09 - Kitchen - Start of run.</span><br><span class="line">2023/11/10 17:54:09 - RepositoriesMeta - Reading repositories XML file: /usr/local/data-integration/.kettle/repositories.xml</span><br><span class="line">2023/11/10 17:54:10 - zgcw - 开始执行任务</span><br><span class="line">2023/11/10 17:54:11 - zgcw - 开始项[market]</span><br><span class="line">2023/11/10 17:54:11 - market - Using run configuration [Pentaho <span class="built_in">local</span>]</span><br><span class="line">2023/11/10 17:54:11 - market - 为了转换解除补丁开始  [market]</span><br><span class="line">2023/11/10 17:54:11 - read_from_market.0 - Finished reading query, closing connection</span><br><span class="line">2023/11/10 17:54:11 - read_from_market.0 - 完成处理 (I=443, O=0, R=0, W=443, U=0, E=0)</span><br><span class="line">2023/11/10 17:54:11 - write_to_market.0 - 完成处理 (I=443, O=0, R=443, W=443, U=0, E=0)</span><br><span class="line">2023/11/10 17:54:11 - zgcw - 开始项[car_transfer_info]</span><br><span class="line">2023/11/10 17:54:11 - car_transfer_info - Using run configuration [Pentaho <span class="built_in">local</span>]</span><br><span class="line">2023/11/10 17:54:11 - car_transfer_info - 为了转换解除补丁开始  [car_transfer_info]</span><br><span class="line">2023/11/10 17:54:11 - get_lastast_time_of_car_transfer.0 - Finished reading query, closing connection</span><br><span class="line">2023/11/10 17:54:11 - get_lastast_time_of_car_transfer.0 - 完成处理 (I=1, O=0, R=0, W=1, U=0, E=0)</span><br><span class="line">2023/11/10 17:54:12 - read_modifed_record.0 - Finished reading query, closing connection</span><br><span class="line">2023/11/10 17:54:12 - read_modifed_record.0 - 完成处理 (I=10, O=0, R=1, W=10, U=0, E=0)</span><br><span class="line">2023/11/10 17:54:12 - update_car_transfer_info.0 - 完成处理 (I=10, O=9, R=10, W=10, U=1, E=0)</span><br><span class="line">2023/11/10 17:54:12 - zgcw - 开始项[成功]</span><br><span class="line">2023/11/10 17:54:12 - zgcw - 完成作业项[成功] (结果=[<span class="literal">true</span>])</span><br><span class="line">2023/11/10 17:54:12 - zgcw - 完成作业项[car_transfer_info] (结果=[<span class="literal">true</span>])</span><br><span class="line">2023/11/10 17:54:12 - zgcw - 完成作业项[market] (结果=[<span class="literal">true</span>])</span><br><span class="line">2023/11/10 17:54:12 - zgcw - 任务执行完毕</span><br><span class="line">2023/11/10 17:54:12 - Kitchen - Finished!</span><br><span class="line">2023/11/10 17:54:12 - Kitchen - Start=2023/11/10 17:54:10.967, Stop=2023/11/10 17:54:12.271</span><br><span class="line">2023/11/10 17:54:12 - Kitchen - Processing ended after 1 seconds.</span><br></pre></td></tr></table></figure>
+
+<h3 id="做第一个市场每日交易统计"><a href="#做第一个市场每日交易统计" class="headerlink" title="做第一个市场每日交易统计"></a>做第一个市场每日交易统计</h3><p>新建表 transfer_daily_report</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `transfer_daily_report` (</span><br><span class="line">  `market_id` int(10) DEFAULT NULL COMMENT &#x27;市场编号&#x27;,</span><br><span class="line">  `day` DATE  DEFAULT NULL COMMENT &#x27;天&#x27;,</span><br><span class="line">  `vehicle_type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT &#x27;车辆类型&#x27;,</span><br><span class="line">  `amount` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT &#x27;金额&#x27;,</span><br><span class="line">  `cnt` int DEFAULT NULL COMMENT &#x27;数量&#x27;,</span><br><span class="line">  `market` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT &#x27;市场名称&#x27;,</span><br><span class="line">  `province` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT &#x27;省&#x27;,</span><br><span class="line">  KEY `p` (`market_id`,`day`,`vehicle_type`)</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT=&#x27;日统计（每个市场、每天、分类型统计）&#x27;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="新建重构作业流程"><a href="#新建重构作业流程" class="headerlink" title="新建重构作业流程"></a>新建重构作业流程</h4><p>第一步先清库,新建执行sql的任务</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span>  <span class="keyword">from</span> transfer_daily_report;</span><br></pre></td></tr></table></figure>
+
+<p>新建一个获取全部交易执行的语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT date(  handle_time) as day,</span><br><span class="line"> SUM(vehicle_price) as amount , count(*) as cnt,</span><br><span class="line"> i.market_id,m.name as market, m.province_name as province,</span><br><span class="line"> i.vehicle_type</span><br><span class="line">FROM zg_vehicle_transfer_info i inner join market m on m.id = i.market_id </span><br><span class="line"> where i.handle_time is not null </span><br><span class="line">GROUP BY i.market_id,day ,i.vehicle_type;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>新增一个生成车辆分类的脚本</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Script here</span></span><br><span class="line"><span class="keyword">var</span> vehicle_category= <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;客车&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;客车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;轿车&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;客车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;小型汽&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;客车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;小型轿&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;客车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;面包车&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;客车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;小型越野&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;客车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;货车&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;货车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;载货&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;货车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;重型&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;货车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;货运&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;货车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;摩托车&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;摩托车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;二轮&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;摩托车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>最后添加一个表输出的节点。</p>
+<h4 id="新建日更新的作业"><a href="#新建日更新的作业" class="headerlink" title="新建日更新的作业"></a>新建日更新的作业</h4><p>新增一个获取最近10天交易的sql</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="type">date</span>(handle_time) <span class="keyword">as</span> <span class="keyword">day</span>,</span><br><span class="line"> <span class="built_in">SUM</span>(vehicle_price) <span class="keyword">as</span> amount , <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">as</span> cnt,</span><br><span class="line"> i.market_id,m.name <span class="keyword">as</span> market, m.province_name <span class="keyword">as</span> province,</span><br><span class="line"> i.vehicle_type</span><br><span class="line"><span class="keyword">FROM</span> zg_vehicle_transfer_info i <span class="keyword">inner</span> <span class="keyword">join</span> market m <span class="keyword">on</span> m.id <span class="operator">=</span> i.market_id </span><br><span class="line"> <span class="keyword">where</span>  i.handle_time <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">and</span>  i.handle_time <span class="operator">&gt;</span> date_sub( now(),<span class="type">interval</span> <span class="number">10</span> <span class="keyword">day</span>)</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> i.market_id,<span class="keyword">day</span> ,i.vehicle_type;</span><br></pre></td></tr></table></figure>
+
+<p>添加生成车辆类别的脚本（同上）</p>
+<p>最后增加一个插入或者更新表的节点</p>
+<p>这里要根据市场、日期、车辆类型来更新。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023-10-31-make%20oracle%20on%20vagrant%20box/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023-1219-%E5%BC%80%E6%BA%90oss/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%9A%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%B8%82%E5%9C%BA%E6%AF%8F%E6%97%A5%E4%BA%A4%E6%98%93%E7%BB%9F%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">做第一个市场每日交易统计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E9%87%8D%E6%9E%84%E4%BD%9C%E4%B8%9A%E6%B5%81%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">新建重构作业流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E6%97%A5%E6%9B%B4%E6%96%B0%E7%9A%84%E4%BD%9C%E4%B8%9A"><span class="nav-number">1.2.</span> <span class="nav-text">新建日更新的作业</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">wanghongxing</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wanghongxing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2020-firewall%20%E9%98%B2%E7%81%AB%E5%A2%99%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240204-apple%20silicon%20install%20stable%20diffusion%20webui%E9%80%9F%E5%BA%A6%E6%85%A2%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020-firewall%20%E9%98%B2%E7%81%AB%E5%A2%99%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">firewall 防火墙常用命令</a>
+            <a href="/20240204-apple%20silicon%20install%20stable%20diffusion%20webui%E9%80%9F%E5%BA%A6%E6%85%A2%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="post-title-link" itemprop="url">Untitled</a>
         </h2>
 
         <div class="post-meta">
@@ -184,14 +184,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-03-30 11:20:34" itemprop="dateCreated datePublished" datetime="2019-03-30T11:20:34+08:00">2019-03-30</time>
+              <time title="Created: 2024-02-04 22:09:07" itemprop="dateCreated datePublished" datetime="2024-02-04T22:09:07+08:00">2024-02-04</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-03 23:18:28" itemprop="dateModified" datetime="2023-01-03T23:18:28+08:00">2023-01-03</time>
+                <time title="Modified: 2024-02-07 11:50:56" itemprop="dateModified" datetime="2024-02-07T11:50:56+08:00">2024-02-07</time>
               </span>
 
           
@@ -205,42 +205,400 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>firewall</p>
-<p>配置firewalld</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">firewall-cmd --version  # 查看版本</span><br><span class="line">firewall-cmd --help     # 查看帮助</span><br><span class="line"></span><br><span class="line"># 查看设置：</span><br><span class="line">firewall-cmd --state  # 显示状态</span><br><span class="line">firewall-cmd --get-active-zones  # 查看区域信息</span><br><span class="line">firewall-cmd --get-zone-of-interface=eth0  # 查看指定接口所属区域</span><br><span class="line">firewall-cmd --panic-on  # 拒绝所有包</span><br><span class="line">firewall-cmd --panic-off  # 取消拒绝状态</span><br><span class="line">firewall-cmd --query-panic  # 查看是否拒绝</span><br><span class="line"></span><br><span class="line">firewall-cmd --reload # 更新防火墙规则</span><br><span class="line">firewall-cmd --complete-reload</span><br><span class="line"># 两者的区别就是第一个无需断开连接，就是firewalld特性之一动态添加规则，第二个需要断开连接，类似重启服务</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 将接口添加到区域，默认接口都在public</span><br><span class="line">firewall-cmd --zone=public --add-interface=eth0</span><br><span class="line"># 永久生效再加上 --permanent 然后reload防火墙</span><br><span class="line"> </span><br><span class="line"># 设置默认接口区域，立即生效无需重启</span><br><span class="line">firewall-cmd --set-default-zone=public</span><br><span class="line"></span><br><span class="line"># 查看所有打开的端口：</span><br><span class="line">firewall-cmd --zone=dmz --list-ports</span><br><span class="line"></span><br><span class="line"># 加入一个端口到区域：</span><br><span class="line">firewall-cmd --zone=dmz --add-port=8080/tcp</span><br><span class="line"># 若要永久生效方法同上</span><br><span class="line"> </span><br><span class="line"># 打开一个服务，类似于将端口可视化，服务需要在配置文件中添加，/etc/firewalld 目录下有services文件夹，这个不详细说了，详情参考文档</span><br><span class="line">firewall-cmd --zone=work --add-service=smtp</span><br><span class="line"> </span><br><span class="line"># 移除服务</span><br><span class="line">firewall-cmd --zone=work --remove-service=smtp</span><br><span class="line"></span><br><span class="line"># 显示支持的区域列表</span><br><span class="line">firewall-cmd --get-zones</span><br><span class="line"></span><br><span class="line"># 设置为家庭区域</span><br><span class="line">firewall-cmd --set-default-zone=home</span><br><span class="line"></span><br><span class="line"># 查看当前区域</span><br><span class="line">firewall-cmd --get-active-zones</span><br><span class="line"></span><br><span class="line"># 设置当前区域的接口</span><br><span class="line">firewall-cmd --get-zone-of-interface=enp03s</span><br><span class="line"></span><br><span class="line"># 显示所有公共区域（public）</span><br><span class="line">firewall-cmd --zone=public --list-all</span><br><span class="line"></span><br><span class="line"># 临时修改网络接口（enp0s3）为内部区域（internal）</span><br><span class="line">firewall-cmd --zone=internal --change-interface=enp03s</span><br><span class="line"></span><br><span class="line"># 永久修改网络接口enp03s为内部区域（internal）</span><br><span class="line">firewall-cmd --permanent --zone=internal --change-interface=enp03s</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <p>apple silicon install stable diffusion webui 后运行速度特别慢，参照 <a target="_blank" rel="noopener" href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/7453">https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/7453</a></p>
+<p>下载新的webui-user.sh文件，其实就是增加了三行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export COMMANDLINE_ARGS=&quot;--skip-torch-cuda-test --upcast-sampling --opt-sub-quad-attention --use-cpu interrogate&quot;</span><br><span class="line">venv_dir=&quot;venv-torch-nightly&quot;</span><br><span class="line">export TORCH_COMMAND=&quot;pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后重新执行webui.sh 后系统速度暴增。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240204-stable%20diffusion%20webui%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20240204-stable%20diffusion%20webui%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-02-04 22:09:07" itemprop="dateCreated datePublished" datetime="2024-02-04T22:09:07+08:00">2024-02-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-02-07 11:54:35" itemprop="dateModified" datetime="2024-02-07T11:54:35+08:00">2024-02-07</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>参考 <a target="_blank" rel="noopener" href="https://ivonblog.com/posts/stable-diffusion-webui-manuals/prompts/general-prompt-guide/">Ivon的部落格</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">an asian girl on the beach</span><br></pre></td></tr></table></figure>
+
+<img src="../images/sd/20240204001.png" alt="20240204001" style="zoom:50%;" />
+
+<p>改用新的提示词</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1girl, asian, beach, ocean</span><br></pre></td></tr></table></figure>
+
+<p>然后将batch count改为4</p>
+<img src="../images/sd/20240204002.png" alt="20240204002" style="zoom:50%;" />
 
 
 
-<p>服务管理</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># 显示服务列表  </span><br><span class="line">Amanda, FTP, Samba和TFTP等最重要的服务已经被FirewallD提供相应的服务，可以使用如下命令查看：</span><br><span class="line"></span><br><span class="line">firewall-cmd --get-services</span><br><span class="line"></span><br><span class="line"># 允许SSH服务通过</span><br><span class="line">firewall-cmd --new-service=ssh</span><br><span class="line"></span><br><span class="line"># 禁止SSH服务通过</span><br><span class="line">firewall-cmd --delete-service=ssh</span><br><span class="line"></span><br><span class="line"># 打开TCP的8080端口</span><br><span class="line">firewall-cmd --enable ports=8080/tcp</span><br><span class="line"></span><br><span class="line"># 临时允许Samba服务通过600秒</span><br><span class="line">firewall-cmd --enable service=samba --timeout=600</span><br><span class="line"></span><br><span class="line"># 显示当前服务</span><br><span class="line">firewall-cmd --list-services</span><br><span class="line"></span><br><span class="line"># 添加HTTP服务到内部区域（internal）</span><br><span class="line">firewall-cmd --permanent --zone=internal --add-service=http</span><br><span class="line">firewall-cmd --reload     # 在不改变状态的条件下重新加载防火墙</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>再算一次，但是结果变了？没错，即使提示词相近，AI绘图每次生图结果都是随机的。要维持上一次的结果并微调，你得保留每次算图的种子码(Seed，SD WebUI界面右下角，亦会写在文件名上)。</p>
+<p>这时候注意一下右下角的内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1girl, asian, beach, ocean</span><br><span class="line">Steps: 20, Sampler: LMS, CFG scale: 7, Seed: 1655102876, Size: 512x560, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</span><br></pre></td></tr></table></figure>
+
+<img src="../images/sd/00013-1655102876.png" alt="00013-1655102876" style="zoom:50%;" />
+
+<p>新测试,在seed 处填入：1655102876</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1girl, asian, blue eyes, short hair, straw hat, standing, blue bikini, beach, ocean, orange sky</span><br><span class="line"></span><br><span class="line">Steps: 20, Sampler: LMS, CFG scale: 7, Seed: 1655102876, Size: 512x560, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<img src="../images/sd/00014-1655102876.png" alt="00014-1655102876" style="zoom:50%;" />
+
+<p>要改变风格，可以在提示词加入「风格」的提示词。这方面的提示词有：相片(photoshop)、3D建模(3d model)、装饰艺术(art deco)、石像(stone sculpture)等风格</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a stone sculpture of 1girl, asian, blue eyes, beach, ocean</span><br><span class="line">Steps: 20, Sampler: DPM++ 2M SDE, CFG scale: 7, Seed: 1822157101, Size: 512x512,</span><br><span class="line">Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</span><br><span class="line"></span><br><span class="line">Time taken: 14.5 sec.</span><br></pre></td></tr></table></figure>
+
+<img src="../images/sd/00019-1822157101.png" alt="00019-1822157101" style="zoom:50%;" />
+
+<p>风格是很难界定的东西呢，一般来说我们会图片像哪个艺术家的风格对吧？那么不如直接「召唤」他们吧！提示词可以包含某位画家的名字，AI会尝试模仿其风格。例如加上「慕夏的作品」，并加入「大师级作品」的风格提示词：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">; 参考翻译：慕夏的作品，大师级作品，一个女孩，亚洲人，蓝眼睛，沙滩，海洋</span></span><br><span class="line">artwork by Alfons Maria Mucha, masterpiece, <span class="number">1</span>girl, asian, blue eyes, beach, ocean</span><br></pre></td></tr></table></figure>
+
+<p>生图的结果就会变得像是慕夏的作品。顺带一提<code>masterpiece</code>这个提示词还蛮万用的，可以让作品维持一定水准。</p>
+<img src="../images/sd/00023-3397365016.png" alt="00023-3397365016" style="zoom:50%;" />
+
+<p>当然还可以画特定动漫人物的「二创」，只要将名字和作品名称打上去就可以了。有名的动漫角色只要出现名字，不用特别指定身体特征就会生成原作风格了，例如指定《新世纪福音战士》的惣流·明日香·兰格雷：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">asuka_langley_souryuu from neon_genesis_evangelion, masterpiece, <span class="number">1</span>girl, beach, ocean</span><br></pre></td></tr></table></figure>
+
+<img src="../images/sd/00026-1538503611.png" alt="00026-1538503611" style="zoom:50%;" />
+
+<p>再次提醒，在下提示词的时候，生成图片使用的模型也需纳入考量。譬如想要生成特定动漫人物，去Danbooru找到了英文姓名，加上提示词，但你却用画真人的Stable Diffusion去算，则AI可能根本就不会认得你说的角色是谁，反之亦然。Danbooru的标签风格跟一般图片的描述还是有差距的。</p>
+<p>除非日后有搜罗全部网络图片的超大模型出现，否则下提示词须配合模型种类来决定。</p>
+<p>如果AI怎样都生成不出你要的风格或人物，请考虑换个模型，或是 <a target="_blank" rel="noopener" href="https://ivonblog.com/posts/stable-diffusion-webui-manuals/zh-cn/training/">自行训练模型</a>。</p>
+<h1 id="负向提示词-Negative-Prompts"><a href="#负向提示词-Negative-Prompts" class="headerlink" title="负向提示词 Negative Prompts"></a>负向提示词 Negative Prompts</h1><p>上面我们只写提示词，但下面的负向提示词的字段都是空白。但生图时常常还需要加入一些负向提示词，避免掉不好的结果。AI绘图有时不会一次就算出好结果，所以还需要加上负向提示词来控制，尤其是大批算图的时候更为重要。</p>
+<p>负向提示词会加入一些常见的「不好」的图片特征，例如低画质、最糟品质、画家签名、模糊、浮水印</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deformed, lowres, bad anatomy, text, error, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, artist name</span><br></pre></td></tr></table></figure>
+
+<p>不想看到的东西也可以加进去。例如不想看到裸露、兵器、血、猎奇的元素出现，就加入<code>nsfw</code>、<code>weapon</code>、<code>blood</code>、<code>guro</code>至负向提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nsfw, weapon, blood, guro, lowres, bad anatomy, text, error, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name</span><br></pre></td></tr></table></figure>
+
+<p>提示词并非越多越好，正向提示词以不超过150个词元(token)为原则；不过负向提示词可以尽量把不想看到的都塞进去。</p>
+<h1 id="Stable-Diffusion-WebUI独有语法"><a href="#Stable-Diffusion-WebUI独有语法" class="headerlink" title="Stable Diffusion WebUI独有语法"></a>Stable Diffusion WebUI独有语法</h1><p>此节列出的语法为AUTOMATIC1111制作的SD WebUI独有，使用其他人制作的Stable Diffusion程序不见得适用。</p>
+<h2 id="关注度括号-Attention-emphasis"><a href="#关注度括号-Attention-emphasis" class="headerlink" title="关注度括号 Attention/emphasis"></a>关注度括号 Attention/emphasis</h2><p>控制关注度的符号，增加算图时对该提示词的关注度(attention)。简单来说，括号就是你想强调的重点元素，括号越多，生成的结果越会符合括号里的提示词。</p>
+<p>SD WebUI使用小括号控制关注度： <code>( )</code> 小括号层次越多权重越高(不加小括号为1倍，每加一层小括号乘以1.1倍)。例如，强调「蓝眼睛」，生成的结果就更高几率是蓝眼睛人物</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">asuka_langley_souryuu from neon_genesis_evangelion, masterpiece, 1girl, beach, ocean, ((blue eyes))</span><br><span class="line">Steps: 20, Sampler: UniPC, CFG scale: 7, Seed: 1080937815, Size: 512x512, </span><br><span class="line">Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<img src="../images/sd/00027-1080937815.png" alt="00027-1080937815" style="zoom:50%;" />
 
 
 
-<p>端口管理</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">打开443/TCP端口</span></span><br><span class="line">firewall-cmd --add-port=443/tcp  --permanent</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">永久打开3690/TCP端口</span></span><br><span class="line">firewall-cmd --permanent --add-port=3690/tcp  --permanent</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">永久打开端口好像需要reload一下，临时打开好像不用，如果用了reload临时打开的端口就失效了</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">其它服务也可能是这样的，这个没有测试</span></span><br><span class="line">firewall-cmd --reload</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看防火墙，添加的端口也可以看到</span></span><br><span class="line">firewall-cmd --list-all</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>亦可以直接写明要增强几倍关注度，但其实一般情况下不用设太强，用一二层的小括号就够了。</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">asuka_langley_souryuu from neon_genesis_evangelion, masterpiece, <span class="number">1</span>girl, beach, ocean, ((<span class="name">blue</span> eyes)),((<span class="name">yellow</span> hair))</span><br><span class="line">Steps: <span class="number">20</span>, Sampler: UniPC, CFG scale: <span class="number">7</span>, Seed: <span class="number">2199430340</span>, Size: <span class="number">512</span>x512,</span><br><span class="line">Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.<span class="number">7.0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<img src="../images/sd/00028-2199430340.png" alt="00028-2199430340" style="zoom:50%;" />
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">asuka_langley_souryuu from neon_genesis_evangelion, masterpiece, 1girl, beach, ocean, ((blue eyes)),((yellow hair)),(Green clothes)</span><br><span class="line">Steps: 20, Sampler: UniPC, CFG scale: 7, </span><br><span class="line">Seed: 2630536656, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</span><br></pre></td></tr></table></figure>
+
+<p>这时候对颜色的控制已经错乱了，说明提示词混乱了。</p>
+<img src="../images/sd/00029-2630536656.png" alt="00029-2630536656" style="zoom:50%;" />
 
 
 
 
 
-<p>all</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable firewalld</span><br><span class="line">systemctl start firewalld</span><br><span class="line">firewall-cmd --add-port=443/tcp  --permanent</span><br><span class="line">firewall-cmd --add-port=80/tcp  --permanent</span><br><span class="line">firewall-cmd --add-port=7002/tcp  --permanent</span><br></pre></td></tr></table></figure>
+<h2 id="提示词编辑-Prompt-editing"><a href="#提示词编辑-Prompt-editing" class="headerlink" title="提示词编辑 Prompt editing"></a>提示词编辑 Prompt editing</h2><p>指定在到哪一步数的时候切换提示词。此处的中括号跟权重无关。</p>
+<p>语法为<code>[提示词1:提示词2:要切换的步数]</code></p>
+<p>例如，算图时设置20步，一开始算橘子，设置算到15步时切换成苹果</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[orange : apple : <span class="number">15</span>] on table</span><br></pre></td></tr></table></figure>
 
-<p>zone</p>
-<p>增加一个zone</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --new-zone=zgcw-access --permanent</span><br></pre></td></tr></table></figure>
+<p>这时候就是生成一个桔子</p>
+<h2 id="切换单字-Alternating-Words"><a href="#切换单字-Alternating-Words" class="headerlink" title="切换单字 Alternating Words"></a>切换单字 Alternating Words</h2><p>使用<code>|</code>代表在每个步数切换提示词，例如我要在算图时于「蓝眼睛」或「红眼睛」或「黑眼睛」之间切换</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">asian, woman, [blue eyes|red eyes|black eyes], beach, ocean</span><br></pre></td></tr></table></figure>
 
-<p>增加ip和端口</p>
-<p>gateway</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=zgcw-access --add-source=172.17.100.0/24 --permanent</span><br><span class="line">firewall-cmd --zone=zgcw-access --add-port=9939/tcp  --permanent</span><br><span class="line">firewall-cmd --zone=zgcw-access --add-port=7001/tcp  --permanent</span><br><span class="line">firewall-cmd --zone=zgcw-access --add-port=7002/tcp  --permanent</span><br><span class="line">firewall-cmd --zone=zgcw-access --add-port=8091-8094/tcp  --permanent</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+<h2 id="可组合性扩散-Composable-Diffusion"><a href="#可组合性扩散-Composable-Diffusion" class="headerlink" title="可组合性扩散 Composable Diffusion"></a>可组合性扩散 Composable Diffusion</h2><p>此语法让AI依照权重生成二个不同的对象。</p>
+<p>例如生成橘子与苹果，中间用大写的<code>AND</code>连接</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">orange AND apple</span><br></pre></td></tr></table></figure>
 
-<p>work1、work2</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=zgcw-access --add-source=172.17.100.0/24 --permanent</span><br><span class="line">firewall-cmd --zone=zgcw-access --add-port=8091-8094/tcp  --permanent</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+<p>后面加上数字控制权重，初始值为1，数值低于0.1则无效。</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">orange :<span class="number">1.5</span> AND apple :<span class="number">2.5</span></span><br></pre></td></tr></table></figure>
+
+<p>此语法适合搭配 <a target="_blank" rel="noopener" href="https://ivonblog.com/posts/stable-diffusion-webui-manuals/zh-cn/extensions/latent-couple/">ControlNet和Latent Couple</a>，可以准确控制图中对象的位置。</p>
+<img src="../images/sd/00116-2587609433.png" alt="00116-2587609433" style="zoom:50%;" />
 
 
 
-<p>ip段</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">172.17.100.218</span><br><span class="line">172.17.100.222 work1</span><br><span class="line">172.17.100.223 work2</span><br><span class="line">172.17.100.220 es</span><br><span class="line">172.17.86.0</span><br></pre></td></tr></table></figure>
+<h1 id="提示词范例"><a href="#提示词范例" class="headerlink" title="提示词范例"></a>提示词范例</h1><p>这里提供一些懒人包。负向提示词有些是通用的。</p>
+<h2 id="生成可爱的狗勾"><a href="#生成可爱的狗勾" class="headerlink" title="生成可爱的狗勾"></a>生成可爱的狗勾</h2><p>让我们试着画几只柯基犬在草地上奔跑。</p>
+<p>建议使用模型：Stable Diffusion、Realistic Vision</p>
+<p>提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span> corgi dogs running on grass field</span><br></pre></td></tr></table></figure>
+
+<p>负向提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lowres, bad anatomy, text, error, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name</span><br></pre></td></tr></table></figure>
+
+<p>Steps: 20, Sampler: Euler a, CFG scale: 7, Seed: 2387293181, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</p>
+<img src="../images/sd/00032-2387293181.png" alt="00032-2387293181" style="zoom:50%;" />
+
+
+
+<h2 id="生成高科技未来城市"><a href="#生成高科技未来城市" class="headerlink" title="生成高科技未来城市"></a>生成高科技未来城市</h2><p>建议使用模型：Stable Diffusion、Realistic Vision</p>
+<p>提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">city future, <span class="number">8</span>k, exploration, cinematic, realistic, unreal engine, hyper detailed, volumetric light, moody cinematic epic concept art, realistic matte painting, hyper photorealistic</span><br></pre></td></tr></table></figure>
+
+<p>负向提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lowres, bad anatomy, text, error, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name</span><br></pre></td></tr></table></figure>
+
+<p>Steps: 20, Sampler: Euler a, CFG scale: 7, Seed: 299709774, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</p>
+<img src="../images/sd/00034-299709774.png" alt="00034-299709774" style="zoom:50%;" />
+
+
+
+<h2 id="生成一台特斯拉车子"><a href="#生成一台特斯拉车子" class="headerlink" title="生成一台特斯拉车子"></a>生成一台特斯拉车子</h2><p>建议使用模型：Stable Diffusion、Realistic Vision</p>
+<p>提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">concept art,tesla car, aerodynamic, future</span><br></pre></td></tr></table></figure>
+
+<p>负向提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lowres, bad anatomy, text, error, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name</span><br></pre></td></tr></table></figure>
+
+<p>Steps: 20, Sampler: Euler a, CFG scale: 7, Seed: 3821788433, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</p>
+<img src="../images/sd/00041-3821788433.png" alt="00041-3821788433" style="zoom:50%;" />
+
+<h2 id="生成动漫美少女"><a href="#生成动漫美少女" class="headerlink" title="生成动漫美少女"></a>生成动漫美少女</h2><p>建议使用模型：Anything、Hentai Diffusion</p>
+<p>随机画一个Fate/Grand Order的贞德</p>
+<p>提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jeanne d&#x27;arc from fate grand order, <span class="number">1</span>girl, (<span class="name">best</span> quality), (<span class="name">masterpiece</span>), (<span class="name">high</span> detail), ((<span class="name">full</span> face)), sharp, ((<span class="name">looking</span> at viewer)), ((<span class="name">detailed</span> pupils)), (<span class="name">thick</span> thighs), (((<span class="name">full</span> body))), (<span class="name">large</span> breasts)</span><br></pre></td></tr></table></figure>
+
+<p>负向提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name</span><br></pre></td></tr></table></figure>
+
+<p>Steps: 20, Sampler: Euler, CFG scale: 7, Seed: 1480416086, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</p>
+<img src="../images/sd/00052-1480416086.png" alt="00052-1480416086" style="zoom:50%;" />
+
+<h2 id="生成日韩风真人女孩"><a href="#生成日韩风真人女孩" class="headerlink" title="生成日韩风真人女孩"></a>生成日韩风真人女孩</h2><p>建议使用模型：ChilloutMix、Perfect World，并适时使用Japanese Doll的LoRA。</p>
+<p>随机画一个日本女孩，不要色色</p>
+<p>提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">a</span> japanese woman), shiny skin, (<span class="name">ultra</span> high res,photorealistic,realistic,best quality,photo-realistic), (((<span class="name">high</span> detailed skin,visible pores))),(<span class="name">real</span> person,photograph), (<span class="number">8</span>k, raw photo, best quality, masterpiece),(<span class="number">1</span>girl),photon mapping, radiosity, physically-based rendering,automatic white balance,(<span class="name">haunting</span> smile,moist lips),watery eyes, (<span class="name">blush</span><span class="name">|cute and playful|</span><span class="name">adorable</span><span class="name">|thick bangs|</span><span class="name">beauty</span>),((<span class="name">irises</span> and pupils are rounded,the pupil reflects the surroundings,eyes are not the same size))</span><br></pre></td></tr></table></figure>
+
+<p>负向提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nude, lowres,blurry,simple background,jpeg artifacts,bad-artist,bad shadow,compressed image,low pixel,light spot, paintings,sketches,((<span class="name">monochrome</span>)),((<span class="name">grayscale</span>)),noise point,semi-realistic, <span class="number">3</span>d,render,cg,drawing,cartoon,anime,comic,username,watermark,signature,cropped,error,censored,text,stain, deformed iris,deformed pupils,deformed nail,deformed ear,deformed eye,deformed eyelid,collapsed eyeshadow, [excessive skin spots,excessive skin imperfections,skin blemishes,skin fold,rough skinstain skin],goosebumps,skin layering,axillary fold,facial contortion, (<span class="name">flawless</span> face),trimming</span><br></pre></td></tr></table></figure>
+
+<p>Steps: 20, Sampler: DDIM, CFG scale: 7, Seed: 2228126458, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</p>
+<img src="../images/sd/00057-2228126458.png" alt="00057-2228126458" style="zoom:50%;" />
+
+
+
+<p><strong>Prompt:</strong></p>
+<p><code>(a japanese woman), shiny skin, (ultra high res,photorealistic,realistic,best quality,photo-realistic), (((high detailed skin,visible pores))),(real person,photograph), (8k, raw photo, best quality, masterpiece),(1girl),photon mapping, radiosity, physically-based rendering,automatic white balance,(haunting smile,moist lips),watery eyes, (blush|cute and playful|adorable|thick bangs|beauty),((irises and pupils are rounded,the pupil reflects the surroundings,eyes are not the same size))</code></p>
+<img src="/Users/whx/Documents/wanghongxing.github.com/source/images/sd/20240207110110-1201812112.png" alt="20240207110110-1201812112" style="zoom:50%;" />
+
+<p>Steps: 20, Sampler: Euler a, CFG scale: 7, Seed: 1201812112, Size: 512x512, Model hash: 4199bcdd14, Model: revAnimated_v122EOL, Version: v1.7.0</p>
+<h1 id="5-值得参考的提示词网站"><a href="#5-值得参考的提示词网站" class="headerlink" title="5. 值得参考的提示词网站 #"></a>5. 值得参考的提示词网站 <a target="_blank" rel="noopener" href="https://ivonblog.com/posts/stable-diffusion-webui-manuals/zh-cn/prompts/general-prompt-guide/#5-%E5%80%BC%E5%BE%97%E5%8F%82%E8%80%83%E7%9A%84%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BD%91%E7%AB%99">#</a></h1><p>若使用的是SD模型，想生成真人，请看 <a target="_blank" rel="noopener" href="https://rentry.org/artists_sd-v1-4">Voldy</a>整理的历史上有名的艺术家。</p>
+<p>若使用动漫风的模型请看 <a target="_blank" rel="noopener" href="https://danbooru.donmai.us/">Danbooru</a>图库的标签决定要下哪些提示词。</p>
+<p><a target="_blank" rel="noopener" href="https://promptomania.com/stable-diffusion-prompt-builder/">Prompt Generator</a>和 <a target="_blank" rel="noopener" href="https://thereisnospon.github.io/NovelAiTag/">NovelAI魔导书</a>可以协助你组合提示词。</p>
+<p><a target="_blank" rel="noopener" href="https://civitai.com/">Civitai</a>除了下载模型外，还有很多现成的提示词搭配模型的范例可以照抄。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240204-macos%20%E5%AE%89%E8%A3%85ComfyUI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20240204-macos%20%E5%AE%89%E8%A3%85ComfyUI/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-02-04 11:00:54" itemprop="dateCreated datePublished" datetime="2024-02-04T11:00:54+08:00">2024-02-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-02-19 14:10:42" itemprop="dateModified" datetime="2024-02-19T14:10:42+08:00">2024-02-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>macos 安装ComfyUI</p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/comfyanonymous/ComfyUI">https://github.com/comfyanonymous/ComfyUI</a></p>
+<h3 id="Dependencies"><a href="#Dependencies" class="headerlink" title="Dependencies"></a>Dependencies</h3><p>Install the dependencies by opening your terminal inside the ComfyUI folder and:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda activate comfyui</span><br><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Run"><a href="#Run" class="headerlink" title="Run"></a>Run</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python main.py --force-fp16</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="comfyUI-examples"><a href="#comfyUI-examples" class="headerlink" title="comfyUI examples"></a>comfyUI examples</h2><p><a target="_blank" rel="noopener" href="https://comfyanonymous.github.io/ComfyUI_examples/">https://comfyanonymous.github.io/ComfyUI_examples/</a></p>
+<p>这里包含所有comfyUI的例子，这里所有图片都包含可以被comfyUI加载的 metadata 信息</p>
+<p>RealESRGAN_x4plus.pth </p>
+<p><a target="_blank" rel="noopener" href="https://huggingface.co/lllyasviel/Annotators/blob/main/RealESRGAN_x4plus.pth">https://huggingface.co/lllyasviel/Annotators/blob/main/RealESRGAN_x4plus.pth</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240204-apple%20silicon%20Install%20pytorch%20nightly/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20240204-apple%20silicon%20Install%20pytorch%20nightly/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-02-04 11:00:39 / Modified: 12:36:23" itemprop="dateCreated datePublished" datetime="2024-02-04T11:00:39+08:00">2024-02-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>apple silicon Install pytorch nightly</p>
+<p><a target="_blank" rel="noopener" href="https://developer.apple.com/metal/pytorch/">https://developer.apple.com/metal/pytorch/</a></p>
+<h5 id="Anaconda"><a href="#Anaconda" class="headerlink" title="Anaconda"></a>Anaconda</h5><h4 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h4><p>Apple silicon</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh</span><br><span class="line">sh Miniconda3-latest-MacOSX-arm64.sh</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h4><h5 id="Anaconda-1"><a href="#Anaconda-1" class="headerlink" title="Anaconda"></a>Anaconda</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install pytorch torchvision torchaudio -c pytorch-nightly</span><br></pre></td></tr></table></figure>
+
+<h5 id="pip"><a href="#pip" class="headerlink" title="pip"></a>pip</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install --pre torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/nightly/cpu</span><br></pre></td></tr></table></figure>
+
+<h4 id="Verify"><a href="#Verify" class="headerlink" title="Verify"></a>Verify</h4><p>You can verify <code>mps</code> support using a simple Python script:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">if torch.backends.mps.is_available():</span><br><span class="line">    mps_device = torch.device(&quot;mps&quot;)</span><br><span class="line">    x = torch.ones(1, device=mps_device)</span><br><span class="line">    print (x)</span><br><span class="line">else:</span><br><span class="line">    print (&quot;MPS device not found.&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>The output should show:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensor([1.], device=&#x27;mps:0&#x27;)</span><br></pre></td></tr></table></figure>
+
+
 
 
       
@@ -261,7 +619,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2018-%E7%A0%B4%E8%A7%A3%E5%85%89%E7%8C%AB/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240202-oracle%20%E5%88%9B%E5%BB%BA%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -275,7 +633,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018-%E7%A0%B4%E8%A7%A3%E5%85%89%E7%8C%AB/" class="post-title-link" itemprop="url">破解光猫</a>
+            <a href="/20240202-oracle%20%E5%88%9B%E5%BB%BA%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/" class="post-title-link" itemprop="url">Untitled</a>
         </h2>
 
         <div class="post-meta">
@@ -285,15 +643,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-12-01 13:46:48" itemprop="dateCreated datePublished" datetime="2018-12-01T13:46:48+08:00">2018-12-01</time>
+              <time title="Created: 2024-02-02 10:58:02" itemprop="dateCreated datePublished" datetime="2024-02-02T10:58:02+08:00">2024-02-02</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-02 18:54:49" itemprop="dateModified" datetime="2023-01-02T18:54:49+08:00">2023-01-02</time>
-              </span>
 
           
 
@@ -306,14 +657,66 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>从<a target="_blank" rel="noopener" href="https://blog.csdn.net/kt_ZhangSheng/article/details/80855083">这里看到</a></p>
-<blockquote>
-<p>进入TEWA-800E的管理页面，发现只能使用默认用户user登陆，而user没有修改路由模式的权限，现在的问题就是想办法登陆超级用户了，查到超级用户账号密码为CUAdmin/CUAdmin。以前似乎可以使用cu.html来登陆，但我试了下，现在（2018年6月底）应该是已经封掉了。<br>Chrome打开光猫登陆页面，默认是192.168.1.1，F12进入开发工具，在source中可以看到user_name固定为user，且提交时还加了对用户名的验证。 找到对应的代码，拷贝到console，修改user_name的值为CUAdmin，去掉用户名的验证。 </p>
-</blockquote>
-<p>就是在console中执行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">document.getElementById(&#x27;user_name&#x27;).value= &#x27;CUAdmin&#x27;;</span><br><span class="line">function submitFrm()</span><br><span class="line">&#123;</span><br><span class="line">  document.getElementById(&#x27;loginfrm&#x27;).submit();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>就进入管理界面</p>
-<p>上行管理中设置第二个连接为桥接方式，保存就可以了。<br>然后在自己的路由器中设置wlan为ppoe方式，填上用户名密码就行了。</p>
+          <p>oracle 创建远程连接</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> DATABASE LINK remote_db</span><br><span class="line"><span class="keyword">CONNECT</span> <span class="keyword">TO</span> remote_username IDENTIFIED <span class="keyword">BY</span> remote_password</span><br><span class="line"><span class="keyword">USING</span> <span class="string">&#x27;172.16.40.2:1521/HWDB&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> db_link,username,host <span class="keyword">from</span> dba_db_links;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240124-npm%20install%20ssl%E8%AF%81%E4%B9%A6%E5%A4%B1%E6%95%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20240124-npm%20install%20ssl%E8%AF%81%E4%B9%A6%E5%A4%B1%E6%95%88/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-01-24 12:33:49" itemprop="dateCreated datePublished" datetime="2024-01-24T12:33:49+08:00">2024-01-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>npm install ssl证书失效</p>
+<p>npm config set strict-ssl false</p>
 
       
     </div>
@@ -333,7 +736,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2018-11-30-windows-run-spring-boot-as-services/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240111%E5%BC%80%E6%BA%90%E5%A4%87%E4%BB%BDbackupPC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -347,7 +750,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018-11-30-windows-run-spring-boot-as-services/" class="post-title-link" itemprop="url">在windows以服务的方式启动springboot</a>
+            <a href="/20240111%E5%BC%80%E6%BA%90%E5%A4%87%E4%BB%BDbackupPC/" class="post-title-link" itemprop="url">Untitled</a>
         </h2>
 
         <div class="post-meta">
@@ -357,14 +760,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-11-30 11:20:34" itemprop="dateCreated datePublished" datetime="2018-11-30T11:20:34+08:00">2018-11-30</time>
+              <time title="Created: 2024-01-11 17:03:51" itemprop="dateCreated datePublished" datetime="2024-01-11T17:03:51+08:00">2024-01-11</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-03 23:19:45" itemprop="dateModified" datetime="2023-01-03T23:19:45+08:00">2023-01-03</time>
+                <time title="Modified: 2024-01-18 11:24:23" itemprop="dateModified" datetime="2024-01-18T11:24:23+08:00">2024-01-18</time>
               </span>
 
           
@@ -378,202 +781,94 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>了解一下：<br><a target="_blank" rel="noopener" href="https://github.com/kohsuke/winsw">Windows service wrapper </a><br>这个软件可以把任何程序作为服务运行，首先下载exe执行文件，我的执行文件命名:customs.exe<br>创建customs.xml</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">service</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>Customs<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Customs<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>This runs Spring Boot Customs as a Service.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executable</span>&gt;</span>java<span class="tag">&lt;/<span class="name">executable</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arguments</span>&gt;</span>-Xmx256m -jar  -Dspring.profiles.active=test &quot;c:\jenkins\soft\customs\customs.jar&quot;<span class="tag">&lt;/<span class="name">arguments</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logmode</span>&gt;</span>rotate<span class="tag">&lt;/<span class="name">logmode</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>然后执行安装服务命令</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\jenkins\soft\customs&gt;customs install</span><br><span class="line">2018-11-30 11:11:23,416 INFO  - Installing the service with id &#x27;Customs&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>启动服务</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">C:\jenkins\soft\customs&gt;customs start</span><br><span class="line">2018-11-30 11:12:42,031 INFO  - Starting the service with id &#x27;Customs&#x27;</span><br><span class="line"></span><br><span class="line">C:\jenkins\soft\customs&gt;dir</span><br><span class="line"> 驱动器 C 中的卷没有标签。</span><br><span class="line"> 卷的序列号是 BCFA-AA62</span><br><span class="line"></span><br><span class="line"> C:\jenkins\soft\customs 的目录</span><br><span class="line"></span><br><span class="line">2018/11/30  11:12    &lt;DIR&gt;          .</span><br><span class="line">2018/11/30  11:12    &lt;DIR&gt;          ..</span><br><span class="line">2018/11/30  11:12                 0 customs.err.log</span><br><span class="line">2018/11/30  11:06           360,448 customs.exe</span><br><span class="line">2018/11/30  10:37        39,628,558 customs.jar</span><br><span class="line">2018/11/30  11:12               978 customs.out.log</span><br><span class="line">2018/11/30  11:12             1,612 customs.wrapper.log</span><br><span class="line">2018/11/30  11:09               367 customs.xml</span><br></pre></td></tr></table></figure>
-
-<p>其中customs.out.log 是spring boot 的执行日志，customs.err.log是错误日志<br>customs.wrapper.log是service wrapper 的执行日志</p>
-<p>看到目录名是jenkins开头的，其实这个项目是用jenkins做CI的，在windows节点执行，要求windows节点接入的时候用管理员身份执行，项目用maven打包完成后添加一个windows shell任务<br>shell脚本如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">rem copy jar to c:\jenkins\customs\customs.jar</span><br><span class="line">copy target\customs-0.0.1-SNAPSHOT.jar c:\jenkins\soft\customs\customs.jar</span><br><span class="line">rem 进入工作目录</span><br><span class="line">cd c:\jenkins\soft\customs</span><br><span class="line"></span><br><span class="line">rem 停止服务</span><br><span class="line">customs stop</span><br><span class="line"></span><br><span class="line">rem 启动服务</span><br><span class="line">customs start</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2018-%E5%9B%BD%E5%AF%86%E6%94%B9%E9%80%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018-%E5%9B%BD%E5%AF%86%E6%94%B9%E9%80%A0/" class="post-title-link" itemprop="url">fabric 国密改造</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-10-30 11:20:34" itemprop="dateCreated datePublished" datetime="2018-10-30T11:20:34+08:00">2018-10-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-03 23:17:32" itemprop="dateModified" datetime="2023-01-03T23:17:32+08:00">2023-01-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>fabric 国密改造</p>
-<p>代码仓库（限制权限的私人仓库）</p>
-<p>国密改造补丁：<code>ssh://gitlabs.my118.com:9022/wanghongxing/fabric-sm-patch.git</code></p>
-<p>国密版代码：<code>ssh://git@gitlabs.my118.com:9022/wanghongxing/fabric.git</code></p>
-<p>java sdk 国密版代码仓库 <code>ssh://git@gitlabs.my118.com:9022/blockchain/fabric-sdk-java.git</code></p>
-<p>fabric国密改造包括：源代码改造、sdk改造、ca改造。</p>
-<h2 id="Fabric源代码改造的大致清单"><a href="#Fabric源代码改造的大致清单" class="headerlink" title="Fabric源代码改造的大致清单"></a>Fabric源代码改造的大致清单</h2><h3 id="主要涉及一下目录及文件"><a href="#主要涉及一下目录及文件" class="headerlink" title="主要涉及一下目录及文件"></a>主要涉及一下目录及文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">bccsp/factory/gmfactory.go                    </span><br><span class="line">bccsp/factory/nopkcs11.go                     </span><br><span class="line">bccsp/factory/pkcs11.go                       </span><br><span class="line">bccsp/gm/fileks.go                            </span><br><span class="line">bccsp/gm/impl.go                              </span><br><span class="line">bccsp/gm/keys.go                              </span><br><span class="line">bccsp/gm/sm2.go                               </span><br><span class="line">bccsp/gm/sm2key.go                            </span><br><span class="line">bccsp/gm/sm3sig.go                            </span><br><span class="line">bccsp/sm2opts.go                              </span><br><span class="line">bccsp/utils/keys.go                           </span><br><span class="line">cmd/common/signer/signer.go                   </span><br><span class="line">common/tools/cryptogen/ca/generator.go        </span><br><span class="line">common/tools/cryptogen/ca/generatorsm.go      </span><br><span class="line">common/tools/cryptogen/csp/csp.go             </span><br><span class="line">common/tools/cryptogen/csp/cspsm.go           </span><br><span class="line">common/tools/cryptogen/main.go                </span><br><span class="line">common/tools/cryptogen/mainsm.go              </span><br><span class="line">common/tools/cryptogen/msp/generator.go       </span><br><span class="line">common/tools/cryptogen/msp/generatorsm.go     </span><br><span class="line">core/chaincode/shim/ext/attrmgr/attrmgr.go    </span><br><span class="line">core/chaincode/shim/ext/cid/cid.go            </span><br><span class="line">core/chaincode/shim/ext/cid/interfaces.go     </span><br><span class="line">core/common/validation/msgvalidation.go            </span><br><span class="line">msp/cert.go                                   </span><br><span class="line">msp/identities.go                             </span><br><span class="line">msp/mspimpl.go                                </span><br><span class="line">msp/mspimplsetup.go                           </span><br><span class="line">msp/mspimplvalidate.go       </span><br><span class="line">vendor/github.com/wanghongxing/crypto/sm/sm2/</span><br><span class="line">vendor/github.com/wanghongxing/crypto/sm/sm3/</span><br><span class="line">vendor/github.com/wanghongxing/crypto/sm/sm4/</span><br><span class="line">vendor/github.com/wanghongxing/crypto/x509/</span><br></pre></td></tr></table></figure>
+          <p>20240111开源备份backupPC</p>
+<p>3.x版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">yum install BackupPC</span><br><span class="line"></span><br><span class="line">cd /usr/share/BackupPC/</span><br><span class="line">chown backuppc:apache sbin/*</span><br><span class="line">cd sbin</span><br><span class="line"></span><br><span class="line">chmod u+s BackupPC_Admin</span><br><span class="line"></span><br><span class="line">usermod -s /bin/bash backuppc</span><br><span class="line"></span><br><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</span><br><span class="line">firewall-cmd --reload</span><br><span class="line"></span><br><span class="line"># /etc/BackupPC/config.pl</span><br><span class="line">$Conf&#123;CgiAdminUsers&#125;     = &#x27;backuppc&#x27;;</span><br><span class="line">$Conf&#123;PingPath&#125; = &#x27;/bin/ping&#x27;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">htpasswd -c /etc/BackupPC/apache.users backuppc</span><br><span class="line"></span><br><span class="line">zaq1XSW2</span><br><span class="line"></span><br><span class="line">systemctl restart backuppc</span><br><span class="line"> systemctl restart httpd</span><br></pre></td></tr></table></figure>
 
 
 
-<h3 id="大致功能"><a href="#大致功能" class="headerlink" title="大致功能"></a>大致功能</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#bccsp中功过SW方式切换成国密</span></span><br><span class="line"> bccsp/factory/          </span><br><span class="line"><span class="comment">#基本国密bccsp库 </span></span><br><span class="line"> bccsp/gm/    </span><br><span class="line"><span class="comment">#bccsp中增加sm2的常量 </span></span><br><span class="line"> bccsp/sm2opts.go                              </span><br><span class="line"> bccsp/utils/keys.go       </span><br><span class="line"><span class="comment">#消息验证增加国密 </span></span><br><span class="line"> core/common/validation/msgvalidation.go       </span><br><span class="line"><span class="comment">#msp证书对国密的支持 </span></span><br><span class="line"> msp/cert.go                                   </span><br><span class="line"> msp/identities.go                             </span><br><span class="line"> msp/</span><br><span class="line"><span class="comment">#国密算法，第三方拿过来修改了包名</span></span><br><span class="line"> vendor/github.com/wanghongxing/crypto/sm/</span><br><span class="line"><span class="comment">#国密x509证书 ，第三方拿过来修改了包名 </span></span><br><span class="line"> vendor/github.com/wanghongxing/crypto/x509/</span><br><span class="line"><span class="comment">#discover国密支持 </span></span><br><span class="line"> cmd/common/signer/signer.go       </span><br><span class="line"><span class="comment">#生成证书工具改造 </span></span><br><span class="line"> common/tools/cryptogen/   </span><br><span class="line"><span class="comment">#chaincode中访问证书支持国密 </span></span><br><span class="line"> core/chaincode/shim/ext/attrmgr/attrmgr.go    </span><br><span class="line"> core/chaincode/shim/ext/cid/cid.go            </span><br><span class="line"> core/chaincode/shim/ext/cid/interfaces.go    </span><br><span class="line"> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>4.x</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">yum --enablerepo=extras -y install epel-release</span><br><span class="line">yum --enablerepo=epel-testing -y install BackupPC-XS rsync-bpc</span><br><span class="line"></span><br><span class="line"> yum groupinstall &quot;Development Tools&quot;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="fabric国密补丁工程"><a href="#fabric国密补丁工程" class="headerlink" title="fabric国密补丁工程"></a>fabric国密补丁工程</h2><p>fabric 官方源代码 fabric1.4.2 下能正常apply入原始项目中，到了fabric1.4.4以后，msp/mspimplvalidate.go 文件不能打入布丁，手动修改后正常.</p>
-<p>为了保证以后版本能够正常打入官方发布版本，决定每个版本进行修订，修订包名称定为：</p>
-<p>fabric-x.x.x-000xxxx.patch</p>
-<p>同时依赖的crypto/sm crypto/x509决定克隆到自己的 git 目录下，确保版本稳定。</p>
-<h3 id="1-4-4-补丁"><a href="#1-4-4-补丁" class="headerlink" title="1.4.4 补丁"></a>1.4.4 补丁</h3><p>整理后三个patch包如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fabric-1.4.4-0001-china-crypto-standards-support-1.4.4.patch</span><br><span class="line">fabric-1.4.4-0002-gm-ecdsa-chaincode.patch</span><br><span class="line">fabric-1.4.4-0003-change-discover-support-gm.patch</span><br></pre></td></tr></table></figure>
 
-<p>分别完成了基本的国密支持、chaincode中证书支持国密、discover中证书支持国密。</p>
-<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><p>从fabric官方签出1.4.4的代码</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout v1.4.4</span><br></pre></td></tr></table></figure>
 
-<p>然后把patch文件复制到fabric父目录下，然后执行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git am ../fabric-sm-patch/fabric-1.4.4-0001-china-crypto-standards-support-1.4.4.patch</span><br><span class="line">git am ../fabric-sm-patch/fabric-1.4.4-0002-gm-ecdsa-chaincode.patch</span><br><span class="line">git am ../fabric-sm-patch/fabric-1.4.4-0003-change-discover-support-gm.patch</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-4-6-1-4-7-版本"><a href="#1-4-6-1-4-7-版本" class="headerlink" title="1.4.6/1.4.7 版本"></a>1.4.6/1.4.7 版本</h3><p>整理后有一个patch包</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fabric-1.4.7-0001-china-crypto-standards-support-1.4.7.patch</span><br></pre></td></tr></table></figure>
-
-<h4 id="使用方法-1"><a href="#使用方法-1" class="headerlink" title="使用方法"></a>使用方法</h4><p>从官方签出1.4.7代码(注，1.4.7还没有打tag，所以暂时用release-1.4)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git chekcout release-1.4</span><br></pre></td></tr></table></figure>
-
-<p>或者(注，1.4.7还没有打tag，所以暂时用v1.4.6)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout v1.4.6</span><br></pre></td></tr></table></figure>
-
-<p>然后把patch文件复制到fabric父目录下，然后执行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git am ../fabric-sm-patch/fabric-1.4.7-0001-china-crypto-standards-support-1.4.7.patch</span><br></pre></td></tr></table></figure>
-
-<h2 id="fabric国密版本编译"><a href="#fabric国密版本编译" class="headerlink" title="fabric国密版本编译"></a>fabric国密版本编译</h2><h3 id="编译环境建立"><a href="#编译环境建立" class="headerlink" title="编译环境建立"></a>编译环境建立</h3><p>fabirc的编译需要在ubuntu虚拟机里进行编译，所以先要安装virtualbox和vagrant，安装完以后理论上就可以进入devenv目录目录运行虚拟机。</p>
-<p>但是，因为我们伟大的qiang，所以要想编译环境运行好，就先要装fan qiang软件。</p>
-<p>我安装了:</p>
-<p>小飞机Shadowsocks,这个是作为翻墙用的，但是它只监听127.0.0.1，为了让虚拟机的软件用，我们还要转另外一个东东“privoxy”,让这个东东监听ipv4的端口，我用它监听8118端口，</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">brew install privoxy</span><br><span class="line"><span class="comment">#修改配置文件vim /usr/local/etc/privoxy/config</span></span><br><span class="line">listen-address  0.0.0.0:8118</span><br><span class="line">forward-socks5 / localhost:1080 .</span><br></pre></td></tr></table></figure>
-
-<p>然后修改fabric 的 devenv/Vagrant文件，在这行<code>Vagrant.configure(&#39;2&#39;) do |config|</code>后面添加着两行：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># config.proxy.http     = &quot;http://10.0.0.9:8118/&quot;</span><br><span class="line"># config.proxy.https    = &quot;http://10.0.0.9:8118/&quot;</span><br></pre></td></tr></table></figure>
-
-<p>注意，#去掉以后起作用，加上就不起作用了，为什么要说加上#不起作用呢？不加不久完了吗？</p>
-<p>问题就在这里：</p>
-<p>下载github google之类的东东，需要打开；</p>
-<p>下载ubuntu系统之类的软件，需要关闭；</p>
-<p>就是这么麻烦，如果你的fan qiang线路特别好，就一直打开。否则最简单的就是关闭的时候执行到一半不行了，就打开；打开的时候执行到一半不行了，就关闭。周而复始吧～（fuck）</p>
-<p>建好了墙，按理说就可以直接开启虚拟机了，慢～先把Vagrant中</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$script</span> = &lt;&lt;<span class="string">SCRIPT</span></span><br><span class="line"><span class="string">set -x</span></span><br><span class="line"><span class="string">echo &quot;127.0.0.1 couchdb&quot; | tee -a /etc/hosts</span></span><br><span class="line"><span class="string">cd #&#123;SRCMOUNT&#125;/fabric/devenv</span></span><br><span class="line"><span class="string">./setup.sh</span></span><br><span class="line"><span class="string">SCRIPT</span></span><br></pre></td></tr></table></figure>
-
-<p>其中./setup.sh这行注释掉，因为在虚拟机启动的时候它就调用，出错了后你都不知道干啥好，出不去进不来的，就像被卡在门缝中一样。</p>
-<p>把它注释掉后，进入虚拟机后自己手动执行。</p>
-<p>下面启动虚拟机</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant up</span><br></pre></td></tr></table></figure>
-
-<p>第一次的话需要下载镜像，启动完成后执行进入。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant ssh</span><br></pre></td></tr></table></figure>
-
-<p>然后开始慢慢的执行devenv/setup.sh</p>
-<p>执行出错后，慢慢手动开关代理，然后粘贴命令执行就行，最后这个东西执行完了之后，编译环境就算创建完了。</p>
-<h3 id="编译fabric执行程序"><a href="#编译fabric执行程序" class="headerlink" title="编译fabric执行程序"></a>编译fabric执行程序</h3><p>直接执行：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make native</span><br></pre></td></tr></table></figure>
-
-<p>这个会把fabric 可执行程序编译好后放在.build/bin/目录下，包括常用的cryptogen configtxgen configtxlator</p>
-<h3 id="编译docker镜像"><a href="#编译docker镜像" class="headerlink" title="编译docker镜像"></a>编译docker镜像</h3><p>直接执行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make docker</span><br></pre></td></tr></table></figure>
-
-<p>这个一般网络不行都会出错，出错以后如果是下载github google之类的错误就打开代理，否则就关闭代理。</p>
-<p>如果提示找不到.build/xxx/gotools/目录下的什么文件，这就是在代理切换的过程中，因为脚本文件把创建目录作为执行完的标记，所以没有执行成功下次也不会执行。解决办法就是删除它提示找不到文件的那个目录，大概率就是.build/docker/gotools目录。反正就是github google需要qiang，ubuntu系统文件不能用qiang，因为这些网站dns失败，我也没有细究，手动解决就OK。</p>
-<h3 id="打包镜像文件"><a href="#打包镜像文件" class="headerlink" title="打包镜像文件"></a>打包镜像文件</h3><p>为了方便大家使用，编译好之后需要把可执行程序和镜像保存起来供大家用，如下命令把所有可执行文件复制到fabric/devenv/bin，然后把镜像保存到:</p>
-<p>fabric/devenv/fabric-gm-1.4.7-20200506.tar.gz</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> /vagrant/bin/</span><br><span class="line"><span class="built_in">cp</span> .build/bin/* /vagrant/bin/</span><br><span class="line"></span><br><span class="line">docker save $(docker images | sed <span class="string">&#x27;1d&#x27;</span> | awk <span class="string">&#x27;&#123;print $1 &quot;:&quot; $2 &#125;&#x27;</span>) | \</span><br><span class="line">	gzip -c &gt; /vagrant/fabric-gm-1.4.7-20200506.tar.gz</span><br></pre></td></tr></table></figure>
+<p>安装BackupPC-XS</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wget https://objects.githubusercontent.com/github-production-release-asset-2e65be/58925230/05a45000-b2e9-11ea-8766-8cd9a1e4807f?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240112%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240112T014229Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=57f0e65e2a8b2453af7e2296533a49f03d484cd27bcb2535c98c033e4c6eb5b7&amp;X-Amz-SignedHeaders=host&amp;actor_id=4491017&amp;key_id=0&amp;repo_id=58925230&amp;response-content-disposition=attachment%3B%20filename%3DBackupPC-XS-0.62.tar.gz&amp;response-content-type=application%2Foctet-stream</span><br><span class="line">tar zxf BackupPC-XS-0.62.tar.gz</span><br><span class="line">cd BackupPC-XS-0.62</span><br><span class="line"></span><br><span class="line">perl Makefile.PL</span><br><span class="line">make</span><br><span class="line">make test</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="java-sdk国密改造"><a href="#java-sdk国密改造" class="headerlink" title="java sdk国密改造"></a>java sdk国密改造</h2><p>代码仓库 <code>ssh://git@gitlabs.my118.com:9022/blockchain/fabric-sdk-java.git</code></p>
-<h3 id="改造思路"><a href="#改造思路" class="headerlink" title="改造思路"></a>改造思路</h3><p>fabric java sdk使用 bouncycastle 作为加密库，因为bouncycastle 本身已经支持国密的算法，所以只用在fabric java sdk中添加对加密算法、hash算法、证书类型的判断即可。</p>
-<p><strong>但是：</strong>因为bouncycastle必须手动加载早java security系统中，所以应用程序应该在启动的时候调用如下代码加载<code>Security.addProvider(new BouncyCastleProvider());</code>。否则就会提示类似于不可识别的证书、不支持的算法等莫名其妙的错误提示。</p>
-<h3 id="Config改造"><a href="#Config改造" class="headerlink" title="Config改造"></a>Config改造</h3><p>java sdk启动的时候在 config.properties 文件查找配置选项，比较有用的几个是：</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># security level determines the elliptic curve used to generate keys. Valid values are 256 ( curve is P-256 )</span></span><br><span class="line"><span class="comment"># and 384 ( curve is secp384r1 )</span></span><br><span class="line"><span class="attr">org.hyperledger.fabric.sdk.crypto.security_level</span> = <span class="string">256</span></span><br><span class="line"><span class="comment"># hash algorithm determines the message digest used when creating a signature. Valid values are</span></span><br><span class="line"><span class="comment"># SHA2 ( digest is SHA-256 ) and SHA3 ( digest is SHA-3 )</span></span><br><span class="line"><span class="attr">org.hyperledger.fabric.sdk.crypto.hash_algorithm</span> = <span class="string">SHA2</span></span><br><span class="line"><span class="comment"># The format for the certificate PEM files used by the SDK, Fabric and Fabric-ca components.</span></span><br><span class="line"><span class="comment"># currently X.509 is the only valid format supported. This entry is here to allow for future support</span></span><br><span class="line"><span class="comment"># org.hyperledger.fabric.sdk.crypto.certificate_format = X.509</span></span><br><span class="line"><span class="comment"># The algorithm used to generate a signature. Valid values are listed in the JCA Standard Algorithm Name Documentation</span></span><br><span class="line"><span class="comment"># e.g. http://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#Signature</span></span><br><span class="line"><span class="attr">org.hyperledger.fabric.sdk.crypto.default_signature_algorithm</span> = <span class="string">SHA256withECDSA</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="Install-the-following-requisites-for-BackupPC-version-4-3-1"><a href="#Install-the-following-requisites-for-BackupPC-version-4-3-1" class="headerlink" title="Install the following requisites for BackupPC version 4.3.1"></a>Install the following requisites for BackupPC version 4.3.1</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">yum -y install bzip2 httpd mod_perl par2cmdline perl-Archive-Zip perl-CGI \</span><br><span class="line">perl-Compress-Raw-Zlib perl-Data-Dumper perl-Digest-MD5 perl-File-Listing \</span><br><span class="line">perl-File-RsyncP perl-Net-FTP-AutoReconnect perl-Net-FTP-RetrHandle \</span><br><span class="line">perl-Time-ParseDate perl-XML-RSS perl-version rrdtool samba-client</span><br></pre></td></tr></table></figure>
 
-<p>上面的配置是缺省的椭圆曲线配置，为了满足国密支持，我们需要支持如下配置</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">org.hyperledger.fabric.sdk.crypto.default_signature_algorithm</span> = <span class="string">SM3withSM2</span></span><br><span class="line"><span class="attr">org.hyperledger.fabric.sdk.hash_algorithm</span> = <span class="string">SM3</span></span><br><span class="line"><span class="attr">org.hyperledger.fabric.sdk.security_level</span>=<span class="string">255</span></span><br></pre></td></tr></table></figure>
-
-<p>security_level=255 是为了避免跟椭圆曲线冲突。</p>
-<p>相应的我们需要在Config.java文件中修改加密曲线配置，增加<code>255=sm2p256v1</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//defaultProperty(SECURITY_CURVE_MAPPING, &quot;256=secp256r1:384=secp384r1&quot;);</span></span><br><span class="line">  defaultProperty(SECURITY_CURVE_MAPPING, <span class="string">&quot;256=secp256r1:384=secp384r1:255=sm2p256v1&quot;</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>这样系统看到<code>security_level=255</code> 就知道使用 sm2p256v1 加密曲线。</p>
-<h3 id="加密套件修改"><a href="#加密套件修改" class="headerlink" title="加密套件修改"></a>加密套件修改</h3><h4 id="验证证书"><a href="#验证证书" class="headerlink" title="验证证书"></a>验证证书</h4><p>在验证证书的时候CertPathValidator 不能使用缺省的，需要使用bouncycastle 提供的。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//CertPathValidator certValidator = CertPathValidator.getInstance(</span></span><br><span class="line">		CertPathValidator.getDefaultType()); <span class="comment">// PKIX</span></span><br><span class="line"><span class="type">CertPathValidator</span> <span class="variable">certValidator</span> <span class="operator">=</span> CertPathValidator.getInstance(\</span><br><span class="line">		CertPathValidator.getDefaultType(), <span class="string">&quot;BC&quot;</span>); <span class="comment">// PKIX</span></span><br></pre></td></tr></table></figure>
+<h1 id="Lets-set-up-some-directories-that-we-are-going-to-use-later"><a href="#Lets-set-up-some-directories-that-we-are-going-to-use-later" class="headerlink" title="Lets set up some directories that we are going to use later."></a>Lets set up some directories that we are going to use later.</h1><p>My backuppc server has a raid10 array mounted at /data/. I am going to use this to store the data for backuppc. Lets create the backuppc folder on my raid. Note: this folder can grow to be extremely large.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /data/backuppc</span><br></pre></td></tr></table></figure>
 
 
 
-<h4 id="配置哈希算法"><a href="#配置哈希算法" class="headerlink" title="配置哈希算法"></a>配置哈希算法</h4><p>需要添加sm3的判断</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">setHashAlgorithm</span><span class="params">(String algorithm)</span> <span class="keyword">throws</span> InvalidArgumentException &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// whx: 添加SM3</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (isNullOrEmpty(algorithm)</span><br><span class="line">            || !(<span class="string">&quot;SHA2&quot;</span>.equals(algorithm)</span><br><span class="line">            || <span class="string">&quot;SHA3&quot;</span>.equals(algorithm)</span><br><span class="line">            || <span class="string">&quot;SM3&quot;</span>.equals(algorithm)</span><br><span class="line">    )) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">InvalidArgumentException</span>(<span class="string">&quot;Illegal Hash function family: &quot;</span></span><br><span class="line">                + algorithm + <span class="string">&quot; - must be either SHA2 or SHA3 or SM3&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    hashAlgorithm = algorithm;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="椭圆曲线证书转换的时候"><a href="#椭圆曲线证书转换的时候" class="headerlink" title="椭圆曲线证书转换的时候"></a>椭圆曲线证书转换的时候</h4><p>标准算法转换的时候有这么一句，在国密里面要注释掉，否则验证签名会失败。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sigs = preventMalleability(sigs, curveN);</span><br></pre></td></tr></table></figure>
-
-<h4 id="证书工厂配置"><a href="#证书工厂配置" class="headerlink" title="证书工厂配置"></a>证书工厂配置</h4><p>修改为之支持x509，由 bouncycastle 提供。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//            cf = CertificateFactory.getInstance(CERTIFICATE_FORMAT);</span><br><span class="line">            cf = CertificateFactory.getInstance(&quot;X509&quot;, &quot;BC&quot;);</span><br></pre></td></tr></table></figure>
-
-<h4 id="增加固定的sha256"><a href="#增加固定的sha256" class="headerlink" title="增加固定的sha256"></a>增加固定的sha256</h4><p>因为在提交交易的时候，交易的哈希是固定的sha256，但做签名的时候根据证书使用，所以在这里添加一个sha256,在交易提交的时候调用</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//whx 做一个固定的sha256哈希</span><br><span class="line">@Override</span><br><span class="line">public byte[] hashSha256(byte[] input) &#123;</span><br><span class="line">    Digest digest = new SHA256Digest();</span><br><span class="line">    byte[] retValue = new byte[digest.getDigestSize()];</span><br><span class="line">    digest.update(input, 0, input.length);</span><br><span class="line">    digest.doFinal(retValue, 0);</span><br><span class="line">    return retValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Now lets create one more folder for BackupPC to store some web interface files.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /var/www/html/backuppc</span><br></pre></td></tr></table></figure>
 
 
 
-<p>提交交易的时候：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="title function_">TransactionContext</span><span class="params">(Channel channel, User user, CryptoSuite cryptoPrimitives)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">byte</span>[] txh = cryptoPrimitives.hashSha256(comp.toByteArray());</span><br></pre></td></tr></table></figure>
+<p>And create the cgi-bin directory for backuppc</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /var/www/cgi-bin/backuppc</span><br></pre></td></tr></table></figure>
 
 
 
-<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>config.properties 作为java sdk的配置文件，缺省在jar执行文件的当前目录，如果没有，就是按照标准的椭圆曲线证书支持；否则，就必须单独做配置文件，如下是标准的国密算法配置内容：</p>
-<p>上面的配置是缺省的椭圆曲线配置，为了满足国密支持，我们需要支持如下配置</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">org.hyperledger.fabric.sdk.crypto.default_signature_algorithm</span> = <span class="string">SM3withSM2</span></span><br><span class="line"><span class="attr">org.hyperledger.fabric.sdk.hash_algorithm</span> = <span class="string">SM3</span></span><br><span class="line"><span class="attr">org.hyperledger.fabric.sdk.security_level</span>=<span class="string">255</span></span><br></pre></td></tr></table></figure>
+<p>Make note of those 2 directories. The installer will ask for them if we don’t explicitly set them below.</p>
+<h1 id="Create-and-setup-the-backuppc-user"><a href="#Create-and-setup-the-backuppc-user" class="headerlink" title="Create and setup the backuppc user."></a>Create and setup the backuppc user.</h1><p>Create group backuppc.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupadd backuppc</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Create backuppc user, and tell it where its home folder is. My backuppc user’s home folder is /opt/backuppc. Change this to whatever you’d like.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">useradd --home-dir /opt/backuppc --create-home --shell /bin/bash --base-dir /opt/backuppc --gid backuppc backuppc</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="Set-Permissions-on-the-directories-we-created"><a href="#Set-Permissions-on-the-directories-we-created" class="headerlink" title="Set Permissions on the directories we created:"></a>Set Permissions on the directories we created:</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown -R backuppc:backuppc /data/backuppc</span><br><span class="line">chown -R backuppc:backuppc /opt/backuppc</span><br></pre></td></tr></table></figure>
+
+<h1 id="Download-the-BackupPC-tar-gz-archive-and-extract-it"><a href="#Download-the-BackupPC-tar-gz-archive-and-extract-it" class="headerlink" title="Download the BackupPC tar.gz archive and extract it."></a>Download the BackupPC tar.gz archive and extract it.</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd ~</span><br><span class="line">wget https://github.com/backuppc/backuppc/releases/download/4.4.0/BackupPC-4.4.0.tar.gz</span><br><span class="line">tar zxf BackupPC-4.4.0.tar.gz</span><br><span class="line">cd BackupPC-4.4.0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="Run-the-configure-pl-script"><a href="#Run-the-configure-pl-script" class="headerlink" title="Run the configure.pl script"></a>Run the configure.pl script</h1><p>Pay close attention to the paths in this command.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">perl configure.pl --batch --cgi-dir /var/www/cgi-bin/backuppc \</span><br><span class="line">--data-dir /data0/backuppc --hostname backuppc --html-dir /var/www/html/backuppc \</span><br><span class="line">--html-dir-url /backuppc --install-dir /opt/backuppc</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Alternatively, you can execute the perl script with no arguments and it will walk you through the install step by step. This is the preferred method if you are upgrading a version 3.X install. (Not supported by this guide)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl configure.pl</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">Ok, we&#x27;re about to:</span><br><span class="line"></span><br><span class="line">  - install the binaries, lib and docs in /usr/local/BackupPC</span><br><span class="line">  - create the data directory /data/BackupPC</span><br><span class="line">  - optionally install the cgi-bin interface</span><br><span class="line">  - create/update the config.pl file /etc/BackupPC/config.pl</span><br><span class="line">--&gt; Do you want to continue? [y]?</span><br><span class="line">Created /usr/local/BackupPC/bin</span><br><span class="line">Created /usr/local/BackupPC/share</span><br><span class="line">Created /usr/local/BackupPC/share/doc</span><br><span class="line">Created /usr/local/BackupPC/share/doc/BackupPC</span><br><span class="line">Created /usr/local/BackupPC/lib</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC/CGI</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC/Config</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC/Lang</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC/Storage</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC/Xfer</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC/Zip</span><br><span class="line">Created /usr/local/BackupPC/lib/Net</span><br><span class="line">Created /usr/local/BackupPC/lib/Net/FTP</span><br><span class="line">Created /data/BackupPC</span><br><span class="line">Created /data/BackupPC/pool</span><br><span class="line">Created /data/BackupPC/cpool</span><br><span class="line">Created /data/BackupPC/pc</span><br><span class="line">Created /etc/BackupPC</span><br><span class="line">Created /var/log/BackupPC</span><br><span class="line">Created /var/run/BackupPC</span><br><span class="line">Installing binaries in /usr/local/BackupPC/bin</span><br><span class="line">Installing library in /usr/local/BackupPC/lib</span><br><span class="line">Making systemd and init.d scripts</span><br><span class="line">Making Apache configuration file for suid-perl</span><br><span class="line">Installing docs in /usr/local/BackupPC/share/doc/BackupPC</span><br><span class="line">Installing cgi script BackupPC_Admin in /var/www/cgi-bin/backuppc</span><br><span class="line">Installing config.pl and hosts in /etc/BackupPC</span><br><span class="line"></span><br><span class="line">Ok, it looks like we are finished.  There are several more things you</span><br><span class="line">will need to do:</span><br><span class="line"></span><br><span class="line">  - Browse through the config file, /etc/BackupPC/config.pl,</span><br><span class="line">    and make sure all the settings are correct.  In particular,</span><br><span class="line">    you will need to set $Conf&#123;CgiAdminUsers&#125; so you have</span><br><span class="line">    administration privileges in the CGI interface.</span><br><span class="line"></span><br><span class="line">  - Edit the list of hosts to backup in /etc/BackupPC/hosts.</span><br><span class="line"></span><br><span class="line">  - Read the documentation in /usr/local/BackupPC/doc/BackupPC.html.</span><br><span class="line">    Please pay special attention to the security section.</span><br><span class="line"></span><br><span class="line">  - Verify that the CGI script BackupPC_Admin runs correctly.  You might</span><br><span class="line">    need to change the permissions or group ownership of BackupPC_Admin.</span><br><span class="line">    If this is an upgrade and you are using mod_perl, you will need</span><br><span class="line">    to restart Apache.  Otherwise it will have stale code.</span><br><span class="line"></span><br><span class="line">  - BackupPC should be ready to start.  Don&#x27;t forget to run it</span><br><span class="line">    as user backuppc!  The installation also contains</span><br><span class="line">    a systemd/backuppc.service script that can be installed so</span><br><span class="line">    that BackupPC can auto-start on boot.  This will also enable</span><br><span class="line">    administrative users to start the server from the CGI interface.</span><br><span class="line">    See systemd/README.</span><br><span class="line"></span><br><span class="line">Enjoy!  </span><br></pre></td></tr></table></figure>
+
+<h1 id="Apache-config"><a href="#Apache-config" class="headerlink" title="Apache config"></a>Apache config</h1><p>I chose the CGI route (not S-CGI) and chose the directory /var/www/cgi-bin/backuppc for my CGI directory. I chose /var/www/html/backuppc as my images directory. You may need to set this path in the config if you ran the configure.pl script with no arguments.</p>
+<p>Now we need to copy the Apache config into the apache conf.d directory.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp httpd/BackupPC.conf /etc/httpd/conf.d/</span><br></pre></td></tr></table></figure>
+
+<h1 id="Install-the-included-systemd-script"><a href="#Install-the-included-systemd-script" class="headerlink" title="Install the included systemd script:"></a>Install the included systemd script:</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cp systemd/backuppc.service /etc/systemd/system/</span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl start backuppc</span><br><span class="line">systemctl enable backuppc</span><br></pre></td></tr></table></figure>
+
+<h1 id="Create-the-backuppc-authentication-file"><a href="#Create-the-backuppc-authentication-file" class="headerlink" title="Create the backuppc authentication file."></a>Create the backuppc authentication file.</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">htpasswd -c /etc/BackupPC/BackupPC.users backuppc</span><br><span class="line"></span><br><span class="line">zaq1XSW2</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Note: this sets the username to backuppc (modify it to your liking)</p>
+<p>Set permissions on this file.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown backuppc:backuppc /etc/BackupPC/BackupPC.users</span><br></pre></td></tr></table></figure>
+
+<h1 id="Edit-the-config-pl-file-in-etc-BackupPC"><a href="#Edit-the-config-pl-file-in-etc-BackupPC" class="headerlink" title="Edit the config.pl file in /etc/BackupPC/"></a>Edit the config.pl file in /etc/BackupPC/</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/BackupPC/config.pl</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Check the image directory and image url variables.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$Conf&#123;CgiImageDir&#125; = &#x27;/var/www/html/backuppc&#x27;;</span><br><span class="line">$Conf&#123;CgiImageDirURL&#125; = &#x27;/BackupPc&#x27;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Also add backuppc as the administrative user: <code>$Conf&#123;CgiAdminUsers&#125;     = &#39;backuppc&#39;;</code></p>
+<p>这时候不能往/etc/BackupPC目录写东西，</p>
+<p>chcon -R -t httpd_sys_content_t /etc/BackupPC</p>
+<p>查看备份内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 列表</span><br><span class="line">BackupPC_ls -h bi-server -n 0 -s /data/bakdata /</span><br><span class="line">BackupPC_ls -h erp-oracle -n 1 -s /backup/bakdata /</span><br><span class="line"></span><br><span class="line">#查看文件</span><br><span class="line">BackupPC_zcat -h erp-oracle -n 1 -s /backup/bakdata /navy_bak221220_full.log</span><br></pre></td></tr></table></figure>
 
 
       
@@ -594,7 +889,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2018-%E5%9B%BD%E5%AF%86%E5%95%86%E5%AF%86%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2023-1219-%E5%BC%80%E6%BA%90oss/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -608,7 +903,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018-%E5%9B%BD%E5%AF%86%E5%95%86%E5%AF%86%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D/" class="post-title-link" itemprop="url">国密商密什么意思</a>
+            <a href="/2023-1219-%E5%BC%80%E6%BA%90oss/" class="post-title-link" itemprop="url">Untitled</a>
         </h2>
 
         <div class="post-meta">
@@ -618,15 +913,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-10-10 10:20:34" itemprop="dateCreated datePublished" datetime="2018-10-10T10:20:34+08:00">2018-10-10</time>
+              <time title="Created: 2023-12-19 14:57:35" itemprop="dateCreated datePublished" datetime="2023-12-19T14:57:35+08:00">2023-12-19</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-03 23:17:51" itemprop="dateModified" datetime="2023-01-03T23:17:51+08:00">2023-01-03</time>
-              </span>
 
           
 
@@ -639,22 +927,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="国密商密什么意思"><a href="#国密商密什么意思" class="headerlink" title="国密商密什么意思"></a>国密商密什么意思</h1><p>国密算法即国家密码局认定的国产密码算法，即商用密码。<br>国际算法由美国的安全局发布，是现今最通用的商用密码算法。</p>
-<p>美国国家标准局</p>
-<p>美国国家安全局</p>
-<h2 id="商密-国际商用加密算法"><a href="#商密-国际商用加密算法" class="headerlink" title="商密-国际商用加密算法"></a>商密-国际商用加密算法</h2><p>一般说商密是指商用密码。更多是我们更加耳熟能详的的密码学标准。诸如AES、DAS、RSA、ECC椭圆曲线系列等加密算法。</p>
-<h2 id="国密-中国国家商用密码算法"><a href="#国密-中国国家商用密码算法" class="headerlink" title="国密-中国国家商用密码算法"></a>国密-中国国家商用密码算法</h2><p>国密是中国国家密码局认定和颁发的密码算法标准，SM 是一个系列，常用的包括SM1、SM2、SM3、SM4。</p>
-<p>经中央机构编制委员会批准,原<strong>国家密码管理委员会办公室</strong>更名为<strong>国家密码管理局</strong></p>
-<p><strong>《商用密码管理条例》</strong></p>
-<p>《行业标准公告》2012-3-21</p>
-<h2 id="为啥有了商密还要有国密"><a href="#为啥有了商密还要有国密" class="headerlink" title="为啥有了商密还要有国密"></a>为啥有了商密还要有国密</h2><p>为什么有了商密还要国密。主要原因可能包括：</p>
-<p>1、一部分商密的设计中涉及到的一些具体步骤主要是老美的一些强力部门负责的。里面是不是有个什么漏洞啊、后门啊什么的不清楚。</p>
-<p>2、国密是自己人弄的，对于原理和实现细节一清二楚。用起来放心。<br>目前国密主要是对国内的产品，有些特殊的产品国家会强制使用。</p>
-<p>密码学目前主要包括有</p>
+          <p>开源oss</p>
 <ul>
-<li>对称加密算法。常见的包括DES、3DES、AES、SM1等。</li>
-<li>非对加密算法。常见的包括RSA、ECC、SM2等。</li>
-<li>消息摘要算法。最常见的就是md5、SHA系列、SM3。</li>
+<li><p>Minio：一个基于Apache License v2.0协议的开源对象存储服务器。Minio支持Amazon S3兼容API，可以用于构建云端的备份，CDN和存储库。</p>
+</li>
+<li><p>Ceph：一个分布式文件系统，可以在计算机集群上提供高性能的对象存储和文件系统服务。Ceph是一个开源项目，提供了一个名为RadosGW的对象存储服务器，支持Amazon S3和OpenStack Swift API。</p>
+</li>
+<li><p>GlusterFS：一个分布式文件系统，可以在计算机集群上提供高性能的文件存储服务。GlusterFS使用FUSE来将分布式文件系统挂载到本地文件系统上，可以提供类似于NFS或CIFS的文件共享服务。</p>
+</li>
 </ul>
 
       
@@ -675,7 +955,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2018-mark-down-use/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2023-1110-kettle%E5%AD%A6%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -689,7 +969,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018-mark-down-use/" class="post-title-link" itemprop="url">mark down 的基本用法</a>
+            <a href="/2023-1110-kettle%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">Untitled</a>
         </h2>
 
         <div class="post-meta">
@@ -699,24 +979,15 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-04-29 15:01:48" itemprop="dateCreated datePublished" datetime="2018-04-29T15:01:48+08:00">2018-04-29</time>
+              <time title="Created: 2023-11-10 14:09:00" itemprop="dateCreated datePublished" datetime="2023-11-10T14:09:00+08:00">2023-11-10</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-19 09:41:41" itemprop="dateModified" datetime="2023-01-19T09:41:41+08:00">2023-01-19</time>
+                <time title="Modified: 2023-11-14 09:24:28" itemprop="dateModified" datetime="2023-11-14T09:24:28+08:00">2023-11-14</time>
               </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/fabric/" itemprop="url" rel="index"><span itemprop="name">fabric</span></a>
-                </span>
-            </span>
 
           
 
@@ -729,80 +1000,62 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="标题1"><a href="#标题1" class="headerlink" title="标题1"></a>标题1</h1><p>allala</p>
-<h2 id="标题二"><a href="#标题二" class="headerlink" title="标题二"></a>标题二</h2><p>第二部分</p>
-<h2 id="无序列表：使用星号、加号或是减号作为列表标记"><a href="#无序列表：使用星号、加号或是减号作为列表标记" class="headerlink" title="无序列表：使用星号、加号或是减号作为列表标记"></a>无序列表：使用星号、加号或是减号作为列表标记</h2><ul>
-<li>Red</li>
-<li>Green</li>
-<li>Blue</li>
-</ul>
-<h2 id="有序列表：使用数字接着一个英文句点"><a href="#有序列表：使用数字接着一个英文句点" class="headerlink" title="有序列表：使用数字接着一个英文句点"></a>有序列表：使用数字接着一个英文句点</h2><ol>
-<li><p>Red</p>
-</li>
-<li><p>Green</p>
-</li>
-<li><p>Blue</p>
-<blockquote>
-<p>aaa<br>bbb</p>
-</blockquote>
-</li>
-<li><p>11</p>
-</li>
-<li><p>333</p>
-</li>
-<li><p><input disabled="" type="checkbox">  不勾选</p>
-</li>
-<li><p><input checked="" disabled="" type="checkbox">  勾选</p>
-</li>
-<li><p>223</p>
-</li>
-</ol>
-<ul>
-<li><input disabled="" type="checkbox"> 不勾选</li>
-<li><input checked="" disabled="" type="checkbox"> 勾选</li>
-</ul>
-<h2 id="强调"><a href="#强调" class="headerlink" title="强调"></a>强调</h2><p>在Markdown中，可以使用 * 和  _  来表示斜体和加粗。</p>
-<h2 id="斜体："><a href="#斜体：" class="headerlink" title="斜体："></a>斜体：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*Coding，让开发更简单*</span><br><span class="line">_Coding，让开发更简单_</span><br></pre></td></tr></table></figure>
-<p><em>Coding，让开发更简单</em><br><em>Coding，让开发更简单</em></p>
-<h2 id="加粗："><a href="#加粗：" class="headerlink" title="加粗："></a>加粗：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">**Coding，让开发更简单**</span><br><span class="line">__Coding，让开发更简单__</span><br></pre></td></tr></table></figure>
+          <p>20231110-kettle学习</p>
+<p>kettle用repositories</p>
+<p>新建一个数据库的仓库，记着要把启动命令中增加  “-Dfile.encoding=UTF-8”,否则打开文件的时候会出现 Invalid byte 1 of 1-byte UTF-8 sequence.</p>
+<p> 然后新建的转换和作业就保存到数据库中</p>
+<p>linux服务器操作</p>
+<p>把pdi解压缩后复制到<code>/usr/local/data-integration</code> 目录</p>
+<p>设置环境变量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export KETTLE_HOME=/usr/local/data-integration</span><br></pre></td></tr></table></figure>
 
-<p><strong>Coding，让开发更简单</strong><br><strong>Coding，让开发更简单</strong></p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>只要把你的代码块包裹在 “` 之间，你就不需要通过无休止的缩进来标记代码块了。 在围栏式代码块中，你可以指定一个可选的语言标识符，然后我们就可以为它启用语法着色了。 举个例子，这样可以为一段 Ruby 代码着色：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span> <span class="string">&#x27;redcarpet&#x27;</span></span><br><span class="line">markdown = <span class="title class_">Redcarpet</span>.<span class="title function_">new</span>(<span class="string">&quot;Hello World!&quot;</span>)</span><br><span class="line">puts markdown.<span class="property">to_html</span></span><br></pre></td></tr></table></figure>
+<p>把windows下做好的 repositories.xml 文件复制到<code>/usr/local/data-integration/.kettle</code></p>
+<p> 目录下</p>
+<p>查看repository:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./kitchen.sh -listrep</span><br><span class="line"> List of repositories:</span><br><span class="line">#1 : birepo [bi-databases]  id=KettleDatabaseRepository</span><br><span class="line"> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>查看所有的job</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./kitchen.sh -rep:birepo  -user:admin -pass:admin   -listjobs</span><br><span class="line">2023/11/10 17:40:59 - Kitchen - Start of run.</span><br><span class="line">2023/11/10 17:40:59 - RepositoriesMeta - Reading repositories XML file: /usr/local/data-integration/.kettle/repositories.xml</span><br><span class="line">zgcw</span><br></pre></td></tr></table></figure>
 
 
-<h2 id="自动链接"><a href="#自动链接" class="headerlink" title="自动链接"></a>自动链接</h2><p>方括号显示说明，圆括号内显示网址， Markdown 会自动把它转成链接，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[超强大的云开发平台Coding](http://coding.net)</span><br></pre></td></tr></table></figure>
-<p><a target="_blank" rel="noopener" href="http://coding.net/">超强大的云开发平台Coding</a></p>
-<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>在 Markdown 中，可以制作表格，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">First Header | Second Header | Third Header</span><br><span class="line">------------ | ------------- | ------------</span><br><span class="line">Content Cell | Content Cell  | Content Cell</span><br><span class="line">Content Cell | Content Cell  | Content Cell</span><br></pre></td></tr></table></figure>
+
+<p>查看所有的trans</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./pan.sh -rep:birepo  -user:admin -pass:admin   -listtrans</span><br><span class="line">2023/11/10 17:43:09 - Pan - 开始运行.</span><br><span class="line">2023/11/10 17:43:09 - RepositoriesMeta - Reading repositories XML file: /usr/local/data-integration/.kettle/repositories.xml</span><br><span class="line">car_transfer_info</span><br><span class="line">market</span><br></pre></td></tr></table></figure>
+
+<p>执行转换：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ ./pan.sh -rep:birepo  -user:admin -pass:admin   -trans:market</span><br><span class="line">2023/11/10 17:45:35 - Pan - 开始运行.</span><br><span class="line">2023/11/10 17:45:35 - RepositoriesMeta - Reading repositories XML file: /usr/local/data-integration/.kettle/repositories.xml</span><br><span class="line">2023/11/10 17:45:36 - market - 为了转换解除补丁开始  [market]</span><br><span class="line">2023/11/10 17:45:36 - read_from_market.0 - Finished reading query, closing connection</span><br><span class="line">2023/11/10 17:45:36 - read_from_market.0 - 完成处理 (I=443, O=0, R=0, W=443, U=0, E=0)</span><br><span class="line">2023/11/10 17:45:37 - write_to_market.0 - 完成处理 (I=443, O=0, R=443, W=443, U=0, E=0)</span><br><span class="line">2023/11/10 17:45:37 - Pan - 完成!</span><br><span class="line">2023/11/10 17:45:37 - Pan - 开始=2023/11/10 17:45:36.601, 停止=2023/11/10 17:45:37.081</span><br><span class="line">2023/11/10 17:45:37 - Pan - 0 秒后处理结束.</span><br><span class="line">2023/11/10 17:45:37 - market -</span><br><span class="line">2023/11/10 17:45:37 - market - 进程 read_from_market.0 成功结束, 处理了 443 行. ( - 行/秒)</span><br><span class="line">2023/11/10 17:45:37 - market - 进程 write_to_market.0 成功结束, 处理了 443 行. ( - 行/秒)</span><br></pre></td></tr></table></figure>
+
+<p>执行转换</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ ./pan.sh -rep:birepo  -user:admin -pass:admin   -trans:car_transfer_info</span><br><span class="line">2023/11/10 17:46:18 - Pan - 开始运行.</span><br><span class="line">2023/11/10 17:46:18 - RepositoriesMeta - Reading repositories XML file: /usr/local/data-integration/.kettle/repositories.xml</span><br><span class="line">2023/11/10 17:46:18 - car_transfer_info - 为了转换解除补丁开始  [car_transfer_info]</span><br><span class="line">2023/11/10 17:46:19 - get_lastast_time_of_car_transfer.0 - Finished reading query, closing connection</span><br><span class="line">2023/11/10 17:46:19 - get_lastast_time_of_car_transfer.0 - 完成处理 (I=1, O=0, R=0, W=1, U=0, E=0)</span><br><span class="line">2023/11/10 17:46:19 - read_modifed_record.0 - Finished reading query, closing connection</span><br><span class="line">2023/11/10 17:46:19 - read_modifed_record.0 - 完成处理 (I=17, O=0, R=1, W=17, U=0, E=0)</span><br><span class="line">2023/11/10 17:46:19 - update_car_transfer_info.0 - 完成处理 (I=17, O=15, R=17, W=17, U=2, E=0)</span><br><span class="line">2023/11/10 17:46:19 - Pan - 完成!</span><br><span class="line">2023/11/10 17:46:19 - Pan - 开始=2023/11/10 17:46:18.994, 停止=2023/11/10 17:46:19.542</span><br><span class="line">2023/11/10 17:46:19 - Pan - 0 秒后处理结束.</span><br><span class="line">2023/11/10 17:46:19 - car_transfer_info -</span><br><span class="line">2023/11/10 17:46:19 - car_transfer_info - 进程 get_lastast_time_of_car_transfer.0 成功结束, 处理了 1 行. ( - 行/秒)</span><br><span class="line">2023/11/10 17:46:19 - car_transfer_info - 进程 read_modifed_record.0 成功结束, 处理了 17 行. ( - 行/秒)</span><br><span class="line">2023/11/10 17:46:19 - car_transfer_info - 进程 update_car_transfer_info.0 成功结束, 处理了 17 行. ( - 行/秒)</span><br></pre></td></tr></table></figure>
 
 
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-<th>Third Header</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-</tbody></table>
-<p>分割线</p>
-<p>在 Markdown 中，可以使用 3 个以上『-』符号制作分割线，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这是分隔线上部分内容</span><br><span class="line">---</span><br><span class="line">这是分隔线下部分内容</span><br></pre></td></tr></table></figure>
-<p>效果图如下：</p>
-<h2 id="这是分隔线上部分内容"><a href="#这是分隔线上部分内容" class="headerlink" title="这是分隔线上部分内容"></a>这是分隔线上部分内容</h2><p>这是分隔线下部分内容</p>
-<p>没有了</p>
+
+
+
+<p>执行job</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">$ ./kitchen.sh -rep:birepo  -user:admin -pass:admin   -job:zgcw</span><br><span class="line">2023/11/10 17:54:09 - Kitchen - Start of run.</span><br><span class="line">2023/11/10 17:54:09 - RepositoriesMeta - Reading repositories XML file: /usr/local/data-integration/.kettle/repositories.xml</span><br><span class="line">2023/11/10 17:54:10 - zgcw - 开始执行任务</span><br><span class="line">2023/11/10 17:54:11 - zgcw - 开始项[market]</span><br><span class="line">2023/11/10 17:54:11 - market - Using run configuration [Pentaho <span class="built_in">local</span>]</span><br><span class="line">2023/11/10 17:54:11 - market - 为了转换解除补丁开始  [market]</span><br><span class="line">2023/11/10 17:54:11 - read_from_market.0 - Finished reading query, closing connection</span><br><span class="line">2023/11/10 17:54:11 - read_from_market.0 - 完成处理 (I=443, O=0, R=0, W=443, U=0, E=0)</span><br><span class="line">2023/11/10 17:54:11 - write_to_market.0 - 完成处理 (I=443, O=0, R=443, W=443, U=0, E=0)</span><br><span class="line">2023/11/10 17:54:11 - zgcw - 开始项[car_transfer_info]</span><br><span class="line">2023/11/10 17:54:11 - car_transfer_info - Using run configuration [Pentaho <span class="built_in">local</span>]</span><br><span class="line">2023/11/10 17:54:11 - car_transfer_info - 为了转换解除补丁开始  [car_transfer_info]</span><br><span class="line">2023/11/10 17:54:11 - get_lastast_time_of_car_transfer.0 - Finished reading query, closing connection</span><br><span class="line">2023/11/10 17:54:11 - get_lastast_time_of_car_transfer.0 - 完成处理 (I=1, O=0, R=0, W=1, U=0, E=0)</span><br><span class="line">2023/11/10 17:54:12 - read_modifed_record.0 - Finished reading query, closing connection</span><br><span class="line">2023/11/10 17:54:12 - read_modifed_record.0 - 完成处理 (I=10, O=0, R=1, W=10, U=0, E=0)</span><br><span class="line">2023/11/10 17:54:12 - update_car_transfer_info.0 - 完成处理 (I=10, O=9, R=10, W=10, U=1, E=0)</span><br><span class="line">2023/11/10 17:54:12 - zgcw - 开始项[成功]</span><br><span class="line">2023/11/10 17:54:12 - zgcw - 完成作业项[成功] (结果=[<span class="literal">true</span>])</span><br><span class="line">2023/11/10 17:54:12 - zgcw - 完成作业项[car_transfer_info] (结果=[<span class="literal">true</span>])</span><br><span class="line">2023/11/10 17:54:12 - zgcw - 完成作业项[market] (结果=[<span class="literal">true</span>])</span><br><span class="line">2023/11/10 17:54:12 - zgcw - 任务执行完毕</span><br><span class="line">2023/11/10 17:54:12 - Kitchen - Finished!</span><br><span class="line">2023/11/10 17:54:12 - Kitchen - Start=2023/11/10 17:54:10.967, Stop=2023/11/10 17:54:12.271</span><br><span class="line">2023/11/10 17:54:12 - Kitchen - Processing ended after 1 seconds.</span><br></pre></td></tr></table></figure>
+
+<h3 id="做第一个市场每日交易统计"><a href="#做第一个市场每日交易统计" class="headerlink" title="做第一个市场每日交易统计"></a>做第一个市场每日交易统计</h3><p>新建表 transfer_daily_report</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `transfer_daily_report` (</span><br><span class="line">  `market_id` int(10) DEFAULT NULL COMMENT &#x27;市场编号&#x27;,</span><br><span class="line">  `day` DATE  DEFAULT NULL COMMENT &#x27;天&#x27;,</span><br><span class="line">  `vehicle_type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT &#x27;车辆类型&#x27;,</span><br><span class="line">  `amount` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT &#x27;金额&#x27;,</span><br><span class="line">  `cnt` int DEFAULT NULL COMMENT &#x27;数量&#x27;,</span><br><span class="line">  `market` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT &#x27;市场名称&#x27;,</span><br><span class="line">  `province` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT &#x27;省&#x27;,</span><br><span class="line">  KEY `p` (`market_id`,`day`,`vehicle_type`)</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT=&#x27;日统计（每个市场、每天、分类型统计）&#x27;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="新建重构作业流程"><a href="#新建重构作业流程" class="headerlink" title="新建重构作业流程"></a>新建重构作业流程</h4><p>第一步先清库,新建执行sql的任务</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span>  <span class="keyword">from</span> transfer_daily_report;</span><br></pre></td></tr></table></figure>
+
+<p>新建一个获取全部交易执行的语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT date(  handle_time) as day,</span><br><span class="line"> SUM(vehicle_price) as amount , count(*) as cnt,</span><br><span class="line"> i.market_id,m.name as market, m.province_name as province,</span><br><span class="line"> i.vehicle_type</span><br><span class="line">FROM zg_vehicle_transfer_info i inner join market m on m.id = i.market_id </span><br><span class="line"> where i.handle_time is not null </span><br><span class="line">GROUP BY i.market_id,day ,i.vehicle_type;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>新增一个生成车辆分类的脚本</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Script here</span></span><br><span class="line"><span class="keyword">var</span> vehicle_category= <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;客车&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;客车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;轿车&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;客车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;小型汽&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;客车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;小型轿&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;客车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;面包车&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;客车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;小型越野&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;客车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;货车&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;货车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;载货&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;货车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;重型&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;货车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;货运&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;货车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;摩托车&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;摩托车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;二轮&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;摩托车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>最后添加一个表输出的节点。</p>
+<h4 id="新建日更新的作业"><a href="#新建日更新的作业" class="headerlink" title="新建日更新的作业"></a>新建日更新的作业</h4><p>新增一个获取最近10天交易的sql</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="type">date</span>(handle_time) <span class="keyword">as</span> <span class="keyword">day</span>,</span><br><span class="line"> <span class="built_in">SUM</span>(vehicle_price) <span class="keyword">as</span> amount , <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">as</span> cnt,</span><br><span class="line"> i.market_id,m.name <span class="keyword">as</span> market, m.province_name <span class="keyword">as</span> province,</span><br><span class="line"> i.vehicle_type</span><br><span class="line"><span class="keyword">FROM</span> zg_vehicle_transfer_info i <span class="keyword">inner</span> <span class="keyword">join</span> market m <span class="keyword">on</span> m.id <span class="operator">=</span> i.market_id </span><br><span class="line"> <span class="keyword">where</span>  i.handle_time <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">and</span>  i.handle_time <span class="operator">&gt;</span> date_sub( now(),<span class="type">interval</span> <span class="number">10</span> <span class="keyword">day</span>)</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> i.market_id,<span class="keyword">day</span> ,i.vehicle_type;</span><br></pre></td></tr></table></figure>
+
+<p>添加生成车辆类别的脚本（同上）</p>
+<p>最后增加一个插入或者更新表的节点</p>
+<p>这里要根据市场、日期、车辆类型来更新。</p>
 
       
     </div>
@@ -822,7 +1075,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2018-hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2023-10-31-make%20oracle%20on%20vagrant%20box/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -836,7 +1089,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018-hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+            <a href="/2023-10-31-make%20oracle%20on%20vagrant%20box/" class="post-title-link" itemprop="url">Untitled</a>
         </h2>
 
         <div class="post-meta">
@@ -846,15 +1099,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-03-30 11:20:34" itemprop="dateCreated datePublished" datetime="2018-03-30T11:20:34+08:00">2018-03-30</time>
+              <time title="Created: 2023-11-06 09:48:29" itemprop="dateCreated datePublished" datetime="2023-11-06T09:48:29+08:00">2023-11-06</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-03 23:19:06" itemprop="dateModified" datetime="2023-01-03T23:19:06+08:00">2023-01-03</time>
-              </span>
 
           
 
@@ -867,23 +1113,134 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+          <p>make oracle on vagrant box</p>
+<p><a target="_blank" rel="noopener" href="https://geraldonit.com/2018/06/11/creating-an-oracle-database-vagrant-box/">https://geraldonit.com/2018/06/11/creating-an-oracle-database-vagrant-box/</a></p>
+<p>根据 </p>
+<p>生成两个vm，使用oraclelinux/7 ， 分别是192.168.56.10 192.168.56.11</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># -*- mode: ruby -*-</span></span><br><span class="line"><span class="comment"># vi: set ft=ruby :</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Vagrantfile API/syntax version. Don&#x27;t touch unless you know what you&#x27;re doing!</span></span><br><span class="line"><span class="attr">VAGRANTFILE_API_VERSION</span> = <span class="string">&quot;2&quot;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Box metadata location and box name</span></span><br><span class="line"><span class="attr">BOX_URL</span> = <span class="string">&quot;https://oracle.github.io/vagrant-projects/boxes&quot;</span></span><br><span class="line"><span class="attr">BOX_NAME</span> = <span class="string">&quot;oraclelinux/7&quot;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># UI object for printing information</span></span><br><span class="line"><span class="attr">ui</span> = <span class="string">Vagrant::UI::Prefixed.new(Vagrant::UI::Colored.new, &quot;vagrant&quot;)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Define constants</span></span><br><span class="line"><span class="attr">Vagrant.configure(VAGRANTFILE_API_VERSION)</span> <span class="string">do |config|</span></span><br><span class="line"><span class="comment">  # Use vagrant-env plugin if available</span></span><br><span class="line">  <span class="attr">if</span> <span class="string">Vagrant.has_plugin?(&quot;vagrant-env&quot;)</span></span><br><span class="line">    <span class="attr">config.env.load(&quot;.env.local&quot;,</span> <span class="string">&quot;.env&quot;) # enable the plugin</span></span><br><span class="line">  <span class="attr">end</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # VM name</span></span><br><span class="line">  <span class="attr">VM_NAME</span> = <span class="string">default_s(&#x27;VM_NAME&#x27;, &#x27;oracle11g-vagrant-whx&#x27;)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # Memory for the VM (in MB, 2048 MB = 2 GB)</span></span><br><span class="line">  <span class="attr">VM_MEMORY</span> = <span class="string">default_i(&#x27;VM_MEMORY&#x27;, 4096)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # VM time zone</span></span><br><span class="line"><span class="comment">  # If not specified, will be set to match host time zone (if possible)</span></span><br><span class="line">  <span class="attr">VM_SYSTEM_TIMEZONE</span> = <span class="string">default_s(&#x27;VM_SYSTEM_TIMEZONE&#x27;, host_tz)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # Listener port</span></span><br><span class="line">  <span class="attr">VM_LISTENER_PORT</span> = <span class="string">default_i(&#x27;VM_LISTENER_PORT&#x27;, 1521)</span></span><br><span class="line">  <span class="attr">VM_LISTENER_HOST_PORT</span> = <span class="string">default_i(&#x27;VM_LISTENER_HOST_PORT&#x27;, 1521)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # Oracle Database password for SYS and SYSTEM accounts</span></span><br><span class="line"><span class="comment">  # If left blank, the password will be generated automatically</span></span><br><span class="line">  <span class="attr">VM_ORACLE_PWD</span> = <span class="string">default_s(&#x27;VM_ORACLE_PWD&#x27;, &#x27;&#x27;)</span></span><br><span class="line"><span class="attr">end</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Convenience methods</span></span><br><span class="line"><span class="attr">def</span> <span class="string">default_s(key, default)</span></span><br><span class="line">  <span class="attr">ENV[key]</span> <span class="string">&amp;&amp; ! ENV[key].empty? ? ENV[key] : default</span></span><br><span class="line"><span class="attr">end</span></span><br><span class="line"></span><br><span class="line"><span class="attr">def</span> <span class="string">default_i(key, default)</span></span><br><span class="line">  <span class="attr">default_s(key,</span> <span class="string">default).to_i</span></span><br><span class="line"><span class="attr">end</span></span><br><span class="line"></span><br><span class="line"><span class="attr">def</span> <span class="string">host_tz</span></span><br><span class="line"><span class="comment">  # get host time zone for setting VM time zone</span></span><br><span class="line"><span class="comment">  # if host time zone isn&#x27;t an integer hour offset from GMT, fall back to UTC</span></span><br><span class="line">  <span class="attr">offset_sec</span> = <span class="string">Time.now.gmt_offset</span></span><br><span class="line">  <span class="attr">if</span> <span class="string">(offset_sec % (60 * 60)) == 0</span></span><br><span class="line">    <span class="attr">offset_hr</span> = <span class="string">((offset_sec / 60) / 60)</span></span><br><span class="line">    <span class="attr">timezone_suffix</span> = <span class="string">offset_hr &gt;= 0 ? &quot;-#&#123;offset_hr.to_s&#125;&quot; : &quot;+#&#123;(-offset_hr).to_s&#125;&quot;</span></span><br><span class="line">    <span class="attr">&#x27;Etc/GMT&#x27;</span> <span class="string">+ timezone_suffix</span></span><br><span class="line">  <span class="attr">else</span></span><br><span class="line">    <span class="attr">&#x27;UTC&#x27;</span></span><br><span class="line">  <span class="attr">end</span></span><br><span class="line"><span class="attr">end</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Vagrant.configure(VAGRANTFILE_API_VERSION)</span> <span class="string">do |config|</span></span><br><span class="line">  <span class="attr">config.vm.box</span> = <span class="string">BOX_NAME</span></span><br><span class="line">  <span class="attr">config.vm.box_url</span> = <span class="string">&quot;#&#123;BOX_URL&#125;/#&#123;BOX_NAME&#125;.json&quot;</span></span><br><span class="line">  <span class="attr">config.vm.define</span> <span class="string">VM_NAME</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # Provider-specific configuration</span></span><br><span class="line">  <span class="attr">config.vm.provider</span> <span class="string">&quot;virtualbox&quot; do |v|</span></span><br><span class="line">    <span class="attr">v.memory</span> = <span class="string">VM_MEMORY</span></span><br><span class="line">    <span class="attr">v.name</span> = <span class="string">VM_NAME</span></span><br><span class="line">  <span class="attr">end</span></span><br><span class="line">  <span class="attr">config.vm.provider</span> :<span class="string">libvirt do |v|</span></span><br><span class="line">    <span class="attr">v.memory</span> = <span class="string">VM_MEMORY</span></span><br><span class="line">  <span class="attr">end</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">config.vm.network</span> :<span class="string">private_network, ip: &quot;192.168.56.10&quot;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # add proxy configuration from host env - optional</span></span><br><span class="line">  <span class="attr">if</span> <span class="string">Vagrant.has_plugin?(&quot;vagrant-proxyconf&quot;)</span></span><br><span class="line">    <span class="attr">ui.info</span> <span class="string">&quot;Getting Proxy Configuration from Host...&quot;</span></span><br><span class="line">    <span class="attr">has_proxy</span> = <span class="string">false</span></span><br><span class="line">    <span class="attr">[&quot;http_proxy&quot;,</span> <span class="string">&quot;HTTP_PROXY&quot;].each do |proxy_var|</span></span><br><span class="line">      <span class="attr">if</span> <span class="string">proxy = ENV[proxy_var]</span></span><br><span class="line">        <span class="attr">ui.info</span> <span class="string">&quot;HTTP proxy: &quot; + proxy</span></span><br><span class="line">        <span class="attr">config.proxy.http</span> = <span class="string">proxy</span></span><br><span class="line">        <span class="attr">has_proxy</span> = <span class="string">true</span></span><br><span class="line">        <span class="attr">break</span></span><br><span class="line">      <span class="attr">end</span></span><br><span class="line">    <span class="attr">end</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">[&quot;https_proxy&quot;,</span> <span class="string">&quot;HTTPS_PROXY&quot;].each do |proxy_var|</span></span><br><span class="line">      <span class="attr">if</span> <span class="string">proxy = ENV[proxy_var]</span></span><br><span class="line">        <span class="attr">ui.info</span> <span class="string">&quot;HTTPS proxy: &quot; + proxy</span></span><br><span class="line">        <span class="attr">config.proxy.https</span> = <span class="string">proxy</span></span><br><span class="line">        <span class="attr">has_proxy</span> = <span class="string">true</span></span><br><span class="line">        <span class="attr">break</span></span><br><span class="line">      <span class="attr">end</span></span><br><span class="line">    <span class="attr">end</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">if</span> <span class="string">has_proxy</span></span><br><span class="line"><span class="comment">      # Only consider no_proxy if we have proxies defined.</span></span><br><span class="line">      <span class="attr">no_proxy</span> = <span class="string">&quot;&quot;</span></span><br><span class="line">      <span class="attr">[&quot;no_proxy&quot;,</span> <span class="string">&quot;NO_PROXY&quot;].each do |proxy_var|</span></span><br><span class="line">        <span class="attr">if</span> <span class="string">ENV[proxy_var]</span></span><br><span class="line">          <span class="attr">no_proxy</span> = <span class="string">ENV[proxy_var]</span></span><br><span class="line">          <span class="attr">ui.info</span> <span class="string">&quot;No proxy: &quot; + no_proxy</span></span><br><span class="line">          <span class="attr">no_proxy</span> <span class="string">+= &quot;,&quot;</span></span><br><span class="line">          <span class="attr">break</span></span><br><span class="line">        <span class="attr">end</span></span><br><span class="line">      <span class="attr">end</span></span><br><span class="line">      <span class="attr">config.proxy.no_proxy</span> = <span class="string">no_proxy + &quot;localhost,127.0.0.1&quot;</span></span><br><span class="line">    <span class="attr">end</span></span><br><span class="line">  <span class="attr">else</span></span><br><span class="line">    <span class="attr">[&quot;http_proxy&quot;,</span> <span class="string">&quot;HTTP_PROXY&quot;, &quot;https_proxy&quot;, &quot;HTTPS_PROXY&quot;].each do |proxy_var|</span></span><br><span class="line">      <span class="attr">if</span> <span class="string">ENV[proxy_var]</span></span><br><span class="line">        <span class="attr">ui.warn</span> <span class="string">&#x27;To enable proxies in your VM, install the vagrant-proxyconf plugin&#x27;</span></span><br><span class="line">        <span class="attr">break</span></span><br><span class="line">      <span class="attr">end</span></span><br><span class="line">    <span class="attr">end</span></span><br><span class="line">  <span class="attr">end</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # VM hostname</span></span><br><span class="line">  <span class="attr">config.vm.hostname</span> = <span class="string">VM_NAME</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # Oracle port forwarding</span></span><br><span class="line">  <span class="attr">config.vm.network</span> <span class="string">&quot;forwarded_port&quot;, guest: VM_LISTENER_PORT, host: VM_LISTENER_HOST_PORT</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  # Provision everything on the first run</span></span><br><span class="line">  <span class="attr">config.vm.provision</span> <span class="string">&quot;shell&quot;, path: &quot;scripts/install.sh&quot;, env:</span></span><br><span class="line">    <span class="attr">&#123;</span></span><br><span class="line">       <span class="attr">&quot;SYSTEM_TIMEZONE&quot;</span>     =<span class="string">&gt; VM_SYSTEM_TIMEZONE,</span></span><br><span class="line">       <span class="attr">&quot;LISTENER_PORT&quot;</span>       =<span class="string">&gt; VM_LISTENER_PORT,</span></span><br><span class="line">       <span class="attr">&quot;ORACLE_PWD&quot;</span>          =<span class="string">&gt; VM_ORACLE_PWD</span></span><br><span class="line">    <span class="attr">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">end</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>安装依赖</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum install binutils  compat-libstdc++-33  compat-libstdc++-33.i686  gcc   gcc-c++  glibc  glibc.i686  glibc-devel  glibc-devel.i686  ksh  libgcc   libgcc.i686  libstdc++ libstdc++.i686 libstdc++-devel  libstdc++-devel.i686  libaio  libaio.i686  libaio-devel  libaio-devel.i686  libXext libXext.i686 libXtst libXtst.i686 libX11 libX11.i686  libXau  libXau.i686 libxcb  libxcb.i686   libXi  libXi.i686  make  sysstat  unixODBC unixODBC-devel  zlib-devel  elfutils-libelf-devel -y</span><br><span class="line"></span><br><span class="line">yum install -y xorg-x11-xauth xorg-x11-font-utils xorg-x11-fonts-* xorg-x11-fonts-Type1</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p> 修改/etc/ssh/sshd_config</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X11forwarding yes</span><br><span class="line">X11UseLocalhost no</span><br><span class="line">X11DisplayOffset 10</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>git init .</p>
-<p>增加 theme<br>git submodule add <a href="mailto:&#103;&#105;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#x63;&#111;&#x6d;">&#103;&#105;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#x63;&#111;&#x6d;</a>:theme-next/hexo-theme-next themes/next</p>
-<p>git commit -m “init”</p>
-<h3 id="推送到远程仓"><a href="#推送到远程仓" class="headerlink" title="推送到远程仓"></a>推送到远程仓</h3><p>git remote add origin <a href="mailto:&#x67;&#x69;&#x74;&#64;&#x67;&#105;&#116;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;">&#x67;&#x69;&#x74;&#64;&#x67;&#105;&#116;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;</a>:wanghongxing/wanghongxing.github.io.git<br>git push –set-upstream origin src</p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+<p>退出终端</p>
+<p>生成进入x终端的脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">PORT=$(vagrant ssh-config | grep Port | grep -o <span class="string">&#x27;[0-9]\+&#x27;</span>)</span><br><span class="line"></span><br><span class="line">IDFILE=$(vagrant ssh-config |grep IdentityFile|awk  <span class="string">&#x27;&#123;print $2&#125;&#x27;</span>)</span><br><span class="line">ssh -Y  \</span><br><span class="line">    -o UserKnownHostsFile=/dev/null \</span><br><span class="line">    -o StrictHostKeyChecking=no \</span><br><span class="line">    -o <span class="string">&quot;XAuthLocation=/opt/X11/bin/xauth&quot;</span> \</span><br><span class="line">    -i <span class="variable">$IDFILE</span> \</span><br><span class="line">    vagrant@localhost \</span><br><span class="line">    -p <span class="variable">$PORT</span> \</span><br><span class="line">    <span class="string">&quot;<span class="variable">$@</span>&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>XQuartz中启动terminal，执行命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./whx.sh</span><br><span class="line">echo $DISPLAY</span><br><span class="line"></span><br><span class="line">cd /data/database</span><br><span class="line">./runInstaller</span><br></pre></td></tr></table></figure>
+
+<p>root用户执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/home/vagrant/app/oraInventory/orainstRoot.sh</span><br><span class="line">/home/vagrant/app/vagrant/product/11.2.0/dbhome_1/root.sh</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="master设置："><a href="#master设置：" class="headerlink" title="master设置："></a>master设置：</h3><p>设置sid： whx</p>
+<p>设置密码：zaq1XSW2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">export ORACLE_SID=whx</span><br><span class="line">export ORACLE_BASE=/home/vagrant/app/vagrant</span><br><span class="line">export ORACLE_HOME=/home/vagrant/app/vagrant/product/11.2.0/dbhome_1</span><br><span class="line"></span><br><span class="line">PATH=$PATH:$ORACLE_HOME/bin</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="slaver设置"><a href="#slaver设置" class="headerlink" title="slaver设置"></a>slaver设置</h3><p>设置sid： orcl</p>
+<p>设置密码：zaq1XSW2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">export ORACLE_SID=orcl</span><br><span class="line">export ORACLE_BASE=/home/vagrant/app/vagrant</span><br><span class="line">export ORACLE_HOME=/home/vagrant/app/vagrant/product/11.2.0/dbhome_1</span><br><span class="line"></span><br><span class="line">PATH=$PATH:$ORACLE_HOME/bin </span><br></pre></td></tr></table></figure>
+
+<p>启动oracle</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dbstart  $ORACLE_HOME</span><br></pre></td></tr></table></figure>
+
+<h3 id="下面开始试着主从复制"><a href="#下面开始试着主从复制" class="headerlink" title="下面开始试着主从复制"></a>下面开始试着主从复制</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hooly/p/8178570.html">https://www.cnblogs.com/hooly/p/8178570.html</a></p>
+<p>进入主从，分别执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sqlplus / as sysdba</span><br><span class="line">alter system set aq_tm_processes=2 scope=both;   ---启用对队列消息的时间监视</span><br><span class="line">alter system set global_names=true scope=both;   ---设置全局名称为true</span><br><span class="line">alter system set undo_retention=3600 scope=both;   --设置回滚段时间,默认是900</span><br><span class="line">alter system set streams_pool_size=25M scope=spfile; --sga设置为自动调整情况下不需设置该参数</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>设置主数据库（whx ）为归档mode （以as sysdba身份，可在sqlplus中执行）</strong></p>
+<p>（以as sysdba身份，可在sqlplus中执行）</p>
+<p> 查是否归档,如是归档,请忽略第3点 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; archive log list;</span><br><span class="line"></span><br><span class="line">Database log mode	       No Archive Mode</span><br><span class="line">Automatic archival	       Disabled</span><br><span class="line">Archive destination	       USE_DB_RECOVERY_FILE_DEST</span><br><span class="line">Oldest online log sequence     6</span><br><span class="line">Current log sequence	       8</span><br></pre></td></tr></table></figure>
+
+<p>归档设置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">shutdown immediate;</span><br><span class="line">startup mount;</span><br><span class="line">alter database archivelog;</span><br><span class="line">alter system set LOG_ARCHIVE_DEST_1=&#x27;LOCATION=/home/vagrant/app/archive&#x27;;  ---设置归档目录 （执行此句后，在Windows系统文件夹中看看arc文件夹有没有创建成功，如果没有，则手动创建，在执行此语句）</span><br><span class="line">alter database open;</span><br><span class="line">alter system switch logfile; --相应目录检查是否生成arc文件 （如果提示数据库没开启，则先执行alter database open;）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>主/从数据新建stream管理用户(在主从数据库都执行以下操作)</strong> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sqlplus / as sysdba;</span><br><span class="line">create tablespace tbs_stream datafile &#x27;/home/vagrant/app/vagrant/oradata/whx/tbs_stream01.dbf&#x27; size 2000m autoextend on maxsize unlimited segment space management auto; ---创建主环境的Stream专用表空间</span><br><span class="line">execute dbms_logmnr_d.set_tablespace(&#x27;tbs_stream&#x27;); --将logminer的数据字典从system表空间转移到新建的表空间，防止撑满system表空间</span><br><span class="line">create user strmadmin identified by strmadmin default tablespace tbs_stream temporary tablespace temp;  --创建用户</span><br><span class="line">grant dba to strmadmin;  --直接给dba权限.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sqlplus / as sysdba;</span><br><span class="line">create tablespace tbs_stream datafile &#x27;/home/vagrant/app/vagrant/oradata/orcl/tbs_stream01.dbf&#x27; size 2000m autoextend on maxsize unlimited segment space management auto; ---创建主环境的Stream专用表空间</span><br><span class="line">execute dbms_logmnr_d.set_tablespace(&#x27;tbs_stream&#x27;); --将logminer的数据字典从system表空间转移到新建的表空间，防止撑满system表空间</span><br><span class="line">create user strmadmin identified by strmadmin default tablespace tbs_stream temporary tablespace temp;  --创建用户</span><br><span class="line">grant dba to strmadmin;  --直接给dba权限.</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>主数据库新建连接从数据库的link</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">create public database link orcl connect to strmadmin IDENTIFIED BY strmadmin</span><br><span class="line">using &#x27;(DESCRIPTION =</span><br><span class="line">(ADDRESS_LIST =</span><br><span class="line">(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.56.11)(PORT = 1521))</span><br><span class="line">)</span><br><span class="line">(CONNECT_DATA =</span><br><span class="line">(SID= orcl)</span><br><span class="line">)</span><br><span class="line">)&#x27;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>从数据库新建连接主数据库的link</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">create public database link whx connect to strmadmin IDENTIFIED BY strmadmin</span><br><span class="line">using &#x27;(DESCRIPTION =</span><br><span class="line">(ADDRESS_LIST =</span><br><span class="line">(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.56.10)(PORT = 1521))</span><br><span class="line">)</span><br><span class="line">(CONNECT_DATA =</span><br><span class="line">(SID = whx)</span><br><span class="line">)</span><br><span class="line">)&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>select sysdate from dual@whx</p>
+<p><strong>主数据库流队列创建 （可在plsql中的SQL中执行，登录名应为strmadmin）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">connect strmadmin/strmadmin  </span><br><span class="line">begin</span><br><span class="line">dbms_streams_adm.set_up_queue(queue_table =&gt; &#x27;whx_queue_table&#x27;,queue_name =&gt; &#x27;whx_queue&#x27;);</span><br><span class="line">end;</span><br><span class="line">/</span><br></pre></td></tr></table></figure>
+
+<p>提示：PL/SQL procedure successfully completed.</p>
+<p><strong>从数据库流队列创建</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">connect strmadmin/strmadmin  --以strmadmin身份，登录从数据库。</span><br><span class="line">begin</span><br><span class="line">dbms_streams_adm.set_up_queue(queue_table =&gt; &#x27;orcl_queue_table&#x27;,queue_name =&gt; &#x27;orcl_queue&#x27;);</span><br><span class="line">end;</span><br><span class="line">/</span><br></pre></td></tr></table></figure>
+
+<p>提示：PL/SQL procedure successfully completed.</p>
+<p><strong>主数据库创建捕获进程</strong> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">connect strmadmin/strmadmin</span><br><span class="line"></span><br><span class="line">begin</span><br><span class="line">dbms_streams_adm.add_schema_rules(</span><br><span class="line">schema_name =&gt; &#x27;strmadmin&#x27;,</span><br><span class="line">streams_type =&gt; &#x27;capture&#x27;,</span><br><span class="line">streams_name =&gt; &#x27;capture_whx&#x27;,</span><br><span class="line">queue_name =&gt; &#x27;strmadmin.whx_queue&#x27;,</span><br><span class="line">include_dml =&gt; true,</span><br><span class="line">include_ddl =&gt; true,</span><br><span class="line">include_tagged_lcr =&gt; false,</span><br><span class="line">source_database =&gt; null,</span><br><span class="line">inclusion_rule =&gt; true);</span><br><span class="line">end;</span><br><span class="line">/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>提示：PL/SQL procedure successfully completed.</p>
+<p><strong>从数据库实例化strmadmin用户  （这两个路径须一致）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">exp strmadmin/strmadmin@whx file=&#x27;/home/vagrant/crm.dmp&#x27; object_consistent=y rows=y</span><br><span class="line">exp strmadmin/strmadmin@orcl file=&#x27;/home/vagrant/crm.dmp&#x27; object_consistent=y rows=y</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这个执行失败</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EXP-00056: ORACLE error 12154 encountered</span><br><span class="line">ORA-12154: TNS:could not resolve the connect identifier specified</span><br><span class="line">EXP-00000: Export terminated unsuccessfully</span><br></pre></td></tr></table></figure>
+
+<p>修改 /home/vagrant/app/vagrant/product/11.2.0/dbhome_1/network/admin/tnsnames.ora增加 WHX部分内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ORCL =</span><br><span class="line">  (DESCRIPTION =</span><br><span class="line">    (ADDRESS = (PROTOCOL = TCP)(HOST = oracle11g-vagrant-slave)(PORT = 1521))</span><br><span class="line">    (CONNECT_DATA =</span><br><span class="line">      (SERVER = DEDICATED)</span><br><span class="line">      (SERVICE_NAME = orcl)</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">WHX =</span><br><span class="line">  (DESCRIPTION =</span><br><span class="line">    (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.56.10)(PORT = 1521))</span><br><span class="line">    (CONNECT_DATA =</span><br><span class="line">      (SID = whx)</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后导出正常。</p>
+<p>在从数据库新建strmadmin </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">imp strmadmin/strmadmin@orcl file=&#x27;/home/vagrant/crm.dmp&#x27; ignore=y commit=y streams_instantiation=y full=y</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Import: Release 11.2.0.1.0 - Production on Tue Oct 31 23:08:12 2023</span><br><span class="line"></span><br><span class="line">Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Connected to: Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production</span><br><span class="line">With the Partitioning, OLAP, Data Mining and Real Application Testing options</span><br><span class="line"></span><br><span class="line">Export file created by EXPORT:V11.02.00 via conventional path</span><br><span class="line">import done in US7ASCII character set and AL16UTF16 NCHAR character set</span><br><span class="line">import server uses AL32UTF8 character set (possible charset conversion)</span><br><span class="line">. importing STRMADMIN&#x27;s objects into STRMADMIN</span><br><span class="line">. . importing table        &quot;AQ$_WHX_QUEUE_TABLE_C&quot;          0 rows imported</span><br><span class="line">. . importing table        &quot;AQ$_WHX_QUEUE_TABLE_G&quot;          0 rows imported</span><br><span class="line">. . importing table        &quot;AQ$_WHX_QUEUE_TABLE_H&quot;</span><br><span class="line">Note: table contains ROWID column, values may be obsolete          0 rows imported</span><br><span class="line">. . importing table        &quot;AQ$_WHX_QUEUE_TABLE_I&quot;</span><br><span class="line">Note: table contains ROWID column, values may be obsolete          0 rows imported</span><br><span class="line">. . importing table        &quot;AQ$_WHX_QUEUE_TABLE_L&quot;          0 rows imported</span><br><span class="line">. . importing table        &quot;AQ$_WHX_QUEUE_TABLE_S&quot;          1 rows imported</span><br><span class="line">. . importing table        &quot;AQ$_WHX_QUEUE_TABLE_T&quot;          0 rows imported</span><br><span class="line">. . importing table              &quot;WHX_QUEUE_TABLE&quot;          0 rows imported</span><br><span class="line">Import terminated successfully without warnings.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>主数据库创建传播进程</strong> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">connect strmadmin/strmadmin</span><br><span class="line">begin</span><br><span class="line">dbms_streams_adm.add_schema_propagation_rules(</span><br><span class="line">schema_name =&gt; &#x27;strmadmin&#x27;,</span><br><span class="line">streams_name =&gt; &#x27;whx_to_orcl&#x27;,</span><br><span class="line">source_queue_name =&gt; &#x27;strmadmin.whx_queue&#x27;,</span><br><span class="line">destination_queue_name =&gt; &#x27;strmadmin.orcl_queue@orcl&#x27;,</span><br><span class="line">include_dml =&gt; true,</span><br><span class="line">include_ddl =&gt; true,</span><br><span class="line">include_tagged_lcr =&gt; false,</span><br><span class="line">source_database =&gt; &#x27;whx&#x27;,</span><br><span class="line">inclusion_rule =&gt; true);</span><br><span class="line">end;</span><br><span class="line">/</span><br></pre></td></tr></table></figure>
+
+
+
+<p>注意：此段语句执行可能会报错，如果报错，不用管，继续执行后面的。</p>
+<p>修改propagation休眠时间为0，表示实时传播LCR，latency以秒为单位 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">begin</span><br><span class="line">dbms_aqadm.alter_propagation_schedule(</span><br><span class="line">queue_name =&gt; &#x27;whx_queue&#x27;,</span><br><span class="line">destination =&gt; &#x27;orcl&#x27;,</span><br><span class="line">latency =&gt; 0);</span><br><span class="line">end;</span><br><span class="line">/</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>从数据创建应用进程</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">connect strmadmin/strmadmin</span><br><span class="line">begin</span><br><span class="line">dbms_streams_adm.add_schema_rules(</span><br><span class="line">schema_name =&gt; &#x27;strmadmin&#x27;,</span><br><span class="line">streams_type =&gt; &#x27;apply&#x27;,</span><br><span class="line">streams_name =&gt; &#x27;apply_orcl&#x27;,</span><br><span class="line">queue_name =&gt; &#x27;strmadmin.orcl_queue&#x27;,</span><br><span class="line">include_dml =&gt; true,</span><br><span class="line">include_ddl =&gt; true,</span><br><span class="line">include_tagged_lcr =&gt; false,</span><br><span class="line">source_database =&gt; &#x27;whx&#x27;,</span><br><span class="line">inclusion_rule =&gt; true);</span><br><span class="line">end;</span><br><span class="line">/</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>启动Stream</strong></p>
+<p>从数据库启动应用进程 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">connect strmadmin/strmadmin</span><br><span class="line">begin</span><br><span class="line">dbms_apply_adm.start_apply(</span><br><span class="line">apply_name =&gt; &#x27;apply_orcl&#x27;);</span><br><span class="line">end;</span><br><span class="line">/</span><br></pre></td></tr></table></figure>
+
+<p>主数据库启动捕获进程 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">begin</span><br><span class="line">dbms_capture_adm.start_capture(</span><br><span class="line">capture_name =&gt; &#x27;capture_whx&#x27;);</span><br><span class="line">end;</span><br><span class="line">/</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>现在就可以进行测试了，在whx用户中作何一个测试表新增数据,删除数据,增加表,修改表结构,进行同步测试</strong></p>
 
       
     </div>
@@ -902,7 +1259,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -968,7 +1325,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1004,7 +1361,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hongxing.tech","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="以前使用pyenv来管理python版本，最近看到别人用 anaconda，就了解了一下，试着安装。 安装anaconda从 anaconda 官网 https:&#x2F;&#x2F;www.anaconda.com&#x2F;products&#x2F;distribution#macos 下载可视化版本https:&#x2F;&#x2F;repo.anaconda.com&#x2F;archive&#x2F;Anaconda3-2022.10-MacOSX-x86_64">
+<meta property="og:type" content="article">
+<meta property="og:title" content="macos环境安装Anaconda，然后安装python3.7.10，使用 paddlepaddle-2.3.2">
+<meta property="og:url" content="https://hongxing.tech/2023-0107macos%E5%AE%89%E8%A3%85Anaconda/index.html">
+<meta property="og:site_name" content="红星">
+<meta property="og:description" content="以前使用pyenv来管理python版本，最近看到别人用 anaconda，就了解了一下，试着安装。 安装anaconda从 anaconda 官网 https:&#x2F;&#x2F;www.anaconda.com&#x2F;products&#x2F;distribution#macos 下载可视化版本https:&#x2F;&#x2F;repo.anaconda.com&#x2F;archive&#x2F;Anaconda3-2022.10-MacOSX-x86_64">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-01-07T12:37:30.000Z">
+<meta property="article:modified_time" content="2023-02-24T01:32:55.547Z">
+<meta property="article:author" content="wanghongxing">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://hongxing.tech/2023-0107macos%E5%AE%89%E8%A3%85Anaconda/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title>macos环境安装Anaconda，然后安装python3.7.10，使用 paddlepaddle-2.3.2 | 红星</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">红星</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2023-0107macos%E5%AE%89%E8%A3%85Anaconda/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          macos环境安装Anaconda，然后安装python3.7.10，使用 paddlepaddle-2.3.2
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-01-07 20:37:30" itemprop="dateCreated datePublished" datetime="2023-01-07T20:37:30+08:00">2023-01-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-02-24 09:32:55" itemprop="dateModified" datetime="2023-02-24T09:32:55+08:00">2023-02-24</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>以前使用pyenv来管理python版本，最近看到别人用 anaconda，就了解了一下，试着安装。</p>
+<h3 id="安装anaconda"><a href="#安装anaconda" class="headerlink" title="安装anaconda"></a>安装anaconda</h3><p>从 anaconda 官网 <a target="_blank" rel="noopener" href="https://www.anaconda.com/products/distribution#macos">https://www.anaconda.com/products/distribution#macos</a> 下载可视化版本<a target="_blank" rel="noopener" href="https://repo.anaconda.com/archive/Anaconda3-2022.10-MacOSX-x86_64.pkg%EF%BC%8C%E7%84%B6%E5%90%8E%E5%AE%89%E8%A3%85%EF%BC%9B%E5%AE%89%E8%A3%85%E5%AE%8C%E5%90%8E%E7%B3%BB%E7%BB%9F%E5%A4%9A%E4%BA%86%E4%B8%80%E4%B8%AA">https://repo.anaconda.com/archive/Anaconda3-2022.10-MacOSX-x86_64.pkg，然后安装；安装完后系统多了一个</a> anaconda-navigator，安装目录是~/opt/anaconda3 ，打开后可以在environments下create新的环境，但是新建的时候python版本不能随便选，由于一直使用python-3.7.10来使用paddle，所以还是得自己手动创建。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">conda create -n paddle232-py3710 python=3.7.10</span><br><span class="line"></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># To activate this environment, use</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#     $ conda activate paddle232-py3710</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># To deactivate an active environment, use</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#     $ conda deactivate</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>创建好后在可视化界面也可以看到。</p>
+<h3 id="然后命令行激活"><a href="#然后命令行激活" class="headerlink" title="然后命令行激活"></a>然后命令行激活</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(base) wanghongxing:~ whx$ python -V</span><br><span class="line">Python 3.9.13</span><br><span class="line">(base) wanghongxing:~ whx$ conda activate paddle232-py3710</span><br><span class="line"></span><br><span class="line">(paddle232-py3710) wanghongxing:~ whx$ python -V</span><br><span class="line">Python 3.7.10</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，刚开始python是3.9.13，执行 <code>conda activate paddle232-py3710</code>后python版本变成3.7.10</p>
+<h3 id="安装paddle2-3-2"><a href="#安装paddle2-3-2" class="headerlink" title="安装paddle2.3.2"></a>安装paddle2.3.2</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">(paddle232-py3710) wanghongxing:~ python -m pip install paddlepaddle==2.3.2 -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line"></span><br><span class="line">Looking <span class="keyword">in</span> indexes: https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">Collecting paddlepaddle==2.3.2</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/ba/bf/bc6a1dd9a1126d8cd1467917d34bf12c9282152f99afc5b8cad29118eda4/paddlepaddle-2.3.2-cp37-cp37m-macosx_10_6_intel.whl (93.0 MB)</span><br><span class="line">Collecting numpy&gt;=1.13</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/32/dd/43d8b2b2ebf424f6555271a4c9f5b50dc3cc0aafa66c72b4d36863f71358/numpy-1.21.6-cp37-cp37m-macosx_10_9_x86_64.whl (16.9 MB)</span><br><span class="line">Collecting decorator</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/d5/50/83c593b07763e1161326b3b8c6686f0f4b0f24d5526546bee538c89837d6/decorator-5.1.1-py3-none-any.whl (9.1 kB)</span><br><span class="line">Collecting paddle-bfloat==0.1.7</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/c6/40/65edb5bf459317bdc808f884805784470c9b5ab38b81df23fac02e02f5b8/paddle_bfloat-0.1.7-cp37-cp37m-macosx_10_9_x86_64.whl (44 kB)</span><br><span class="line">Collecting six</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/d9/5a/e7c31adbe875f2abbb91bd84cf2dc52d792b5a01506781dbcf25c91daf11/six-1.16.0-py2.py3-none-any.whl (11 kB)</span><br><span class="line">Collecting protobuf&lt;=3.20.0,&gt;=3.1.0</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/be/f0/2633123b475c9ae6e9be25351c7ba6ca3adc223d73789ca2f6f5e4686723/protobuf-3.20.0-cp37-cp37m-macosx_10_9_x86_64.whl (961 kB)</span><br><span class="line">Collecting astor</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/c3/88/97eef84f48fa04fbd6750e62dcceafba6c63c81b7ac1420856c8dcc0a3f9/astor-0.8.1-py2.py3-none-any.whl (27 kB)</span><br><span class="line">Collecting Pillow</span><br><span class="line">  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/91/1d/57a09a69508a27c1c6caa4197ce7fac5be5b7d736889ba1a20931ff4efca/Pillow-9.4.0-1-cp37-cp37m-macosx_10_10_x86_64.whl (3.3 MB)</span><br><span class="line">     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.3/3.3 MB 14.4 MB/s eta 0:00:00</span><br><span class="line">Collecting opt-einsum==3.3.0</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/bc/19/404708a7e54ad2798907210462fd950c3442ea51acc8790f3da48d2bee8b/opt_einsum-3.3.0-py3-none-any.whl (65 kB)</span><br><span class="line">Collecting requests&gt;=2.20.0</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/ca/91/6d9b8ccacd0412c08820f72cebaa4f0c0441b5cda699c90f618b6f8a1b42/requests-2.28.1-py3-none-any.whl (62 kB)</span><br><span class="line">Collecting idna&lt;4,&gt;=2.5</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/fc/34/3030de6f1370931b9dbb4dad48f6ab1015ab1d32447850b9fc94e60097be/idna-3.4-py3-none-any.whl (61 kB)</span><br><span class="line">Collecting urllib3&lt;1.27,&gt;=1.21.1</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/65/0c/cc6644eaa594585e5875f46f3c83ee8762b647b51fc5b0fb253a242df2dc/urllib3-1.26.13-py2.py3-none-any.whl (140 kB)</span><br><span class="line">Collecting charset-normalizer&lt;3,&gt;=2</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/db/51/a507c856293ab05cdc1db77ff4bc1268ddd39f29e7dc4919aa497f0adbec/charset_normalizer-2.1.1-py3-none-any.whl (39 kB)</span><br><span class="line">Requirement already satisfied: certifi&gt;=2017.4.17 <span class="keyword">in</span> ./opt/anaconda3/envs/paddle232-py3710/lib/python3.7/site-packages (from requests&gt;=2.20.0-&gt;paddlepaddle==2.3.2) (2022.12.7)</span><br><span class="line">Installing collected packages: paddle-bfloat, urllib3, six, protobuf, Pillow, numpy, idna, decorator, charset-normalizer, astor, requests, opt-einsum, paddlepaddle</span><br><span class="line">Successfully installed Pillow-9.4.0 astor-0.8.1 charset-normalizer-2.1.1 decorator-5.1.1 idna-3.4 numpy-1.21.6 opt-einsum-3.3.0 paddle-bfloat-0.1.7 paddlepaddle-2.3.2 protobuf-3.20.0 requests-2.28.1 six-1.16.0 urllib3-1.26.13</span><br><span class="line"></span><br><span class="line">(paddle232-py3710) wanghongxing:~ whx$ <span class="built_in">which</span> paddle</span><br><span class="line">/Users/whx/opt/anaconda3/envs/paddle232-py3710/bin/paddle</span><br><span class="line">(paddle232-py3710) wanghongxing:~ whx$ paddle version</span><br><span class="line">&lt;stdin&gt;:3: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.</span><br><span class="line">PaddlePaddle 2.3.2, compiled with</span><br><span class="line">    with_avx: ON</span><br><span class="line">    with_gpu: OFF</span><br><span class="line">    with_mkl: OFF</span><br><span class="line">    with_mkldnn: OFF</span><br><span class="line">    with_python: ON</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>安装paddle</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">(paddle232-py3710) wanghongxing:guyuai-emotion-train whx$ pip3 install paddle</span><br><span class="line">Collecting paddle</span><br><span class="line">  Using cached paddle-1.0.2.tar.gz (579 kB)</span><br><span class="line">  Preparing metadata (setup.py) ... error</span><br><span class="line">  error: subprocess-exited-with-error</span><br><span class="line">  </span><br><span class="line">  × python setup.py egg_info did not run successfully.</span><br><span class="line">  │ <span class="built_in">exit</span> code: 1</span><br><span class="line">  ╰─&gt; [8 lines of output]</span><br><span class="line">      Traceback (most recent call last):</span><br><span class="line">        File <span class="string">&quot;&lt;string&gt;&quot;</span>, line 36, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">        File <span class="string">&quot;&lt;pip-setuptools-caller&gt;&quot;</span>, line 34, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">        File <span class="string">&quot;/private/var/folders/6d/lxb9s6557cx2wq_2fs6s2_bm0000gr/T/pip-install-h1m6_55m/paddle_d36d8dad2117474f8fc2aaa140c6ac30/setup.py&quot;</span>, line 3, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">          import paddle</span><br><span class="line">        File <span class="string">&quot;/private/var/folders/6d/lxb9s6557cx2wq_2fs6s2_bm0000gr/T/pip-install-h1m6_55m/paddle_d36d8dad2117474f8fc2aaa140c6ac30/paddle/__init__.py&quot;</span>, line 5, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">          import common, dual, tight, data, prox</span><br><span class="line">      ModuleNotFoundError: No module named <span class="string">&#x27;common&#x27;</span></span><br><span class="line">      [end of output]</span><br><span class="line">  </span><br><span class="line">  note: This error originates from a subprocess, and is likely not a problem with pip.</span><br><span class="line">error: metadata-generation-failed</span><br><span class="line"></span><br><span class="line">× Encountered error <span class="keyword">while</span> generating package metadata.</span><br><span class="line">╰─&gt; See above <span class="keyword">for</span> output.</span><br><span class="line"></span><br><span class="line">note: This is an issue with the package mentioned above, not pip.</span><br><span class="line">hint: See above <span class="keyword">for</span> details.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后手动安装依赖包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">pip install common</span><br><span class="line">pip install dual</span><br><span class="line">pip install tight</span><br><span class="line">pip install data</span><br><span class="line">pip install prox</span><br><span class="line"></span><br><span class="line">(paddle232-py3710) wanghongxing:guyuai-emotion-train whx$ pip3 install paddle==1.0.2</span><br><span class="line">Collecting paddle==1.0.2</span><br><span class="line">  Using cached paddle-1.0.2.tar.gz (579 kB)</span><br><span class="line">  Preparing metadata (setup.py) ... <span class="keyword">done</span></span><br><span class="line">Building wheels <span class="keyword">for</span> collected packages: paddle</span><br><span class="line">  Building wheel <span class="keyword">for</span> paddle (setup.py) ... <span class="keyword">done</span></span><br><span class="line">  Created wheel <span class="keyword">for</span> paddle: filename=paddle-1.0.2-py3-none-any.whl size=33366 sha256=63916ce0eea092ef9e690f3e992b51f32f955eabc66070be6e9feba60d672973</span><br><span class="line">  Stored <span class="keyword">in</span> directory: /Users/whx/Library/Caches/pip/wheels/e2/38/0e/382f68d54c6949b370f1438aa96172ff44a8ed367134cce32e</span><br><span class="line">Successfully built paddle</span><br><span class="line">Installing collected packages: paddle</span><br><span class="line">Successfully installed paddle-1.0.2</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>安装完后仍然执行异常，没办法，删除<code>rm -rf ~/opt/anaconda3</code>，重新下载命令行版本，下载地址<code>https://repo.anaconda.com/archive/Anaconda3-2022.10-MacOSX-x86_64.sh</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bash Anaconda3-2022.10-MacOSX-x86_64.sh</span><br><span class="line">conda create -n paddle232-py3710 python=3.7.10</span><br><span class="line">conda activate paddle232-py3710</span><br><span class="line">pip install paddle==1.0.2</span><br><span class="line">python -m pip install paddlepaddle==2.3.2 -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这时候 paddle2.3.2 环境正常。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">arch -x86_64 bash</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020-12-18-ipfs/" rel="prev" title="IPFS 测试">
+      <i class="fa fa-chevron-left"></i> IPFS 测试
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023-0118-IntelliJ-IDEA-%E6%8E%A5%E5%8F%A3%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7/" rel="next" title="IntelliJ IDEA 接口调试工具">
+      IntelliJ IDEA 接口调试工具 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85anaconda"><span class="nav-number">1.</span> <span class="nav-text">安装anaconda</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%84%B6%E5%90%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%BF%80%E6%B4%BB"><span class="nav-number">2.</span> <span class="nav-text">然后命令行激活</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85paddle2-3-2"><span class="nav-number">3.</span> <span class="nav-text">安装paddle2.3.2</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">wanghongxing</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wanghongxing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

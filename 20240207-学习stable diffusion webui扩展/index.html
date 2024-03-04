@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hongxing.tech","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="ControlNet 安装骨架动作绘图Ivon的部落格 如果你用过Stable Diffusion，可能已经注意到图像的输出有无限的结果可能性，就像在赌博一样，即使你输入了如此复杂和精心设计的提示，控制AI的能力仍然是有限的。所以我们就需要一种在最大大程度上能控制输出的方式。 ControlNet是斯坦福大学研究人员开发的Stable Diffusion的扩展，使创作者能够轻松地控制AI图像和视频">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红星">
+<meta property="og:url" content="https://hongxing.tech/20240207-%E5%AD%A6%E4%B9%A0stable%20diffusion%20webui%E6%89%A9%E5%B1%95/index.html">
+<meta property="og:site_name" content="红星">
+<meta property="og:description" content="ControlNet 安装骨架动作绘图Ivon的部落格 如果你用过Stable Diffusion，可能已经注意到图像的输出有无限的结果可能性，就像在赌博一样，即使你输入了如此复杂和精心设计的提示，控制AI的能力仍然是有限的。所以我们就需要一种在最大大程度上能控制输出的方式。 ControlNet是斯坦福大学研究人员开发的Stable Diffusion的扩展，使创作者能够轻松地控制AI图像和视频">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hongxing.tech/images/sd/v2-de4552588266a99bc190a1da375b832d_720w.webp">
+<meta property="og:image" content="https://hongxing.tech/images/sd/00100-333969092.png">
+<meta property="og:image" content="https://hongxing.tech/images/sd/20240207154113-3314802259.png">
+<meta property="article:published_time" content="2024-02-06T03:21:50.446Z">
+<meta property="article:modified_time" content="2024-02-18T06:24:01.337Z">
+<meta property="article:author" content="wanghongxing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hongxing.tech/images/sd/v2-de4552588266a99bc190a1da375b832d_720w.webp">
+
+<link rel="canonical" href="https://hongxing.tech/20240207-%E5%AD%A6%E4%B9%A0stable%20diffusion%20webui%E6%89%A9%E5%B1%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title> | 红星</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">红星</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240207-%E5%AD%A6%E4%B9%A0stable%20diffusion%20webui%E6%89%A9%E5%B1%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-02-06 11:21:50" itemprop="dateCreated datePublished" datetime="2024-02-06T11:21:50+08:00">2024-02-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-02-18 14:24:01" itemprop="dateModified" datetime="2024-02-18T14:24:01+08:00">2024-02-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="ControlNet-安装骨架动作绘图"><a href="#ControlNet-安装骨架动作绘图" class="headerlink" title="ControlNet 安装骨架动作绘图"></a>ControlNet 安装骨架动作绘图</h2><p><a target="_blank" rel="noopener" href="https://ivonblog.com/posts/stable-diffusion-webui-manuals/extensions/controlnet/">Ivon的部落格</a></p>
+<p>如果你用过Stable Diffusion，可能已经注意到图像的输出有无限的结果可能性，就像在赌博一样，即使你输入了如此复杂和精心设计的提示，控制AI的能力仍然是有限的。所以我们就需要一种在最大大程度上能控制输出的方式。</p>
+<p>ControlNet是斯坦福大学研究人员开发的Stable Diffusion的扩展，使创作者能够轻松地控制AI图像和视频中的对象。它将根据边缘检测、草图处理或人体姿势等各种条件来控制图像生成。ControlNet可以概括为一种简单的稳定扩散微调方法。</p>
+<p>ControlNet是通过加入额外条件来控制扩散模型的神经网络结构，它可以让AI参考给定图片的动作/线条/景深，更精准的生成图片。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Mikubill/sd-webui-controlnet">https://github.com/Mikubill/sd-webui-controlnet</a></p>
+<p>克隆代码到本地，然后从本地安装。</p>
+<p>安装完成后从 <a target="_blank" rel="noopener" href="https://huggingface.co/lllyasviel/ControlNet-v1-1/tree/main">https://huggingface.co/lllyasviel/ControlNet-v1-1/tree/main</a> 下载所有的pth文件，保存到 stable-diffusion-webui/extensions/sd-webui-controlnet/models 目录。</p>
+<h3 id="各個模型的用途"><a href="#各個模型的用途" class="headerlink" title="各個模型的用途"></a>各個模型的用途</h3><p>ControlNet現有以下模型，您可以按照需求只下載需要的模型。</p>
+<h4 id="Anime-Lineart"><a href="#Anime-Lineart" class="headerlink" title="Anime Lineart"></a>Anime Lineart</h4><p>偵測線條，生成的圖片亦會保留原始的線條，適合處理動漫圖像</p>
+<h4 id="Canny"><a href="#Canny" class="headerlink" title="Canny"></a>Canny</h4><p>偵測圖片邊緣，比較模糊，不如Scribbles完整。</p>
+<p>Canny通过使用边缘检测器创建高对比度区域的轮廓来检测输入图像。线条可以捕捉到非常详细的信息，但如果你的图像背景中有一些物体，它很可能会检测到不需要的物体。所以背景中物体越少效果越好。用于此预处理器的最佳模型是control_sd15_canny。</p>
+<h4 id="Depth-amp-Depth-Leres"><a href="#Depth-amp-Depth-Leres" class="headerlink" title="Depth   &amp; Depth Leres"></a>Depth   <strong>&amp; Depth Leres</strong></h4><p>偵測輸入圖片的深度圖(depth map)。</p>
+<p>这个预处理器有助于生成输入图像的深度估计。深度通常用于控制图像内物体的空间定位。浅色区域意味着它离用户更近，而深色区域则离用户更远。</p>
+<p>在大图像时它可能会丢失图像内部的细节(面部表情等)。一般会与control_sd15_depth模型组合使用。Midas Resolution函数用于增加或减少detectmap中的大小和细节级别。它的级别越高，将使用更多的VRAM，但可以生成更高质量的图像，反之亦然。</p>
+<p>Depth Leres有与Depth 相同的基本概念，但在地图中包含更广泛的范围。但有时它会从图片中捕获了太多信息，可能会生成与原始图像略有不同的图像。所以最好先试用两种预处理器，然后决定哪一种。</p>
+<p><strong>HED (Holistically-Nested Edge Detection)</strong></p>
+<p>Hed可以在物体周围创建清晰和精细的边界，输出类似于Canny，但减少了噪声和更柔软的边缘。它的有效性在于能够捕捉复杂的细节和轮廓，同时保留细节特征(面部表情、头发、手指等)。Hed预处理器可用于修改图像的风格和颜色。用于此预处理器的最佳模型是control_sd15_hed。</p>
+<h4 id="Illumination"><a href="#Illumination" class="headerlink" title="Illumination"></a>Illumination</h4><p>偵測輸入圖片的光源與照明效果。</p>
+<h4 id="Inpaint"><a href="#Inpaint" class="headerlink" title="Inpaint"></a>Inpaint</h4><p>功能類似「內補繪製」，使用50%隨機遮罩＋50%隨機光流遮罩訓練而成。</p>
+<h4 id="Instruct-Pix2Pix"><a href="#Instruct-Pix2Pix" class="headerlink" title="Instruct Pix2Pix"></a>Instruct Pix2Pix</h4><p>模型檔名為<code>ip2p</code>，類似「圖生圖」，但是使用訓練50%的指示(instruction)提示詞和50%的敘述(description)提示詞訓練而成。因為是ControlNet，使用此模型時不需要調整CFG Scale。</p>
+<p>根據原作者的說法，此模型在下「使其成為X」的提示詞所生成的圖，效果比「使Y成為X」要好。</p>
+<blockquote>
+<p>Also, it seems that instructions like “make it into X” works better than “make Y into X”.</p>
+</blockquote>
+<h4 id="Lineart"><a href="#Lineart" class="headerlink" title="Lineart"></a>Lineart</h4><p>偵測線條，適合處理線稿，生成的圖片亦會保留原始的線條。</p>
+<h4 id="M-LSD-Mobile-Line-Segment-Detection"><a href="#M-LSD-Mobile-Line-Segment-Detection" class="headerlink" title="M-LSD ( Mobile Line Segment Detection)"></a>M-LSD <strong>( Mobile Line Segment Detection)</strong></h4><p>偵測輸入圖片的直線。MLSD Preprocessor 最适合生成强有力的线条，这些线条能够检测出需要独特和刚性轮廓的建筑和其他人造作品。但是它不适用于处理非刚性或弯曲的物体。MLSD适用于生成室内布局或建筑结构，因为它可以突出直线和边缘。用于此预处理器的最佳模型是control_sd15_mlsd。</p>
+<h4 id="Normal-map"><a href="#Normal-map" class="headerlink" title="Normal map"></a>Normal map</h4><p>法线图使用了三种主要颜色(红、绿、蓝)，通过不同的角度来精确定位物体的粗糙度和光滑程度。它生成法线图的基本估计，可以保留相当多的细节，但可能会产生意想不到的结果，因为法线图完全来自图像，而不是在3D建模软件中构建的。</p>
+<p>法线图有利于突出复杂的细节和轮廓，并且在定位对象方面也很有效，特别是在接近度和距离方面。“Normal Background Threshold”用于调整背景成分。设置一个更高的阈值可以移除背景的远处部分(将其混合成紫色)。降低阈值将命令AI保留甚至显示额外的背景元素。用于此预处理器的最佳模型是control_sd15_normal。</p>
+<h4 id="Openpose"><a href="#Openpose" class="headerlink" title="Openpose"></a>Openpose</h4><p>使用OpenPose技術偵測輸入圖片人物的動作，不一定會保留線條。</p>
+<p>这个预处理器生成了一个基本的骨骼火柴人形象。 这种技术被广泛采用，因为多个 OpenPose 骨架可以组合成一个图像，这有助于引导稳定扩散生成多个一致的主题。 骨架图有很多关节点，。</p>
+<p><img src="../images/sd/v2-de4552588266a99bc190a1da375b832d_720w.webp" alt="v2-de4552588266a99bc190a1da375b832d_720w"></p>
+<p>要优化 OpenPose 的结果，建议上传一张人体图像（全身或半身）以及想要提取的姿势。 用于此预处理器的最佳模型是 control_sd15_openpose。</p>
+<h4 id="Scribbles"><a href="#Scribbles" class="headerlink" title="Scribbles"></a>Scribbles</h4><p>偵測線條，偵測到的線條品質介於Soft Edge和Lineart之間。</p>
+<p>涂鸦的目的是从简单的黑白线条画和草图生成图像。用户也可以使用“Canvas”选项创建特定大小的空白画布，用于手动素描（也可以直接上传图像）。如果草图和绘图由白色背景上的黑线组成，则需要选中“Invert Input Color”复选框。用于这个预处理器的最佳模型是control_sd15_openpose。</p>
+<h4 id="Segmentation"><a href="#Segmentation" class="headerlink" title="Segmentation"></a>Segmentation</h4><p>模型檔名為<code>seg</code>，將偵測的圖片物件切成一個一個色塊處理，例如房子一個色塊，後面的天空一個色塊。</p>
+<h4 id="Shuffle"><a href="#Shuffle" class="headerlink" title="Shuffle"></a>Shuffle</h4><p>把輸入圖片的概念轉移到生成的圖片。</p>
+<p>作者給的例子：輸入灰色裝甲圖片，生成的鋼鐵人盔甲也會是灰色的。</p>
+<h4 id="Soft-Edge"><a href="#Soft-Edge" class="headerlink" title="Soft Edge"></a>Soft Edge</h4><p>偵測圖片邊緣，效果較為柔和，像用炭筆塗過。</p>
+<h4 id="Tile"><a href="#Tile" class="headerlink" title="Tile"></a>Tile</h4><p>輸入圖片，選取一個區域，使其變清晰的模型。</p>
+<p>开始使用</p>
+<p><strong>prompt：</strong></p>
+<p><code>a chinese girl, black hair, red shirt, Blue Jeans， Red High Heels, watery eyes,(ultra high res,photorealistic,realistic,best quality,photo-realistic), (((high detailed skin))),(real person,photograph)</code></p>
+<p><strong>negative prompt:</strong></p>
+<p>disfigured, ugly, bad, immature, cartoon, anime, 3d, painting, b&amp;w</p>
+<p>启用姿态openpos：</p>
+<p>参考图</p>
+<img src="../images/sd/00100-333969092.png" alt="00100-333969092" style="zoom:33%;" />
+
+<p>结果：</p>
+<img src="../images/sd/20240207154113-3314802259.png" alt="20240207154113-3314802259" style="zoom:50%;" />
+
+
+
+<h2 id="提示词工具"><a href="#提示词工具" class="headerlink" title="提示词工具"></a>提示词工具</h2><p><a target="_blank" rel="noopener" href="https://github.com/DominikDoom/a1111-sd-webui-tagcomplete.git">https://github.com/DominikDoom/a1111-sd-webui-tagcomplete.git</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/byzod/a1111-sd-webui-tagcomplete-CN/">https://github.com/byzod/a1111-sd-webui-tagcomplete-CN/</a> 中文</p>
+<h2 id="图片库浏览"><a href="#图片库浏览" class="headerlink" title="图片库浏览"></a>图片库浏览</h2><p><a target="_blank" rel="noopener" href="https://github.com/yfszzx/stable-diffusion-webui-images-browser.git">https://github.com/yfszzx/stable-diffusion-webui-images-browser.git</a></p>
+<h2 id="骨架人偶-PoseX"><a href="#骨架人偶-PoseX" class="headerlink" title="骨架人偶 PoseX"></a>骨架人偶 PoseX</h2><p><a target="_blank" rel="noopener" href="https://github.com/hnmr293/posex.git">https://github.com/hnmr293/posex.git</a></p>
+<p>需要先安裝ControlNet才能使用這個擴充功能</p>
+<p>PoseX是可以在Stable Diffuison WebUI直接拉人物骨架，再配合ControlNet生成姿勢的擴充功能。</p>
+<p>開啟文生圖的頁面，點選右下角PoseX，點選Send this image to ControlNet</p>
+<p>在下面的ControlNet，點選Enabled，preprocessor選取<code>none</code>，model選<code>openpose</code>，不需要上傳圖片。</p>
+<p>回到上面的PoseX，調整人物姿勢。左鍵點選移動，滾輪放大縮小，對模型左鍵點二下即可用右鍵移動單個骨架。</p>
+<h2 id="AI绘图转影片"><a href="#AI绘图转影片" class="headerlink" title="AI绘图转影片"></a>AI绘图转影片</h2><p><a target="_blank" rel="noopener" href="https://github.com/Scholar01/sd-webui-mov2mov">https://github.com/Scholar01/sd-webui-mov2mov</a></p>
+<p>需要先安裝ControlNet才能使用這個擴充功能</p>
+<p>將影片逐一抽出畫格，使用ControlNet生圖，然後再自動合成新影片。可以設定輸出的畫格率，將人物單獨處理。</p>
+<p>目前只有windows系统可以使用,如果您系统不支持,可以关闭该选项卡.</p>
+<h2 id="生成多个任务"><a href="#生成多个任务" class="headerlink" title="生成多个任务"></a>生成多个任务</h2><p><a target="_blank" rel="noopener" href="https://github.com/ashen-sensored/stable-diffusion-webui-two-shot">https://github.com/ashen-sensored/stable-diffusion-webui-two-shot</a></p>
+<p>nt Couple會分割繪圖時的提示詞，這樣就可以生成多重人物/物件，並精確指定位置顏色了。</p>
+<p>像是先用PoseX拉好骨架，再使用Latent Couple標出人物的概略位置。</p>
+<h2 id="用文生图-ControlNet-Latent-Couple生成指定位置的多个任务"><a href="#用文生图-ControlNet-Latent-Couple生成指定位置的多个任务" class="headerlink" title="用文生图+ControlNet+Latent Couple生成指定位置的多个任务"></a>用文生图+ControlNet+Latent Couple生成指定位置的多个任务</h2><p>於文生圖的界面會看到Latent Couple</p>
+<p>勾選Enabled啟用，設定長寬，再點選最下面的<code>Create blank canvas</code>建立空白畫布</p>
+<p>用滑鼠繪製色塊。例如用紅筆繪製一個人物，藍筆繪製另一個人物。</p>
+<p>點選<code>I&#39;ve finished my sketch</code>，下面就會顯示各個色塊的分割狀況。依序填入提示詞：在<code>General Prompt</code>填入畫風和背景的提示詞，藍筆部份填入貞德<code>Jeanne d&#39;Arc</code>相關的提示詞，紅筆部份填入艾比蓋兒<code>Abigail Williams</code>的相關提示詞</p>
+<p>點選<code>Prompt Info Update</code>，提示詞即會自動跑到上面的框框，再自行補上負向提示詞。</p>
+<p>搭配事先用PoseX拉好的骨架，再點選Generate開始生圖。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/20240206-stable%20diffusion%20webui%20%E4%BB%8Ecivital%20%E4%B8%8B%E8%BD%BD%E6%A8%A1%E5%9E%8B%E5%B9%B6%E5%AD%A6%E4%B9%A0%E6%96%87%E7%94%9F%E5%9B%BE/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/20240218-Stable%20Diffusion%20%E5%9F%BA%E7%A1%80/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ControlNet-%E5%AE%89%E8%A3%85%E9%AA%A8%E6%9E%B6%E5%8A%A8%E4%BD%9C%E7%BB%98%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">ControlNet 安装骨架动作绘图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%84%E5%80%8B%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%94%A8%E9%80%94"><span class="nav-number">1.1.</span> <span class="nav-text">各個模型的用途</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Anime-Lineart"><span class="nav-number">1.1.1.</span> <span class="nav-text">Anime Lineart</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Canny"><span class="nav-number">1.1.2.</span> <span class="nav-text">Canny</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Depth-amp-Depth-Leres"><span class="nav-number">1.1.3.</span> <span class="nav-text">Depth   &amp; Depth Leres</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Illumination"><span class="nav-number">1.1.4.</span> <span class="nav-text">Illumination</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Inpaint"><span class="nav-number">1.1.5.</span> <span class="nav-text">Inpaint</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Instruct-Pix2Pix"><span class="nav-number">1.1.6.</span> <span class="nav-text">Instruct Pix2Pix</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lineart"><span class="nav-number">1.1.7.</span> <span class="nav-text">Lineart</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#M-LSD-Mobile-Line-Segment-Detection"><span class="nav-number">1.1.8.</span> <span class="nav-text">M-LSD ( Mobile Line Segment Detection)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Normal-map"><span class="nav-number">1.1.9.</span> <span class="nav-text">Normal map</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Openpose"><span class="nav-number">1.1.10.</span> <span class="nav-text">Openpose</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Scribbles"><span class="nav-number">1.1.11.</span> <span class="nav-text">Scribbles</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Segmentation"><span class="nav-number">1.1.12.</span> <span class="nav-text">Segmentation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Shuffle"><span class="nav-number">1.1.13.</span> <span class="nav-text">Shuffle</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Soft-Edge"><span class="nav-number">1.1.14.</span> <span class="nav-text">Soft Edge</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Tile"><span class="nav-number">1.1.15.</span> <span class="nav-text">Tile</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E5%85%B7"><span class="nav-number">2.</span> <span class="nav-text">提示词工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E5%BA%93%E6%B5%8F%E8%A7%88"><span class="nav-number">3.</span> <span class="nav-text">图片库浏览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%A8%E6%9E%B6%E4%BA%BA%E5%81%B6-PoseX"><span class="nav-number">4.</span> <span class="nav-text">骨架人偶 PoseX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AI%E7%BB%98%E5%9B%BE%E8%BD%AC%E5%BD%B1%E7%89%87"><span class="nav-number">5.</span> <span class="nav-text">AI绘图转影片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%A4%9A%E4%B8%AA%E4%BB%BB%E5%8A%A1"><span class="nav-number">6.</span> <span class="nav-text">生成多个任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%96%87%E7%94%9F%E5%9B%BE-ControlNet-Latent-Couple%E7%94%9F%E6%88%90%E6%8C%87%E5%AE%9A%E4%BD%8D%E7%BD%AE%E7%9A%84%E5%A4%9A%E4%B8%AA%E4%BB%BB%E5%8A%A1"><span class="nav-number">7.</span> <span class="nav-text">用文生图+ControlNet+Latent Couple生成指定位置的多个任务</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">wanghongxing</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wanghongxing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hongxing.tech","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="参考 Ivon的部落格 1an asian girl on the beach    改用新的提示词 11girl, asian, beach, ocean  然后将batch count改为4       再算一次，但是结果变了？没错，即使提示词相近，AI绘图每次生图结果都是随机的。要维持上一次的结果并微调，你得保留每次算图的种子码(Seed，SD WebUI界面右下角，亦会写在文件名上)。 这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红星">
+<meta property="og:url" content="https://hongxing.tech/20240204-stable%20diffusion%20webui%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="红星">
+<meta property="og:description" content="参考 Ivon的部落格 1an asian girl on the beach    改用新的提示词 11girl, asian, beach, ocean  然后将batch count改为4       再算一次，但是结果变了？没错，即使提示词相近，AI绘图每次生图结果都是随机的。要维持上一次的结果并微调，你得保留每次算图的种子码(Seed，SD WebUI界面右下角，亦会写在文件名上)。 这">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hongxing.tech/images/sd/20240204001.png">
+<meta property="og:image" content="https://hongxing.tech/images/sd/20240204002.png">
+<meta property="og:image" content="https://hongxing.tech/images/sd/00013-1655102876.png">
+<meta property="og:image" content="https://hongxing.tech/images/sd/00014-1655102876.png">
+<meta property="og:image" content="https://hongxing.tech/images/sd/00019-1822157101.png">
+<meta property="og:image" content="https://hongxing.tech/images/sd/00023-3397365016.png">
+<meta property="og:image" content="https://hongxing.tech/images/sd/00026-1538503611.png">
+<meta property="og:image" content="https://hongxing.tech/images/sd/00027-1080937815.png">
+<meta property="og:image" content="https://hongxing.tech/images/sd/00028-2199430340.png">
+<meta property="og:image" content="https://hongxing.tech/images/sd/00029-2630536656.png">
+<meta property="og:image" content="https://hongxing.tech/images/sd/00116-2587609433.png">
+<meta property="og:image" content="https://hongxing.tech/images/sd/00032-2387293181.png">
+<meta property="og:image" content="https://hongxing.tech/images/sd/00034-299709774.png">
+<meta property="og:image" content="https://hongxing.tech/images/sd/00041-3821788433.png">
+<meta property="og:image" content="https://hongxing.tech/images/sd/00052-1480416086.png">
+<meta property="og:image" content="https://hongxing.tech/images/sd/00057-2228126458.png">
+<meta property="og:image" content="https://hongxing.tech/Users/whx/Documents/wanghongxing.github.com/source/images/sd/20240207110110-1201812112.png">
+<meta property="article:published_time" content="2024-02-04T14:09:07.899Z">
+<meta property="article:modified_time" content="2024-02-07T03:54:35.702Z">
+<meta property="article:author" content="wanghongxing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hongxing.tech/images/sd/20240204001.png">
+
+<link rel="canonical" href="https://hongxing.tech/20240204-stable%20diffusion%20webui%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%AD%A6%E4%B9%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title> | 红星</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">红星</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240204-stable%20diffusion%20webui%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-02-04 22:09:07" itemprop="dateCreated datePublished" datetime="2024-02-04T22:09:07+08:00">2024-02-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-02-07 11:54:35" itemprop="dateModified" datetime="2024-02-07T11:54:35+08:00">2024-02-07</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>参考 <a target="_blank" rel="noopener" href="https://ivonblog.com/posts/stable-diffusion-webui-manuals/prompts/general-prompt-guide/">Ivon的部落格</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">an asian girl on the beach</span><br></pre></td></tr></table></figure>
+
+<img src="../images/sd/20240204001.png" alt="20240204001" style="zoom:50%;" />
+
+<p>改用新的提示词</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1girl, asian, beach, ocean</span><br></pre></td></tr></table></figure>
+
+<p>然后将batch count改为4</p>
+<img src="../images/sd/20240204002.png" alt="20240204002" style="zoom:50%;" />
+
+
+
+
+
+<p>再算一次，但是结果变了？没错，即使提示词相近，AI绘图每次生图结果都是随机的。要维持上一次的结果并微调，你得保留每次算图的种子码(Seed，SD WebUI界面右下角，亦会写在文件名上)。</p>
+<p>这时候注意一下右下角的内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1girl, asian, beach, ocean</span><br><span class="line">Steps: 20, Sampler: LMS, CFG scale: 7, Seed: 1655102876, Size: 512x560, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</span><br></pre></td></tr></table></figure>
+
+<img src="../images/sd/00013-1655102876.png" alt="00013-1655102876" style="zoom:50%;" />
+
+<p>新测试,在seed 处填入：1655102876</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1girl, asian, blue eyes, short hair, straw hat, standing, blue bikini, beach, ocean, orange sky</span><br><span class="line"></span><br><span class="line">Steps: 20, Sampler: LMS, CFG scale: 7, Seed: 1655102876, Size: 512x560, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<img src="../images/sd/00014-1655102876.png" alt="00014-1655102876" style="zoom:50%;" />
+
+<p>要改变风格，可以在提示词加入「风格」的提示词。这方面的提示词有：相片(photoshop)、3D建模(3d model)、装饰艺术(art deco)、石像(stone sculpture)等风格</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a stone sculpture of 1girl, asian, blue eyes, beach, ocean</span><br><span class="line">Steps: 20, Sampler: DPM++ 2M SDE, CFG scale: 7, Seed: 1822157101, Size: 512x512,</span><br><span class="line">Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</span><br><span class="line"></span><br><span class="line">Time taken: 14.5 sec.</span><br></pre></td></tr></table></figure>
+
+<img src="../images/sd/00019-1822157101.png" alt="00019-1822157101" style="zoom:50%;" />
+
+<p>风格是很难界定的东西呢，一般来说我们会图片像哪个艺术家的风格对吧？那么不如直接「召唤」他们吧！提示词可以包含某位画家的名字，AI会尝试模仿其风格。例如加上「慕夏的作品」，并加入「大师级作品」的风格提示词：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">; 参考翻译：慕夏的作品，大师级作品，一个女孩，亚洲人，蓝眼睛，沙滩，海洋</span></span><br><span class="line">artwork by Alfons Maria Mucha, masterpiece, <span class="number">1</span>girl, asian, blue eyes, beach, ocean</span><br></pre></td></tr></table></figure>
+
+<p>生图的结果就会变得像是慕夏的作品。顺带一提<code>masterpiece</code>这个提示词还蛮万用的，可以让作品维持一定水准。</p>
+<img src="../images/sd/00023-3397365016.png" alt="00023-3397365016" style="zoom:50%;" />
+
+<p>当然还可以画特定动漫人物的「二创」，只要将名字和作品名称打上去就可以了。有名的动漫角色只要出现名字，不用特别指定身体特征就会生成原作风格了，例如指定《新世纪福音战士》的惣流·明日香·兰格雷：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">asuka_langley_souryuu from neon_genesis_evangelion, masterpiece, <span class="number">1</span>girl, beach, ocean</span><br></pre></td></tr></table></figure>
+
+<img src="../images/sd/00026-1538503611.png" alt="00026-1538503611" style="zoom:50%;" />
+
+<p>再次提醒，在下提示词的时候，生成图片使用的模型也需纳入考量。譬如想要生成特定动漫人物，去Danbooru找到了英文姓名，加上提示词，但你却用画真人的Stable Diffusion去算，则AI可能根本就不会认得你说的角色是谁，反之亦然。Danbooru的标签风格跟一般图片的描述还是有差距的。</p>
+<p>除非日后有搜罗全部网络图片的超大模型出现，否则下提示词须配合模型种类来决定。</p>
+<p>如果AI怎样都生成不出你要的风格或人物，请考虑换个模型，或是 <a target="_blank" rel="noopener" href="https://ivonblog.com/posts/stable-diffusion-webui-manuals/zh-cn/training/">自行训练模型</a>。</p>
+<h1 id="负向提示词-Negative-Prompts"><a href="#负向提示词-Negative-Prompts" class="headerlink" title="负向提示词 Negative Prompts"></a>负向提示词 Negative Prompts</h1><p>上面我们只写提示词，但下面的负向提示词的字段都是空白。但生图时常常还需要加入一些负向提示词，避免掉不好的结果。AI绘图有时不会一次就算出好结果，所以还需要加上负向提示词来控制，尤其是大批算图的时候更为重要。</p>
+<p>负向提示词会加入一些常见的「不好」的图片特征，例如低画质、最糟品质、画家签名、模糊、浮水印</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deformed, lowres, bad anatomy, text, error, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, artist name</span><br></pre></td></tr></table></figure>
+
+<p>不想看到的东西也可以加进去。例如不想看到裸露、兵器、血、猎奇的元素出现，就加入<code>nsfw</code>、<code>weapon</code>、<code>blood</code>、<code>guro</code>至负向提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nsfw, weapon, blood, guro, lowres, bad anatomy, text, error, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name</span><br></pre></td></tr></table></figure>
+
+<p>提示词并非越多越好，正向提示词以不超过150个词元(token)为原则；不过负向提示词可以尽量把不想看到的都塞进去。</p>
+<h1 id="Stable-Diffusion-WebUI独有语法"><a href="#Stable-Diffusion-WebUI独有语法" class="headerlink" title="Stable Diffusion WebUI独有语法"></a>Stable Diffusion WebUI独有语法</h1><p>此节列出的语法为AUTOMATIC1111制作的SD WebUI独有，使用其他人制作的Stable Diffusion程序不见得适用。</p>
+<h2 id="关注度括号-Attention-emphasis"><a href="#关注度括号-Attention-emphasis" class="headerlink" title="关注度括号 Attention/emphasis"></a>关注度括号 Attention/emphasis</h2><p>控制关注度的符号，增加算图时对该提示词的关注度(attention)。简单来说，括号就是你想强调的重点元素，括号越多，生成的结果越会符合括号里的提示词。</p>
+<p>SD WebUI使用小括号控制关注度： <code>( )</code> 小括号层次越多权重越高(不加小括号为1倍，每加一层小括号乘以1.1倍)。例如，强调「蓝眼睛」，生成的结果就更高几率是蓝眼睛人物</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">asuka_langley_souryuu from neon_genesis_evangelion, masterpiece, 1girl, beach, ocean, ((blue eyes))</span><br><span class="line">Steps: 20, Sampler: UniPC, CFG scale: 7, Seed: 1080937815, Size: 512x512, </span><br><span class="line">Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<img src="../images/sd/00027-1080937815.png" alt="00027-1080937815" style="zoom:50%;" />
+
+
+
+
+
+<p>亦可以直接写明要增强几倍关注度，但其实一般情况下不用设太强，用一二层的小括号就够了。</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">asuka_langley_souryuu from neon_genesis_evangelion, masterpiece, <span class="number">1</span>girl, beach, ocean, ((<span class="name">blue</span> eyes)),((<span class="name">yellow</span> hair))</span><br><span class="line">Steps: <span class="number">20</span>, Sampler: UniPC, CFG scale: <span class="number">7</span>, Seed: <span class="number">2199430340</span>, Size: <span class="number">512</span>x512,</span><br><span class="line">Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.<span class="number">7.0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<img src="../images/sd/00028-2199430340.png" alt="00028-2199430340" style="zoom:50%;" />
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">asuka_langley_souryuu from neon_genesis_evangelion, masterpiece, 1girl, beach, ocean, ((blue eyes)),((yellow hair)),(Green clothes)</span><br><span class="line">Steps: 20, Sampler: UniPC, CFG scale: 7, </span><br><span class="line">Seed: 2630536656, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</span><br></pre></td></tr></table></figure>
+
+<p>这时候对颜色的控制已经错乱了，说明提示词混乱了。</p>
+<img src="../images/sd/00029-2630536656.png" alt="00029-2630536656" style="zoom:50%;" />
+
+
+
+
+
+<h2 id="提示词编辑-Prompt-editing"><a href="#提示词编辑-Prompt-editing" class="headerlink" title="提示词编辑 Prompt editing"></a>提示词编辑 Prompt editing</h2><p>指定在到哪一步数的时候切换提示词。此处的中括号跟权重无关。</p>
+<p>语法为<code>[提示词1:提示词2:要切换的步数]</code></p>
+<p>例如，算图时设置20步，一开始算橘子，设置算到15步时切换成苹果</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[orange : apple : <span class="number">15</span>] on table</span><br></pre></td></tr></table></figure>
+
+<p>这时候就是生成一个桔子</p>
+<h2 id="切换单字-Alternating-Words"><a href="#切换单字-Alternating-Words" class="headerlink" title="切换单字 Alternating Words"></a>切换单字 Alternating Words</h2><p>使用<code>|</code>代表在每个步数切换提示词，例如我要在算图时于「蓝眼睛」或「红眼睛」或「黑眼睛」之间切换</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">asian, woman, [blue eyes|red eyes|black eyes], beach, ocean</span><br></pre></td></tr></table></figure>
+
+<h2 id="可组合性扩散-Composable-Diffusion"><a href="#可组合性扩散-Composable-Diffusion" class="headerlink" title="可组合性扩散 Composable Diffusion"></a>可组合性扩散 Composable Diffusion</h2><p>此语法让AI依照权重生成二个不同的对象。</p>
+<p>例如生成橘子与苹果，中间用大写的<code>AND</code>连接</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">orange AND apple</span><br></pre></td></tr></table></figure>
+
+<p>后面加上数字控制权重，初始值为1，数值低于0.1则无效。</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">orange :<span class="number">1.5</span> AND apple :<span class="number">2.5</span></span><br></pre></td></tr></table></figure>
+
+<p>此语法适合搭配 <a target="_blank" rel="noopener" href="https://ivonblog.com/posts/stable-diffusion-webui-manuals/zh-cn/extensions/latent-couple/">ControlNet和Latent Couple</a>，可以准确控制图中对象的位置。</p>
+<img src="../images/sd/00116-2587609433.png" alt="00116-2587609433" style="zoom:50%;" />
+
+
+
+<h1 id="提示词范例"><a href="#提示词范例" class="headerlink" title="提示词范例"></a>提示词范例</h1><p>这里提供一些懒人包。负向提示词有些是通用的。</p>
+<h2 id="生成可爱的狗勾"><a href="#生成可爱的狗勾" class="headerlink" title="生成可爱的狗勾"></a>生成可爱的狗勾</h2><p>让我们试着画几只柯基犬在草地上奔跑。</p>
+<p>建议使用模型：Stable Diffusion、Realistic Vision</p>
+<p>提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span> corgi dogs running on grass field</span><br></pre></td></tr></table></figure>
+
+<p>负向提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lowres, bad anatomy, text, error, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name</span><br></pre></td></tr></table></figure>
+
+<p>Steps: 20, Sampler: Euler a, CFG scale: 7, Seed: 2387293181, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</p>
+<img src="../images/sd/00032-2387293181.png" alt="00032-2387293181" style="zoom:50%;" />
+
+
+
+<h2 id="生成高科技未来城市"><a href="#生成高科技未来城市" class="headerlink" title="生成高科技未来城市"></a>生成高科技未来城市</h2><p>建议使用模型：Stable Diffusion、Realistic Vision</p>
+<p>提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">city future, <span class="number">8</span>k, exploration, cinematic, realistic, unreal engine, hyper detailed, volumetric light, moody cinematic epic concept art, realistic matte painting, hyper photorealistic</span><br></pre></td></tr></table></figure>
+
+<p>负向提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lowres, bad anatomy, text, error, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name</span><br></pre></td></tr></table></figure>
+
+<p>Steps: 20, Sampler: Euler a, CFG scale: 7, Seed: 299709774, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</p>
+<img src="../images/sd/00034-299709774.png" alt="00034-299709774" style="zoom:50%;" />
+
+
+
+<h2 id="生成一台特斯拉车子"><a href="#生成一台特斯拉车子" class="headerlink" title="生成一台特斯拉车子"></a>生成一台特斯拉车子</h2><p>建议使用模型：Stable Diffusion、Realistic Vision</p>
+<p>提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">concept art,tesla car, aerodynamic, future</span><br></pre></td></tr></table></figure>
+
+<p>负向提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lowres, bad anatomy, text, error, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name</span><br></pre></td></tr></table></figure>
+
+<p>Steps: 20, Sampler: Euler a, CFG scale: 7, Seed: 3821788433, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</p>
+<img src="../images/sd/00041-3821788433.png" alt="00041-3821788433" style="zoom:50%;" />
+
+<h2 id="生成动漫美少女"><a href="#生成动漫美少女" class="headerlink" title="生成动漫美少女"></a>生成动漫美少女</h2><p>建议使用模型：Anything、Hentai Diffusion</p>
+<p>随机画一个Fate/Grand Order的贞德</p>
+<p>提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jeanne d&#x27;arc from fate grand order, <span class="number">1</span>girl, (<span class="name">best</span> quality), (<span class="name">masterpiece</span>), (<span class="name">high</span> detail), ((<span class="name">full</span> face)), sharp, ((<span class="name">looking</span> at viewer)), ((<span class="name">detailed</span> pupils)), (<span class="name">thick</span> thighs), (((<span class="name">full</span> body))), (<span class="name">large</span> breasts)</span><br></pre></td></tr></table></figure>
+
+<p>负向提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name</span><br></pre></td></tr></table></figure>
+
+<p>Steps: 20, Sampler: Euler, CFG scale: 7, Seed: 1480416086, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</p>
+<img src="../images/sd/00052-1480416086.png" alt="00052-1480416086" style="zoom:50%;" />
+
+<h2 id="生成日韩风真人女孩"><a href="#生成日韩风真人女孩" class="headerlink" title="生成日韩风真人女孩"></a>生成日韩风真人女孩</h2><p>建议使用模型：ChilloutMix、Perfect World，并适时使用Japanese Doll的LoRA。</p>
+<p>随机画一个日本女孩，不要色色</p>
+<p>提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">a</span> japanese woman), shiny skin, (<span class="name">ultra</span> high res,photorealistic,realistic,best quality,photo-realistic), (((<span class="name">high</span> detailed skin,visible pores))),(<span class="name">real</span> person,photograph), (<span class="number">8</span>k, raw photo, best quality, masterpiece),(<span class="number">1</span>girl),photon mapping, radiosity, physically-based rendering,automatic white balance,(<span class="name">haunting</span> smile,moist lips),watery eyes, (<span class="name">blush</span><span class="name">|cute and playful|</span><span class="name">adorable</span><span class="name">|thick bangs|</span><span class="name">beauty</span>),((<span class="name">irises</span> and pupils are rounded,the pupil reflects the surroundings,eyes are not the same size))</span><br></pre></td></tr></table></figure>
+
+<p>负向提示词</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nude, lowres,blurry,simple background,jpeg artifacts,bad-artist,bad shadow,compressed image,low pixel,light spot, paintings,sketches,((<span class="name">monochrome</span>)),((<span class="name">grayscale</span>)),noise point,semi-realistic, <span class="number">3</span>d,render,cg,drawing,cartoon,anime,comic,username,watermark,signature,cropped,error,censored,text,stain, deformed iris,deformed pupils,deformed nail,deformed ear,deformed eye,deformed eyelid,collapsed eyeshadow, [excessive skin spots,excessive skin imperfections,skin blemishes,skin fold,rough skinstain skin],goosebumps,skin layering,axillary fold,facial contortion, (<span class="name">flawless</span> face),trimming</span><br></pre></td></tr></table></figure>
+
+<p>Steps: 20, Sampler: DDIM, CFG scale: 7, Seed: 2228126458, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</p>
+<img src="../images/sd/00057-2228126458.png" alt="00057-2228126458" style="zoom:50%;" />
+
+
+
+<p><strong>Prompt:</strong></p>
+<p><code>(a japanese woman), shiny skin, (ultra high res,photorealistic,realistic,best quality,photo-realistic), (((high detailed skin,visible pores))),(real person,photograph), (8k, raw photo, best quality, masterpiece),(1girl),photon mapping, radiosity, physically-based rendering,automatic white balance,(haunting smile,moist lips),watery eyes, (blush|cute and playful|adorable|thick bangs|beauty),((irises and pupils are rounded,the pupil reflects the surroundings,eyes are not the same size))</code></p>
+<img src="/Users/whx/Documents/wanghongxing.github.com/source/images/sd/20240207110110-1201812112.png" alt="20240207110110-1201812112" style="zoom:50%;" />
+
+<p>Steps: 20, Sampler: Euler a, CFG scale: 7, Seed: 1201812112, Size: 512x512, Model hash: 4199bcdd14, Model: revAnimated_v122EOL, Version: v1.7.0</p>
+<h1 id="5-值得参考的提示词网站"><a href="#5-值得参考的提示词网站" class="headerlink" title="5. 值得参考的提示词网站 #"></a>5. 值得参考的提示词网站 <a target="_blank" rel="noopener" href="https://ivonblog.com/posts/stable-diffusion-webui-manuals/zh-cn/prompts/general-prompt-guide/#5-%E5%80%BC%E5%BE%97%E5%8F%82%E8%80%83%E7%9A%84%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BD%91%E7%AB%99">#</a></h1><p>若使用的是SD模型，想生成真人，请看 <a target="_blank" rel="noopener" href="https://rentry.org/artists_sd-v1-4">Voldy</a>整理的历史上有名的艺术家。</p>
+<p>若使用动漫风的模型请看 <a target="_blank" rel="noopener" href="https://danbooru.donmai.us/">Danbooru</a>图库的标签决定要下哪些提示词。</p>
+<p><a target="_blank" rel="noopener" href="https://promptomania.com/stable-diffusion-prompt-builder/">Prompt Generator</a>和 <a target="_blank" rel="noopener" href="https://thereisnospon.github.io/NovelAiTag/">NovelAI魔导书</a>可以协助你组合提示词。</p>
+<p><a target="_blank" rel="noopener" href="https://civitai.com/">Civitai</a>除了下载模型外，还有很多现成的提示词搭配模型的范例可以照抄。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/20240204-macos%20%E5%AE%89%E8%A3%85ComfyUI/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/20240204-apple%20silicon%20install%20stable%20diffusion%20webui%E9%80%9F%E5%BA%A6%E6%85%A2%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B4%9F%E5%90%91%E6%8F%90%E7%A4%BA%E8%AF%8D-Negative-Prompts"><span class="nav-number">1.</span> <span class="nav-text">负向提示词 Negative Prompts</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Stable-Diffusion-WebUI%E7%8B%AC%E6%9C%89%E8%AF%AD%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">Stable Diffusion WebUI独有语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E6%B3%A8%E5%BA%A6%E6%8B%AC%E5%8F%B7-Attention-emphasis"><span class="nav-number">2.1.</span> <span class="nav-text">关注度括号 Attention&#x2F;emphasis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BC%96%E8%BE%91-Prompt-editing"><span class="nav-number">2.2.</span> <span class="nav-text">提示词编辑 Prompt editing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%87%E6%8D%A2%E5%8D%95%E5%AD%97-Alternating-Words"><span class="nav-number">2.3.</span> <span class="nav-text">切换单字 Alternating Words</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E7%BB%84%E5%90%88%E6%80%A7%E6%89%A9%E6%95%A3-Composable-Diffusion"><span class="nav-number">2.4.</span> <span class="nav-text">可组合性扩散 Composable Diffusion</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%E8%AF%8D%E8%8C%83%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">提示词范例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%8F%AF%E7%88%B1%E7%9A%84%E7%8B%97%E5%8B%BE"><span class="nav-number">3.1.</span> <span class="nav-text">生成可爱的狗勾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E9%AB%98%E7%A7%91%E6%8A%80%E6%9C%AA%E6%9D%A5%E5%9F%8E%E5%B8%82"><span class="nav-number">3.2.</span> <span class="nav-text">生成高科技未来城市</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E4%B8%80%E5%8F%B0%E7%89%B9%E6%96%AF%E6%8B%89%E8%BD%A6%E5%AD%90"><span class="nav-number">3.3.</span> <span class="nav-text">生成一台特斯拉车子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%8A%A8%E6%BC%AB%E7%BE%8E%E5%B0%91%E5%A5%B3"><span class="nav-number">3.4.</span> <span class="nav-text">生成动漫美少女</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%97%A5%E9%9F%A9%E9%A3%8E%E7%9C%9F%E4%BA%BA%E5%A5%B3%E5%AD%A9"><span class="nav-number">3.5.</span> <span class="nav-text">生成日韩风真人女孩</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%80%BC%E5%BE%97%E5%8F%82%E8%80%83%E7%9A%84%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BD%91%E7%AB%99"><span class="nav-number">4.</span> <span class="nav-text">5. 值得参考的提示词网站 </span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">wanghongxing</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wanghongxing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

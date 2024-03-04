@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hongxing.tech","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="pytorch学习之路 pytorch包含以下组件 torch: 一个像numpy 向量库 torch.autograd 自动微分库，支持所有微分向量运算 torch.jit 一个编译栈，从pytorch代码来创建可序列化、可以优化的模型 torch.nn 神经元网络库，设计之初保持了最大化灵活性，深度继承了求导库 torch.multiprocessing 多处理，在torch 向量访问处理器时">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红星">
+<meta property="og:url" content="https://hongxing.tech/20240226pytorch%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/index.html">
+<meta property="og:site_name" content="红星">
+<meta property="og:description" content="pytorch学习之路 pytorch包含以下组件 torch: 一个像numpy 向量库 torch.autograd 自动微分库，支持所有微分向量运算 torch.jit 一个编译栈，从pytorch代码来创建可序列化、可以优化的模型 torch.nn 神经元网络库，设计之初保持了最大化灵活性，深度继承了求导库 torch.multiprocessing 多处理，在torch 向量访问处理器时">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-02-26T01:36:20.861Z">
+<meta property="article:modified_time" content="2024-02-26T07:44:40.318Z">
+<meta property="article:author" content="wanghongxing">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://hongxing.tech/20240226pytorch%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title> | 红星</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">红星</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240226pytorch%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-02-26 09:36:20 / Modified: 15:44:40" itemprop="dateCreated datePublished" datetime="2024-02-26T09:36:20+08:00">2024-02-26</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>pytorch学习之路</p>
+<p>pytorch包含以下组件</p>
+<p>torch: 一个像numpy 向量库</p>
+<p>torch.autograd 自动微分库，支持所有微分向量运算</p>
+<p>torch.jit 一个编译栈，从pytorch代码来创建可序列化、可以优化的模型</p>
+<p>torch.nn 神经元网络库，设计之初保持了最大化灵活性，深度继承了求导库</p>
+<p>torch.multiprocessing 多处理，在torch 向量访问处理器时使用了魔术化的内存共享。在数据加载和疯狂的训练模型的时候非常有用。</p>
+<p>torch。utils 数据记在和其他功能</p>
+<p>通常pytorch用作两个方面：</p>
+<p>1、替代numpy来使用gpu</p>
+<p>2、提供最大灵活性和速度的深度学习研究平台</p>
+<p>动态神经元网络：使用磁带记录仪回放这种独特的方法来创建神经元网络。</p>
+<p>pytorch使用反向模式自动微分技术，让我们经常零成本的改变网络行为；我们的灵感来自于这篇文章的几个研究报告。</p>
+<p>这个技术不是pytorch独有的。这是目前为止最快速的实现。你可以为你疯狂的研究获得最快的速度和灵活性。</p>
+<p>pytorch不是一个整体绑定到 c++框架的。他是深度集成到python中。你可以像使用numpy scipy scikit-learn一样自然的使用它。你可以写你自己全新神经元网络，使用你喜欢的库和包。我们的目标是不重复造轮子。</p>
+<p>必要的经验</p>
+<p>pytorch设计为只觉得、线性的思考、简单易用。当你执行一行代码，他被执行了。在现实世界中他不是异步视图。当你调试一行代码或者接收到错误信息和堆栈跟踪，理解他们是很直观的。堆栈调用之初你的代码在哪里被定义。我们希望你不要因为坏的堆栈调用、异步执行和不透明的执行引擎而花费时间调试你的代码。</p>
+<p>快速和学习</p>
+<p>pytorch有最小的框架成本。我们继承了加速库像intel MKL 和nvidia（cuDNN nccl)去最大化速度。最核心的，他核心的cpu gpu向量和神经元网络是成熟的并且经过多年测试的。</p>
+<p>因此，pytorch是非常快的，无论执行小规模还是大规模的模型。</p>
+<p>无痛扩展</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>二进制，命令行通过conda 或者pip 安装 参照： <a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">https://pytorch.org/get-started/locally/</a></p>
+<p>源代码安装</p>
+<p>需要满足：python 3.8+；编译器全面支持C++17，像clang或者gcc（gcc 9.4.0或者最新）</p>
+<p>强烈推荐安装conda环境。</p>
+<p>如果想要编译cuda支持，从我们的支持矩阵里选择一个我们支持的版本<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">select a supported version of CUDA from our support matrix</a>。然后安装nvidia cuda ,nvidia cuDNN v8.5 + ,CUDA兼容的编译器。</p>
+<p>如果要禁用CUDA，设置环境变量 USE_CUDA=0 .其它有用的环境变量在setup.py中。</p>
+<h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h4><h4 id="Get-the-PyTorch-Source"><a href="#Get-the-PyTorch-Source" class="headerlink" title="Get the PyTorch Source"></a>Get the PyTorch Source</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone --recursive https://github.com/pytorch/pytorch</span><br><span class="line">cd pytorch</span><br><span class="line"># if you are updating an existing checkout</span><br><span class="line">git submodule sync</span><br><span class="line">git submodule update --init --recursive</span><br></pre></td></tr></table></figure>
+
+
+
+<p>通用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda install cmake ninja</span><br><span class="line"># Run this command from the PyTorch directory after cloning the source code using the “Get the PyTorch Source“ section below</span><br><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>On Linux</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">conda install intel::mkl-static intel::mkl-include</span><br><span class="line"># CUDA only: Add LAPACK support for the GPU if needed</span><br><span class="line">conda install -c pytorch magma-cuda110  # or the magma-cuda* that matches your CUDA version from https://anaconda.org/pytorch/repo</span><br><span class="line"></span><br><span class="line"># (optional) If using torch.compile with inductor/triton, install the matching version of triton</span><br><span class="line"># Run from the pytorch directory after cloning</span><br><span class="line">make triton</span><br></pre></td></tr></table></figure>
+
+<p><strong>On MacOS</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Add this package on intel x86 processor machines only</span><br><span class="line">conda install intel::mkl-static intel::mkl-include</span><br><span class="line"># Add these packages if torch.distributed is needed</span><br><span class="line">conda install pkg-config libuv</span><br></pre></td></tr></table></figure>
+
+<p><strong>On Windows</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">conda install intel::mkl-static intel::mkl-include</span><br><span class="line"># Add these packages if torch.distributed is needed.</span><br><span class="line"># Distributed package support on Windows is a prototype feature and is subject to changes.</span><br><span class="line">conda install -c conda-forge libuv=1.39</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Install-PyTorch"><a href="#Install-PyTorch" class="headerlink" title="Install PyTorch"></a>Install PyTorch</h4><p><strong>On macOS</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 setup.py develop</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/20240219-sd%E6%A8%A1%E5%9E%8B/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/20230226%E5%AD%A6%E4%B9%A0%20tensors/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="nav-number">1.0.1.</span> <span class="nav-text">安装依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Get-the-PyTorch-Source"><span class="nav-number">1.0.2.</span> <span class="nav-text">Get the PyTorch Source</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-PyTorch"><span class="nav-number">1.0.3.</span> <span class="nav-text">Install PyTorch</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">wanghongxing</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wanghongxing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
