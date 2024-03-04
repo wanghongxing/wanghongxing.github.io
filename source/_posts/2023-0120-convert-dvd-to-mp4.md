@@ -399,3 +399,25 @@ find . -name '*.MPG' -exec bash -c 'convertFile ${0}' {} \;
 
 ```
 
+
+
+
+
+修改视频码率，设置缩放后的视频大小和码率
+
+```
+ffmpeg -i 浩之宝视频2024-1-9.mp4   -r 15 -b 350k  -vcodec libx265 -vtag hvc1 浩之宝视频2024-1-9-350.mp4
+ffmpeg -i 浩之宝视频2024-1-9.mp4 -vf scale=iw*.8:ih*.8 -r 15 -b 350k  -vcodec libx265 -vtag hvc1 浩之宝视频2024-1-9-350k.mp4
+ffmpeg -i 澎众店视频2024-1-9.mp4 -vf scale=iw*.8:ih*.8 -r 15 -b 350k  -vcodec libx265 -vtag hvc1 澎众店视频2024-1-9-3501k.mp4
+ffmpeg -i 澎众店视频2024-1-9.mp4  -r 15 -b 350k  -vcodec libx265 -vtag hvc1 澎众店视频2024-1-9-350k.mp4
+
+
+
+
+ffmpeg -i 1彭众.mp4  -r 15 -b 200k  -vcodec libx265 -vtag hvc1 1彭众-350k.mp4
+ffmpeg -i 2深蓝.mp4  -r 15 -b 200k  -vcodec libx265 -vtag hvc1 2深蓝-350k.mp4
+
+
+
+```
+
