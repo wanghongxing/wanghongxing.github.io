@@ -160,75 +160,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240204-apple%20silicon%20install%20stable%20diffusion%20webui%E9%80%9F%E5%BA%A6%E6%85%A2%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/20240204-apple%20silicon%20install%20stable%20diffusion%20webui%E9%80%9F%E5%BA%A6%E6%85%A2%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="post-title-link" itemprop="url">Untitled</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-02-04 22:09:07" itemprop="dateCreated datePublished" datetime="2024-02-04T22:09:07+08:00">2024-02-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-02-07 11:50:56" itemprop="dateModified" datetime="2024-02-07T11:50:56+08:00">2024-02-07</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>apple silicon install stable diffusion webui 后运行速度特别慢，参照 <a target="_blank" rel="noopener" href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/7453">https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/7453</a></p>
-<p>下载新的webui-user.sh文件，其实就是增加了三行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export COMMANDLINE_ARGS=&quot;--skip-torch-cuda-test --upcast-sampling --opt-sub-quad-attention --use-cpu interrogate&quot;</span><br><span class="line">venv_dir=&quot;venv-torch-nightly&quot;</span><br><span class="line">export TORCH_COMMAND=&quot;pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>然后重新执行webui.sh 后系统速度暴增。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
     <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240204-stable%20diffusion%20webui%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%AD%A6%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -243,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/20240204-stable%20diffusion%20webui%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">Untitled</a>
+            <a href="/20240204-stable%20diffusion%20webui%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">20240204-stable diffusion webui 提示词学习</a>
         </h2>
 
         <div class="post-meta">
@@ -260,7 +191,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-02-07 11:54:35" itemprop="dateModified" datetime="2024-02-07T11:54:35+08:00">2024-02-07</time>
+                <time title="Modified: 2024-03-04 10:06:48" itemprop="dateModified" datetime="2024-03-04T10:06:48+08:00">2024-03-04</time>
               </span>
 
           
@@ -477,7 +408,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/20240204-macos%20%E5%AE%89%E8%A3%85ComfyUI/" class="post-title-link" itemprop="url">Untitled</a>
+            <a href="/20240204-macos%20%E5%AE%89%E8%A3%85ComfyUI/" class="post-title-link" itemprop="url">macos 安装ComfyUI</a>
         </h2>
 
         <div class="post-meta">
@@ -494,7 +425,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-02-19 14:10:42" itemprop="dateModified" datetime="2024-02-19T14:10:42+08:00">2024-02-19</time>
+                <time title="Modified: 2024-03-04 10:06:35" itemprop="dateModified" datetime="2024-03-04T10:06:35+08:00">2024-03-04</time>
               </span>
 
           
@@ -508,8 +439,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>macos 安装ComfyUI</p>
-<p> <a target="_blank" rel="noopener" href="https://github.com/comfyanonymous/ComfyUI">https://github.com/comfyanonymous/ComfyUI</a></p>
+          <p> <a target="_blank" rel="noopener" href="https://github.com/comfyanonymous/ComfyUI">https://github.com/comfyanonymous/ComfyUI</a></p>
 <h3 id="Dependencies"><a href="#Dependencies" class="headerlink" title="Dependencies"></a>Dependencies</h3><p>Install the dependencies by opening your terminal inside the ComfyUI folder and:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda activate comfyui</span><br><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
 
@@ -556,7 +486,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/20240204-apple%20silicon%20Install%20pytorch%20nightly/" class="post-title-link" itemprop="url">Untitled</a>
+            <a href="/20240204-apple%20silicon%20Install%20pytorch%20nightly/" class="post-title-link" itemprop="url">apple silicon Install pytorch nightly</a>
         </h2>
 
         <div class="post-meta">
@@ -565,10 +495,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2024-02-04 11:00:39 / Modified: 12:36:23" itemprop="dateCreated datePublished" datetime="2024-02-04T11:00:39+08:00">2024-02-04</time>
+              <time title="Created: 2024-02-04 11:00:39" itemprop="dateCreated datePublished" datetime="2024-02-04T11:00:39+08:00">2024-02-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-03-04 10:06:09" itemprop="dateModified" datetime="2024-03-04T10:06:09+08:00">2024-03-04</time>
+              </span>
 
           
 
@@ -581,8 +517,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>apple silicon Install pytorch nightly</p>
-<p><a target="_blank" rel="noopener" href="https://developer.apple.com/metal/pytorch/">https://developer.apple.com/metal/pytorch/</a></p>
+          <p><a target="_blank" rel="noopener" href="https://developer.apple.com/metal/pytorch/">https://developer.apple.com/metal/pytorch/</a></p>
 <h5 id="Anaconda"><a href="#Anaconda" class="headerlink" title="Anaconda"></a>Anaconda</h5><h4 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h4><p>Apple silicon</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh</span><br><span class="line">sh Miniconda3-latest-MacOSX-arm64.sh</span><br></pre></td></tr></table></figure>
 
@@ -633,7 +568,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/20240202-oracle%20%E5%88%9B%E5%BB%BA%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/" class="post-title-link" itemprop="url">Untitled</a>
+            <a href="/20240202-oracle%20%E5%88%9B%E5%BB%BA%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/" class="post-title-link" itemprop="url">oracle 创建远程连接</a>
         </h2>
 
         <div class="post-meta">
@@ -645,6 +580,13 @@
 
               <time title="Created: 2024-02-02 10:58:02" itemprop="dateCreated datePublished" datetime="2024-02-02T10:58:02+08:00">2024-02-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-03-04 10:05:59" itemprop="dateModified" datetime="2024-03-04T10:05:59+08:00">2024-03-04</time>
+              </span>
 
           
 
@@ -657,8 +599,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>oracle 创建远程连接</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> DATABASE LINK remote_db</span><br><span class="line"><span class="keyword">CONNECT</span> <span class="keyword">TO</span> remote_username IDENTIFIED <span class="keyword">BY</span> remote_password</span><br><span class="line"><span class="keyword">USING</span> <span class="string">&#x27;172.16.40.2:1521/HWDB&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> db_link,username,host <span class="keyword">from</span> dba_db_links;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> DATABASE LINK remote_db</span><br><span class="line"><span class="keyword">CONNECT</span> <span class="keyword">TO</span> remote_username IDENTIFIED <span class="keyword">BY</span> remote_password</span><br><span class="line"><span class="keyword">USING</span> <span class="string">&#x27;172.16.40.2:1521/HWDB&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> db_link,username,host <span class="keyword">from</span> dba_db_links;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -691,7 +632,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/20240124-npm%20install%20ssl%E8%AF%81%E4%B9%A6%E5%A4%B1%E6%95%88/" class="post-title-link" itemprop="url">Untitled</a>
+            <a href="/20240124-npm%20install%20ssl%E8%AF%81%E4%B9%A6%E5%A4%B1%E6%95%88/" class="post-title-link" itemprop="url">npm install ssl证书失效</a>
         </h2>
 
         <div class="post-meta">
@@ -703,6 +644,13 @@
 
               <time title="Created: 2024-01-24 12:33:49" itemprop="dateCreated datePublished" datetime="2024-01-24T12:33:49+08:00">2024-01-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-03-04 10:05:47" itemprop="dateModified" datetime="2024-03-04T10:05:47+08:00">2024-03-04</time>
+              </span>
 
           
 
@@ -715,8 +663,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>npm install ssl证书失效</p>
-<p>npm config set strict-ssl false</p>
+          <p>npm config set strict-ssl false</p>
 
       
     </div>
@@ -750,7 +697,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/20240111%E5%BC%80%E6%BA%90%E5%A4%87%E4%BB%BDbackupPC/" class="post-title-link" itemprop="url">Untitled</a>
+            <a href="/20240111%E5%BC%80%E6%BA%90%E5%A4%87%E4%BB%BDbackupPC/" class="post-title-link" itemprop="url">20240111开源备份backupPC</a>
         </h2>
 
         <div class="post-meta">
@@ -767,7 +714,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-01-18 11:24:23" itemprop="dateModified" datetime="2024-01-18T11:24:23+08:00">2024-01-18</time>
+                <time title="Modified: 2024-03-04 10:05:26" itemprop="dateModified" datetime="2024-03-04T10:05:26+08:00">2024-03-04</time>
               </span>
 
           
@@ -781,8 +728,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>20240111开源备份backupPC</p>
-<p>3.x版本</p>
+          <p>3.x版本</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">yum install BackupPC</span><br><span class="line"></span><br><span class="line">cd /usr/share/BackupPC/</span><br><span class="line">chown backuppc:apache sbin/*</span><br><span class="line">cd sbin</span><br><span class="line"></span><br><span class="line">chmod u+s BackupPC_Admin</span><br><span class="line"></span><br><span class="line">usermod -s /bin/bash backuppc</span><br><span class="line"></span><br><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</span><br><span class="line">firewall-cmd --reload</span><br><span class="line"></span><br><span class="line"># /etc/BackupPC/config.pl</span><br><span class="line">$Conf&#123;CgiAdminUsers&#125;     = &#x27;backuppc&#x27;;</span><br><span class="line">$Conf&#123;PingPath&#125; = &#x27;/bin/ping&#x27;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">htpasswd -c /etc/BackupPC/apache.users backuppc</span><br><span class="line"></span><br><span class="line">zaq1XSW2</span><br><span class="line"></span><br><span class="line">systemctl restart backuppc</span><br><span class="line"> systemctl restart httpd</span><br></pre></td></tr></table></figure>
 
 
@@ -889,6 +835,321 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240110-Linux%E6%9F%A5%E7%9C%8BCPU%E4%BF%A1%E6%81%AF%EF%BC%8C%E6%9C%BA%E5%99%A8%E5%9E%8B%E5%8F%B7%EF%BC%8C%E5%86%85%E5%AD%98%E7%AD%89%E4%BF%A1%E6%81%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20240110-Linux%E6%9F%A5%E7%9C%8BCPU%E4%BF%A1%E6%81%AF%EF%BC%8C%E6%9C%BA%E5%99%A8%E5%9E%8B%E5%8F%B7%EF%BC%8C%E5%86%85%E5%AD%98%E7%AD%89%E4%BF%A1%E6%81%AF/" class="post-title-link" itemprop="url">20240110- Linux查看CPU信息，机器型号，内存等信息</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-01-10 14:06:33" itemprop="dateCreated datePublished" datetime="2024-01-10T14:06:33+08:00">2024-01-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-03-04 10:07:02" itemprop="dateModified" datetime="2024-03-04T10:07:02+08:00">2024-03-04</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Linux查看CPU信息，机器型号，内存等信息"><a href="#Linux查看CPU信息，机器型号，内存等信息" class="headerlink" title="Linux查看CPU信息，机器型号，内存等信息"></a>Linux查看CPU信息，机器型号，内存等信息</h1><h2 id="1-系统"><a href="#1-系统" class="headerlink" title="1. 系统"></a>1. 系统</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">uname -a</td>
+<td align="left">查看内核/操作系统/CPU信息</td>
+</tr>
+<tr>
+<td align="left">head -n 1 /etc/issue</td>
+<td align="left">查看操作系统版本</td>
+</tr>
+<tr>
+<td align="left">cat /proc/cpuinfo</td>
+<td align="left">查看CPU信息</td>
+</tr>
+<tr>
+<td align="left">hostname</td>
+<td align="left">查看计算机名</td>
+</tr>
+<tr>
+<td align="left">lspci -tv</td>
+<td align="left">列出所有PCI设备</td>
+</tr>
+<tr>
+<td align="left">lsusb -tv</td>
+<td align="left">列出所有USB设备</td>
+</tr>
+<tr>
+<td align="left">lsmod</td>
+<td align="left">列出加载的内核模块</td>
+</tr>
+<tr>
+<td align="left">env</td>
+<td align="left">查看环境变量</td>
+</tr>
+<tr>
+<td align="left">lspci | grep -i nvidia</td>
+<td align="left">查看NVIDIA显卡</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="2-资源"><a href="#2-资源" class="headerlink" title="2. 资源"></a>2. 资源</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">free -m</td>
+<td align="left">查看内存使用量和交换区使用量</td>
+</tr>
+<tr>
+<td align="left">df -h</td>
+<td align="left">查看各分区使用情况</td>
+</tr>
+<tr>
+<td align="left">du -sh &lt;目录名&gt;</td>
+<td align="left">查看指定目录的大小</td>
+</tr>
+<tr>
+<td align="left">grep MemTotal /proc/meminfo</td>
+<td align="left">查看内存总量</td>
+</tr>
+<tr>
+<td align="left">grep MemFree /proc/meminfo</td>
+<td align="left">查看空闲内存量</td>
+</tr>
+<tr>
+<td align="left">uptime</td>
+<td align="left">查看系统运行时间、用户数、负载</td>
+</tr>
+<tr>
+<td align="left">cat /proc/loadavg</td>
+<td align="left">查看系统负载</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="3-磁盘和分区"><a href="#3-磁盘和分区" class="headerlink" title="3. 磁盘和分区"></a>3. 磁盘和分区</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">含义</th>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">mount</td>
+<td align="left">column -t</td>
+<td align="left">查看挂接的分区状态</td>
+</tr>
+<tr>
+<td align="left">fdisk -l</td>
+<td align="left">查看所有分区</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">swapon -s</td>
+<td align="left">查看所有交换分区</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">hdparm -i /dev/hda</td>
+<td align="left">查看磁盘参数(仅适用于IDE设备)</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">dmesg</td>
+<td align="left">grep IDE</td>
+<td align="left">查看启动时IDE设备检测状况</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="4-网络"><a href="#4-网络" class="headerlink" title="4. 网络"></a>4. 网络</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">ifconfig</td>
+<td align="left">查看所有网络接口的属性</td>
+</tr>
+<tr>
+<td align="left">iptables -L</td>
+<td align="left">查看防火墙设置</td>
+</tr>
+<tr>
+<td align="left">route -n</td>
+<td align="left">查看路由表</td>
+</tr>
+<tr>
+<td align="left">netstat -lntp</td>
+<td align="left">查看所有监听端口</td>
+</tr>
+<tr>
+<td align="left">netstat -antp</td>
+<td align="left">查看所有已经建立的连接</td>
+</tr>
+<tr>
+<td align="left">netstat -s</td>
+<td align="left">查看网络统计信息</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="5-进程"><a href="#5-进程" class="headerlink" title="5. 进程"></a>5. 进程</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">ps -ef</td>
+<td align="left">查看所有进程</td>
+</tr>
+<tr>
+<td align="left">top</td>
+<td align="left">实时显示进程状态</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="6-用户"><a href="#6-用户" class="headerlink" title="6. 用户"></a>6. 用户</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">w</td>
+<td align="left">查看活动用户</td>
+</tr>
+<tr>
+<td align="left">id &lt;用户名&gt;</td>
+<td align="left">查看指定用户信息</td>
+</tr>
+<tr>
+<td align="left">last</td>
+<td align="left">查看用户登录日志</td>
+</tr>
+<tr>
+<td align="left">cut -d: -f1 /etc/passwd</td>
+<td align="left">查看系统所有用户</td>
+</tr>
+<tr>
+<td align="left">cut -d: -f1 /etc/group</td>
+<td align="left">查看系统所有组</td>
+</tr>
+<tr>
+<td align="left">crontab -l</td>
+<td align="left">查看当前用户的计划任务</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="7-服务"><a href="#7-服务" class="headerlink" title="7. 服务"></a>7. 服务</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">chkconfig –list</td>
+<td align="left">列出所有系统服务</td>
+</tr>
+<tr>
+<td align="left">chkconfig –list | grep on</td>
+<td align="left">列出所有启动的系统服务</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="8-程序"><a href="#8-程序" class="headerlink" title="8. 程序"></a>8. 程序</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">rpm -qa</td>
+<td align="left">查看所有安装的软件包</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="9-查看CPU信息（型号）"><a href="#9-查看CPU信息（型号）" class="headerlink" title="9. 查看CPU信息（型号）"></a>9. 查看CPU信息（型号）</h2><ul>
+<li>CPU型号<br><code>cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c</code></li>
+<li>几颗核心<br><code>cat /proc/cpuinfo | grep physical | uniq -c </code></li>
+<li>查看CPU模式<br><code>getconf LONG_BIT</code></li>
+<li>查看CPU运算flags<br><code>cat /proc/cpuinfo | grep flags | grep &#39; lm &#39; | wc -l</code></li>
+<li>完整看cpu详细信息<br><code>dmidecode | grep &#39;Processor Information</code></li>
+<li>查看内存信息<br><code>cat /proc/meminfo</code></li>
+<li>查看当前操作系统内核信息<br><code>uname -a</code></li>
+<li>查看当前操作系统发行版信息<br><code>cat /etc/issue | grep Linux</code></li>
+<li>查看机器型号<br><code>dmidecode | grep &quot;Product Name</code></li>
+<li>查看网卡信息<br><code>dmesg | grep -i eth</code></li>
+</ul>
+<h2 id="10-GPU相关命令"><a href="#10-GPU相关命令" class="headerlink" title="10. GPU相关命令"></a>10. GPU相关命令</h2><ul>
+<li>查看显卡信息<br><code>lspci | grep -i vga</code></li>
+<li>若使用NVIDIA显卡<br><code>lspci | grep -i nvidia</code></li>
+<li>查看显卡详情<br><code>lspci -v -s 00:0f.0</code></li>
+<li>查看显存使用情况<br><code>nvidia-smi</code></li>
+<li>周期性输出显卡使用情况<br><code>watch -n 10 nvidia-smi</code></li>
+<li>查看cuda版本<br><code>cat /usr/local/cuda/version.txt</code></li>
+<li>查看cudnn版本<br><code>cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2</code></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
     <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2023-1219-%E5%BC%80%E6%BA%90oss/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -903,7 +1164,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023-1219-%E5%BC%80%E6%BA%90oss/" class="post-title-link" itemprop="url">Untitled</a>
+            <a href="/2023-1219-%E5%BC%80%E6%BA%90oss/" class="post-title-link" itemprop="url">2023-1219-开源oss</a>
         </h2>
 
         <div class="post-meta">
@@ -915,6 +1176,13 @@
 
               <time title="Created: 2023-12-19 14:57:35" itemprop="dateCreated datePublished" datetime="2023-12-19T14:57:35+08:00">2023-12-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-03-04 10:04:34" itemprop="dateModified" datetime="2024-03-04T10:04:34+08:00">2024-03-04</time>
+              </span>
 
           
 
@@ -969,7 +1237,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023-1110-kettle%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">Untitled</a>
+            <a href="/2023-1110-kettle%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">2023-1110-kettle学习</a>
         </h2>
 
         <div class="post-meta">
@@ -986,7 +1254,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-11-14 09:24:28" itemprop="dateModified" datetime="2023-11-14T09:24:28+08:00">2023-11-14</time>
+                <time title="Modified: 2024-03-04 10:04:13" itemprop="dateModified" datetime="2024-03-04T10:04:13+08:00">2024-03-04</time>
               </span>
 
           
@@ -1325,7 +1593,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -20,17 +20,17 @@
     var CONFIG = {"hostname":"hongxing.tech","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="20240218-用diffusers搭建stable diffusion 参照  diffusers api 123456789101112131415conda create -n dfu python&#x3D;3.10.13conda activate dfupip install diffusers --upgrade -i https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;si">
+  <meta name="description" content="参照  diffusers api 123456789101112131415conda create -n dfu python&#x3D;3.10.13conda activate dfupip install diffusers --upgrade -i https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple some-packagepip install transform">
 <meta property="og:type" content="article">
-<meta property="og:title" content="红星">
+<meta property="og:title" content="20240218-用diffusers搭建stable diffusion">
 <meta property="og:url" content="https://hongxing.tech/20240218-%E7%94%A8diffusers%E6%90%AD%E5%BB%BAstable%20diffusion/index.html">
 <meta property="og:site_name" content="红星">
-<meta property="og:description" content="20240218-用diffusers搭建stable diffusion 参照  diffusers api 123456789101112131415conda create -n dfu python&#x3D;3.10.13conda activate dfupip install diffusers --upgrade -i https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;si">
+<meta property="og:description" content="参照  diffusers api 123456789101112131415conda create -n dfu python&#x3D;3.10.13conda activate dfupip install diffusers --upgrade -i https:&#x2F;&#x2F;pypi.tuna.tsinghua.edu.cn&#x2F;simple some-packagepip install transform">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://hongxing.tech/images/sd/20240218-whx.png">
 <meta property="og:image" content="https://hongxing.tech/images/sd/202402181931-001.png">
 <meta property="article:published_time" content="2024-02-18T09:25:25.245Z">
-<meta property="article:modified_time" content="2024-02-18T11:33:10.170Z">
+<meta property="article:modified_time" content="2024-03-04T02:00:57.419Z">
 <meta property="article:author" content="wanghongxing">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://hongxing.tech/images/sd/20240218-whx.png">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title> | 红星</title>
+  <title>20240218-用diffusers搭建stable diffusion | 红星</title>
   
 
 
@@ -181,7 +181,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
+          20240218-用diffusers搭建stable diffusion
         </h1>
 
         <div class="post-meta">
@@ -190,10 +190,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2024-02-18 17:25:25 / Modified: 19:33:10" itemprop="dateCreated datePublished" datetime="2024-02-18T17:25:25+08:00">2024-02-18</time>
+              <time title="Created: 2024-02-18 17:25:25" itemprop="dateCreated datePublished" datetime="2024-02-18T17:25:25+08:00">2024-02-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-03-04 10:00:57" itemprop="dateModified" datetime="2024-03-04T10:00:57+08:00">2024-03-04</time>
+              </span>
 
           
 
@@ -206,8 +212,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>20240218-用diffusers搭建stable diffusion</p>
-<p>参照  <a target="_blank" rel="noopener" href="https://huggingface.co/docs/diffusers/api/pipelines/stable_diffusion/text2img#diffusers.StableDiffusionPipeline.__call__.negative_prompt">diffusers api</a></p>
+        <p>参照  <a target="_blank" rel="noopener" href="https://huggingface.co/docs/diffusers/api/pipelines/stable_diffusion/text2img#diffusers.StableDiffusionPipeline.__call__.negative_prompt">diffusers api</a></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">conda create -n dfu python=3.10.13</span><br><span class="line">conda activate dfu</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pip install diffusers --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple some-package</span><br><span class="line"></span><br><span class="line">pip install transformers==4.27.0 accelerate==0.12.0 invisible_watermark -i https://pypi.tuna.tsinghua.edu.cn/simple some-package</span><br><span class="line"></span><br><span class="line">conda install jupyter</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pip install diffusers transformers scipy ftfy </span><br><span class="line"></span><br><span class="line">pip install git+https://github.com/huggingface/accelerate</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#读取diffuers库</span><br><span class="line">from diffusers import StableDiffusionPipeline</span><br><span class="line"></span><br><span class="line">#初始化SD模型，加载预训练权重</span><br><span class="line">pipe = StableDiffusionPipeline.from_pretrained(&quot;runwayml/stable-diffusion-v1-5&quot;)</span><br><span class="line">#使用GPU加速</span><br><span class="line">pipe.to(&quot;mps&quot;)</span><br></pre></td></tr></table></figure>
@@ -237,12 +242,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/20240218-Stable%20Diffusion%20%E5%9F%BA%E7%A1%80/" rel="prev" title="">
-      <i class="fa fa-chevron-left"></i> 
+    <a href="/20240218-Stable%20Diffusion%20%E5%9F%BA%E7%A1%80/" rel="prev" title="20240218-Stable Diffusion 基础">
+      <i class="fa fa-chevron-left"></i> 20240218-Stable Diffusion 基础
     </a></div>
       <div class="post-nav-item">
-    <a href="/20240219-sd%E6%A8%A1%E5%9E%8B/" rel="next" title="">
-       <i class="fa fa-chevron-right"></i>
+    <a href="/20240219-sd%E6%A8%A1%E5%9E%8B/" rel="next" title="20240219-sd模型">
+      20240219-sd模型 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -315,7 +320,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

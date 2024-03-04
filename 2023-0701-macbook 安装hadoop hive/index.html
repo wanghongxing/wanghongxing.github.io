@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hongxing.tech","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="macbook 安装hadoop hive 123brew install hardoopbrew install hive  配置hadoophadoop安装的是3.3.4 echo “127.0.0.1 wanghongxing” &gt;&gt; &#x2F;etc&#x2F;hosts 目录是 &#x2F;usr&#x2F;local&#x2F;Cellar&#x2F;hadoop&#x2F;3.3.4&#x2F; 进入 &#x2F;usr&#x2F;local&#x2F;Cellar&#x2F;hadoo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2023-0701-macbook 安装hadoop hive">
+<meta property="og:url" content="https://hongxing.tech/2023-0701-macbook%20%E5%AE%89%E8%A3%85hadoop%20hive/index.html">
+<meta property="og:site_name" content="红星">
+<meta property="og:description" content="macbook 安装hadoop hive 123brew install hardoopbrew install hive  配置hadoophadoop安装的是3.3.4 echo “127.0.0.1 wanghongxing” &gt;&gt; &#x2F;etc&#x2F;hosts 目录是 &#x2F;usr&#x2F;local&#x2F;Cellar&#x2F;hadoop&#x2F;3.3.4&#x2F; 进入 &#x2F;usr&#x2F;local&#x2F;Cellar&#x2F;hadoo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-04T01:38:16.709Z">
+<meta property="article:modified_time" content="2024-03-04T02:02:41.352Z">
+<meta property="article:author" content="wanghongxing">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://hongxing.tech/2023-0701-macbook%20%E5%AE%89%E8%A3%85hadoop%20hive/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title>2023-0701-macbook 安装hadoop hive | 红星</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">红星</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2023-0701-macbook%20%E5%AE%89%E8%A3%85hadoop%20hive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2023-0701-macbook 安装hadoop hive
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-07-04 09:38:16" itemprop="dateCreated datePublished" datetime="2023-07-04T09:38:16+08:00">2023-07-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-03-04 10:02:41" itemprop="dateModified" datetime="2024-03-04T10:02:41+08:00">2024-03-04</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>macbook 安装hadoop hive</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew install hardoop</span><br><span class="line"></span><br><span class="line">brew install hive</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置hadoop"><a href="#配置hadoop" class="headerlink" title="配置hadoop"></a>配置hadoop</h2><p>hadoop安装的是3.3.4</p>
+<p>echo “127.0.0.1 wanghongxing” &gt;&gt; /etc/hosts</p>
+<p>目录是 /usr/local/Cellar/hadoop/3.3.4/</p>
+<p>进入 /usr/local/Cellar/hadoop/3.3.4/目录，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd  /usr/local/Cellar/hadoop/3.3.4/</span><br><span class="line">mkdir tmp</span><br><span class="line">mkdir -p dfs/name</span><br><span class="line">mkdir hadoop</span><br></pre></td></tr></table></figure>
+
+<p>进入libexec目录，修改etc下的配置文件</p>
+<ul>
+<li>core-site.xml</li>
+<li>hdfs-site.xml</li>
+<li>mapred-site.xml</li>
+<li>yarn-site.xml</li>
+</ul>
+<h3 id="修改-core-site-xml-文件"><a href="#修改-core-site-xml-文件" class="headerlink" title="修改 core-site.xml 文件"></a><strong>修改 core-site.xml 文件</strong></h3><p>设置 Hadoop 的临时目录和文件系统，localhost:9000 表示本地主机。如果使用远程主机，要用相应的 IP 地址来代替，填写远程主机的域名，则需要到 /etc/hosts 文件中做 DNS 映射。在 core-site.xml 文件里作如下配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.defaultFS<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://localhost:9000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!--用来指定hadoop运行时产生文件的存放目录  自己创建--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/local/Cellar/hadoop/3.3.4/tmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="修改-hdfs-site-xml-文件"><a href="#修改-hdfs-site-xml-文件" class="headerlink" title="修改 hdfs-site.xml 文件"></a><strong>修改 hdfs-site.xml 文件</strong></h3><p>hdfs-site.xml 的配置修改如下，注意 name 和 data 的路径都要替换成本地的路径：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--不是root用户也可以写文件到hdfs--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.permissions<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span>    <span class="comment">&lt;!--关闭防火墙--&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--把路径换成本地的name坐在位置--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/local/Cellar/hadoop/3.3.4/dfs/name<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--在本地新建一个存放hadoop数据的文件夹，然后将路径在这里配置一下--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/local/Cellar/hadoop/3.3.4/hadoop<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="修改-mapred-site-xml-文件"><a href="#修改-mapred-site-xml-文件" class="headerlink" title="修改 mapred-site.xml 文件"></a><strong>修改 mapred-site.xml 文件</strong></h3><p>由于根目录下 etc/hadoop 中没有 mapred-site.xml 文件，所以需要创建该文件。但是目录中提供了 mapred-site.xml.template 模版文件。我们将其重命名为 mapred-site.xml，然后将 yarn 设置成数据处理框架：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--指定mapreduce运行在yarn上--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="修改-yarn-site-xml-文件"><a href="#修改-yarn-site-xml-文件" class="headerlink" title="修改 yarn-site.xml 文件"></a><strong>修改 yarn-site.xml 文件</strong></h3><p>配置数据的处理框架 yarn：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- Site specific YARN configuration properties --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>localhost:8088<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="名称节点设置"><a href="#名称节点设置" class="headerlink" title="名称节点设置"></a>名称节点设置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hdfs namenode -format</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="验证Hadoop"><a href="#验证Hadoop" class="headerlink" title="验证Hadoop"></a>验证Hadoop</h3><p>​     </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sbin/start-all.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="在浏览器访问Hadoop"><a href="#在浏览器访问Hadoop" class="headerlink" title="在浏览器访问Hadoop"></a>在浏览器访问Hadoop</h3><p>​    访问Hadoop的默认端口号为9870(老版本的是 50070 ). 使用以下网址，以获取浏览器Hadoop服务。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:9870/</span><br></pre></td></tr></table></figure>
+
+<h3 id="验证集群的所有应用程序"><a href="#验证集群的所有应用程序" class="headerlink" title="验证集群的所有应用程序"></a>验证集群的所有应用程序</h3><p>​    访问集群中的所有应用程序的默认端口号为8088。使用以下URL访问该服务。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:8088/</span><br></pre></td></tr></table></figure>
+
+<h3 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h3><p>关闭</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sbin/stop-all.sh</span><br><span class="line"></span><br><span class="line">rm -rf tmp/dfs</span><br><span class="line"></span><br><span class="line">sbin/start-all.sh</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>至此，hadoop看着么有问题。</p>
+<hr>
+<h2 id="配置hive"><a href="#配置hive" class="headerlink" title="配置hive"></a>配置hive</h2><h3 id="在-bash-profile文件新增"><a href="#在-bash-profile文件新增" class="headerlink" title="在 ~/.bash_profile文件新增"></a>在 ~/.bash_profile文件新增</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#Setting PATH for Hive</span><br><span class="line"></span><br><span class="line">export HIVE_HOME=/usr/local/Cellar/hive/3.1.3/libexec</span><br><span class="line"></span><br><span class="line">export PATH=$PATH:HIVE_HOME/bin</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">create database hivestore;</span><br><span class="line"></span><br><span class="line"> CREATE USER  &#x27;hardoop&#x27;@&#x27;%&#x27;  IDENTIFIED BY &#x27;123456&#x27;;</span><br><span class="line"></span><br><span class="line">GRANT ALL PRIVILEGES ON  *.* TO &#x27;hardoop&#x27;@&#x27;%&#x27; WITH GRANT OPTION;</span><br><span class="line"></span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改Hive配置文件"><a href="#修改Hive配置文件" class="headerlink" title="**修改Hive配置文件"></a>**修改Hive配置文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd $HIVE_HOME/conf</span><br><span class="line">cp hive-default.xml.template hive-site.xml</span><br><span class="line">vim hive-site.xml</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionUserName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionPassword<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>123456<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionURL<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>jdbc:mysql://localhost:3306/hivestore<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionDriverName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.mysql.cj.jdbc.Driver<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.exec.local.scratchdir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/local/Cellar/hive/3.1.3/libexec/iotmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.querylog.location<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/local/Cellar/hive/3.1.3/libexec/iotmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.downloaded.resources.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/local/Cellar/hive/3.1.2/libexec/iotmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  </span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="下载mysql连接器"><a href="#下载mysql连接器" class="headerlink" title="下载mysql连接器"></a><strong>下载mysql连接器</strong></h3><p>在<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/connector/j/">https://dev.mysql.com/downloads/connector/j/</a></p>
+<p>mysql-connector，下载选platform independent的操作系统。解压以后，把jar文件复制到/usr/local/Cellar/hive/3.1.3/libexec/lib目录下面。</p>
+<p>在/usr/local/Cellar/hive/3.1.2/libexec/（即$HIVE_HOME）文件夹内新建iotmp文件夹</p>
+<h3 id="初始化库"><a href="#初始化库" class="headerlink" title="初始化库"></a><strong>初始化库</strong></h3><p>在/usr/local/Cellar/hive/3.1.2/libexec/bin目录下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schematool -initSchema -dbType mysql</span><br></pre></td></tr></table></figure>
+
+<p>查看初始化信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schematool -dbType mysql -info</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="启动hive"><a href="#启动hive" class="headerlink" title="启动hive"></a>启动hive</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">wanghongxing:~ whx$ hive</span><br><span class="line">SLF4J: Class path contains multiple SLF4J bindings.</span><br><span class="line">SLF4J: Found binding in [jar:file:/usr/local/Cellar/hive/3.1.3/libexec/lib/log4j-slf4j-impl-2.17.1.jar!/org/slf4j/impl/StaticLoggerBinder.class]</span><br><span class="line">SLF4J: Found binding in [jar:file:/usr/local/Cellar/hadoop/3.3.4/libexec/share/hadoop/common/lib/slf4j-reload4j-1.7.36.jar!/org/slf4j/impl/StaticLoggerBinder.class]</span><br><span class="line">SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.</span><br><span class="line">SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]</span><br><span class="line">Hive Session ID = 8a401692-9f09-41f6-babb-0ac77fd8eb16</span><br><span class="line"></span><br><span class="line">Logging initialized using configuration in jar:file:/usr/local/Cellar/hive/3.1.3/libexec/lib/hive-common-3.1.3.jar!/hive-log4j2.properties Async: true</span><br><span class="line">Hive Session ID = 380b0568-e219-453f-abf8-12eb4d7cf331</span><br><span class="line">Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.</span><br><span class="line">hive&gt; show  databases ;</span><br><span class="line">OK</span><br><span class="line">default</span><br><span class="line">Time taken: 0.798 seconds, Fetched: 1 row(s)</span><br><span class="line">hive&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<p>折腾了半天，重新看hadoop，启动总是出问题，因为自己是arm芯片的macbook，决定用docker的方式折腾。</p>
+<p>从 <a target="_blank" rel="noopener" href="https://github.com/big-data-europe/docker-hadoop">https://github.com/big-data-europe/docker-hadoop</a> clone 了他的代码库</p>
+<p>看他头打包镜像的脚本，执行make build就可以打包。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">DOCKER_NETWORK = docker-hadoop_default</span><br><span class="line">ENV_FILE = hadoop.env</span><br><span class="line">current_branch := $(shell git rev-parse --abbrev-ref HEAD)</span><br><span class="line">build:</span><br><span class="line">	docker build -t bde2020/hadoop-base:$(current_branch) ./base</span><br><span class="line">	docker build -t bde2020/hadoop-namenode:$(current_branch) ./namenode</span><br><span class="line">	docker build -t bde2020/hadoop-datanode:$(current_branch) ./datanode</span><br><span class="line">	docker build -t bde2020/hadoop-resourcemanager:$(current_branch) ./resourcemanager</span><br><span class="line">	docker build -t bde2020/hadoop-nodemanager:$(current_branch) ./nodemanager</span><br><span class="line">	docker build -t bde2020/hadoop-historyserver:$(current_branch) ./historyserver</span><br><span class="line">	docker build -t bde2020/hadoop-submit:$(current_branch) ./submit</span><br><span class="line"></span><br><span class="line">wordcount:</span><br><span class="line">	docker build -t hadoop-wordcount ./submit</span><br><span class="line">	docker run --network $&#123;DOCKER_NETWORK&#125; --env-file $&#123;ENV_FILE&#125; bde2020/hadoop-base:$(current_branch) hdfs dfs -mkdir -p /input/</span><br><span class="line">	docker run --network $&#123;DOCKER_NETWORK&#125; --env-file $&#123;ENV_FILE&#125; bde2020/hadoop-base:$(current_branch) hdfs dfs -copyFromLocal -f /opt/hadoop-3.2.3/README.txt /input/</span><br><span class="line">	docker run --network $&#123;DOCKER_NETWORK&#125; --env-file $&#123;ENV_FILE&#125; hadoop-wordcount</span><br><span class="line">	docker run --network $&#123;DOCKER_NETWORK&#125; --env-file $&#123;ENV_FILE&#125; bde2020/hadoop-base:$(current_branch) hdfs dfs -cat /output/*</span><br><span class="line">	docker run --network $&#123;DOCKER_NETWORK&#125; --env-file $&#123;ENV_FILE&#125; bde2020/hadoop-base:$(current_branch) hdfs dfs -rm -r /output</span><br><span class="line">	docker run --network $&#123;DOCKER_NETWORK&#125; --env-file $&#123;ENV_FILE&#125; bde2020/hadoop-base:$(current_branch) hdfs dfs -rm -r /input</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>另外Dockerfile是从debian 来做，安装arm64版jdk比较麻烦，因为改成openjdk11,同时把jdk相应的安装去掉了，顺便把hardoop升级到3.2.3</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">FROM openjdk:11</span><br><span class="line"></span><br><span class="line">MAINTAINER Ivan Ermilov &lt;ivan.s.ermilov@gmail.com&gt;</span><br><span class="line">MAINTAINER Giannis Mouchakis &lt;gmouchakis@iit.demokritos.gr&gt;</span><br><span class="line"></span><br><span class="line">RUN apt-get update &amp;&amp; DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \</span><br><span class="line">      net-tools \</span><br><span class="line">      curl \</span><br><span class="line">      netcat \</span><br><span class="line">      gnupg \</span><br><span class="line">      libsnappy-dev \</span><br><span class="line">    &amp;&amp; rm -rf /var/lib/apt/lists/*</span><br><span class="line">      </span><br><span class="line"># ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/</span><br><span class="line"></span><br><span class="line">RUN curl -O https://dist.apache.org/repos/dist/release/hadoop/common/KEYS</span><br><span class="line"></span><br><span class="line">RUN gpg --import KEYS</span><br><span class="line"></span><br><span class="line">ENV HADOOP_VERSION 3.2.3</span><br><span class="line">ENV HADOOP_URL https://www.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz</span><br><span class="line"></span><br><span class="line">RUN set -x \</span><br><span class="line">    &amp;&amp; curl -fSL &quot;$HADOOP_URL&quot; -o /tmp/hadoop.tar.gz \</span><br><span class="line">    &amp;&amp; curl -fSL &quot;$HADOOP_URL.asc&quot; -o /tmp/hadoop.tar.gz.asc \</span><br><span class="line">    &amp;&amp; gpg --verify /tmp/hadoop.tar.gz.asc \</span><br><span class="line">    &amp;&amp; tar -xvf /tmp/hadoop.tar.gz -C /opt/ \</span><br><span class="line">    &amp;&amp; rm /tmp/hadoop.tar.gz*</span><br><span class="line"></span><br><span class="line">RUN ln -s /opt/hadoop-$HADOOP_VERSION/etc/hadoop /etc/hadoop</span><br><span class="line"></span><br><span class="line">RUN mkdir /opt/hadoop-$HADOOP_VERSION/logs</span><br><span class="line"></span><br><span class="line">RUN mkdir /hadoop-data</span><br><span class="line"></span><br><span class="line">ENV HADOOP_HOME=/opt/hadoop-$HADOOP_VERSION</span><br><span class="line">ENV HADOOP_CONF_DIR=/etc/hadoop</span><br><span class="line">ENV MULTIHOMED_NETWORK=1</span><br><span class="line">ENV USER=root</span><br><span class="line">ENV PATH $HADOOP_HOME/bin/:$PATH</span><br><span class="line"></span><br><span class="line">ADD entrypoint.sh /entrypoint.sh</span><br><span class="line"></span><br><span class="line">RUN chmod a+x /entrypoint.sh</span><br><span class="line"></span><br><span class="line">ENTRYPOINT [&quot;/entrypoint.sh&quot;]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这个弄好后hadoop没有问题，但是加上 hive后总是有问题。</p>
+<p>拿出intel芯片的macbook，这样搞。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023-0315%E4%BA%91%E7%AB%AF%E5%AE%89%E8%A3%85openvpn%E5%8F%8A%E8%AE%BF%E9%97%AE%E4%BA%91%E7%AB%AFdocker%20/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023-0704-mysql%20%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E7%9A%84%E6%97%B6%E5%80%99%E6%8F%90%E7%A4%BA%E5%AF%86%E7%A0%81%E5%A4%AA%E7%AE%80%E5%8D%95/" rel="next" title="2023-0704-mysql 创建用户的时候提示密码太简单">
+      2023-0704-mysql 创建用户的时候提示密码太简单 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEhadoop"><span class="nav-number">1.</span> <span class="nav-text">配置hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-core-site-xml-%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">修改 core-site.xml 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-hdfs-site-xml-%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">修改 hdfs-site.xml 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-mapred-site-xml-%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">修改 mapred-site.xml 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-yarn-site-xml-%E6%96%87%E4%BB%B6"><span class="nav-number">1.4.</span> <span class="nav-text">修改 yarn-site.xml 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8D%E7%A7%B0%E8%8A%82%E7%82%B9%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.5.</span> <span class="nav-text">名称节点设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81Hadoop"><span class="nav-number">1.6.</span> <span class="nav-text">验证Hadoop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BF%E9%97%AEHadoop"><span class="nav-number">1.7.</span> <span class="nav-text">在浏览器访问Hadoop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E9%9B%86%E7%BE%A4%E7%9A%84%E6%89%80%E6%9C%89%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.8.</span> <span class="nav-text">验证集群的所有应用程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%90%AF"><span class="nav-number">1.9.</span> <span class="nav-text">重启</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEhive"><span class="nav-number">2.</span> <span class="nav-text">配置hive</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8-bash-profile%E6%96%87%E4%BB%B6%E6%96%B0%E5%A2%9E"><span class="nav-number">2.1.</span> <span class="nav-text">在 ~&#x2F;.bash_profile文件新增</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql"><span class="nav-number">2.2.</span> <span class="nav-text">mysql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9Hive%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.3.</span> <span class="nav-text">**修改Hive配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDmysql%E8%BF%9E%E6%8E%A5%E5%99%A8"><span class="nav-number">2.4.</span> <span class="nav-text">下载mysql连接器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%BA%93"><span class="nav-number">2.5.</span> <span class="nav-text">初始化库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8hive"><span class="nav-number">2.6.</span> <span class="nav-text">启动hive</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">wanghongxing</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wanghongxing</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
