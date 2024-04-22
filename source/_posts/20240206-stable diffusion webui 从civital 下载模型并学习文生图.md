@@ -6,8 +6,7 @@ civital 下载模型并学习之二
 
 # Meow Mix - Realistic & Versatile
 
- https://civitai-delivery-worker-prod.5ac0637cfd0766c97916cefa3764fbdf.r2.cloudflarestorage.com/158704/model/meowPrunedFp16.Jl2h.safetensors?X-Amz-Expires=86400&response-content-disposition=attachment%3B%20filename%3D%22meowMixRealistic_prunedFp16FIXED.safetensors%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=e01358d793ad6966166af8b3064953ad/20240205/us-east-1/s3/aws4_request&X-Amz-Date=20240205T111539Z&X-Amz-SignedHeaders=host&X-Amz-Signature=0a9b38d02cd05995a45f62c9bc0bcbb7d3313b7566b71e2bcb4180c0d6c91097
-
+ 
 
 
 Prompt：
