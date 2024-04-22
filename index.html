@@ -160,6 +160,89 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240422-macbook-silicon-%E8%BF%90%E8%A1%8Ckettle%EF%BC%88data-integration%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20240422-macbook-silicon-%E8%BF%90%E8%A1%8Ckettle%EF%BC%88data-integration%EF%BC%89/" class="post-title-link" itemprop="url">macbook (silicon) 运行kettle（data-integration）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-04-22 08:16:30 / Modified: 08:25:45" itemprop="dateCreated datePublished" datetime="2024-04-22T08:16:30+08:00">2024-04-22</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>macbook   silicon 运行kettle（data-integration）</p>
+<p>kettle在windows及intel电脑运行正常，但是在silicon芯片的macos上执行是提示：不支持arm64。搜索 发现解决方案： <a target="_blank" rel="noopener" href="https://medium.com/@gabriella.mayang/how-to-install-and-open-pentaho-data-integration-on-macbook-m2-apple-silicon-4081c2875a02">https://medium.com/@gabriella.mayang/how-to-install-and-open-pentaho-data-integration-on-macbook-m2-apple-silicon-4081c2875a02</a></p>
+<h1 id="Step-1-Download-JDK-and-JRE"><a href="#Step-1-Download-JDK-and-JRE" class="headerlink" title="Step 1: Download JDK and JRE"></a>Step 1: Download JDK and JRE</h1><p>I tried JDK from Oracle but it failed. Now the only JDK that I am using and proven successful in opening PDI in my M2 is the one from <strong>Eclipse Temurin OpenJDK.</strong></p>
+<ol>
+<li>Click here to download <a target="_blank" rel="noopener" href="https://adoptium.net/temurin/releases/?variant=openjdk8&amp;os=mac">https://adoptium.net/temurin/releases/?variant=openjdk8&amp;os=mac</a></li>
+<li>Choose JDK .pkg</li>
+</ol>
+<h1 id="Step-2-Download-MacOSX-X86-JAR"><a href="#Step-2-Download-MacOSX-X86-JAR" class="headerlink" title="Step 2: Download MacOSX X86 JAR"></a>Step 2: Download MacOSX X86 JAR</h1><ol>
+<li>Click here to download <a target="_blank" rel="noopener" href="https://mega.nz/file/VFhgnS6I#s4zUK81rXGdXcpJMuzUvDOHoixZmAl4jyXd0yMU11F0">https://mega.nz/file/VFhgnS6I#s4zUK81rXGdXcpJMuzUvDOHoixZmAl4jyXd0yMU11F0</a></li>
+<li>Move the file to ‘libswt/osx64’</li>
+</ol>
+<p>就是把下载的文件放到 data-integration/libswt/osx64 目录下。</p>
+<h1 id="Step-4-Create-New-Terminal-Profile-for-Intel"><a href="#Step-4-Create-New-Terminal-Profile-for-Intel" class="headerlink" title="Step 4: Create New Terminal Profile for Intel"></a>Step 4: Create New Terminal Profile for Intel</h1><p>注：这里是苹果原生的terminal，不是iterm。</p>
+<ol>
+<li>Open Terminal &gt; Settings</li>
+<li>Click the ‘**+’** button to add new profile and name it as “Rosetta Intel”. You can choose another name but make sure the new profile name indicates the profile usage is for Intel-based apps</li>
+<li>Go to ‘Shell’ tab and paste this in the ‘Run Command’ field:</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env /usr/bin/arch -x86_64 /bin/zsh --login</span><br></pre></td></tr></table></figure>
+
+<p>Uncheck ‘Run inside shell’. Uncheck the checkbox would prevent running the shell twice, which could bloat your environment variables since ~/.zshrc gets run twice</p>
+<h3 id="最后-JAVA-HOME"><a href="#最后-JAVA-HOME" class="headerlink" title="最后 JAVA_HOME"></a>最后 JAVA_HOME</h3><p>因为我用了多版本的jdk，所以需要单独设置一个java环境</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-8.jdk/Contents/Home</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后就成功了。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
     <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240304-%E8%A7%A3%E5%86%B3%20%E8%AE%BF%E9%97%AEhttp%E8%87%AA%E5%8A%A8%E8%B7%B3%E8%BD%AC%E5%88%B0https%E7%9A%84%E9%97%AE%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1063,75 +1146,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240204-apple%20silicon%20install%20stable%20diffusion%20webui%E9%80%9F%E5%BA%A6%E6%85%A2%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/20240204-apple%20silicon%20install%20stable%20diffusion%20webui%E9%80%9F%E5%BA%A6%E6%85%A2%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="post-title-link" itemprop="url">20240204-apple silicon install stable diffusion webui速度慢的解决办法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-02-04 22:09:07" itemprop="dateCreated datePublished" datetime="2024-02-04T22:09:07+08:00">2024-02-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:06:27" itemprop="dateModified" datetime="2024-03-04T10:06:27+08:00">2024-03-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>apple silicon install stable diffusion webui 后运行速度特别慢，参照 <a target="_blank" rel="noopener" href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/7453">https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/7453</a></p>
-<p>下载新的webui-user.sh文件，其实就是增加了三行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export COMMANDLINE_ARGS=&quot;--skip-torch-cuda-test --upcast-sampling --opt-sub-quad-attention --use-cpu interrogate&quot;</span><br><span class="line">venv_dir=&quot;venv-torch-nightly&quot;</span><br><span class="line">export TORCH_COMMAND=&quot;pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>然后重新执行webui.sh 后系统速度暴增。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1201,7 +1215,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

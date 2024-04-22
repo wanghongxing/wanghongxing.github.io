@@ -160,6 +160,99 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2023-0221-macbook-m1-%E5%AE%89%E8%A3%85-brew-%E5%8F%8A-redis-%E8%B8%A9%E5%9D%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023-0221-macbook-m1-%E5%AE%89%E8%A3%85-brew-%E5%8F%8A-redis-%E8%B8%A9%E5%9D%91/" class="post-title-link" itemprop="url">20230221 macbook m1 安装 brew 及 redis 踩坑</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-02-21 12:20:53" itemprop="dateCreated datePublished" datetime="2023-02-21T12:20:53+08:00">2023-02-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-04-02 22:18:07" itemprop="dateModified" datetime="2023-04-02T22:18:07+08:00">2023-04-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>因为笔记本是用以前的时间仓恢复回来的，所以brew啥的都是x64架构的，需要重新安装brew。</p>
+<h2 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a>Homebrew</h2><p>x86_64 和 ARM64 版本的 homebrew 的安装目录是不一样的</p>
+<p>x86_64 安装目录：<code>/usr/local/homebrew</code></p>
+<p>ARM64 安装目录：<code>/opt/homebrew</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>这是后电脑上有了两套brew,</p>
+<h2 id="切换命令"><a href="#切换命令" class="headerlink" title="切换命令"></a>切换命令</h2><p>为了方便在x64和arm64之间来回切换就参照 <a target="_blank" rel="noopener" href="https://wuyanxin.com/post/mac-m1-brew-both-support-aarm64-and-x86_64.html">Mac M1 安装 Homebrew 最佳实践</a> 做了</p>
+<p>文件 <code>~/.brew_arm</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>文件 <code>~/.brew_intel</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval &quot;$(/usr/local/homebrew/bin/brew shellenv)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>将下面代码加入到 <code>.zshrc</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># homebrew</span><br><span class="line">alias brew_arm=&#x27;source ~/.brew_arm&#x27;</span><br><span class="line">alias brew_intel=&quot;source ~/.brew_intel&quot;</span><br></pre></td></tr></table></figure>
+
+<p>切换命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew_intel # 切换到 x86_64</span><br><span class="line">brew_arm # 切换到 arm64</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><p>切换到arm64 安装了新的redis <code>brew install redis</code>，版本是7.x .</p>
+<p>然后再 idea 中调试运行spring boot程序就会卡在中间，打开调试信息看 貌似 redisson 一直不停地连接、close，估计是arm 版本的redis有问题。</p>
+<p>先停止redis <code>brew services stop redis</code>,然后卸载 <code>brew uninstall redis</code>.</p>
+<p>切换到 x64环境 brew_intel, 然后重新安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ brew install redis</span><br><span class="line">$ which redis-server</span><br><span class="line">/usr/local/bin/redis-server   #这就是x64版本</span><br><span class="line"></span><br><span class="line">$ brew services start redis</span><br><span class="line"></span><br><span class="line">$ file /usr/local/bin/redis-server</span><br><span class="line">/usr/local/bin/redis-server: Mach-O 64-bit executable x86_64 # 确认是x64</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后idea中调试就正常了。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
     <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2023-0220-macbook-m1-nvm%E5%AE%89%E8%A3%85node/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1389,107 +1482,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2020-firewall%20%E9%98%B2%E7%81%AB%E5%A2%99%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020-firewall%20%E9%98%B2%E7%81%AB%E5%A2%99%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">firewall 防火墙常用命令</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-03-30 11:20:34" itemprop="dateCreated datePublished" datetime="2019-03-30T11:20:34+08:00">2019-03-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-03 23:18:28" itemprop="dateModified" datetime="2023-01-03T23:18:28+08:00">2023-01-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>firewall</p>
-<p>配置firewalld</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">firewall-cmd --version  # 查看版本</span><br><span class="line">firewall-cmd --help     # 查看帮助</span><br><span class="line"></span><br><span class="line"># 查看设置：</span><br><span class="line">firewall-cmd --state  # 显示状态</span><br><span class="line">firewall-cmd --get-active-zones  # 查看区域信息</span><br><span class="line">firewall-cmd --get-zone-of-interface=eth0  # 查看指定接口所属区域</span><br><span class="line">firewall-cmd --panic-on  # 拒绝所有包</span><br><span class="line">firewall-cmd --panic-off  # 取消拒绝状态</span><br><span class="line">firewall-cmd --query-panic  # 查看是否拒绝</span><br><span class="line"></span><br><span class="line">firewall-cmd --reload # 更新防火墙规则</span><br><span class="line">firewall-cmd --complete-reload</span><br><span class="line"># 两者的区别就是第一个无需断开连接，就是firewalld特性之一动态添加规则，第二个需要断开连接，类似重启服务</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 将接口添加到区域，默认接口都在public</span><br><span class="line">firewall-cmd --zone=public --add-interface=eth0</span><br><span class="line"># 永久生效再加上 --permanent 然后reload防火墙</span><br><span class="line"> </span><br><span class="line"># 设置默认接口区域，立即生效无需重启</span><br><span class="line">firewall-cmd --set-default-zone=public</span><br><span class="line"></span><br><span class="line"># 查看所有打开的端口：</span><br><span class="line">firewall-cmd --zone=dmz --list-ports</span><br><span class="line"></span><br><span class="line"># 加入一个端口到区域：</span><br><span class="line">firewall-cmd --zone=dmz --add-port=8080/tcp</span><br><span class="line"># 若要永久生效方法同上</span><br><span class="line"> </span><br><span class="line"># 打开一个服务，类似于将端口可视化，服务需要在配置文件中添加，/etc/firewalld 目录下有services文件夹，这个不详细说了，详情参考文档</span><br><span class="line">firewall-cmd --zone=work --add-service=smtp</span><br><span class="line"> </span><br><span class="line"># 移除服务</span><br><span class="line">firewall-cmd --zone=work --remove-service=smtp</span><br><span class="line"></span><br><span class="line"># 显示支持的区域列表</span><br><span class="line">firewall-cmd --get-zones</span><br><span class="line"></span><br><span class="line"># 设置为家庭区域</span><br><span class="line">firewall-cmd --set-default-zone=home</span><br><span class="line"></span><br><span class="line"># 查看当前区域</span><br><span class="line">firewall-cmd --get-active-zones</span><br><span class="line"></span><br><span class="line"># 设置当前区域的接口</span><br><span class="line">firewall-cmd --get-zone-of-interface=enp03s</span><br><span class="line"></span><br><span class="line"># 显示所有公共区域（public）</span><br><span class="line">firewall-cmd --zone=public --list-all</span><br><span class="line"></span><br><span class="line"># 临时修改网络接口（enp0s3）为内部区域（internal）</span><br><span class="line">firewall-cmd --zone=internal --change-interface=enp03s</span><br><span class="line"></span><br><span class="line"># 永久修改网络接口enp03s为内部区域（internal）</span><br><span class="line">firewall-cmd --permanent --zone=internal --change-interface=enp03s</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>服务管理</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># 显示服务列表  </span><br><span class="line">Amanda, FTP, Samba和TFTP等最重要的服务已经被FirewallD提供相应的服务，可以使用如下命令查看：</span><br><span class="line"></span><br><span class="line">firewall-cmd --get-services</span><br><span class="line"></span><br><span class="line"># 允许SSH服务通过</span><br><span class="line">firewall-cmd --new-service=ssh</span><br><span class="line"></span><br><span class="line"># 禁止SSH服务通过</span><br><span class="line">firewall-cmd --delete-service=ssh</span><br><span class="line"></span><br><span class="line"># 打开TCP的8080端口</span><br><span class="line">firewall-cmd --enable ports=8080/tcp</span><br><span class="line"></span><br><span class="line"># 临时允许Samba服务通过600秒</span><br><span class="line">firewall-cmd --enable service=samba --timeout=600</span><br><span class="line"></span><br><span class="line"># 显示当前服务</span><br><span class="line">firewall-cmd --list-services</span><br><span class="line"></span><br><span class="line"># 添加HTTP服务到内部区域（internal）</span><br><span class="line">firewall-cmd --permanent --zone=internal --add-service=http</span><br><span class="line">firewall-cmd --reload     # 在不改变状态的条件下重新加载防火墙</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>端口管理</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">打开443/TCP端口</span></span><br><span class="line">firewall-cmd --add-port=443/tcp  --permanent</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">永久打开3690/TCP端口</span></span><br><span class="line">firewall-cmd --permanent --add-port=3690/tcp  --permanent</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">永久打开端口好像需要reload一下，临时打开好像不用，如果用了reload临时打开的端口就失效了</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">其它服务也可能是这样的，这个没有测试</span></span><br><span class="line">firewall-cmd --reload</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看防火墙，添加的端口也可以看到</span></span><br><span class="line">firewall-cmd --list-all</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>all</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable firewalld</span><br><span class="line">systemctl start firewalld</span><br><span class="line">firewall-cmd --add-port=443/tcp  --permanent</span><br><span class="line">firewall-cmd --add-port=80/tcp  --permanent</span><br><span class="line">firewall-cmd --add-port=7002/tcp  --permanent</span><br></pre></td></tr></table></figure>
-
-<p>zone</p>
-<p>增加一个zone</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --new-zone=zgcw-access --permanent</span><br></pre></td></tr></table></figure>
-
-<p>增加ip和端口</p>
-<p>gateway</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=zgcw-access --add-source=172.17.100.0/24 --permanent</span><br><span class="line">firewall-cmd --zone=zgcw-access --add-port=9939/tcp  --permanent</span><br><span class="line">firewall-cmd --zone=zgcw-access --add-port=7001/tcp  --permanent</span><br><span class="line">firewall-cmd --zone=zgcw-access --add-port=7002/tcp  --permanent</span><br><span class="line">firewall-cmd --zone=zgcw-access --add-port=8091-8094/tcp  --permanent</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
-
-<p>work1、work2</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=zgcw-access --add-source=172.17.100.0/24 --permanent</span><br><span class="line">firewall-cmd --zone=zgcw-access --add-port=8091-8094/tcp  --permanent</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
-
-
-
-<p>ip段</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">172.17.100.218</span><br><span class="line">172.17.100.222 work1</span><br><span class="line">172.17.100.223 work2</span><br><span class="line">172.17.100.220 es</span><br><span class="line">172.17.86.0</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1559,7 +1551,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
