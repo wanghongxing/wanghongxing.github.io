@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hongxing.tech/20240206-stable%20diffusion%20webui%20%E4%BB%8Ecivital%20%E4%B8%8B%E8%BD%BD%E6%A8%A1%E5%9E%8B%E5%B9%B6%E5%AD%A6%E4%B9%A0%E6%96%87%E7%94%9F%E5%9B%BE/</loc>
+    
+    <lastmod>2024-04-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://hongxing.tech/20240422-macbook-silicon-%E8%BF%90%E8%A1%8Ckettle%EF%BC%88data-integration%EF%BC%89/</loc>
     
     <lastmod>2024-04-22</lastmod>
@@ -192,15 +201,6 @@
   
   <url>
     <loc>https://hongxing.tech/20240205-Stable%20diffusion%20webui%20%E4%BD%BF%E7%94%A8sdXL_v10VAEFix.safetensors%20%E6%A8%A1%E5%9E%8B%E6%97%B6%E5%80%99%E6%8F%90%E7%A4%BA%20%20Downloading%20VAEApprox%20model%20TimeoutError/</loc>
-    
-    <lastmod>2024-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hongxing.tech/20240206-stable%20diffusion%20webui%20%E4%BB%8Ecivital%20%E4%B8%8B%E8%BD%BD%E6%A8%A1%E5%9E%8B%E5%B9%B6%E5%AD%A6%E4%B9%A0%E6%96%87%E7%94%9F%E5%9B%BE/</loc>
     
     <lastmod>2024-03-04</lastmod>
     
