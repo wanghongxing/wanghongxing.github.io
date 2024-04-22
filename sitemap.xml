@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hongxing.tech/20240111%E5%BC%80%E6%BA%90%E5%A4%87%E4%BB%BDbackupPC/</loc>
+    
+    <lastmod>2024-04-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://hongxing.tech/20240206-stable%20diffusion%20webui%20%E4%BB%8Ecivital%20%E4%B8%8B%E8%BD%BD%E6%A8%A1%E5%9E%8B%E5%B9%B6%E5%AD%A6%E4%B9%A0%E6%96%87%E7%94%9F%E5%9B%BE/</loc>
     
     <lastmod>2024-04-22</lastmod>
@@ -93,15 +102,6 @@
   
   <url>
     <loc>https://hongxing.tech/20240124-npm%20install%20ssl%E8%AF%81%E4%B9%A6%E5%A4%B1%E6%95%88/</loc>
-    
-    <lastmod>2024-03-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hongxing.tech/20240111%E5%BC%80%E6%BA%90%E5%A4%87%E4%BB%BDbackupPC/</loc>
     
     <lastmod>2024-03-04</lastmod>
     
