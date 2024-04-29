@@ -28,7 +28,7 @@
 <meta property="og:description" content="3.x版本 123456789101112131415161718192021222324yum install BackupPCcd &#x2F;usr&#x2F;share&#x2F;BackupPC&#x2F;chown backuppc:apache sbin&#x2F;*cd sbinchmod u+s BackupPC_Adminusermod -s &#x2F;bin&#x2F;bash backuppcfirewall-cmd --zone&#x3D;publ">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-01-11T09:03:51.425Z">
-<meta property="article:modified_time" content="2024-04-22T00:32:22.367Z">
+<meta property="article:modified_time" content="2024-04-22T00:33:24.132Z">
 <meta property="article:author" content="wanghongxing">
 <meta name="twitter:card" content="summary">
 
@@ -195,7 +195,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-04-22 08:32:22" itemprop="dateModified" datetime="2024-04-22T08:32:22+08:00">2024-04-22</time>
+                <time title="Modified: 2024-04-22 08:33:24" itemprop="dateModified" datetime="2024-04-22T08:33:24+08:00">2024-04-22</time>
               </span>
 
           
@@ -274,7 +274,7 @@
 
 <h1 id="Install-the-included-systemd-script"><a href="#Install-the-included-systemd-script" class="headerlink" title="Install the included systemd script:"></a>Install the included systemd script:</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cp systemd/backuppc.service /etc/systemd/system/</span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl start backuppc</span><br><span class="line">systemctl enable backuppc</span><br></pre></td></tr></table></figure>
 
-<h1 id="Create-the-backuppc-authentication-file"><a href="#Create-the-backuppc-authentication-file" class="headerlink" title="Create the backuppc authentication file."></a>Create the backuppc authentication file.</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">htpasswd -c /etc/BackupPC/BackupPC.users backuppc</span><br><span class="line"></span><br><span class="line">zaq1XSW2</span><br></pre></td></tr></table></figure>
+<h1 id="Create-the-backuppc-authentication-file"><a href="#Create-the-backuppc-authentication-file" class="headerlink" title="Create the backuppc authentication file."></a>Create the backuppc authentication file.</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">htpasswd -c /etc/BackupPC/BackupPC.users backuppc</span><br><span class="line"></span><br><span class="line"> </span><br></pre></td></tr></table></figure>
 
 
 
