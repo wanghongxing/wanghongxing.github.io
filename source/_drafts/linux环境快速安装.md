@@ -47,8 +47,8 @@ yum install -y yum-utils \
 
 ```shell
 yum-config-manager \
-   --add-repo \
-    https://download.docker.com/linux/centos/docker-ce.repo
+    --add-repo \
+    https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 ```
 
 安装 Docker
@@ -57,7 +57,7 @@ yum-config-manager \
 
 ```shell
 yum update
-yum install docker-ce
+yum install docker-ce-19.03.12-3.el7
 ```
 
 如果弹出 GPG key 的接收提示，请确认是否为 060a 61c5 1b55 8a7f 742b 77aa c52f eb6b 621e 9f35，如果是，可以接受并继续安装。 
@@ -71,6 +71,7 @@ yum install docker-ce
 ```shell
 curl -L https://github.com/docker/compose/releases/download/1.24.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
+
 ```
 
 **注意:**
