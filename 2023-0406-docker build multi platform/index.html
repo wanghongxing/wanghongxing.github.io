@@ -28,7 +28,7 @@
 <meta property="og:description" content="docker build multi platform macbook arm版生成镜像时候是arm64 架构的，没法在服务器运行，为了给服务器打镜像。 改成 如下命令可以生成服务器运行的镜像 1docker   build --platform linux&#x2F;amd64 .  但是不能在本机运行，改成如下命令生成多架构的镜像 1docker buildx build --platform linu">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-07-04T01:38:16.709Z">
-<meta property="article:modified_time" content="2024-03-04T02:02:27.871Z">
+<meta property="article:modified_time" content="2024-10-11T07:35:23.455Z">
 <meta property="article:author" content="wanghongxing">
 <meta name="twitter:card" content="summary">
 
@@ -195,7 +195,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:02:27" itemprop="dateModified" datetime="2024-03-04T10:02:27+08:00">2024-03-04</time>
+                <time title="Modified: 2024-10-11 15:35:23" itemprop="dateModified" datetime="2024-10-11T15:35:23+08:00">2024-10-11</time>
               </span>
 
           
@@ -220,7 +220,7 @@
 <p>但是提示</p>
 <p>ERROR: multiple platforms feature is currently not supported for docker driver. Please switch to a different driver (eg. “docker buildx create –use”)</p>
 <p>然后学习后发现需要</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker buildx create --name mybuilder --driver docker-container</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">docker buildx create --name mycustombuilder --driver docker-container --bootstrap</span><br><span class="line">docker  buildx use mycustombuilder</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">docker  buildx build --platform linux/arm64,linux/amd64 \</span><br><span class="line">--build-arg VCS_REF=`git rev-parse --short HEAD` \</span><br><span class="line">--build-arg BUILD_DATE=`date -u +&quot;%Y-%m-%dT%H:%M:%SZ&quot;` \</span><br><span class="line">--build-arg CANAL_COMPONENT_VERSION=&quot;1.1.7&quot; \</span><br><span class="line">--build-arg CANAL_COMPONENT_NAME=&quot;canal-adapter&quot; \</span><br><span class="line">--build-arg CANAL_DOWNLOAD_NAME=&quot;canal.adapter&quot; \</span><br><span class="line">-t wanghongxing/canal-adapter:v1.1.7 . --push</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>然后就可以了。</p>
 
@@ -316,7 +316,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

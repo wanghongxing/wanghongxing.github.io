@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240204-apple%20silicon%20install%20stable%20diffusion%20webui%E9%80%9F%E5%BA%A6%E6%85%A2%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2024-5-20-macos%20m1miniconda%E4%BD%BF%E7%94%A8python2.7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/20240204-apple%20silicon%20install%20stable%20diffusion%20webui%E9%80%9F%E5%BA%A6%E6%85%A2%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="post-title-link" itemprop="url">20240204-apple silicon install stable diffusion webui速度慢的解决办法</a>
+            <a href="/2024-5-20-macos%20m1miniconda%E4%BD%BF%E7%94%A8python2.7/" class="post-title-link" itemprop="url">Untitled</a>
         </h2>
 
         <div class="post-meta">
@@ -184,15 +184,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2024-02-04 22:09:07" itemprop="dateCreated datePublished" datetime="2024-02-04T22:09:07+08:00">2024-02-04</time>
+              <time title="Created: 2024-05-21 11:00:39" itemprop="dateCreated datePublished" datetime="2024-05-21T11:00:39+08:00">2024-05-21</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:06:27" itemprop="dateModified" datetime="2024-03-04T10:06:27+08:00">2024-03-04</time>
-              </span>
 
           
 
@@ -205,403 +198,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>apple silicon install stable diffusion webui 后运行速度特别慢，参照 <a target="_blank" rel="noopener" href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/7453">https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/7453</a></p>
-<p>下载新的webui-user.sh文件，其实就是增加了三行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export COMMANDLINE_ARGS=&quot;--skip-torch-cuda-test --upcast-sampling --opt-sub-quad-attention --use-cpu interrogate&quot;</span><br><span class="line">venv_dir=&quot;venv-torch-nightly&quot;</span><br><span class="line">export TORCH_COMMAND=&quot;pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>然后重新执行webui.sh 后系统速度暴增。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240204-stable%20diffusion%20webui%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/20240204-stable%20diffusion%20webui%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">20240204-stable diffusion webui 提示词学习</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-02-04 22:09:07" itemprop="dateCreated datePublished" datetime="2024-02-04T22:09:07+08:00">2024-02-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:06:48" itemprop="dateModified" datetime="2024-03-04T10:06:48+08:00">2024-03-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>参考 <a target="_blank" rel="noopener" href="https://ivonblog.com/posts/stable-diffusion-webui-manuals/prompts/general-prompt-guide/">Ivon的部落格</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">an asian girl on the beach</span><br></pre></td></tr></table></figure>
-
-<img src="../images/sd/20240204001.png" alt="20240204001" style="zoom:50%;" />
-
-<p>改用新的提示词</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1girl, asian, beach, ocean</span><br></pre></td></tr></table></figure>
-
-<p>然后将batch count改为4</p>
-<img src="../images/sd/20240204002.png" alt="20240204002" style="zoom:50%;" />
-
-
-
-
-
-<p>再算一次，但是结果变了？没错，即使提示词相近，AI绘图每次生图结果都是随机的。要维持上一次的结果并微调，你得保留每次算图的种子码(Seed，SD WebUI界面右下角，亦会写在文件名上)。</p>
-<p>这时候注意一下右下角的内容</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1girl, asian, beach, ocean</span><br><span class="line">Steps: 20, Sampler: LMS, CFG scale: 7, Seed: 1655102876, Size: 512x560, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</span><br></pre></td></tr></table></figure>
-
-<img src="../images/sd/00013-1655102876.png" alt="00013-1655102876" style="zoom:50%;" />
-
-<p>新测试,在seed 处填入：1655102876</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1girl, asian, blue eyes, short hair, straw hat, standing, blue bikini, beach, ocean, orange sky</span><br><span class="line"></span><br><span class="line">Steps: 20, Sampler: LMS, CFG scale: 7, Seed: 1655102876, Size: 512x560, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<img src="../images/sd/00014-1655102876.png" alt="00014-1655102876" style="zoom:50%;" />
-
-<p>要改变风格，可以在提示词加入「风格」的提示词。这方面的提示词有：相片(photoshop)、3D建模(3d model)、装饰艺术(art deco)、石像(stone sculpture)等风格</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a stone sculpture of 1girl, asian, blue eyes, beach, ocean</span><br><span class="line">Steps: 20, Sampler: DPM++ 2M SDE, CFG scale: 7, Seed: 1822157101, Size: 512x512,</span><br><span class="line">Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</span><br><span class="line"></span><br><span class="line">Time taken: 14.5 sec.</span><br></pre></td></tr></table></figure>
-
-<img src="../images/sd/00019-1822157101.png" alt="00019-1822157101" style="zoom:50%;" />
-
-<p>风格是很难界定的东西呢，一般来说我们会图片像哪个艺术家的风格对吧？那么不如直接「召唤」他们吧！提示词可以包含某位画家的名字，AI会尝试模仿其风格。例如加上「慕夏的作品」，并加入「大师级作品」的风格提示词：</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">; 参考翻译：慕夏的作品，大师级作品，一个女孩，亚洲人，蓝眼睛，沙滩，海洋</span></span><br><span class="line">artwork by Alfons Maria Mucha, masterpiece, <span class="number">1</span>girl, asian, blue eyes, beach, ocean</span><br></pre></td></tr></table></figure>
-
-<p>生图的结果就会变得像是慕夏的作品。顺带一提<code>masterpiece</code>这个提示词还蛮万用的，可以让作品维持一定水准。</p>
-<img src="../images/sd/00023-3397365016.png" alt="00023-3397365016" style="zoom:50%;" />
-
-<p>当然还可以画特定动漫人物的「二创」，只要将名字和作品名称打上去就可以了。有名的动漫角色只要出现名字，不用特别指定身体特征就会生成原作风格了，例如指定《新世纪福音战士》的惣流·明日香·兰格雷：</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">asuka_langley_souryuu from neon_genesis_evangelion, masterpiece, <span class="number">1</span>girl, beach, ocean</span><br></pre></td></tr></table></figure>
-
-<img src="../images/sd/00026-1538503611.png" alt="00026-1538503611" style="zoom:50%;" />
-
-<p>再次提醒，在下提示词的时候，生成图片使用的模型也需纳入考量。譬如想要生成特定动漫人物，去Danbooru找到了英文姓名，加上提示词，但你却用画真人的Stable Diffusion去算，则AI可能根本就不会认得你说的角色是谁，反之亦然。Danbooru的标签风格跟一般图片的描述还是有差距的。</p>
-<p>除非日后有搜罗全部网络图片的超大模型出现，否则下提示词须配合模型种类来决定。</p>
-<p>如果AI怎样都生成不出你要的风格或人物，请考虑换个模型，或是 <a target="_blank" rel="noopener" href="https://ivonblog.com/posts/stable-diffusion-webui-manuals/zh-cn/training/">自行训练模型</a>。</p>
-<h1 id="负向提示词-Negative-Prompts"><a href="#负向提示词-Negative-Prompts" class="headerlink" title="负向提示词 Negative Prompts"></a>负向提示词 Negative Prompts</h1><p>上面我们只写提示词，但下面的负向提示词的字段都是空白。但生图时常常还需要加入一些负向提示词，避免掉不好的结果。AI绘图有时不会一次就算出好结果，所以还需要加上负向提示词来控制，尤其是大批算图的时候更为重要。</p>
-<p>负向提示词会加入一些常见的「不好」的图片特征，例如低画质、最糟品质、画家签名、模糊、浮水印</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deformed, lowres, bad anatomy, text, error, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, artist name</span><br></pre></td></tr></table></figure>
-
-<p>不想看到的东西也可以加进去。例如不想看到裸露、兵器、血、猎奇的元素出现，就加入<code>nsfw</code>、<code>weapon</code>、<code>blood</code>、<code>guro</code>至负向提示词</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nsfw, weapon, blood, guro, lowres, bad anatomy, text, error, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name</span><br></pre></td></tr></table></figure>
-
-<p>提示词并非越多越好，正向提示词以不超过150个词元(token)为原则；不过负向提示词可以尽量把不想看到的都塞进去。</p>
-<h1 id="Stable-Diffusion-WebUI独有语法"><a href="#Stable-Diffusion-WebUI独有语法" class="headerlink" title="Stable Diffusion WebUI独有语法"></a>Stable Diffusion WebUI独有语法</h1><p>此节列出的语法为AUTOMATIC1111制作的SD WebUI独有，使用其他人制作的Stable Diffusion程序不见得适用。</p>
-<h2 id="关注度括号-Attention-emphasis"><a href="#关注度括号-Attention-emphasis" class="headerlink" title="关注度括号 Attention/emphasis"></a>关注度括号 Attention/emphasis</h2><p>控制关注度的符号，增加算图时对该提示词的关注度(attention)。简单来说，括号就是你想强调的重点元素，括号越多，生成的结果越会符合括号里的提示词。</p>
-<p>SD WebUI使用小括号控制关注度： <code>( )</code> 小括号层次越多权重越高(不加小括号为1倍，每加一层小括号乘以1.1倍)。例如，强调「蓝眼睛」，生成的结果就更高几率是蓝眼睛人物</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">asuka_langley_souryuu from neon_genesis_evangelion, masterpiece, 1girl, beach, ocean, ((blue eyes))</span><br><span class="line">Steps: 20, Sampler: UniPC, CFG scale: 7, Seed: 1080937815, Size: 512x512, </span><br><span class="line">Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<img src="../images/sd/00027-1080937815.png" alt="00027-1080937815" style="zoom:50%;" />
-
-
-
-
-
-<p>亦可以直接写明要增强几倍关注度，但其实一般情况下不用设太强，用一二层的小括号就够了。</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">asuka_langley_souryuu from neon_genesis_evangelion, masterpiece, <span class="number">1</span>girl, beach, ocean, ((<span class="name">blue</span> eyes)),((<span class="name">yellow</span> hair))</span><br><span class="line">Steps: <span class="number">20</span>, Sampler: UniPC, CFG scale: <span class="number">7</span>, Seed: <span class="number">2199430340</span>, Size: <span class="number">512</span>x512,</span><br><span class="line">Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.<span class="number">7.0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<img src="../images/sd/00028-2199430340.png" alt="00028-2199430340" style="zoom:50%;" />
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">asuka_langley_souryuu from neon_genesis_evangelion, masterpiece, 1girl, beach, ocean, ((blue eyes)),((yellow hair)),(Green clothes)</span><br><span class="line">Steps: 20, Sampler: UniPC, CFG scale: 7, </span><br><span class="line">Seed: 2630536656, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</span><br></pre></td></tr></table></figure>
-
-<p>这时候对颜色的控制已经错乱了，说明提示词混乱了。</p>
-<img src="../images/sd/00029-2630536656.png" alt="00029-2630536656" style="zoom:50%;" />
-
-
-
-
-
-<h2 id="提示词编辑-Prompt-editing"><a href="#提示词编辑-Prompt-editing" class="headerlink" title="提示词编辑 Prompt editing"></a>提示词编辑 Prompt editing</h2><p>指定在到哪一步数的时候切换提示词。此处的中括号跟权重无关。</p>
-<p>语法为<code>[提示词1:提示词2:要切换的步数]</code></p>
-<p>例如，算图时设置20步，一开始算橘子，设置算到15步时切换成苹果</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[orange : apple : <span class="number">15</span>] on table</span><br></pre></td></tr></table></figure>
-
-<p>这时候就是生成一个桔子</p>
-<h2 id="切换单字-Alternating-Words"><a href="#切换单字-Alternating-Words" class="headerlink" title="切换单字 Alternating Words"></a>切换单字 Alternating Words</h2><p>使用<code>|</code>代表在每个步数切换提示词，例如我要在算图时于「蓝眼睛」或「红眼睛」或「黑眼睛」之间切换</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">asian, woman, [blue eyes|red eyes|black eyes], beach, ocean</span><br></pre></td></tr></table></figure>
-
-<h2 id="可组合性扩散-Composable-Diffusion"><a href="#可组合性扩散-Composable-Diffusion" class="headerlink" title="可组合性扩散 Composable Diffusion"></a>可组合性扩散 Composable Diffusion</h2><p>此语法让AI依照权重生成二个不同的对象。</p>
-<p>例如生成橘子与苹果，中间用大写的<code>AND</code>连接</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">orange AND apple</span><br></pre></td></tr></table></figure>
-
-<p>后面加上数字控制权重，初始值为1，数值低于0.1则无效。</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">orange :<span class="number">1.5</span> AND apple :<span class="number">2.5</span></span><br></pre></td></tr></table></figure>
-
-<p>此语法适合搭配 <a target="_blank" rel="noopener" href="https://ivonblog.com/posts/stable-diffusion-webui-manuals/zh-cn/extensions/latent-couple/">ControlNet和Latent Couple</a>，可以准确控制图中对象的位置。</p>
-<img src="../images/sd/00116-2587609433.png" alt="00116-2587609433" style="zoom:50%;" />
-
-
-
-<h1 id="提示词范例"><a href="#提示词范例" class="headerlink" title="提示词范例"></a>提示词范例</h1><p>这里提供一些懒人包。负向提示词有些是通用的。</p>
-<h2 id="生成可爱的狗勾"><a href="#生成可爱的狗勾" class="headerlink" title="生成可爱的狗勾"></a>生成可爱的狗勾</h2><p>让我们试着画几只柯基犬在草地上奔跑。</p>
-<p>建议使用模型：Stable Diffusion、Realistic Vision</p>
-<p>提示词</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span> corgi dogs running on grass field</span><br></pre></td></tr></table></figure>
-
-<p>负向提示词</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lowres, bad anatomy, text, error, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name</span><br></pre></td></tr></table></figure>
-
-<p>Steps: 20, Sampler: Euler a, CFG scale: 7, Seed: 2387293181, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</p>
-<img src="../images/sd/00032-2387293181.png" alt="00032-2387293181" style="zoom:50%;" />
-
-
-
-<h2 id="生成高科技未来城市"><a href="#生成高科技未来城市" class="headerlink" title="生成高科技未来城市"></a>生成高科技未来城市</h2><p>建议使用模型：Stable Diffusion、Realistic Vision</p>
-<p>提示词</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">city future, <span class="number">8</span>k, exploration, cinematic, realistic, unreal engine, hyper detailed, volumetric light, moody cinematic epic concept art, realistic matte painting, hyper photorealistic</span><br></pre></td></tr></table></figure>
-
-<p>负向提示词</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lowres, bad anatomy, text, error, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name</span><br></pre></td></tr></table></figure>
-
-<p>Steps: 20, Sampler: Euler a, CFG scale: 7, Seed: 299709774, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</p>
-<img src="../images/sd/00034-299709774.png" alt="00034-299709774" style="zoom:50%;" />
-
-
-
-<h2 id="生成一台特斯拉车子"><a href="#生成一台特斯拉车子" class="headerlink" title="生成一台特斯拉车子"></a>生成一台特斯拉车子</h2><p>建议使用模型：Stable Diffusion、Realistic Vision</p>
-<p>提示词</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">concept art,tesla car, aerodynamic, future</span><br></pre></td></tr></table></figure>
-
-<p>负向提示词</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lowres, bad anatomy, text, error, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name</span><br></pre></td></tr></table></figure>
-
-<p>Steps: 20, Sampler: Euler a, CFG scale: 7, Seed: 3821788433, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</p>
-<img src="../images/sd/00041-3821788433.png" alt="00041-3821788433" style="zoom:50%;" />
-
-<h2 id="生成动漫美少女"><a href="#生成动漫美少女" class="headerlink" title="生成动漫美少女"></a>生成动漫美少女</h2><p>建议使用模型：Anything、Hentai Diffusion</p>
-<p>随机画一个Fate/Grand Order的贞德</p>
-<p>提示词</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jeanne d&#x27;arc from fate grand order, <span class="number">1</span>girl, (<span class="name">best</span> quality), (<span class="name">masterpiece</span>), (<span class="name">high</span> detail), ((<span class="name">full</span> face)), sharp, ((<span class="name">looking</span> at viewer)), ((<span class="name">detailed</span> pupils)), (<span class="name">thick</span> thighs), (((<span class="name">full</span> body))), (<span class="name">large</span> breasts)</span><br></pre></td></tr></table></figure>
-
-<p>负向提示词</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name</span><br></pre></td></tr></table></figure>
-
-<p>Steps: 20, Sampler: Euler, CFG scale: 7, Seed: 1480416086, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</p>
-<img src="../images/sd/00052-1480416086.png" alt="00052-1480416086" style="zoom:50%;" />
-
-<h2 id="生成日韩风真人女孩"><a href="#生成日韩风真人女孩" class="headerlink" title="生成日韩风真人女孩"></a>生成日韩风真人女孩</h2><p>建议使用模型：ChilloutMix、Perfect World，并适时使用Japanese Doll的LoRA。</p>
-<p>随机画一个日本女孩，不要色色</p>
-<p>提示词</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">a</span> japanese woman), shiny skin, (<span class="name">ultra</span> high res,photorealistic,realistic,best quality,photo-realistic), (((<span class="name">high</span> detailed skin,visible pores))),(<span class="name">real</span> person,photograph), (<span class="number">8</span>k, raw photo, best quality, masterpiece),(<span class="number">1</span>girl),photon mapping, radiosity, physically-based rendering,automatic white balance,(<span class="name">haunting</span> smile,moist lips),watery eyes, (<span class="name">blush</span><span class="name">|cute and playful|</span><span class="name">adorable</span><span class="name">|thick bangs|</span><span class="name">beauty</span>),((<span class="name">irises</span> and pupils are rounded,the pupil reflects the surroundings,eyes are not the same size))</span><br></pre></td></tr></table></figure>
-
-<p>负向提示词</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nude, lowres,blurry,simple background,jpeg artifacts,bad-artist,bad shadow,compressed image,low pixel,light spot, paintings,sketches,((<span class="name">monochrome</span>)),((<span class="name">grayscale</span>)),noise point,semi-realistic, <span class="number">3</span>d,render,cg,drawing,cartoon,anime,comic,username,watermark,signature,cropped,error,censored,text,stain, deformed iris,deformed pupils,deformed nail,deformed ear,deformed eye,deformed eyelid,collapsed eyeshadow, [excessive skin spots,excessive skin imperfections,skin blemishes,skin fold,rough skinstain skin],goosebumps,skin layering,axillary fold,facial contortion, (<span class="name">flawless</span> face),trimming</span><br></pre></td></tr></table></figure>
-
-<p>Steps: 20, Sampler: DDIM, CFG scale: 7, Seed: 2228126458, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</p>
-<img src="../images/sd/00057-2228126458.png" alt="00057-2228126458" style="zoom:50%;" />
-
-
-
-<p><strong>Prompt:</strong></p>
-<p><code>(a japanese woman), shiny skin, (ultra high res,photorealistic,realistic,best quality,photo-realistic), (((high detailed skin,visible pores))),(real person,photograph), (8k, raw photo, best quality, masterpiece),(1girl),photon mapping, radiosity, physically-based rendering,automatic white balance,(haunting smile,moist lips),watery eyes, (blush|cute and playful|adorable|thick bangs|beauty),((irises and pupils are rounded,the pupil reflects the surroundings,eyes are not the same size))</code></p>
-<img src="/Users/whx/Documents/wanghongxing.github.com/source/images/sd/20240207110110-1201812112.png" alt="20240207110110-1201812112" style="zoom:50%;" />
-
-<p>Steps: 20, Sampler: Euler a, CFG scale: 7, Seed: 1201812112, Size: 512x512, Model hash: 4199bcdd14, Model: revAnimated_v122EOL, Version: v1.7.0</p>
-<h1 id="5-值得参考的提示词网站"><a href="#5-值得参考的提示词网站" class="headerlink" title="5. 值得参考的提示词网站 #"></a>5. 值得参考的提示词网站 <a target="_blank" rel="noopener" href="https://ivonblog.com/posts/stable-diffusion-webui-manuals/zh-cn/prompts/general-prompt-guide/#5-%E5%80%BC%E5%BE%97%E5%8F%82%E8%80%83%E7%9A%84%E6%8F%90%E7%A4%BA%E8%AF%8D%E7%BD%91%E7%AB%99">#</a></h1><p>若使用的是SD模型，想生成真人，请看 <a target="_blank" rel="noopener" href="https://rentry.org/artists_sd-v1-4">Voldy</a>整理的历史上有名的艺术家。</p>
-<p>若使用动漫风的模型请看 <a target="_blank" rel="noopener" href="https://danbooru.donmai.us/">Danbooru</a>图库的标签决定要下哪些提示词。</p>
-<p><a target="_blank" rel="noopener" href="https://promptomania.com/stable-diffusion-prompt-builder/">Prompt Generator</a>和 <a target="_blank" rel="noopener" href="https://thereisnospon.github.io/NovelAiTag/">NovelAI魔导书</a>可以协助你组合提示词。</p>
-<p><a target="_blank" rel="noopener" href="https://civitai.com/">Civitai</a>除了下载模型外，还有很多现成的提示词搭配模型的范例可以照抄。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240204-macos%20%E5%AE%89%E8%A3%85ComfyUI/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/20240204-macos%20%E5%AE%89%E8%A3%85ComfyUI/" class="post-title-link" itemprop="url">macos 安装ComfyUI</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-02-04 11:00:54" itemprop="dateCreated datePublished" datetime="2024-02-04T11:00:54+08:00">2024-02-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:06:35" itemprop="dateModified" datetime="2024-03-04T10:06:35+08:00">2024-03-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p> <a target="_blank" rel="noopener" href="https://github.com/comfyanonymous/ComfyUI">https://github.com/comfyanonymous/ComfyUI</a></p>
-<h3 id="Dependencies"><a href="#Dependencies" class="headerlink" title="Dependencies"></a>Dependencies</h3><p>Install the dependencies by opening your terminal inside the ComfyUI folder and:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda activate comfyui</span><br><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="Run"><a href="#Run" class="headerlink" title="Run"></a>Run</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python main.py --force-fp16</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="comfyUI-examples"><a href="#comfyUI-examples" class="headerlink" title="comfyUI examples"></a>comfyUI examples</h2><p><a target="_blank" rel="noopener" href="https://comfyanonymous.github.io/ComfyUI_examples/">https://comfyanonymous.github.io/ComfyUI_examples/</a></p>
-<p>这里包含所有comfyUI的例子，这里所有图片都包含可以被comfyUI加载的 metadata 信息</p>
-<p>RealESRGAN_x4plus.pth </p>
-<p><a target="_blank" rel="noopener" href="https://huggingface.co/lllyasviel/Annotators/blob/main/RealESRGAN_x4plus.pth">https://huggingface.co/lllyasviel/Annotators/blob/main/RealESRGAN_x4plus.pth</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240204-apple%20silicon%20Install%20pytorch%20nightly/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/20240204-apple%20silicon%20Install%20pytorch%20nightly/" class="post-title-link" itemprop="url">apple silicon Install pytorch nightly</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-02-04 11:00:39" itemprop="dateCreated datePublished" datetime="2024-02-04T11:00:39+08:00">2024-02-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:06:09" itemprop="dateModified" datetime="2024-03-04T10:06:09+08:00">2024-03-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="https://developer.apple.com/metal/pytorch/">https://developer.apple.com/metal/pytorch/</a></p>
-<h5 id="Anaconda"><a href="#Anaconda" class="headerlink" title="Anaconda"></a>Anaconda</h5><h4 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h4><p>Apple silicon</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh</span><br><span class="line">sh Miniconda3-latest-MacOSX-arm64.sh</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h4><h5 id="Anaconda-1"><a href="#Anaconda-1" class="headerlink" title="Anaconda"></a>Anaconda</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install pytorch torchvision torchaudio -c pytorch-nightly</span><br></pre></td></tr></table></figure>
-
-<h5 id="pip"><a href="#pip" class="headerlink" title="pip"></a>pip</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install --pre torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/nightly/cpu</span><br></pre></td></tr></table></figure>
-
-<h4 id="Verify"><a href="#Verify" class="headerlink" title="Verify"></a>Verify</h4><p>You can verify <code>mps</code> support using a simple Python script:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">if torch.backends.mps.is_available():</span><br><span class="line">    mps_device = torch.device(&quot;mps&quot;)</span><br><span class="line">    x = torch.ones(1, device=mps_device)</span><br><span class="line">    print (x)</span><br><span class="line">else:</span><br><span class="line">    print (&quot;MPS device not found.&quot;)</span><br></pre></td></tr></table></figure>
-
-<p>The output should show:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensor([1.], device=&#x27;mps:0&#x27;)</span><br></pre></td></tr></table></figure>
-
+          <p>macos m1miniconda使用python2.7</p>
+<p>conda create -n python27 python=2.7 anaconda</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CONDA_SUBDIR=osx-64 conda create -n py27 python=2.7</span><br></pre></td></tr></table></figure>
 
 
 
@@ -623,7 +222,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240202-oracle%20%E5%88%9B%E5%BB%BA%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240521-%E6%89%8B%E5%8A%A8%E7%94%B3%E8%AF%B7letsencrypt%E8%AF%81%E4%B9%A6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -637,7 +236,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/20240202-oracle%20%E5%88%9B%E5%BB%BA%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/" class="post-title-link" itemprop="url">oracle 创建远程连接</a>
+            <a href="/20240521-%E6%89%8B%E5%8A%A8%E7%94%B3%E8%AF%B7letsencrypt%E8%AF%81%E4%B9%A6/" class="post-title-link" itemprop="url">Untitled</a>
         </h2>
 
         <div class="post-meta">
@@ -647,14 +246,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2024-02-02 10:58:02" itemprop="dateCreated datePublished" datetime="2024-02-02T10:58:02+08:00">2024-02-02</time>
+              <time title="Created: 2024-05-21 09:41:19" itemprop="dateCreated datePublished" datetime="2024-05-21T09:41:19+08:00">2024-05-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:05:59" itemprop="dateModified" datetime="2024-03-04T10:05:59+08:00">2024-03-04</time>
+                <time title="Modified: 2024-05-27 13:52:39" itemprop="dateModified" datetime="2024-05-27T13:52:39+08:00">2024-05-27</time>
               </span>
 
           
@@ -668,71 +267,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> DATABASE LINK remote_db</span><br><span class="line"><span class="keyword">CONNECT</span> <span class="keyword">TO</span> remote_username IDENTIFIED <span class="keyword">BY</span> remote_password</span><br><span class="line"><span class="keyword">USING</span> <span class="string">&#x27;172.16.40.2:1521/HWDB&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> db_link,username,host <span class="keyword">from</span> dba_db_links;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-      
-    </div>
+          <p>手动申请letsencrypt证书</p>
+<p>系统安装docker，然后在执行如下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --rm --name certbot \</span><br><span class="line">           -v &quot;/etc/letsencrypt:/etc/letsencrypt&quot; \</span><br><span class="line">           -v &quot;/var/lib/www:/www&quot; \</span><br><span class="line">           certbot/certbot certonly</span><br></pre></td></tr></table></figure>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240124-npm%20install%20ssl%E8%AF%81%E4%B9%A6%E5%A4%B1%E6%95%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/20240124-npm%20install%20ssl%E8%AF%81%E4%B9%A6%E5%A4%B1%E6%95%88/" class="post-title-link" itemprop="url">npm install ssl证书失效</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-01-24 12:33:49" itemprop="dateCreated datePublished" datetime="2024-01-24T12:33:49+08:00">2024-01-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:05:47" itemprop="dateModified" datetime="2024-03-04T10:05:47+08:00">2024-03-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>npm config set strict-ssl false</p>
+<p>其中/var/lib/www是域名静态根目录，期间提示号域名的根目录的时候输入 /www</p>
+<p>正常的话会将证书放到/etc/letsencrypt目录下。</p>
 
       
     </div>
@@ -752,7 +292,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240111%E5%BC%80%E6%BA%90%E5%A4%87%E4%BB%BDbackupPC/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240422-macbook-silicon-%E8%BF%90%E8%A1%8Ckettle%EF%BC%88data-integration%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -766,7 +306,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/20240111%E5%BC%80%E6%BA%90%E5%A4%87%E4%BB%BDbackupPC/" class="post-title-link" itemprop="url">20240111开源备份backupPC</a>
+            <a href="/20240422-macbook-silicon-%E8%BF%90%E8%A1%8Ckettle%EF%BC%88data-integration%EF%BC%89/" class="post-title-link" itemprop="url">macbook (silicon) 运行kettle（data-integration）</a>
         </h2>
 
         <div class="post-meta">
@@ -775,16 +315,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2024-01-11 17:03:51" itemprop="dateCreated datePublished" datetime="2024-01-11T17:03:51+08:00">2024-01-11</time>
+              <time title="Created: 2024-04-22 08:16:30 / Modified: 08:25:45" itemprop="dateCreated datePublished" datetime="2024-04-22T08:16:30+08:00">2024-04-22</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-04-22 08:33:24" itemprop="dateModified" datetime="2024-04-22T08:33:24+08:00">2024-04-22</time>
-              </span>
 
           
 
@@ -797,94 +331,31 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>3.x版本</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">yum install BackupPC</span><br><span class="line"></span><br><span class="line">cd /usr/share/BackupPC/</span><br><span class="line">chown backuppc:apache sbin/*</span><br><span class="line">cd sbin</span><br><span class="line"></span><br><span class="line">chmod u+s BackupPC_Admin</span><br><span class="line"></span><br><span class="line">usermod -s /bin/bash backuppc</span><br><span class="line"></span><br><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</span><br><span class="line">firewall-cmd --reload</span><br><span class="line"></span><br><span class="line"># /etc/BackupPC/config.pl</span><br><span class="line">$Conf&#123;CgiAdminUsers&#125;     = &#x27;backuppc&#x27;;</span><br><span class="line">$Conf&#123;PingPath&#125; = &#x27;/bin/ping&#x27;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">htpasswd -c /etc/BackupPC/apache.users backuppc</span><br><span class="line"></span><br><span class="line">zaq1XSW2</span><br><span class="line"></span><br><span class="line">systemctl restart backuppc</span><br><span class="line"> systemctl restart httpd</span><br></pre></td></tr></table></figure>
+          <p>macbook   silicon 运行kettle（data-integration）</p>
+<p>kettle在windows及intel电脑运行正常，但是在silicon芯片的macos上执行是提示：不支持arm64。搜索 发现解决方案： <a target="_blank" rel="noopener" href="https://medium.com/@gabriella.mayang/how-to-install-and-open-pentaho-data-integration-on-macbook-m2-apple-silicon-4081c2875a02">https://medium.com/@gabriella.mayang/how-to-install-and-open-pentaho-data-integration-on-macbook-m2-apple-silicon-4081c2875a02</a></p>
+<h1 id="Step-1-Download-JDK-and-JRE"><a href="#Step-1-Download-JDK-and-JRE" class="headerlink" title="Step 1: Download JDK and JRE"></a>Step 1: Download JDK and JRE</h1><p>I tried JDK from Oracle but it failed. Now the only JDK that I am using and proven successful in opening PDI in my M2 is the one from <strong>Eclipse Temurin OpenJDK.</strong></p>
+<ol>
+<li>Click here to download <a target="_blank" rel="noopener" href="https://adoptium.net/temurin/releases/?variant=openjdk8&amp;os=mac">https://adoptium.net/temurin/releases/?variant=openjdk8&amp;os=mac</a></li>
+<li>Choose JDK .pkg</li>
+</ol>
+<h1 id="Step-2-Download-MacOSX-X86-JAR"><a href="#Step-2-Download-MacOSX-X86-JAR" class="headerlink" title="Step 2: Download MacOSX X86 JAR"></a>Step 2: Download MacOSX X86 JAR</h1><ol>
+<li>Click here to download <a target="_blank" rel="noopener" href="https://mega.nz/file/VFhgnS6I#s4zUK81rXGdXcpJMuzUvDOHoixZmAl4jyXd0yMU11F0">https://mega.nz/file/VFhgnS6I#s4zUK81rXGdXcpJMuzUvDOHoixZmAl4jyXd0yMU11F0</a></li>
+<li>Move the file to ‘libswt/osx64’</li>
+</ol>
+<p>就是把下载的文件放到 data-integration/libswt/osx64 目录下。</p>
+<h1 id="Step-4-Create-New-Terminal-Profile-for-Intel"><a href="#Step-4-Create-New-Terminal-Profile-for-Intel" class="headerlink" title="Step 4: Create New Terminal Profile for Intel"></a>Step 4: Create New Terminal Profile for Intel</h1><p>注：这里是苹果原生的terminal，不是iterm。</p>
+<ol>
+<li>Open Terminal &gt; Settings</li>
+<li>Click the ‘**+’** button to add new profile and name it as “Rosetta Intel”. You can choose another name but make sure the new profile name indicates the profile usage is for Intel-based apps</li>
+<li>Go to ‘Shell’ tab and paste this in the ‘Run Command’ field:</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env /usr/bin/arch -x86_64 /bin/zsh --login</span><br></pre></td></tr></table></figure>
 
+<p>Uncheck ‘Run inside shell’. Uncheck the checkbox would prevent running the shell twice, which could bloat your environment variables since ~/.zshrc gets run twice</p>
+<h3 id="最后-JAVA-HOME"><a href="#最后-JAVA-HOME" class="headerlink" title="最后 JAVA_HOME"></a>最后 JAVA_HOME</h3><p>因为我用了多版本的jdk，所以需要单独设置一个java环境</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-8.jdk/Contents/Home</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-
-<p>4.x</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">yum --enablerepo=extras -y install epel-release</span><br><span class="line">yum --enablerepo=epel-testing -y install BackupPC-XS rsync-bpc</span><br><span class="line"></span><br><span class="line"> yum groupinstall &quot;Development Tools&quot;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>安装BackupPC-XS</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> https://objects.githubusercontent.com/github-production-release-asset-2e65be/ </span><br><span class="line">tar zxf BackupPC-XS-0.62.tar.gz</span><br><span class="line">cd BackupPC-XS-0.62</span><br><span class="line"></span><br><span class="line">perl Makefile.PL</span><br><span class="line">make</span><br><span class="line">make test</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="Install-the-following-requisites-for-BackupPC-version-4-3-1"><a href="#Install-the-following-requisites-for-BackupPC-version-4-3-1" class="headerlink" title="Install the following requisites for BackupPC version 4.3.1"></a>Install the following requisites for BackupPC version 4.3.1</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">yum -y install bzip2 httpd mod_perl par2cmdline perl-Archive-Zip perl-CGI \</span><br><span class="line">perl-Compress-Raw-Zlib perl-Data-Dumper perl-Digest-MD5 perl-File-Listing \</span><br><span class="line">perl-File-RsyncP perl-Net-FTP-AutoReconnect perl-Net-FTP-RetrHandle \</span><br><span class="line">perl-Time-ParseDate perl-XML-RSS perl-version rrdtool samba-client</span><br></pre></td></tr></table></figure>
-
-<h1 id="Lets-set-up-some-directories-that-we-are-going-to-use-later"><a href="#Lets-set-up-some-directories-that-we-are-going-to-use-later" class="headerlink" title="Lets set up some directories that we are going to use later."></a>Lets set up some directories that we are going to use later.</h1><p>My backuppc server has a raid10 array mounted at /data/. I am going to use this to store the data for backuppc. Lets create the backuppc folder on my raid. Note: this folder can grow to be extremely large.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /data/backuppc</span><br></pre></td></tr></table></figure>
-
-
-
-<p>Now lets create one more folder for BackupPC to store some web interface files.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /var/www/html/backuppc</span><br></pre></td></tr></table></figure>
-
-
-
-<p>And create the cgi-bin directory for backuppc</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /var/www/cgi-bin/backuppc</span><br></pre></td></tr></table></figure>
-
-
-
-<p>Make note of those 2 directories. The installer will ask for them if we don’t explicitly set them below.</p>
-<h1 id="Create-and-setup-the-backuppc-user"><a href="#Create-and-setup-the-backuppc-user" class="headerlink" title="Create and setup the backuppc user."></a>Create and setup the backuppc user.</h1><p>Create group backuppc.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupadd backuppc</span><br></pre></td></tr></table></figure>
-
-
-
-<p>Create backuppc user, and tell it where its home folder is. My backuppc user’s home folder is /opt/backuppc. Change this to whatever you’d like.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">useradd --home-dir /opt/backuppc --create-home --shell /bin/bash --base-dir /opt/backuppc --gid backuppc backuppc</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="Set-Permissions-on-the-directories-we-created"><a href="#Set-Permissions-on-the-directories-we-created" class="headerlink" title="Set Permissions on the directories we created:"></a>Set Permissions on the directories we created:</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown -R backuppc:backuppc /data/backuppc</span><br><span class="line">chown -R backuppc:backuppc /opt/backuppc</span><br></pre></td></tr></table></figure>
-
-<h1 id="Download-the-BackupPC-tar-gz-archive-and-extract-it"><a href="#Download-the-BackupPC-tar-gz-archive-and-extract-it" class="headerlink" title="Download the BackupPC tar.gz archive and extract it."></a>Download the BackupPC tar.gz archive and extract it.</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd ~</span><br><span class="line">wget https://github.com/backuppc/backuppc/releases/download/4.4.0/BackupPC-4.4.0.tar.gz</span><br><span class="line">tar zxf BackupPC-4.4.0.tar.gz</span><br><span class="line">cd BackupPC-4.4.0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="Run-the-configure-pl-script"><a href="#Run-the-configure-pl-script" class="headerlink" title="Run the configure.pl script"></a>Run the configure.pl script</h1><p>Pay close attention to the paths in this command.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">perl configure.pl --batch --cgi-dir /var/www/cgi-bin/backuppc \</span><br><span class="line">--data-dir /data0/backuppc --hostname backuppc --html-dir /var/www/html/backuppc \</span><br><span class="line">--html-dir-url /backuppc --install-dir /opt/backuppc</span><br></pre></td></tr></table></figure>
-
-
-
-<p>Alternatively, you can execute the perl script with no arguments and it will walk you through the install step by step. This is the preferred method if you are upgrading a version 3.X install. (Not supported by this guide)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl configure.pl</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">Ok, we&#x27;re about to:</span><br><span class="line"></span><br><span class="line">  - install the binaries, lib and docs in /usr/local/BackupPC</span><br><span class="line">  - create the data directory /data/BackupPC</span><br><span class="line">  - optionally install the cgi-bin interface</span><br><span class="line">  - create/update the config.pl file /etc/BackupPC/config.pl</span><br><span class="line">--&gt; Do you want to continue? [y]?</span><br><span class="line">Created /usr/local/BackupPC/bin</span><br><span class="line">Created /usr/local/BackupPC/share</span><br><span class="line">Created /usr/local/BackupPC/share/doc</span><br><span class="line">Created /usr/local/BackupPC/share/doc/BackupPC</span><br><span class="line">Created /usr/local/BackupPC/lib</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC/CGI</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC/Config</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC/Lang</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC/Storage</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC/Xfer</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC/Zip</span><br><span class="line">Created /usr/local/BackupPC/lib/Net</span><br><span class="line">Created /usr/local/BackupPC/lib/Net/FTP</span><br><span class="line">Created /data/BackupPC</span><br><span class="line">Created /data/BackupPC/pool</span><br><span class="line">Created /data/BackupPC/cpool</span><br><span class="line">Created /data/BackupPC/pc</span><br><span class="line">Created /etc/BackupPC</span><br><span class="line">Created /var/log/BackupPC</span><br><span class="line">Created /var/run/BackupPC</span><br><span class="line">Installing binaries in /usr/local/BackupPC/bin</span><br><span class="line">Installing library in /usr/local/BackupPC/lib</span><br><span class="line">Making systemd and init.d scripts</span><br><span class="line">Making Apache configuration file for suid-perl</span><br><span class="line">Installing docs in /usr/local/BackupPC/share/doc/BackupPC</span><br><span class="line">Installing cgi script BackupPC_Admin in /var/www/cgi-bin/backuppc</span><br><span class="line">Installing config.pl and hosts in /etc/BackupPC</span><br><span class="line"></span><br><span class="line">Ok, it looks like we are finished.  There are several more things you</span><br><span class="line">will need to do:</span><br><span class="line"></span><br><span class="line">  - Browse through the config file, /etc/BackupPC/config.pl,</span><br><span class="line">    and make sure all the settings are correct.  In particular,</span><br><span class="line">    you will need to set $Conf&#123;CgiAdminUsers&#125; so you have</span><br><span class="line">    administration privileges in the CGI interface.</span><br><span class="line"></span><br><span class="line">  - Edit the list of hosts to backup in /etc/BackupPC/hosts.</span><br><span class="line"></span><br><span class="line">  - Read the documentation in /usr/local/BackupPC/doc/BackupPC.html.</span><br><span class="line">    Please pay special attention to the security section.</span><br><span class="line"></span><br><span class="line">  - Verify that the CGI script BackupPC_Admin runs correctly.  You might</span><br><span class="line">    need to change the permissions or group ownership of BackupPC_Admin.</span><br><span class="line">    If this is an upgrade and you are using mod_perl, you will need</span><br><span class="line">    to restart Apache.  Otherwise it will have stale code.</span><br><span class="line"></span><br><span class="line">  - BackupPC should be ready to start.  Don&#x27;t forget to run it</span><br><span class="line">    as user backuppc!  The installation also contains</span><br><span class="line">    a systemd/backuppc.service script that can be installed so</span><br><span class="line">    that BackupPC can auto-start on boot.  This will also enable</span><br><span class="line">    administrative users to start the server from the CGI interface.</span><br><span class="line">    See systemd/README.</span><br><span class="line"></span><br><span class="line">Enjoy!  </span><br></pre></td></tr></table></figure>
-
-<h1 id="Apache-config"><a href="#Apache-config" class="headerlink" title="Apache config"></a>Apache config</h1><p>I chose the CGI route (not S-CGI) and chose the directory /var/www/cgi-bin/backuppc for my CGI directory. I chose /var/www/html/backuppc as my images directory. You may need to set this path in the config if you ran the configure.pl script with no arguments.</p>
-<p>Now we need to copy the Apache config into the apache conf.d directory.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp httpd/BackupPC.conf /etc/httpd/conf.d/</span><br></pre></td></tr></table></figure>
-
-<h1 id="Install-the-included-systemd-script"><a href="#Install-the-included-systemd-script" class="headerlink" title="Install the included systemd script:"></a>Install the included systemd script:</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cp systemd/backuppc.service /etc/systemd/system/</span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl start backuppc</span><br><span class="line">systemctl enable backuppc</span><br></pre></td></tr></table></figure>
-
-<h1 id="Create-the-backuppc-authentication-file"><a href="#Create-the-backuppc-authentication-file" class="headerlink" title="Create the backuppc authentication file."></a>Create the backuppc authentication file.</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">htpasswd -c /etc/BackupPC/BackupPC.users backuppc</span><br><span class="line"></span><br><span class="line"> </span><br></pre></td></tr></table></figure>
-
-
-
-<p>Note: this sets the username to backuppc (modify it to your liking)</p>
-<p>Set permissions on this file.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown backuppc:backuppc /etc/BackupPC/BackupPC.users</span><br></pre></td></tr></table></figure>
-
-<h1 id="Edit-the-config-pl-file-in-etc-BackupPC"><a href="#Edit-the-config-pl-file-in-etc-BackupPC" class="headerlink" title="Edit the config.pl file in /etc/BackupPC/"></a>Edit the config.pl file in /etc/BackupPC/</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/BackupPC/config.pl</span><br></pre></td></tr></table></figure>
-
-
-
-<p>Check the image directory and image url variables.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$Conf&#123;CgiImageDir&#125; = &#x27;/var/www/html/backuppc&#x27;;</span><br><span class="line">$Conf&#123;CgiImageDirURL&#125; = &#x27;/BackupPc&#x27;;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>Also add backuppc as the administrative user: <code>$Conf&#123;CgiAdminUsers&#125;     = &#39;backuppc&#39;;</code></p>
-<p>这时候不能往/etc/BackupPC目录写东西，</p>
-<p>chcon -R -t httpd_sys_content_t /etc/BackupPC</p>
-<p>查看备份内容</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 列表</span><br><span class="line">BackupPC_ls -h bi-server -n 0 -s /data/bakdata /</span><br><span class="line">BackupPC_ls -h erp-oracle -n 1 -s /backup/bakdata /</span><br><span class="line"></span><br><span class="line">#查看文件</span><br><span class="line">BackupPC_zcat -h erp-oracle -n 1 -s /backup/bakdata /navy_bak221220_full.log</span><br></pre></td></tr></table></figure>
-
+<p>然后就成功了。</p>
 
       
     </div>
@@ -904,7 +375,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240110-Linux%E6%9F%A5%E7%9C%8BCPU%E4%BF%A1%E6%81%AF%EF%BC%8C%E6%9C%BA%E5%99%A8%E5%9E%8B%E5%8F%B7%EF%BC%8C%E5%86%85%E5%AD%98%E7%AD%89%E4%BF%A1%E6%81%AF/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240304-%E8%A7%A3%E5%86%B3%20%E8%AE%BF%E9%97%AEhttp%E8%87%AA%E5%8A%A8%E8%B7%B3%E8%BD%AC%E5%88%B0https%E7%9A%84%E9%97%AE%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -918,7 +389,77 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/20240110-Linux%E6%9F%A5%E7%9C%8BCPU%E4%BF%A1%E6%81%AF%EF%BC%8C%E6%9C%BA%E5%99%A8%E5%9E%8B%E5%8F%B7%EF%BC%8C%E5%86%85%E5%AD%98%E7%AD%89%E4%BF%A1%E6%81%AF/" class="post-title-link" itemprop="url">20240110- Linux查看CPU信息，机器型号，内存等信息</a>
+            <a href="/20240304-%E8%A7%A3%E5%86%B3%20%E8%AE%BF%E9%97%AEhttp%E8%87%AA%E5%8A%A8%E8%B7%B3%E8%BD%AC%E5%88%B0https%E7%9A%84%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">20240304-解决 访问http自动跳转到https的问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-03-04 09:20:34 / Modified: 09:58:33" itemprop="dateCreated datePublished" datetime="2024-03-04T09:20:34+08:00">2024-03-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>解决 访问http自动跳转到https的问题</p>
+<p>1、先访问http域名，然后点击地址栏所测那个“不安全”的警告，弹出对话框中选择网站设置，</p>
+<p><img src="../images/2024-03-04-09.37.38.png" alt="2024-03-04-09.37.38"></p>
+<p>2、然后再下面的不安全内容后面的下拉框中选择<strong>允许</strong></p>
+<p><img src="../images/2024-03-04-09.37.47.png" alt="2024-03-04-09.37.47"></p>
+<p>3、在地址栏输入: chrome://net-internals/#hsts</p>
+<img src="../images/截屏2024-03-04 09.53.37.png" alt="截屏2024-03-04 09.53.37" style="zoom: 67%;" />
+
+<p>4、找到底部Delete domain security policies一栏，输入想处理的域名，点击delete。</p>
+<img src="../images/截屏2024-03-04 09.53.51.png" alt="截屏2024-03-04 09.53.51" style="zoom:67%;" />
+
+<p>5、搞定了，再次访问http域名不再自动跳转https了。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240226-pytorch%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20240226-pytorch%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/" class="post-title-link" itemprop="url">20240226pytorch学习之路</a>
         </h2>
 
         <div class="post-meta">
@@ -928,7 +469,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2024-01-10 14:06:33" itemprop="dateCreated datePublished" datetime="2024-01-10T14:06:33+08:00">2024-01-10</time>
+              <time title="Created: 2024-02-26 09:20:34" itemprop="dateCreated datePublished" datetime="2024-02-26T09:20:34+08:00">2024-02-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -949,258 +490,53 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Linux查看CPU信息，机器型号，内存等信息"><a href="#Linux查看CPU信息，机器型号，内存等信息" class="headerlink" title="Linux查看CPU信息，机器型号，内存等信息"></a>Linux查看CPU信息，机器型号，内存等信息</h1><h2 id="1-系统"><a href="#1-系统" class="headerlink" title="1. 系统"></a>1. 系统</h2><table>
-<thead>
-<tr>
-<th align="left">命令</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">uname -a</td>
-<td align="left">查看内核/操作系统/CPU信息</td>
-</tr>
-<tr>
-<td align="left">head -n 1 /etc/issue</td>
-<td align="left">查看操作系统版本</td>
-</tr>
-<tr>
-<td align="left">cat /proc/cpuinfo</td>
-<td align="left">查看CPU信息</td>
-</tr>
-<tr>
-<td align="left">hostname</td>
-<td align="left">查看计算机名</td>
-</tr>
-<tr>
-<td align="left">lspci -tv</td>
-<td align="left">列出所有PCI设备</td>
-</tr>
-<tr>
-<td align="left">lsusb -tv</td>
-<td align="left">列出所有USB设备</td>
-</tr>
-<tr>
-<td align="left">lsmod</td>
-<td align="left">列出加载的内核模块</td>
-</tr>
-<tr>
-<td align="left">env</td>
-<td align="left">查看环境变量</td>
-</tr>
-<tr>
-<td align="left">lspci | grep -i nvidia</td>
-<td align="left">查看NVIDIA显卡</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="2-资源"><a href="#2-资源" class="headerlink" title="2. 资源"></a>2. 资源</h2><table>
-<thead>
-<tr>
-<th align="left">命令</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">free -m</td>
-<td align="left">查看内存使用量和交换区使用量</td>
-</tr>
-<tr>
-<td align="left">df -h</td>
-<td align="left">查看各分区使用情况</td>
-</tr>
-<tr>
-<td align="left">du -sh &lt;目录名&gt;</td>
-<td align="left">查看指定目录的大小</td>
-</tr>
-<tr>
-<td align="left">grep MemTotal /proc/meminfo</td>
-<td align="left">查看内存总量</td>
-</tr>
-<tr>
-<td align="left">grep MemFree /proc/meminfo</td>
-<td align="left">查看空闲内存量</td>
-</tr>
-<tr>
-<td align="left">uptime</td>
-<td align="left">查看系统运行时间、用户数、负载</td>
-</tr>
-<tr>
-<td align="left">cat /proc/loadavg</td>
-<td align="left">查看系统负载</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="3-磁盘和分区"><a href="#3-磁盘和分区" class="headerlink" title="3. 磁盘和分区"></a>3. 磁盘和分区</h2><table>
-<thead>
-<tr>
-<th align="left">命令</th>
-<th align="left">含义</th>
-<th align="left"></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">mount</td>
-<td align="left">column -t</td>
-<td align="left">查看挂接的分区状态</td>
-</tr>
-<tr>
-<td align="left">fdisk -l</td>
-<td align="left">查看所有分区</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">swapon -s</td>
-<td align="left">查看所有交换分区</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">hdparm -i /dev/hda</td>
-<td align="left">查看磁盘参数(仅适用于IDE设备)</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">dmesg</td>
-<td align="left">grep IDE</td>
-<td align="left">查看启动时IDE设备检测状况</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="4-网络"><a href="#4-网络" class="headerlink" title="4. 网络"></a>4. 网络</h2><table>
-<thead>
-<tr>
-<th align="left">命令</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">ifconfig</td>
-<td align="left">查看所有网络接口的属性</td>
-</tr>
-<tr>
-<td align="left">iptables -L</td>
-<td align="left">查看防火墙设置</td>
-</tr>
-<tr>
-<td align="left">route -n</td>
-<td align="left">查看路由表</td>
-</tr>
-<tr>
-<td align="left">netstat -lntp</td>
-<td align="left">查看所有监听端口</td>
-</tr>
-<tr>
-<td align="left">netstat -antp</td>
-<td align="left">查看所有已经建立的连接</td>
-</tr>
-<tr>
-<td align="left">netstat -s</td>
-<td align="left">查看网络统计信息</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="5-进程"><a href="#5-进程" class="headerlink" title="5. 进程"></a>5. 进程</h2><table>
-<thead>
-<tr>
-<th align="left">命令</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">ps -ef</td>
-<td align="left">查看所有进程</td>
-</tr>
-<tr>
-<td align="left">top</td>
-<td align="left">实时显示进程状态</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="6-用户"><a href="#6-用户" class="headerlink" title="6. 用户"></a>6. 用户</h2><table>
-<thead>
-<tr>
-<th align="left">命令</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">w</td>
-<td align="left">查看活动用户</td>
-</tr>
-<tr>
-<td align="left">id &lt;用户名&gt;</td>
-<td align="left">查看指定用户信息</td>
-</tr>
-<tr>
-<td align="left">last</td>
-<td align="left">查看用户登录日志</td>
-</tr>
-<tr>
-<td align="left">cut -d: -f1 /etc/passwd</td>
-<td align="left">查看系统所有用户</td>
-</tr>
-<tr>
-<td align="left">cut -d: -f1 /etc/group</td>
-<td align="left">查看系统所有组</td>
-</tr>
-<tr>
-<td align="left">crontab -l</td>
-<td align="left">查看当前用户的计划任务</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="7-服务"><a href="#7-服务" class="headerlink" title="7. 服务"></a>7. 服务</h2><table>
-<thead>
-<tr>
-<th align="left">命令</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">chkconfig –list</td>
-<td align="left">列出所有系统服务</td>
-</tr>
-<tr>
-<td align="left">chkconfig –list | grep on</td>
-<td align="left">列出所有启动的系统服务</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="8-程序"><a href="#8-程序" class="headerlink" title="8. 程序"></a>8. 程序</h2><table>
-<thead>
-<tr>
-<th align="left">命令</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">rpm -qa</td>
-<td align="left">查看所有安装的软件包</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="9-查看CPU信息（型号）"><a href="#9-查看CPU信息（型号）" class="headerlink" title="9. 查看CPU信息（型号）"></a>9. 查看CPU信息（型号）</h2><ul>
-<li>CPU型号<br><code>cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c</code></li>
-<li>几颗核心<br><code>cat /proc/cpuinfo | grep physical | uniq -c </code></li>
-<li>查看CPU模式<br><code>getconf LONG_BIT</code></li>
-<li>查看CPU运算flags<br><code>cat /proc/cpuinfo | grep flags | grep &#39; lm &#39; | wc -l</code></li>
-<li>完整看cpu详细信息<br><code>dmidecode | grep &#39;Processor Information</code></li>
-<li>查看内存信息<br><code>cat /proc/meminfo</code></li>
-<li>查看当前操作系统内核信息<br><code>uname -a</code></li>
-<li>查看当前操作系统发行版信息<br><code>cat /etc/issue | grep Linux</code></li>
-<li>查看机器型号<br><code>dmidecode | grep &quot;Product Name</code></li>
-<li>查看网卡信息<br><code>dmesg | grep -i eth</code></li>
-</ul>
-<h2 id="10-GPU相关命令"><a href="#10-GPU相关命令" class="headerlink" title="10. GPU相关命令"></a>10. GPU相关命令</h2><ul>
-<li>查看显卡信息<br><code>lspci | grep -i vga</code></li>
-<li>若使用NVIDIA显卡<br><code>lspci | grep -i nvidia</code></li>
-<li>查看显卡详情<br><code>lspci -v -s 00:0f.0</code></li>
-<li>查看显存使用情况<br><code>nvidia-smi</code></li>
-<li>周期性输出显卡使用情况<br><code>watch -n 10 nvidia-smi</code></li>
-<li>查看cuda版本<br><code>cat /usr/local/cuda/version.txt</code></li>
-<li>查看cudnn版本<br><code>cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2</code></li>
-</ul>
+          <p>pytorch学习之路</p>
+<p>pytorch包含以下组件</p>
+<p>torch: 一个像numpy 向量库</p>
+<p>torch.autograd 自动微分库，支持所有微分向量运算</p>
+<p>torch.jit 一个编译栈，从pytorch代码来创建可序列化、可以优化的模型</p>
+<p>torch.nn 神经元网络库，设计之初保持了最大化灵活性，深度继承了求导库</p>
+<p>torch.multiprocessing 多处理，在torch 向量访问处理器时使用了魔术化的内存共享。在数据加载和疯狂的训练模型的时候非常有用。</p>
+<p>torch。utils 数据记在和其他功能</p>
+<p>通常pytorch用作两个方面：</p>
+<p>1、替代numpy来使用gpu</p>
+<p>2、提供最大灵活性和速度的深度学习研究平台</p>
+<p>动态神经元网络：使用磁带记录仪回放这种独特的方法来创建神经元网络。</p>
+<p>pytorch使用反向模式自动微分技术，让我们经常零成本的改变网络行为；我们的灵感来自于这篇文章的几个研究报告。</p>
+<p>这个技术不是pytorch独有的。这是目前为止最快速的实现。你可以为你疯狂的研究获得最快的速度和灵活性。</p>
+<p>pytorch不是一个整体绑定到 c++框架的。他是深度集成到python中。你可以像使用numpy scipy scikit-learn一样自然的使用它。你可以写你自己全新神经元网络，使用你喜欢的库和包。我们的目标是不重复造轮子。</p>
+<p>必要的经验</p>
+<p>pytorch设计为只觉得、线性的思考、简单易用。当你执行一行代码，他被执行了。在现实世界中他不是异步视图。当你调试一行代码或者接收到错误信息和堆栈跟踪，理解他们是很直观的。堆栈调用之初你的代码在哪里被定义。我们希望你不要因为坏的堆栈调用、异步执行和不透明的执行引擎而花费时间调试你的代码。</p>
+<p>快速和学习</p>
+<p>pytorch有最小的框架成本。我们继承了加速库像intel MKL 和nvidia（cuDNN nccl)去最大化速度。最核心的，他核心的cpu gpu向量和神经元网络是成熟的并且经过多年测试的。</p>
+<p>因此，pytorch是非常快的，无论执行小规模还是大规模的模型。</p>
+<p>无痛扩展</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>二进制，命令行通过conda 或者pip 安装 参照： <a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">https://pytorch.org/get-started/locally/</a></p>
+<p>源代码安装</p>
+<p>需要满足：python 3.8+；编译器全面支持C++17，像clang或者gcc（gcc 9.4.0或者最新）</p>
+<p>强烈推荐安装conda环境。</p>
+<p>如果想要编译cuda支持，从我们的支持矩阵里选择一个我们支持的版本<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">select a supported version of CUDA from our support matrix</a>。然后安装nvidia cuda ,nvidia cuDNN v8.5 + ,CUDA兼容的编译器。</p>
+<p>如果要禁用CUDA，设置环境变量 USE_CUDA=0 .其它有用的环境变量在setup.py中。</p>
+<h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h4><h4 id="Get-the-PyTorch-Source"><a href="#Get-the-PyTorch-Source" class="headerlink" title="Get the PyTorch Source"></a>Get the PyTorch Source</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone --recursive https://github.com/pytorch/pytorch</span><br><span class="line">cd pytorch</span><br><span class="line"># if you are updating an existing checkout</span><br><span class="line">git submodule sync</span><br><span class="line">git submodule update --init --recursive</span><br></pre></td></tr></table></figure>
 
+
+
+<p>通用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda install cmake ninja</span><br><span class="line"># Run this command from the PyTorch directory after cloning the source code using the “Get the PyTorch Source“ section below</span><br><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>On Linux</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">conda install intel::mkl-static intel::mkl-include</span><br><span class="line"># CUDA only: Add LAPACK support for the GPU if needed</span><br><span class="line">conda install -c pytorch magma-cuda110  # or the magma-cuda* that matches your CUDA version from https://anaconda.org/pytorch/repo</span><br><span class="line"></span><br><span class="line"># (optional) If using torch.compile with inductor/triton, install the matching version of triton</span><br><span class="line"># Run from the pytorch directory after cloning</span><br><span class="line">make triton</span><br></pre></td></tr></table></figure>
+
+<p><strong>On MacOS</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Add this package on intel x86 processor machines only</span><br><span class="line">conda install intel::mkl-static intel::mkl-include</span><br><span class="line"># Add these packages if torch.distributed is needed</span><br><span class="line">conda install pkg-config libuv</span><br></pre></td></tr></table></figure>
+
+<p><strong>On Windows</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">conda install intel::mkl-static intel::mkl-include</span><br><span class="line"># Add these packages if torch.distributed is needed.</span><br><span class="line"># Distributed package support on Windows is a prototype feature and is subject to changes.</span><br><span class="line">conda install -c conda-forge libuv=1.39</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Install-PyTorch"><a href="#Install-PyTorch" class="headerlink" title="Install PyTorch"></a>Install PyTorch</h4><p><strong>On macOS</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 setup.py develop</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -1219,7 +555,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2023-1219-%E5%BC%80%E6%BA%90oss/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240219-sd%E6%A8%A1%E5%9E%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1233,7 +569,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023-1219-%E5%BC%80%E6%BA%90oss/" class="post-title-link" itemprop="url">2023-1219-开源oss</a>
+            <a href="/20240219-sd%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">20240219-sd模型</a>
         </h2>
 
         <div class="post-meta">
@@ -1243,14 +579,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2023-12-19 14:57:35" itemprop="dateCreated datePublished" datetime="2023-12-19T14:57:35+08:00">2023-12-19</time>
+              <time title="Created: 2024-02-19 00:00:00" itemprop="dateCreated datePublished" datetime="2024-02-19T00:00:00+08:00">2024-02-19</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:04:34" itemprop="dateModified" datetime="2024-03-04T10:04:34+08:00">2024-03-04</time>
+                <time title="Modified: 2024-03-04 09:59:24" itemprop="dateModified" datetime="2024-03-04T09:59:24+08:00">2024-03-04</time>
               </span>
 
           
@@ -1264,15 +600,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>开源oss</p>
+          <p>20240219-sd模型</p>
+<p>常见的模型有以下几类：</p>
 <ul>
-<li><p>Minio：一个基于Apache License v2.0协议的开源对象存储服务器。Minio支持Amazon S3兼容API，可以用于构建云端的备份，CDN和存储库。</p>
-</li>
-<li><p>Ceph：一个分布式文件系统，可以在计算机集群上提供高性能的对象存储和文件系统服务。Ceph是一个开源项目，提供了一个名为RadosGW的对象存储服务器，支持Amazon S3和OpenStack Swift API。</p>
-</li>
-<li><p>GlusterFS：一个分布式文件系统，可以在计算机集群上提供高性能的文件存储服务。GlusterFS使用FUSE来将分布式文件系统挂载到本地文件系统上，可以提供类似于NFS或CIFS的文件共享服务。</p>
-</li>
+<li><strong>Base 模型：</strong> 就是最常见的 AI 文生图模型，输入一段文字指令，AI 会根据你的指令生成图片。较常见的有 Stable Diffusion v1.5，Stable Diffusion XL 等。</li>
+<li><strong>LoRA 模型：</strong> 你可以简单将其理解为一种滤镜模型。通过它能生成更特殊的图片，比如在 Workflow 中加载线稿 LoRA 模型，就可以生成线稿风格的图片。甚至还有一些 LoRA 模型能让 AI 生成特定样貌的人物，比如一些名人的 LoRA，加载这种模型后，就可以生成特定的名人。但需要注意，这种模型没法脱离 Base 模型使用，这就意味着你需要先下载 Base 模型，然后再下载对应的 LoRA 模型才行。</li>
+<li><strong>Inpainting 模型：</strong> 如果你想要修改某张图片，比如去掉某个物体，或者修复某个物体，那么你就需要使用 Inpainting 模型。这种模型输入一张图片，然后输入一个遮罩，AI 会根据遮罩修复图片。这个模型可以单独使用。</li>
+<li><strong>Upscale 模型：</strong> 如果你想将一张图片放大，那么你就需要使用 Upscale 模型。这种模型输入一张图片，然后输入一个倍数，AI 会根据倍数放大图片。这个模型也可以单独使用。</li>
+<li><strong>ControlNet 模型：</strong> 如果你想控制图片中某个物体出现的位置，或者人物的站姿，那么你就需要使用 ControlNet 模型。但需要注意这个模型和 LoRA 类似，不能脱离 Base 模型使用。</li>
+<li><strong>图生视频模型：</strong> 这种模型输入一段文字指令，AI 会根据你的指令将图片转为视频。</li>
 </ul>
+<p>AI 生图模型需要大量的计算资源，如果你的电脑配置不够，那么即使你下载了模型，也可能无法运行，或者运行起来会很慢，生成一张图片可能要 30 ～ 40 秒。按照前面提到的类型，不同类型的模型对电脑配置的要求也不同。</p>
+<p>对配置影响最大的应该是 Base、Inpainting 还有图生视频模型。目前，市面上没有一个官方统一的 AI 模型运行配置要求，但根据我的经验：</p>
+<ul>
+<li>Base &amp; Inpainting 模型：<ul>
+<li>如果你是 Windows 电脑，显存小于 6G，或者是 M 系列的 MacBook 内存小于 16G，我会推荐你使用 Stable Diffusion v1.5 或者基于此模型微调后的模型。</li>
+<li>如果你的电脑配置比较好，显存大于 8G，或者 M 系列的 MacBook 内存大于 16G，我则会推荐你使用 Stable Diffusion XL 或者基于此模型微调后的模型。</li>
+</ul>
+</li>
+<li>如果你想使用图生视频模型，或者图片生视频模型，那么你的显存最好大于 16G，且最好使用 Nvidia 的显卡。不然基本很难将模型运行起来。</li>
+</ul>
+<p>如果你是初学者，我会推荐你使用 DreamShaper 这个模型，它有基于 SDv1.5 的 Base 模型，也有基于 SDXL 的版本。同时配套也很不错。有 Inpainting 模型，也有 LCM 模型等。而且生成的效果也很不错。</p>
+<h2 id="DreamShaper-系列模型"><a href="#DreamShaper-系列模型" class="headerlink" title="DreamShaper 系列模型"></a>DreamShaper 系列模型</h2><p>如果只推荐一个模型的话，我会推荐 DreamShaper，首先它的成像质量不差，整体质感有点像 Midjourney。</p>
+<p>其次，它的 SD v1.5 版本模型大小也不是很大，甚至比基础模型还要小一点点。</p>
+<p>最后，也是我最喜欢的一点，它的配套模型比较丰富。有 LCM、Inpainting 模型，还有基于 SDXL Turbo 微调的模型。 对于电脑配置较差的朋友，我推荐你们使用 SD v1.5 的模型，即它的 V8.0 版本。</p>
+<h4 id="DreamShaper-XL"><a href="#DreamShaper-XL" class="headerlink" title="DreamShaper XL"></a>DreamShaper XL</h4><p><a target="_blank" rel="noopener" href="https://civitai.com/models/112902/dreamshaper-xl">https://civitai.com/models/112902/dreamshaper-xl</a></p>
+<h2 id="Realistic-风格模型"><a href="#Realistic-风格模型" class="headerlink" title="Realistic 风格模型"></a>Realistic 风格模型</h2><p>如果你主要是以生成人像为主，那么 Realistic 风格模型是一个不错的选择。他们生成的人像质量比较高，且看起来更加真实。以下是两个基于 SD v1.5 微调的模型。</p>
+<p><a target="_blank" rel="noopener" href="https://civitai.com/models/43331/majicmix-realistic">https://civitai.com/models/43331/majicmix-realistic</a></p>
+<p>一般你会看到两种后缀的模型：</p>
+<ul>
+<li><strong>safetensors</strong>：这种模型一般用的是 numpy 格式保存，这就意味着它只保存了张量数据，没有任何代码，加载这类文件会更安全和更快。</li>
+<li><strong>ckpt</strong>：这种文件是序列化过的，这意味着它们可能会包含一些恶意代码，加载这类模型就可能会带来安全风险。</li>
+</ul>
+<p>所以在上述的案例中，我会推荐你下载 safetensors 格式的模型。</p>
+<p>另外，我建议你在搜索模型的时候，需要看看是不是该模型的官方发的，一般我会看模型的下载数，一般下载数越多的模型，越有可能是官方发的。</p>
 
       
     </div>
@@ -1292,7 +653,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2023-1110-kettle%E5%AD%A6%E4%B9%A0/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240218-%E7%94%A8diffusers%E6%90%AD%E5%BB%BAstable%20diffusion/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1306,7 +667,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023-1110-kettle%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">2023-1110-kettle学习</a>
+            <a href="/20240218-%E7%94%A8diffusers%E6%90%AD%E5%BB%BAstable%20diffusion/" class="post-title-link" itemprop="url">20240218-用diffusers搭建stable diffusion</a>
         </h2>
 
         <div class="post-meta">
@@ -1316,14 +677,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2023-11-10 14:09:00" itemprop="dateCreated datePublished" datetime="2023-11-10T14:09:00+08:00">2023-11-10</time>
+              <time title="Created: 2024-02-18 17:25:25" itemprop="dateCreated datePublished" datetime="2024-02-18T17:25:25+08:00">2024-02-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-04-25 17:23:54" itemprop="dateModified" datetime="2024-04-25T17:23:54+08:00">2024-04-25</time>
+                <time title="Modified: 2024-03-04 10:00:57" itemprop="dateModified" datetime="2024-03-04T10:00:57+08:00">2024-03-04</time>
               </span>
 
           
@@ -1337,68 +698,382 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>20231110-kettle学习</p>
-<p>kettle用repositories</p>
-<p>新建一个数据库的仓库，记着要把启动命令中增加  “-Dfile.encoding=UTF-8”,否则打开文件的时候会出现 Invalid byte 1 of 1-byte UTF-8 sequence.</p>
-<p> 然后新建的转换和作业就保存到数据库中</p>
-<p>linux服务器操作</p>
-<p>把pdi解压缩后复制到<code>/usr/local/data-integration</code> 目录</p>
-<p>设置环境变量</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export KETTLE_HOME=/usr/local/data-integration</span><br></pre></td></tr></table></figure>
+          <p>参照  <a target="_blank" rel="noopener" href="https://huggingface.co/docs/diffusers/api/pipelines/stable_diffusion/text2img#diffusers.StableDiffusionPipeline.__call__.negative_prompt">diffusers api</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">conda create -n dfu python=3.10.13</span><br><span class="line">conda activate dfu</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pip install diffusers --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple some-package</span><br><span class="line"></span><br><span class="line">pip install transformers==4.27.0 accelerate==0.12.0 invisible_watermark -i https://pypi.tuna.tsinghua.edu.cn/simple some-package</span><br><span class="line"></span><br><span class="line">conda install jupyter</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pip install diffusers transformers scipy ftfy </span><br><span class="line"></span><br><span class="line">pip install git+https://github.com/huggingface/accelerate</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>把windows下做好的 repositories.xml 文件复制到<code>/usr/local/data-integration/.kettle</code></p>
-<p> 目录下</p>
-<p>查看repository:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./kitchen.sh -listrep</span><br><span class="line"> List of repositories:</span><br><span class="line">#1 : birepo [bi-databases]  id=KettleDatabaseRepository</span><br><span class="line"> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>查看所有的job</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./kitchen.sh -rep:birepo  -user:admin -pass:admin   -listjobs</span><br><span class="line">2023/11/10 17:40:59 - Kitchen - Start of run.</span><br><span class="line">2023/11/10 17:40:59 - RepositoriesMeta - Reading repositories XML file: /usr/local/data-integration/.kettle/repositories.xml</span><br><span class="line">zgcw</span><br></pre></td></tr></table></figure>
-
-
-
-<p>查看所有的trans</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./pan.sh -rep:birepo  -user:admin -pass:admin   -listtrans</span><br><span class="line">2023/11/10 17:43:09 - Pan - 开始运行.</span><br><span class="line">2023/11/10 17:43:09 - RepositoriesMeta - Reading repositories XML file: /usr/local/data-integration/.kettle/repositories.xml</span><br><span class="line">car_transfer_info</span><br><span class="line">market</span><br></pre></td></tr></table></figure>
-
-<p>执行转换：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ ./pan.sh -rep:birepo  -user:admin -pass:admin   -trans:market</span><br><span class="line">2023/11/10 17:45:35 - Pan - 开始运行.</span><br><span class="line">2023/11/10 17:45:35 - RepositoriesMeta - Reading repositories XML file: /usr/local/data-integration/.kettle/repositories.xml</span><br><span class="line">2023/11/10 17:45:36 - market - 为了转换解除补丁开始  [market]</span><br><span class="line">2023/11/10 17:45:36 - read_from_market.0 - Finished reading query, closing connection</span><br><span class="line">2023/11/10 17:45:36 - read_from_market.0 - 完成处理 (I=443, O=0, R=0, W=443, U=0, E=0)</span><br><span class="line">2023/11/10 17:45:37 - write_to_market.0 - 完成处理 (I=443, O=0, R=443, W=443, U=0, E=0)</span><br><span class="line">2023/11/10 17:45:37 - Pan - 完成!</span><br><span class="line">2023/11/10 17:45:37 - Pan - 开始=2023/11/10 17:45:36.601, 停止=2023/11/10 17:45:37.081</span><br><span class="line">2023/11/10 17:45:37 - Pan - 0 秒后处理结束.</span><br><span class="line">2023/11/10 17:45:37 - market -</span><br><span class="line">2023/11/10 17:45:37 - market - 进程 read_from_market.0 成功结束, 处理了 443 行. ( - 行/秒)</span><br><span class="line">2023/11/10 17:45:37 - market - 进程 write_to_market.0 成功结束, 处理了 443 行. ( - 行/秒)</span><br></pre></td></tr></table></figure>
-
-<p>执行转换</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ ./pan.sh -rep:birepo  -user:admin -pass:admin   -trans:car_transfer_info</span><br><span class="line">2023/11/10 17:46:18 - Pan - 开始运行.</span><br><span class="line">2023/11/10 17:46:18 - RepositoriesMeta - Reading repositories XML file: /usr/local/data-integration/.kettle/repositories.xml</span><br><span class="line">2023/11/10 17:46:18 - car_transfer_info - 为了转换解除补丁开始  [car_transfer_info]</span><br><span class="line">2023/11/10 17:46:19 - get_lastast_time_of_car_transfer.0 - Finished reading query, closing connection</span><br><span class="line">2023/11/10 17:46:19 - get_lastast_time_of_car_transfer.0 - 完成处理 (I=1, O=0, R=0, W=1, U=0, E=0)</span><br><span class="line">2023/11/10 17:46:19 - read_modifed_record.0 - Finished reading query, closing connection</span><br><span class="line">2023/11/10 17:46:19 - read_modifed_record.0 - 完成处理 (I=17, O=0, R=1, W=17, U=0, E=0)</span><br><span class="line">2023/11/10 17:46:19 - update_car_transfer_info.0 - 完成处理 (I=17, O=15, R=17, W=17, U=2, E=0)</span><br><span class="line">2023/11/10 17:46:19 - Pan - 完成!</span><br><span class="line">2023/11/10 17:46:19 - Pan - 开始=2023/11/10 17:46:18.994, 停止=2023/11/10 17:46:19.542</span><br><span class="line">2023/11/10 17:46:19 - Pan - 0 秒后处理结束.</span><br><span class="line">2023/11/10 17:46:19 - car_transfer_info -</span><br><span class="line">2023/11/10 17:46:19 - car_transfer_info - 进程 get_lastast_time_of_car_transfer.0 成功结束, 处理了 1 行. ( - 行/秒)</span><br><span class="line">2023/11/10 17:46:19 - car_transfer_info - 进程 read_modifed_record.0 成功结束, 处理了 17 行. ( - 行/秒)</span><br><span class="line">2023/11/10 17:46:19 - car_transfer_info - 进程 update_car_transfer_info.0 成功结束, 处理了 17 行. ( - 行/秒)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#读取diffuers库</span><br><span class="line">from diffusers import StableDiffusionPipeline</span><br><span class="line"></span><br><span class="line">#初始化SD模型，加载预训练权重</span><br><span class="line">pipe = StableDiffusionPipeline.from_pretrained(&quot;runwayml/stable-diffusion-v1-5&quot;)</span><br><span class="line">#使用GPU加速</span><br><span class="line">pipe.to(&quot;mps&quot;)</span><br></pre></td></tr></table></figure>
 
 
 
 
 
-<p>执行job</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">$ ./kitchen.sh -rep:birepo  -user:admin -pass:admin   -job:zgcw</span><br><span class="line">2023/11/10 17:54:09 - Kitchen - Start of run.</span><br><span class="line">2023/11/10 17:54:09 - RepositoriesMeta - Reading repositories XML file: /usr/local/data-integration/.kettle/repositories.xml</span><br><span class="line">2023/11/10 17:54:10 - zgcw - 开始执行任务</span><br><span class="line">2023/11/10 17:54:11 - zgcw - 开始项[market]</span><br><span class="line">2023/11/10 17:54:11 - market - Using run configuration [Pentaho <span class="built_in">local</span>]</span><br><span class="line">2023/11/10 17:54:11 - market - 为了转换解除补丁开始  [market]</span><br><span class="line">2023/11/10 17:54:11 - read_from_market.0 - Finished reading query, closing connection</span><br><span class="line">2023/11/10 17:54:11 - read_from_market.0 - 完成处理 (I=443, O=0, R=0, W=443, U=0, E=0)</span><br><span class="line">2023/11/10 17:54:11 - write_to_market.0 - 完成处理 (I=443, O=0, R=443, W=443, U=0, E=0)</span><br><span class="line">2023/11/10 17:54:11 - zgcw - 开始项[car_transfer_info]</span><br><span class="line">2023/11/10 17:54:11 - car_transfer_info - Using run configuration [Pentaho <span class="built_in">local</span>]</span><br><span class="line">2023/11/10 17:54:11 - car_transfer_info - 为了转换解除补丁开始  [car_transfer_info]</span><br><span class="line">2023/11/10 17:54:11 - get_lastast_time_of_car_transfer.0 - Finished reading query, closing connection</span><br><span class="line">2023/11/10 17:54:11 - get_lastast_time_of_car_transfer.0 - 完成处理 (I=1, O=0, R=0, W=1, U=0, E=0)</span><br><span class="line">2023/11/10 17:54:12 - read_modifed_record.0 - Finished reading query, closing connection</span><br><span class="line">2023/11/10 17:54:12 - read_modifed_record.0 - 完成处理 (I=10, O=0, R=1, W=10, U=0, E=0)</span><br><span class="line">2023/11/10 17:54:12 - update_car_transfer_info.0 - 完成处理 (I=10, O=9, R=10, W=10, U=1, E=0)</span><br><span class="line">2023/11/10 17:54:12 - zgcw - 开始项[成功]</span><br><span class="line">2023/11/10 17:54:12 - zgcw - 完成作业项[成功] (结果=[<span class="literal">true</span>])</span><br><span class="line">2023/11/10 17:54:12 - zgcw - 完成作业项[car_transfer_info] (结果=[<span class="literal">true</span>])</span><br><span class="line">2023/11/10 17:54:12 - zgcw - 完成作业项[market] (结果=[<span class="literal">true</span>])</span><br><span class="line">2023/11/10 17:54:12 - zgcw - 任务执行完毕</span><br><span class="line">2023/11/10 17:54:12 - Kitchen - Finished!</span><br><span class="line">2023/11/10 17:54:12 - Kitchen - Start=2023/11/10 17:54:10.967, Stop=2023/11/10 17:54:12.271</span><br><span class="line">2023/11/10 17:54:12 - Kitchen - Processing ended after 1 seconds.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#接下来，我们就可以运行pipeline了</span><br><span class="line">prompt = &quot;a photograph of an astronaut riding a horse&quot;</span><br><span class="line"># Number of denoising steps</span><br><span class="line">steps = 25         </span><br><span class="line"></span><br><span class="line"># Scale for classifier-free guidance</span><br><span class="line">CFG = 7.5</span><br><span class="line">image = pipe(prompt, guidance_scale=CFG, height=512, width=768, num_inference_steps=steps).images[0]</span><br><span class="line"></span><br><span class="line"># 由于没有固定seed，每次运行代码，我们都会得到一个不同的图片。</span><br><span class="line">display(image)</span><br></pre></td></tr></table></figure>
 
-<p>执行job带参数</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./kitchen.sh -rep:erp_kettle  -user:admin -pass:admin -parameter:start_date=2023-12-1 -job:guanbao</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<img src="../images/sd/20240218-whx.png" alt="20240218-whx" style="zoom:50%;" />
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">prompt = &quot;city future, 8k, exploration, cinematic, realistic, unreal engine, hyper detailed, volumetric light, moody cinematic epic concept art, realistic matte painting, hyper photorealistic&quot;</span><br><span class="line">negative_prompt =&quot;lowres, bad anatomy, text, error, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name&quot;</span><br><span class="line">steps = 20         </span><br><span class="line"></span><br><span class="line">result1 = pipe(prompt=prompt,negative_prompt=negative_prompt, guidance_scale=CFG, height=512, width=768, num_inference_steps=steps)</span><br><span class="line">image1 = result1.images[0]</span><br><span class="line"></span><br><span class="line"># 由于没有固定seed，每次运行代码，我们都会得到一个不同的图片。</span><br><span class="line">display(image1)</span><br></pre></td></tr></table></figure>
+
+<img src="../images/sd/202402181931-001.png" alt="202402181931-001" style="zoom:50%;" />
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240218-Stable%20Diffusion%20%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20240218-Stable%20Diffusion%20%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">20240218-Stable Diffusion 基础</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-02-18 14:40:19" itemprop="dateCreated datePublished" datetime="2024-02-18T14:40:19+08:00">2024-02-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-03-04 10:00:40" itemprop="dateModified" datetime="2024-03-04T10:00:40+08:00">2024-03-04</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Stable Diffusion 基础</p>
+<p>Stable Diffusion（SD）模型是由Stability AI和LAION等公司共同开发的<strong>生成式模型</strong>，总共有<strong>1B左右的参数量</strong>，可以用于文生图，图生图，图像inpainting，ControlNet控制生成，图像超分等丰富的任务</p>
+<p><strong>文生图任务是指将一段文本输入到SD模型中</strong>，经过一定的迭代次数，<strong>SD模型输出一张符合输入文本描述的图片</strong></p>
+<p><strong>而图生图任务在输入本文的基础上，再输入一张图片</strong>，SD模型将根据文本的提示，<strong>将输入图片进行重绘以更加符合文本的描述。</strong></p>
+<p>我们需要给SD模型一个文本信息与机器数据信息之间互相转换的“桥梁”——CLIP Text Encoder模型。 我们使用CLIP Text Encoder模型作为SD模型的<strong>前置模块</strong>，将输入的人类文本信息进行编码，输出特征矩阵，这个特征矩阵与文本信息相匹配，并且能够使得SD模型理解，完成对文本信息的编码后，就会输入到SD模型的“图像优化模块”中对图像的优化进行“控制”。</p>
+<p>如果是图生图任务，我们在输入文本信息的同时，还需要将原图片通过图像编码器（VAE Encoder）生成Latent Feature（隐空间特征）作为输入。</p>
+<p>如果是文生图任务，我们只需要输入文本信息，再用random函数生成一个<strong>高斯噪声矩阵作为</strong>Latent Feature的“替代”输入到SD模型的“图像优化模块”中。</p>
+<p><strong>“图像优化模块”作为SD模型中最为重要的模块，其工作流程是什么样的呢？</strong></p>
+<p>首先，“图像优化模块”是由一个<strong>U-Net网络</strong>和一个<strong>Schedule算法</strong>共同组成，U-Net网络负责预测噪声，<strong>不断优化生成过程，在预测噪声的同时不断注入文本语义信息</strong>。而<strong>schedule算法对每次U-Net预测的噪声进行优化处理（动态调整预测的噪声，控制U-Net预测噪声的强度）</strong>，从而统筹<strong>生成过程的进度</strong>。在SD中，U-Net的迭代优化步数大概是50或者100次，在这个过程中Latent Feature的质量不断的变好（<strong>纯噪声减少，图像语义信息增加，文本语义信息增加</strong>）。 </p>
+<p>U-Net网络和Schedule算法的工作完成以后，SD模型会将优化迭代后的Latent Feature输入到图像解码器（VAE Decoder）中，将Latent Feature重建成像素级图像。</p>
+<p>我们对比一下文生图任务中，初始Latent Feature和经过SD的“图像优化模块”处理后，再用图像解码器重建出来的图片。</p>
+<p>Latent Feature经过图像解码器重建后的图片是一个纯噪声图片。</p>
+<p>经过SD的“图像优化模块”处理后，再用图像解码器重建出来的图片，可以看到是一个张包含丰富内容信息的有效图片。</p>
+<p>Rocky再将其进行总结归纳制作成完整的Stable Diffusion前向推理流程图，方便大家更好的理解SD模型的前向推理过程：</p>
+<img src="../images/sd/v2-cbc067b9d12ad2c25aff103be299bf94_720w.webp" alt="v2-cbc067b9d12ad2c25aff103be299bf94_720w" style="zoom:100%;" />
+
+<ol>
+<li><strong>SD模型是生成式模型</strong>，输入可以是图片，文本以及两者的结合，输出是生成的图片。</li>
+<li><strong>SD模型属于扩散模型</strong>，扩散模型的整体逻辑的特点是过程分步化与可迭代，这给整个生成过程引入更多约束与优化提供了可能。</li>
+<li><strong>SD模型是基于Latent的扩散模型</strong>，将输入数据压缩到Latent隐空间中，比起常规扩散模型，大幅提高计算效率的同时，降低了显存占用，成为了SD模型破圈的关键一招。</li>
+<li><strong>站在CTO视角，将维度拉到最高维，Rocky认为SD模型是一个优化噪声的AI艺术工具。</strong></li>
+</ol>
+<p><strong>Stable Diffusion的整个训练过程在最高维度上可以看成是如何加噪声和如何去噪声的过程，并在针对噪声的“对抗与攻防”中学习到生成图片的能力。</strong></p>
+<p>Stable Diffusion整体的训练逻辑也非常清晰：</p>
+<ol>
+<li>从数据集中随机选择一个训练样本</li>
+<li>从K个噪声量级随机抽样一个timestep</li>
+<li>产生随机噪声</li>
+<li>计算当前所产生的噪声数据</li>
+<li>将噪声输入U-Net预测噪声</li>
+<li>计算产生的噪声和预测的噪声的L2损失</li>
+<li>计算梯度并更新SD模型参数</li>
+</ol>
+<p><strong>语义信息对图片生成的控制</strong></p>
+<p>SD模型在生成图片时，需要输入prompt，那么这些语义信息是如何影响图片的生成呢？</p>
+<p><strong>答案非常简单：注意力机制。</strong></p>
+<p>在SD模型的训练中，每个训练样本都会对应一个标签，我们将对应标签通过CLIP Text Encoder输出Text Embeddings，并将Text Embeddings以<strong>Cross Attention</strong>的形式与U-Net结构耦合，使得每次输入的图片信息与文字信息进行融合训练 </p>
+<h3 id="其他主流生成式模型介绍"><a href="#其他主流生成式模型介绍" class="headerlink" title="其他主流生成式模型介绍"></a>其他主流生成式模型介绍</h3><p>在AIGC时代中，虽然SD模型已经成为核心的生成式模型之一，但是曾在传统深度学习时代火爆的GAN，VAE，Flow-based model等模型也跨过周期在SD模型身边作为辅助，发挥了巨大的作用。</p>
+<p>GAN网络在AIGC时代依然发挥了巨大的作用，配合SD模型完成了很多算法工作流，比如：图像超分，脸部修复，风格迁移，图像编辑，图像fix，图像定权等。</p>
+<p>所以Rocky在这里简单讲解一下GAN的基本原理，让大家做个了解。GAN由生成器G和判别器D组成。其中，生成器主要负责生成相应的样本数据，输入一般是由高斯分布随机采样得到的噪声Z。而判别器的主要职责是区分生成器生成的样本与 gt 样本，输入一般是 gt 样本与相应的生成样本，我们想要的是对 gt 样本输出的置信度越接近1越好，而对生成样本输出的置信度越接近0越好。与一般神经网络不同的是，<strong>GAN在训练时要同时训练生成器与判别器，所以其训练难度是比较大的</strong>。</p>
+<p>我们可以将GAN中的生成器比喻为印假钞票的犯罪分子，判别器则被当作警察。犯罪分子努力让印出的假钞看起来逼真，警察则不断提升对于假钞的辨识能力。二者互相博弈，随着时间的进行，都会越来越强。在图像生成任务中也是如此，生成器不断生成尽可能逼真的假图像。判别器则判断图像是 gt 图像，还是生成的图像。<strong>二者不断博弈优化</strong>，最终生成器生成的图像使得判别器完全无法判别真假。</p>
+<h3 id="VAE模型"><a href="#VAE模型" class="headerlink" title="VAE模型"></a>VAE模型</h3><p>在Stable Diffusion中，<strong>VAE（变分自编码器，Variational Auto-Encoder）是基于Encoder-Decoder架构的生成模型</strong>。VAE的Encoder（编码器）结构能将输入图像转换为低维Latent特征，并作为U-Net的输入。VAE的Decoder（解码器）结构能将低维Latent特征重建还原成像素级图像。</p>
+<p><strong>Stable Diffusion中VAE的核心作用</strong></p>
+<p>总的来说，<strong>在Stable Diffusion中，VAE模型主要起到了图像压缩和图像重建的作用</strong></p>
+<p><strong>为什么VAE可以将图像压缩到一个非常小的Latent space（潜空间）后能再次对图像进行像素级重建呢？</strong></p>
+<p>因为虽然VAE对图像的压缩与重建过程是一个有损压缩与重建过程，但<strong>图像全图级特征关联并不是随机的，它们的分布具有很强的规律性</strong>：比如人脸的眼睛、鼻子、脸颊和嘴巴之间遵循特定的空间关系，又比如一只猫有四条腿，并且这是一个特定的生物结构特征。下面Rocky也使用VAE将图像重建成不同尺寸的生成图像，实验结论发现<strong>如果我们重建生成的图像尺寸在512×512之上时，其实特征损失带来的影响非常小</strong>。</p>
+<p><strong>Stable Diffusion中VAE的高阶作用</strong></p>
+<p>与此同时，VAE模型除了能进行图像压缩和图像重建的工作外，<strong>如果我们在SD系列模型中切换不同微调训练版本的VAE模型，能够发现生成图片的细节与整体颜色也会随之改变（更改生成图像的颜色表现，类似于色彩滤镜）。</strong></p>
+<h3 id="SD模型整体架构初识"><a href="#SD模型整体架构初识" class="headerlink" title="SD模型整体架构初识"></a><strong>SD模型整体架构初识</strong></h3><p><strong>Stable Diffusion模型整体上是一个End-to-End模型</strong>，主要由VAE（变分自编码器，Variational Auto-Encoder），U-Net以及CLIP Text Encoder三个核心组件构成。</p>
+<p>在FP16精度下Stable Diffusion模型大小2G（FP32：4G），其中U-Net大小1.6G，VAE模型大小160M以及CLIP Text Encoder模型大小235M（约123M参数）。其中U-Net结构包含约860M参数，以FP32精度下大小为3.4G左右。</p>
+<p><strong>Stable Diffusion中U-Net的核心作用</strong></p>
+<p>在Stable Diffusion中，<strong>U-Net模型是一个关键核心部分，能够预测噪声残差</strong>，并结合Sampling method（调度算法：PNDM，DDIM，K-LMS等）对输入的特征矩阵进行重构，<strong>逐步将其从随机高斯噪声转化成图片的Latent Feature</strong>。</p>
+<p>具体来说，在前向推理过程中，SD模型通过反复调用 U-Net，将预测出的噪声残差从原噪声矩阵中去除，得到逐步去噪后的图像Latent Feature，再通过VAE的Decoder结构将Latent Feature重建成像素级图像。</p>
+<p><strong>Rocky再从AI绘画应用视角解释一下SD中U-Net的原理与作用。</strong>其实大家在使用Stable Diffusion WebUI时，点击Generate按钮后，页面右下角图片生成框中展示的从噪声到图片的生成过程，其中就是U-Net在不断的为大家去除噪声的过程。到这里大家应该都能比较清楚的理解U-Net的作用了。</p>
+<p>Stable Diffusion中的U-Net，在传统深度学习时代的Encoder-Decoder结构的基础上，<strong>增加了ResNetBlock（包含Time Embedding）模块，Spatial Transformer（SelfAttention + CrossAttention + FeedForward）模块以及CrossAttnDownBlock，CrossAttnUpBlock和CrossAttnMidBlock模块</strong>。</p>
+<p><strong>ResNetBlock模块</strong></p>
+<p>在传统深度学习时代，ResNet的残差结构在图像分类，图像分割，目标检测等主流方向中几乎是不可或缺，<strong>其简洁稳定有效的“残差思想”终于在AIGC时代跨过周期，在SD模型的U-Net结构中继续繁荣</strong>。</p>
+<p>值得注意的是，<strong>Time Embedding正是输入到ResNetBlock模块中，为U-Net引入了时间信息（时间步长T，T的大小代表了噪声扰动的强度），模拟一个随时间变化不断增加不同强度噪声扰动的过程，让SD模型能够更好地理解时间相关性</strong>。</p>
+<p>同时，在SD模型调用U-Net重复迭代去噪的过程中，我们希望在迭代的早期，能够先生成整幅图片的轮廓与边缘特征，随着迭代的深入，再补充生成图片的高频和细节特征信息。<strong>由于在每个ResNetBlock模块中都有Time Embedding，就能告诉U-Net现在是整个迭代过程的哪一步，并及时控制U-Net够根据不同的输入特征和迭代阶段而预测不同的噪声残差</strong>。</p>
+<p><strong>Rocky再从AI绘画应用视角解释一下Time Embedding的作用。</strong>Time Embedding能够让SD模型在生成图片时考虑时间的影响，使得生成的图片更具有故事性、情感和沉浸感等艺术效果。并且Time Embedding可以帮助SD模型在不同的时间点将生成的图片添加完善不同情感和主题的内容，从而增加了AI绘画的多样性和表现力。</p>
+<p><strong>CrossAttention模块</strong></p>
+<p><strong>Spatial Transformer模块不改变输入输出的尺寸，只在图片对应的位置上融合了语义信息，所以不管是在传统深度学习时代，还是AIGC时代，Spatial Transformer都是将本文与图像结合的一个“万金油”模块</strong>。</p>
+<p>看CrossAttention模块的结构图，大家可能会疑惑<strong>为什么Context Embedding用来生成K和V，Latent Feature用来生成Q呢？</strong></p>
+<p>原因也非常简单：因为在Stable Diffusion中，主要的目的是想把文本信息注入到图像信息中里，所以用图片token对文本信息做 Attention实现逐步的文本特征提取和耦合。</p>
+<p><strong>Rocky再从AI绘画应用视角解释一下CrossAttention模块的作用。</strong>CrossAttention模块在AI绘画应用中可以被视为一种连接和表达的工具，它有助于在输入文本和生成图片之间建立联系，创造更具深度和多样性的艺术作品，引发观众的思考和情感共鸣。CrossAttention模块可以将图像和文本信息关联起来，就像艺术家可以将不同的元素融合到一幅作品中，这有助于在创作中实现不同信息之间的协同和互动，产生更具创意性的艺术作品。再者CrossAttention模块可以用于将文本中的情感元素传递到生成图片中，这种情感的交互可以增强艺术作品的表现力和观众的情感共鸣。</p>
+<p><strong>BasicTransformer Block模块</strong></p>
+<p>BasicTransformer Block模块是在CrossAttention子模块的基础上，增加了SelfAttention子模块和Feedforward子模块共同组成的，<strong>并且每个子模块都是一个残差结构</strong>，这样<strong>除了能让文本的语义信息与图像的语义信息更好的融合之外，还能通过SelfAttention机制让模型更好的学习图像数据的特征</strong>。</p>
+<p>首先，在Stable Diffusion U-Net的SelfAttention模块中，<strong>输入只有图像信息，所以SelfAttention主要是为了让SD模型更好的学习图像数据的整体特征</strong>。</p>
+<p>再者，<strong>SelfAttention可以将输入图像的不同部分（像素或图像Patch）进行交互，从而实现特征的整合和全局上下文的引入，能够让模型建立捕捉图像全局关系的能力，有助于模型理解不同位置的像素之间的依赖关系，以更好地理解图像的语义。</strong></p>
+<p>在此基础上，<strong>SelfAttention还能减少平移不变性问题</strong>，SelfAttention模块可以在不考虑位置的情况下捕捉特征之间的关系，因此具有一定的平移不变性。</p>
+<p><strong>Rocky再从AI绘画应用视角解释一下SelfAttention的作用。</strong>SelfAttention模块可以让SD模型在图片生成过程中捕捉内在关系、创造性表达情感和思想、突出重要元素，并创造出丰富多彩、具有深度和层次感的艺术作品。</p>
+<p><strong>Spatial Transformer模块</strong></p>
+<p>更进一步的，在BasicTransformer Block模块基础上，加入GroupNorm和两个卷积层就组成Spatial Transformer模块。Spatial Transformer模块是SD U-Net中的核心Base结构，Encoder中的CrossAttnDownBlock模块，Decoder中的CrossAttnUpBlock模块以及CrossAttnMidBlock模块都包含了大量的Spatial Transformer子模块。</p>
+<h3 id="CLIP-Text-Encoder模型"><a href="#CLIP-Text-Encoder模型" class="headerlink" title="CLIP Text Encoder模型"></a><strong>CLIP Text Encoder模型</strong></h3><p><strong>作为文生图模型，Stable Diffusion中的文本编码模块直接决定了语义信息的优良程度，从而影响到最后图片生成的多样性和可控性。</strong></p>
+<p>在这里，<strong>多模态领域的神器——CLIP（Contrastive Language-Image Pre-training）</strong>，跨过了周期，从传统深度学习时代进入AIGC时代，成为了SD系列模型中文本和图像之间的连接通道。<strong>并且从某种程度上讲，正是因为CLIP模型的前置出现，更加快速地推动了AI绘画领域的繁荣</strong>。</p>
+<p>首先，<strong>CLIP模型是一个基于对比学习的多模态模型，主要包含Text Encoder和Image Encoder两个模型</strong>。其中Text Encoder用来提取文本的特征，可以使用NLP中常用的text transformer模型作为Text Encoder；而Image Encoder主要用来提取图像的特征，可以使用CNN/vision transformer模型（ResNet和ViT）作为Image Encoder。<strong>与此同时，他直接使用4亿个图片与标签文本对数据集进行训练，来学习图片与本文内容的对应关系。</strong></p>
+<p>与U-Net的Encoder和Decoder一样，CLIP的Text Encoder和Image Encoder也能非常灵活的切换；其庞大图片与标签文本数据的预训练赋予了CLIP强大的zero-shot分类能力。</p>
+<p><strong>灵活的结构，简洁的思想，让CLIP不仅仅是个模型，也给我们一个很好的借鉴，往往伟大的产品都是大道至简的。更重要的是，CLIP把自然语言领域的抽象概念带到了计算机视觉领域</strong></p>
+<p>CLIP在训练时，从训练集中随机取出一张图片和标签文本。CLIP模型的任务主要是通过Text Encoder和Image Encoder分别将标签文本和图片提取<strong>embedding向量</strong>，然后用<strong>余弦相似度（cosine similarity）</strong>来比较两个embedding向量的<strong>相似性</strong>，以判断随机抽取的标签文本和图片是否匹配，并进行梯度反向传播，不断进行优化训练。</p>
+<p>完成CLIP的训练后，<strong>输入配对的图片和标签文本，则Text Encoder和Image Encoder可以输出相似的embedding向量</strong>，计算余弦相似度就可以得到接近1的结果。<strong>同时对于不匹配的图片和标签文本，输出的embedding向量计算余弦相似度则会接近0</strong>。</p>
+<p><strong>就这样，CLIP成为了计算机视觉和自然语言处理这两大AI方向的“桥梁”，AI领域的多模态应用有了经典的基石模型。</strong></p>
+<p><strong>上面我们讲到CLIP模型主要包含Text Encoder和Image Encoder两个模型</strong>，在Stable Diffusion中主要使用了Text Encoder模型。<strong>CLIP Text Encoder模型将输入的文本Prompt进行编码，转换成Text Embeddings（文本的语义信息）</strong>，通过前面一章节提到的U-Net网络中的<strong>CrossAttention模块嵌入Stable Diffusion中作为Condition，对生成图像的内容进行一定程度上的控制与引导</strong>，目前SD模型使用的的是<a target="_blank" rel="noopener" href="https://huggingface.co/openai/clip-vit-large-patch14">CLIP ViT-L/14</a>中的Text Encoder模型。</p>
+<p>CLIP ViT-L/14 中的Text Encoder是只包含Transformer结构的模型，一共由12个CLIPEncoderLayer模块组成，模型参数大小是123M，具体CLIP Text Encoder模型结构如下图所示。其中特征维度为768，token数量是77，<strong>所以输出的Text Embeddings的维度为77x768</strong>。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240207-%E5%AD%A6%E4%B9%A0stable%20diffusion%20webui%E6%89%A9%E5%B1%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20240207-%E5%AD%A6%E4%B9%A0stable%20diffusion%20webui%E6%89%A9%E5%B1%95/" class="post-title-link" itemprop="url">20240207-学习stable diffusion webui扩展</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-02-06 11:21:50" itemprop="dateCreated datePublished" datetime="2024-02-06T11:21:50+08:00">2024-02-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-03-04 10:01:17" itemprop="dateModified" datetime="2024-03-04T10:01:17+08:00">2024-03-04</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="ControlNet-安装骨架动作绘图"><a href="#ControlNet-安装骨架动作绘图" class="headerlink" title="ControlNet 安装骨架动作绘图"></a>ControlNet 安装骨架动作绘图</h2><p><a target="_blank" rel="noopener" href="https://ivonblog.com/posts/stable-diffusion-webui-manuals/extensions/controlnet/">Ivon的部落格</a></p>
+<p>如果你用过Stable Diffusion，可能已经注意到图像的输出有无限的结果可能性，就像在赌博一样，即使你输入了如此复杂和精心设计的提示，控制AI的能力仍然是有限的。所以我们就需要一种在最大大程度上能控制输出的方式。</p>
+<p>ControlNet是斯坦福大学研究人员开发的Stable Diffusion的扩展，使创作者能够轻松地控制AI图像和视频中的对象。它将根据边缘检测、草图处理或人体姿势等各种条件来控制图像生成。ControlNet可以概括为一种简单的稳定扩散微调方法。</p>
+<p>ControlNet是通过加入额外条件来控制扩散模型的神经网络结构，它可以让AI参考给定图片的动作/线条/景深，更精准的生成图片。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Mikubill/sd-webui-controlnet">https://github.com/Mikubill/sd-webui-controlnet</a></p>
+<p>克隆代码到本地，然后从本地安装。</p>
+<p>安装完成后从 <a target="_blank" rel="noopener" href="https://huggingface.co/lllyasviel/ControlNet-v1-1/tree/main">https://huggingface.co/lllyasviel/ControlNet-v1-1/tree/main</a> 下载所有的pth文件，保存到 stable-diffusion-webui/extensions/sd-webui-controlnet/models 目录。</p>
+<h3 id="各個模型的用途"><a href="#各個模型的用途" class="headerlink" title="各個模型的用途"></a>各個模型的用途</h3><p>ControlNet現有以下模型，您可以按照需求只下載需要的模型。</p>
+<h4 id="Anime-Lineart"><a href="#Anime-Lineart" class="headerlink" title="Anime Lineart"></a>Anime Lineart</h4><p>偵測線條，生成的圖片亦會保留原始的線條，適合處理動漫圖像</p>
+<h4 id="Canny"><a href="#Canny" class="headerlink" title="Canny"></a>Canny</h4><p>偵測圖片邊緣，比較模糊，不如Scribbles完整。</p>
+<p>Canny通过使用边缘检测器创建高对比度区域的轮廓来检测输入图像。线条可以捕捉到非常详细的信息，但如果你的图像背景中有一些物体，它很可能会检测到不需要的物体。所以背景中物体越少效果越好。用于此预处理器的最佳模型是control_sd15_canny。</p>
+<h4 id="Depth-amp-Depth-Leres"><a href="#Depth-amp-Depth-Leres" class="headerlink" title="Depth   &amp; Depth Leres"></a>Depth   <strong>&amp; Depth Leres</strong></h4><p>偵測輸入圖片的深度圖(depth map)。</p>
+<p>这个预处理器有助于生成输入图像的深度估计。深度通常用于控制图像内物体的空间定位。浅色区域意味着它离用户更近，而深色区域则离用户更远。</p>
+<p>在大图像时它可能会丢失图像内部的细节(面部表情等)。一般会与control_sd15_depth模型组合使用。Midas Resolution函数用于增加或减少detectmap中的大小和细节级别。它的级别越高，将使用更多的VRAM，但可以生成更高质量的图像，反之亦然。</p>
+<p>Depth Leres有与Depth 相同的基本概念，但在地图中包含更广泛的范围。但有时它会从图片中捕获了太多信息，可能会生成与原始图像略有不同的图像。所以最好先试用两种预处理器，然后决定哪一种。</p>
+<p><strong>HED (Holistically-Nested Edge Detection)</strong></p>
+<p>Hed可以在物体周围创建清晰和精细的边界，输出类似于Canny，但减少了噪声和更柔软的边缘。它的有效性在于能够捕捉复杂的细节和轮廓，同时保留细节特征(面部表情、头发、手指等)。Hed预处理器可用于修改图像的风格和颜色。用于此预处理器的最佳模型是control_sd15_hed。</p>
+<h4 id="Illumination"><a href="#Illumination" class="headerlink" title="Illumination"></a>Illumination</h4><p>偵測輸入圖片的光源與照明效果。</p>
+<h4 id="Inpaint"><a href="#Inpaint" class="headerlink" title="Inpaint"></a>Inpaint</h4><p>功能類似「內補繪製」，使用50%隨機遮罩＋50%隨機光流遮罩訓練而成。</p>
+<h4 id="Instruct-Pix2Pix"><a href="#Instruct-Pix2Pix" class="headerlink" title="Instruct Pix2Pix"></a>Instruct Pix2Pix</h4><p>模型檔名為<code>ip2p</code>，類似「圖生圖」，但是使用訓練50%的指示(instruction)提示詞和50%的敘述(description)提示詞訓練而成。因為是ControlNet，使用此模型時不需要調整CFG Scale。</p>
+<p>根據原作者的說法，此模型在下「使其成為X」的提示詞所生成的圖，效果比「使Y成為X」要好。</p>
+<blockquote>
+<p>Also, it seems that instructions like “make it into X” works better than “make Y into X”.</p>
+</blockquote>
+<h4 id="Lineart"><a href="#Lineart" class="headerlink" title="Lineart"></a>Lineart</h4><p>偵測線條，適合處理線稿，生成的圖片亦會保留原始的線條。</p>
+<h4 id="M-LSD-Mobile-Line-Segment-Detection"><a href="#M-LSD-Mobile-Line-Segment-Detection" class="headerlink" title="M-LSD ( Mobile Line Segment Detection)"></a>M-LSD <strong>( Mobile Line Segment Detection)</strong></h4><p>偵測輸入圖片的直線。MLSD Preprocessor 最适合生成强有力的线条，这些线条能够检测出需要独特和刚性轮廓的建筑和其他人造作品。但是它不适用于处理非刚性或弯曲的物体。MLSD适用于生成室内布局或建筑结构，因为它可以突出直线和边缘。用于此预处理器的最佳模型是control_sd15_mlsd。</p>
+<h4 id="Normal-map"><a href="#Normal-map" class="headerlink" title="Normal map"></a>Normal map</h4><p>法线图使用了三种主要颜色(红、绿、蓝)，通过不同的角度来精确定位物体的粗糙度和光滑程度。它生成法线图的基本估计，可以保留相当多的细节，但可能会产生意想不到的结果，因为法线图完全来自图像，而不是在3D建模软件中构建的。</p>
+<p>法线图有利于突出复杂的细节和轮廓，并且在定位对象方面也很有效，特别是在接近度和距离方面。“Normal Background Threshold”用于调整背景成分。设置一个更高的阈值可以移除背景的远处部分(将其混合成紫色)。降低阈值将命令AI保留甚至显示额外的背景元素。用于此预处理器的最佳模型是control_sd15_normal。</p>
+<h4 id="Openpose"><a href="#Openpose" class="headerlink" title="Openpose"></a>Openpose</h4><p>使用OpenPose技術偵測輸入圖片人物的動作，不一定會保留線條。</p>
+<p>这个预处理器生成了一个基本的骨骼火柴人形象。 这种技术被广泛采用，因为多个 OpenPose 骨架可以组合成一个图像，这有助于引导稳定扩散生成多个一致的主题。 骨架图有很多关节点，。</p>
+<p><img src="../images/sd/v2-de4552588266a99bc190a1da375b832d_720w.webp" alt="v2-de4552588266a99bc190a1da375b832d_720w"></p>
+<p>要优化 OpenPose 的结果，建议上传一张人体图像（全身或半身）以及想要提取的姿势。 用于此预处理器的最佳模型是 control_sd15_openpose。</p>
+<h4 id="Scribbles"><a href="#Scribbles" class="headerlink" title="Scribbles"></a>Scribbles</h4><p>偵測線條，偵測到的線條品質介於Soft Edge和Lineart之間。</p>
+<p>涂鸦的目的是从简单的黑白线条画和草图生成图像。用户也可以使用“Canvas”选项创建特定大小的空白画布，用于手动素描（也可以直接上传图像）。如果草图和绘图由白色背景上的黑线组成，则需要选中“Invert Input Color”复选框。用于这个预处理器的最佳模型是control_sd15_openpose。</p>
+<h4 id="Segmentation"><a href="#Segmentation" class="headerlink" title="Segmentation"></a>Segmentation</h4><p>模型檔名為<code>seg</code>，將偵測的圖片物件切成一個一個色塊處理，例如房子一個色塊，後面的天空一個色塊。</p>
+<h4 id="Shuffle"><a href="#Shuffle" class="headerlink" title="Shuffle"></a>Shuffle</h4><p>把輸入圖片的概念轉移到生成的圖片。</p>
+<p>作者給的例子：輸入灰色裝甲圖片，生成的鋼鐵人盔甲也會是灰色的。</p>
+<h4 id="Soft-Edge"><a href="#Soft-Edge" class="headerlink" title="Soft Edge"></a>Soft Edge</h4><p>偵測圖片邊緣，效果較為柔和，像用炭筆塗過。</p>
+<h4 id="Tile"><a href="#Tile" class="headerlink" title="Tile"></a>Tile</h4><p>輸入圖片，選取一個區域，使其變清晰的模型。</p>
+<p>开始使用</p>
+<p><strong>prompt：</strong></p>
+<p><code>a chinese girl, black hair, red shirt, Blue Jeans， Red High Heels, watery eyes,(ultra high res,photorealistic,realistic,best quality,photo-realistic), (((high detailed skin))),(real person,photograph)</code></p>
+<p><strong>negative prompt:</strong></p>
+<p>disfigured, ugly, bad, immature, cartoon, anime, 3d, painting, b&amp;w</p>
+<p>启用姿态openpos：</p>
+<p>参考图</p>
+<img src="../images/sd/00100-333969092.png" alt="00100-333969092" style="zoom:33%;" />
+
+<p>结果：</p>
+<img src="../images/sd/20240207154113-3314802259.png" alt="20240207154113-3314802259" style="zoom:50%;" />
 
 
 
-<h3 id="做第一个市场每日交易统计"><a href="#做第一个市场每日交易统计" class="headerlink" title="做第一个市场每日交易统计"></a>做第一个市场每日交易统计</h3><p>新建表 transfer_daily_report</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `transfer_daily_report` (</span><br><span class="line">  `market_id` int(10) DEFAULT NULL COMMENT &#x27;市场编号&#x27;,</span><br><span class="line">  `day` DATE  DEFAULT NULL COMMENT &#x27;天&#x27;,</span><br><span class="line">  `vehicle_type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT &#x27;车辆类型&#x27;,</span><br><span class="line">  `amount` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT &#x27;金额&#x27;,</span><br><span class="line">  `cnt` int DEFAULT NULL COMMENT &#x27;数量&#x27;,</span><br><span class="line">  `market` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT &#x27;市场名称&#x27;,</span><br><span class="line">  `province` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT &#x27;省&#x27;,</span><br><span class="line">  KEY `p` (`market_id`,`day`,`vehicle_type`)</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT=&#x27;日统计（每个市场、每天、分类型统计）&#x27;;</span><br></pre></td></tr></table></figure>
+<h2 id="提示词工具"><a href="#提示词工具" class="headerlink" title="提示词工具"></a>提示词工具</h2><p><a target="_blank" rel="noopener" href="https://github.com/DominikDoom/a1111-sd-webui-tagcomplete.git">https://github.com/DominikDoom/a1111-sd-webui-tagcomplete.git</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/byzod/a1111-sd-webui-tagcomplete-CN/">https://github.com/byzod/a1111-sd-webui-tagcomplete-CN/</a> 中文</p>
+<h2 id="图片库浏览"><a href="#图片库浏览" class="headerlink" title="图片库浏览"></a>图片库浏览</h2><p><a target="_blank" rel="noopener" href="https://github.com/yfszzx/stable-diffusion-webui-images-browser.git">https://github.com/yfszzx/stable-diffusion-webui-images-browser.git</a></p>
+<h2 id="骨架人偶-PoseX"><a href="#骨架人偶-PoseX" class="headerlink" title="骨架人偶 PoseX"></a>骨架人偶 PoseX</h2><p><a target="_blank" rel="noopener" href="https://github.com/hnmr293/posex.git">https://github.com/hnmr293/posex.git</a></p>
+<p>需要先安裝ControlNet才能使用這個擴充功能</p>
+<p>PoseX是可以在Stable Diffuison WebUI直接拉人物骨架，再配合ControlNet生成姿勢的擴充功能。</p>
+<p>開啟文生圖的頁面，點選右下角PoseX，點選Send this image to ControlNet</p>
+<p>在下面的ControlNet，點選Enabled，preprocessor選取<code>none</code>，model選<code>openpose</code>，不需要上傳圖片。</p>
+<p>回到上面的PoseX，調整人物姿勢。左鍵點選移動，滾輪放大縮小，對模型左鍵點二下即可用右鍵移動單個骨架。</p>
+<h2 id="AI绘图转影片"><a href="#AI绘图转影片" class="headerlink" title="AI绘图转影片"></a>AI绘图转影片</h2><p><a target="_blank" rel="noopener" href="https://github.com/Scholar01/sd-webui-mov2mov">https://github.com/Scholar01/sd-webui-mov2mov</a></p>
+<p>需要先安裝ControlNet才能使用這個擴充功能</p>
+<p>將影片逐一抽出畫格，使用ControlNet生圖，然後再自動合成新影片。可以設定輸出的畫格率，將人物單獨處理。</p>
+<p>目前只有windows系统可以使用,如果您系统不支持,可以关闭该选项卡.</p>
+<h2 id="生成多个任务"><a href="#生成多个任务" class="headerlink" title="生成多个任务"></a>生成多个任务</h2><p><a target="_blank" rel="noopener" href="https://github.com/ashen-sensored/stable-diffusion-webui-two-shot">https://github.com/ashen-sensored/stable-diffusion-webui-two-shot</a></p>
+<p>nt Couple會分割繪圖時的提示詞，這樣就可以生成多重人物/物件，並精確指定位置顏色了。</p>
+<p>像是先用PoseX拉好骨架，再使用Latent Couple標出人物的概略位置。</p>
+<h2 id="用文生图-ControlNet-Latent-Couple生成指定位置的多个任务"><a href="#用文生图-ControlNet-Latent-Couple生成指定位置的多个任务" class="headerlink" title="用文生图+ControlNet+Latent Couple生成指定位置的多个任务"></a>用文生图+ControlNet+Latent Couple生成指定位置的多个任务</h2><p>於文生圖的界面會看到Latent Couple</p>
+<p>勾選Enabled啟用，設定長寬，再點選最下面的<code>Create blank canvas</code>建立空白畫布</p>
+<p>用滑鼠繪製色塊。例如用紅筆繪製一個人物，藍筆繪製另一個人物。</p>
+<p>點選<code>I&#39;ve finished my sketch</code>，下面就會顯示各個色塊的分割狀況。依序填入提示詞：在<code>General Prompt</code>填入畫風和背景的提示詞，藍筆部份填入貞德<code>Jeanne d&#39;Arc</code>相關的提示詞，紅筆部份填入艾比蓋兒<code>Abigail Williams</code>的相關提示詞</p>
+<p>點選<code>Prompt Info Update</code>，提示詞即會自動跑到上面的框框，再自行補上負向提示詞。</p>
+<p>搭配事先用PoseX拉好的骨架，再點選Generate開始生圖。</p>
 
+      
+    </div>
 
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
 
-<h4 id="新建重构作业流程"><a href="#新建重构作业流程" class="headerlink" title="新建重构作业流程"></a>新建重构作业流程</h4><p>第一步先清库,新建执行sql的任务</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span>  <span class="keyword">from</span> transfer_daily_report;</span><br></pre></td></tr></table></figure>
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240206-stable%20diffusion%20webui%20%E4%BB%8Ecivital%20%E4%B8%8B%E8%BD%BD%E6%A8%A1%E5%9E%8B%E5%B9%B6%E5%AD%A6%E4%B9%A0%E6%96%87%E7%94%9F%E5%9B%BE/">
 
-<p>新建一个获取全部交易执行的语句</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT date(  handle_time) as day,</span><br><span class="line"> SUM(vehicle_price) as amount , count(*) as cnt,</span><br><span class="line"> i.market_id,m.name as market, m.province_name as province,</span><br><span class="line"> i.vehicle_type</span><br><span class="line">FROM zg_vehicle_transfer_info i inner join market m on m.id = i.market_id </span><br><span class="line"> where i.handle_time is not null </span><br><span class="line">GROUP BY i.market_id,day ,i.vehicle_type;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
 
-<p>新增一个生成车辆分类的脚本</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Script here</span></span><br><span class="line"><span class="keyword">var</span> vehicle_category= <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;客车&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;客车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;轿车&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;客车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;小型汽&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;客车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;小型轿&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;客车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;面包车&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;客车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;小型越野&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;客车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;货车&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;货车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;载货&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;货车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;重型&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;货车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;货运&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;货车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;摩托车&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;摩托车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(vehicle_type.<span class="title function_">indexOf</span>(<span class="string">&quot;二轮&quot;</span>)&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">vehicle_category=<span class="string">&quot;摩托车&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20240206-stable%20diffusion%20webui%20%E4%BB%8Ecivital%20%E4%B8%8B%E8%BD%BD%E6%A8%A1%E5%9E%8B%E5%B9%B6%E5%AD%A6%E4%B9%A0%E6%96%87%E7%94%9F%E5%9B%BE/" class="post-title-link" itemprop="url">20240206-stable diffusion webui 从civital 下载模型并学习文生图</a>
+        </h2>
 
-<p>最后添加一个表输出的节点。</p>
-<h4 id="新建日更新的作业"><a href="#新建日更新的作业" class="headerlink" title="新建日更新的作业"></a>新建日更新的作业</h4><p>新增一个获取最近10天交易的sql</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="type">date</span>(handle_time) <span class="keyword">as</span> <span class="keyword">day</span>,</span><br><span class="line"> <span class="built_in">SUM</span>(vehicle_price) <span class="keyword">as</span> amount , <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">as</span> cnt,</span><br><span class="line"> i.market_id,m.name <span class="keyword">as</span> market, m.province_name <span class="keyword">as</span> province,</span><br><span class="line"> i.vehicle_type</span><br><span class="line"><span class="keyword">FROM</span> zg_vehicle_transfer_info i <span class="keyword">inner</span> <span class="keyword">join</span> market m <span class="keyword">on</span> m.id <span class="operator">=</span> i.market_id </span><br><span class="line"> <span class="keyword">where</span>  i.handle_time <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">and</span>  i.handle_time <span class="operator">&gt;</span> date_sub( now(),<span class="type">interval</span> <span class="number">10</span> <span class="keyword">day</span>)</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> i.market_id,<span class="keyword">day</span> ,i.vehicle_type;</span><br></pre></td></tr></table></figure>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
 
-<p>添加生成车辆类别的脚本（同上）</p>
-<p>最后增加一个插入或者更新表的节点</p>
-<p>这里要根据市场、日期、车辆类型来更新。</p>
+              <time title="Created: 2024-02-05 19:40:08" itemprop="dateCreated datePublished" datetime="2024-02-05T19:40:08+08:00">2024-02-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-04-22 08:30:23" itemprop="dateModified" datetime="2024-04-22T08:30:23+08:00">2024-04-22</time>
+              </span>
 
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>civital 下载模型并学习之二</p>
+<h1 id="Meow-Mix-Realistic-amp-Versatile"><a href="#Meow-Mix-Realistic-amp-Versatile" class="headerlink" title="Meow Mix - Realistic &amp; Versatile"></a>Meow Mix - Realistic &amp; Versatile</h1><p>Prompt：</p>
+<p><code>Jim is a middle-aged man with short, graying hair and a rugged appearance. He has a rough, unshaven chin and deep wrinkles around his eyes. He is tall and muscular, with broad shoulders and thick arms. He wears a dirty, faded t-shirt and faded jeans that hang loosely on his frame. His demeanor is angry and bitter, with a constant scowl on his face. He is a character who has been through a lot of hardship and is struggling to come to terms with the changes in society. Despite his rough exterior, there is a hint of sadness in his eyes, indicating that he is deeply hurt by the loss of his job and his wife. Overall, Jim is a complex and troubled character who is struggling to find his place in a world that is rapidly changing around him.</code></p>
+<p>Negative Prompt:</p>
+<p><code>canvas frame, cartoon, 3d, ((disfigured)), ((bad art)), ((deformed)),((extra limbs)),((close up)),((b&amp;w)), wierd colors, blurry, (((duplicate))), ((morbid)), ((mutilated)), [out of frame], extra fingers, mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((mutation))), (((deformed))), ((ugly)), blurry, ((bad anatomy)), (((bad proportions))), ((extra limbs)), cloned face, (((disfigured))), out of frame, ugly, extra limbs, (bad anatomy), gross proportions, (malformed limbs), ((missing arms)), ((missing legs)), (((extra arms))), (((extra legs))), mutated hands, (fused fingers), (too many fingers), (((long neck))), Photoshop, video game, ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, mutation, mutated, extra limbs, extra legs, extra arms, disfigured, deformed, cross-eye, body out of frame, blurry, bad art, bad anatomy, 3d render</code></p>
+<p><img src="../images/sd/00134-618633303.png" alt="00134-618633303"></p>
+<p><em>Steps: 20, Sampler: Euler a, CFG scale: 8, Seed: 618633303, Size: 512x512, Model hash: 834d9e407e, Model: meowMixRealistic_prunedFp16FIXED, Version: v1.7.0</em></p>
+<p>试着自己改</p>
+<p>Prompt：</p>
+<p><code>John is a middle-aged chinese man with graying short hair and a rugged appearance. He has a rough, unshaven chin and deep wrinkles around his eyes. He is tall and muscular, with broad shoulders and thick arms. He wears a dirty, faded t-shirt and faded jeans that hang loosely on his frame. His demeanor is angry and bitter, with a constant scowl on his face. He is a character who has been through a lot of hardship and is struggling to come to terms with the changes in society. Despite his rough exterior, there is a hint of sadness in his eyes, indicating that he is deeply hurt by the loss of his job and his wife. Overall, John is a complex and troubled character who is struggling to find his place in a world that is rapidly changing around him.</code></p>
+<img src="../images/sd/20240206095935-14219338.png" alt="20240206095935-14219338" style="zoom:50%;" />
       
     </div>
 
@@ -1416,7 +1091,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1482,7 +1157,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

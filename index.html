@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240422-macbook-silicon-%E8%BF%90%E8%A1%8Ckettle%EF%BC%88data-integration%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240827-%E5%AD%A6%E4%B9%A0clickhouse/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -174,7 +174,106 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/20240422-macbook-silicon-%E8%BF%90%E8%A1%8Ckettle%EF%BC%88data-integration%EF%BC%89/" class="post-title-link" itemprop="url">macbook (silicon) 运行kettle（data-integration）</a>
+            <a href="/20240827-%E5%AD%A6%E4%B9%A0clickhouse/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-08-27 16:40:46" itemprop="dateCreated datePublished" datetime="2024-08-27T16:40:46+08:00">2024-08-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-08-28 17:32:32" itemprop="dateModified" datetime="2024-08-28T17:32:32+08:00">2024-08-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>20240827-学习clickhouse</p>
+<p>docker-compose 安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;3&#x27;</span><br><span class="line">services:</span><br><span class="line">  clickhouse:</span><br><span class="line">    image: yandex/clickhouse-server</span><br><span class="line">    container_name: clickhouse</span><br><span class="line">    ports:</span><br><span class="line">      - 9009:9009</span><br><span class="line">      - 9000:9000</span><br><span class="line">      - 8123:8123</span><br><span class="line">    networks:</span><br><span class="line">      - clickhouse </span><br><span class="line">    volumes:</span><br><span class="line">      - ./clickhouse:/var/lib/clickhouse</span><br><span class="line">      - ./data:/data</span><br><span class="line"> </span><br><span class="line">networks:</span><br><span class="line">  clickhouse:</span><br><span class="line">    driver: bridge</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>苹果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./clickhouse-macos-aarch64v23.8.9.54 server</span><br></pre></td></tr></table></figure>
+
+<p>建库：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">clickhouse<span class="operator">-</span>client <span class="comment">--host clickhouse-server</span></span><br><span class="line">clickhouse<span class="operator">-</span>client <span class="comment">--host clickhouse-server --query &quot;CREATE DATABASE IF NOT EXISTS tutorial&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>macos</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ./clickhouse-macos-aarch64v23.8.9.54 server client</span><br><span class="line">CREATE DATABASE IF NOT EXISTS tutorial</span><br></pre></td></tr></table></figure>
+
+
+
+<p>建表：</p>
+<p>hits_v1</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tutorial.hits_v1</span><br><span class="line">(</span><br><span class="line">    `WatchID` UInt64,</span><br><span class="line">    `JavaEnable` UInt8,</span><br><span class="line">    `Title` String,</span><br><span class="line">    `GoodEvent` Int16,</span><br><span class="line">    `EventTime` DateTime,</span><br><span class="line">    `EventDate` <span class="type">Date</span>,</span><br><span class="line">    `CounterID` UInt32,</span><br><span class="line">    `ClientIP` UInt32,</span><br><span class="line">    `ClientIP6` FixedString(<span class="number">16</span>),</span><br><span class="line">    `RegionID` UInt32,</span><br><span class="line">    `UserID` UInt64,</span><br><span class="line">    `CounterClass` Int8,</span><br><span class="line">    `OS` UInt8,</span><br><span class="line">    `UserAgent` UInt8,</span><br><span class="line">    `URL` String,</span><br><span class="line">    `Referer` String,</span><br><span class="line">    `URLDomain` String,</span><br><span class="line">    `RefererDomain` String,</span><br><span class="line">    `Refresh` UInt8,</span><br><span class="line">    `IsRobot` UInt8,</span><br><span class="line">    `RefererCategories` <span class="keyword">Array</span>(UInt16),</span><br><span class="line">    `URLCategories` <span class="keyword">Array</span>(UInt16),</span><br><span class="line">    `URLRegions` <span class="keyword">Array</span>(UInt32),</span><br><span class="line">    `RefererRegions` <span class="keyword">Array</span>(UInt32),</span><br><span class="line">    `ResolutionWidth` UInt16,</span><br><span class="line">    `ResolutionHeight` UInt16,</span><br><span class="line">    `ResolutionDepth` UInt8,</span><br><span class="line">    `FlashMajor` UInt8,</span><br><span class="line">    `FlashMinor` UInt8,</span><br><span class="line">    `FlashMinor2` String,</span><br><span class="line">    `NetMajor` UInt8,</span><br><span class="line">    `NetMinor` UInt8,</span><br><span class="line">    `UserAgentMajor` UInt16,</span><br><span class="line">    `UserAgentMinor` FixedString(<span class="number">2</span>),</span><br><span class="line">    `CookieEnable` UInt8,</span><br><span class="line">    `JavascriptEnable` UInt8,</span><br><span class="line">    `IsMobile` UInt8,</span><br><span class="line">    `MobilePhone` UInt8,</span><br><span class="line">    `MobilePhoneModel` String,</span><br><span class="line">    `Params` String,</span><br><span class="line">    `IPNetworkID` UInt32,</span><br><span class="line">    `TraficSourceID` Int8,</span><br><span class="line">    `SearchEngineID` UInt16,</span><br><span class="line">    `SearchPhrase` String,</span><br><span class="line">    `AdvEngineID` UInt8,</span><br><span class="line">    `IsArtifical` UInt8,</span><br><span class="line">    `WindowClientWidth` UInt16,</span><br><span class="line">    `WindowClientHeight` UInt16,</span><br><span class="line">    `ClientTimeZone` Int16,</span><br><span class="line">    `ClientEventTime` DateTime,</span><br><span class="line">    `SilverlightVersion1` UInt8,</span><br><span class="line">    `SilverlightVersion2` UInt8,</span><br><span class="line">    `SilverlightVersion3` UInt32,</span><br><span class="line">    `SilverlightVersion4` UInt16,</span><br><span class="line">    `PageCharset` String,</span><br><span class="line">    `CodeVersion` UInt32,</span><br><span class="line">    `IsLink` UInt8,</span><br><span class="line">    `IsDownload` UInt8,</span><br><span class="line">    `IsNotBounce` UInt8,</span><br><span class="line">    `FUniqID` UInt64,</span><br><span class="line">    `HID` UInt32,</span><br><span class="line">    `IsOldCounter` UInt8,</span><br><span class="line">    `IsEvent` UInt8,</span><br><span class="line">    `IsParameter` UInt8,</span><br><span class="line">    `DontCountHits` UInt8,</span><br><span class="line">    `WithHash` UInt8,</span><br><span class="line">    `HitColor` FixedString(<span class="number">1</span>),</span><br><span class="line">    `UTCEventTime` DateTime,</span><br><span class="line">    `Age` UInt8,</span><br><span class="line">    `Sex` UInt8,</span><br><span class="line">    `Income` UInt8,</span><br><span class="line">    `Interests` UInt16,</span><br><span class="line">    `Robotness` UInt8,</span><br><span class="line">    `GeneralInterests` <span class="keyword">Array</span>(UInt16),</span><br><span class="line">    `RemoteIP` UInt32,</span><br><span class="line">    `RemoteIP6` FixedString(<span class="number">16</span>),</span><br><span class="line">    `WindowName` Int32,</span><br><span class="line">    `OpenerName` Int32,</span><br><span class="line">    `HistoryLength` Int16,</span><br><span class="line">    `BrowserLanguage` FixedString(<span class="number">2</span>),</span><br><span class="line">    `BrowserCountry` FixedString(<span class="number">2</span>),</span><br><span class="line">    `SocialNetwork` String,</span><br><span class="line">    `SocialAction` String,</span><br><span class="line">    `HTTPError` UInt16,</span><br><span class="line">    `SendTiming` Int32,</span><br><span class="line">    `DNSTiming` Int32,</span><br><span class="line">    `ConnectTiming` Int32,</span><br><span class="line">    `ResponseStartTiming` Int32,</span><br><span class="line">    `ResponseEndTiming` Int32,</span><br><span class="line">    `FetchTiming` Int32,</span><br><span class="line">    `RedirectTiming` Int32,</span><br><span class="line">    `DOMInteractiveTiming` Int32,</span><br><span class="line">    `DOMContentLoadedTiming` Int32,</span><br><span class="line">    `DOMCompleteTiming` Int32,</span><br><span class="line">    `LoadEventStartTiming` Int32,</span><br><span class="line">    `LoadEventEndTiming` Int32,</span><br><span class="line">    `NSToDOMContentLoadedTiming` Int32,</span><br><span class="line">    `FirstPaintTiming` Int32,</span><br><span class="line">    `RedirectCount` Int8,</span><br><span class="line">    `SocialSourceNetworkID` UInt8,</span><br><span class="line">    `SocialSourcePage` String,</span><br><span class="line">    `ParamPrice` Int64,</span><br><span class="line">    `ParamOrderID` String,</span><br><span class="line">    `ParamCurrency` FixedString(<span class="number">3</span>),</span><br><span class="line">    `ParamCurrencyID` UInt16,</span><br><span class="line">    `GoalsReached` <span class="keyword">Array</span>(UInt32),</span><br><span class="line">    `OpenstatServiceName` String,</span><br><span class="line">    `OpenstatCampaignID` String,</span><br><span class="line">    `OpenstatAdID` String,</span><br><span class="line">    `OpenstatSourceID` String,</span><br><span class="line">    `UTMSource` String,</span><br><span class="line">    `UTMMedium` String,</span><br><span class="line">    `UTMCampaign` String,</span><br><span class="line">    `UTMContent` String,</span><br><span class="line">    `UTMTerm` String,</span><br><span class="line">    `FromTag` String,</span><br><span class="line">    `HasGCLID` UInt8,</span><br><span class="line">    `RefererHash` UInt64,</span><br><span class="line">    `URLHash` UInt64,</span><br><span class="line">    `CLID` UInt32,</span><br><span class="line">    `YCLID` UInt64,</span><br><span class="line">    `ShareService` String,</span><br><span class="line">    `ShareURL` String,</span><br><span class="line">    `ShareTitle` String,</span><br><span class="line">    `ParsedParams` Nested(</span><br><span class="line">        Key1 String,</span><br><span class="line">        Key2 String,</span><br><span class="line">        Key3 String,</span><br><span class="line">        Key4 String,</span><br><span class="line">        Key5 String,</span><br><span class="line">        ValueDouble Float64),</span><br><span class="line">    `IslandID` FixedString(<span class="number">16</span>),</span><br><span class="line">    `RequestNum` UInt32,</span><br><span class="line">    `RequestTry` UInt8</span><br><span class="line">)</span><br><span class="line">ENGINE <span class="operator">=</span> MergeTree()</span><br><span class="line"><span class="keyword">PARTITION</span> <span class="keyword">BY</span> toYYYYMM(EventDate)</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> (CounterID, EventDate, intHash32(UserID))</span><br><span class="line">SAMPLE <span class="keyword">BY</span> intHash32(UserID)</span><br></pre></td></tr></table></figure>
+
+<p>visits_v1</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tutorial.visits_v1</span><br><span class="line">(</span><br><span class="line">    `CounterID` UInt32,</span><br><span class="line">    `StartDate` <span class="type">Date</span>,</span><br><span class="line">    `Sign` Int8,</span><br><span class="line">    `IsNew` UInt8,</span><br><span class="line">    `VisitID` UInt64,</span><br><span class="line">    `UserID` UInt64,</span><br><span class="line">    `StartTime` DateTime,</span><br><span class="line">    `Duration` UInt32,</span><br><span class="line">    `UTCStartTime` DateTime,</span><br><span class="line">    `PageViews` Int32,</span><br><span class="line">    `Hits` Int32,</span><br><span class="line">    `IsBounce` UInt8,</span><br><span class="line">    `Referer` String,</span><br><span class="line">    `StartURL` String,</span><br><span class="line">    `RefererDomain` String,</span><br><span class="line">    `StartURLDomain` String,</span><br><span class="line">    `EndURL` String,</span><br><span class="line">    `LinkURL` String,</span><br><span class="line">    `IsDownload` UInt8,</span><br><span class="line">    `TraficSourceID` Int8,</span><br><span class="line">    `SearchEngineID` UInt16,</span><br><span class="line">    `SearchPhrase` String,</span><br><span class="line">    `AdvEngineID` UInt8,</span><br><span class="line">    `PlaceID` Int32,</span><br><span class="line">    `RefererCategories` <span class="keyword">Array</span>(UInt16),</span><br><span class="line">    `URLCategories` <span class="keyword">Array</span>(UInt16),</span><br><span class="line">    `URLRegions` <span class="keyword">Array</span>(UInt32),</span><br><span class="line">    `RefererRegions` <span class="keyword">Array</span>(UInt32),</span><br><span class="line">    `IsYandex` UInt8,</span><br><span class="line">    `GoalReachesDepth` Int32,</span><br><span class="line">    `GoalReachesURL` Int32,</span><br><span class="line">    `GoalReachesAny` Int32,</span><br><span class="line">    `SocialSourceNetworkID` UInt8,</span><br><span class="line">    `SocialSourcePage` String,</span><br><span class="line">    `MobilePhoneModel` String,</span><br><span class="line">    `ClientEventTime` DateTime,</span><br><span class="line">    `RegionID` UInt32,</span><br><span class="line">    `ClientIP` UInt32,</span><br><span class="line">    `ClientIP6` FixedString(<span class="number">16</span>),</span><br><span class="line">    `RemoteIP` UInt32,</span><br><span class="line">    `RemoteIP6` FixedString(<span class="number">16</span>),</span><br><span class="line">    `IPNetworkID` UInt32,</span><br><span class="line">    `SilverlightVersion3` UInt32,</span><br><span class="line">    `CodeVersion` UInt32,</span><br><span class="line">    `ResolutionWidth` UInt16,</span><br><span class="line">    `ResolutionHeight` UInt16,</span><br><span class="line">    `UserAgentMajor` UInt16,</span><br><span class="line">    `UserAgentMinor` UInt16,</span><br><span class="line">    `WindowClientWidth` UInt16,</span><br><span class="line">    `WindowClientHeight` UInt16,</span><br><span class="line">    `SilverlightVersion2` UInt8,</span><br><span class="line">    `SilverlightVersion4` UInt16,</span><br><span class="line">    `FlashVersion3` UInt16,</span><br><span class="line">    `FlashVersion4` UInt16,</span><br><span class="line">    `ClientTimeZone` Int16,</span><br><span class="line">    `OS` UInt8,</span><br><span class="line">    `UserAgent` UInt8,</span><br><span class="line">    `ResolutionDepth` UInt8,</span><br><span class="line">    `FlashMajor` UInt8,</span><br><span class="line">    `FlashMinor` UInt8,</span><br><span class="line">    `NetMajor` UInt8,</span><br><span class="line">    `NetMinor` UInt8,</span><br><span class="line">    `MobilePhone` UInt8,</span><br><span class="line">    `SilverlightVersion1` UInt8,</span><br><span class="line">    `Age` UInt8,</span><br><span class="line">    `Sex` UInt8,</span><br><span class="line">    `Income` UInt8,</span><br><span class="line">    `JavaEnable` UInt8,</span><br><span class="line">    `CookieEnable` UInt8,</span><br><span class="line">    `JavascriptEnable` UInt8,</span><br><span class="line">    `IsMobile` UInt8,</span><br><span class="line">    `BrowserLanguage` UInt16,</span><br><span class="line">    `BrowserCountry` UInt16,</span><br><span class="line">    `Interests` UInt16,</span><br><span class="line">    `Robotness` UInt8,</span><br><span class="line">    `GeneralInterests` <span class="keyword">Array</span>(UInt16),</span><br><span class="line">    `Params` <span class="keyword">Array</span>(String),</span><br><span class="line">    `Goals` Nested(</span><br><span class="line">        ID UInt32,</span><br><span class="line">        Serial UInt32,</span><br><span class="line">        EventTime DateTime,</span><br><span class="line">        Price Int64,</span><br><span class="line">        OrderID String,</span><br><span class="line">        CurrencyID UInt32),</span><br><span class="line">    `WatchIDs` <span class="keyword">Array</span>(UInt64),</span><br><span class="line">    `ParamSumPrice` Int64,</span><br><span class="line">    `ParamCurrency` FixedString(<span class="number">3</span>),</span><br><span class="line">    `ParamCurrencyID` UInt16,</span><br><span class="line">    `ClickLogID` UInt64,</span><br><span class="line">    `ClickEventID` Int32,</span><br><span class="line">    `ClickGoodEvent` Int32,</span><br><span class="line">    `ClickEventTime` DateTime,</span><br><span class="line">    `ClickPriorityID` Int32,</span><br><span class="line">    `ClickPhraseID` Int32,</span><br><span class="line">    `ClickPageID` Int32,</span><br><span class="line">    `ClickPlaceID` Int32,</span><br><span class="line">    `ClickTypeID` Int32,</span><br><span class="line">    `ClickResourceID` Int32,</span><br><span class="line">    `ClickCost` UInt32,</span><br><span class="line">    `ClickClientIP` UInt32,</span><br><span class="line">    `ClickDomainID` UInt32,</span><br><span class="line">    `ClickURL` String,</span><br><span class="line">    `ClickAttempt` UInt8,</span><br><span class="line">    `ClickOrderID` UInt32,</span><br><span class="line">    `ClickBannerID` UInt32,</span><br><span class="line">    `ClickMarketCategoryID` UInt32,</span><br><span class="line">    `ClickMarketPP` UInt32,</span><br><span class="line">    `ClickMarketCategoryName` String,</span><br><span class="line">    `ClickMarketPPName` String,</span><br><span class="line">    `ClickAWAPSCampaignName` String,</span><br><span class="line">    `ClickPageName` String,</span><br><span class="line">    `ClickTargetType` UInt16,</span><br><span class="line">    `ClickTargetPhraseID` UInt64,</span><br><span class="line">    `ClickContextType` UInt8,</span><br><span class="line">    `ClickSelectType` Int8,</span><br><span class="line">    `ClickOptions` String,</span><br><span class="line">    `ClickGroupBannerID` Int32,</span><br><span class="line">    `OpenstatServiceName` String,</span><br><span class="line">    `OpenstatCampaignID` String,</span><br><span class="line">    `OpenstatAdID` String,</span><br><span class="line">    `OpenstatSourceID` String,</span><br><span class="line">    `UTMSource` String,</span><br><span class="line">    `UTMMedium` String,</span><br><span class="line">    `UTMCampaign` String,</span><br><span class="line">    `UTMContent` String,</span><br><span class="line">    `UTMTerm` String,</span><br><span class="line">    `FromTag` String,</span><br><span class="line">    `HasGCLID` UInt8,</span><br><span class="line">    `FirstVisit` DateTime,</span><br><span class="line">    `PredLastVisit` <span class="type">Date</span>,</span><br><span class="line">    `LastVisit` <span class="type">Date</span>,</span><br><span class="line">    `TotalVisits` UInt32,</span><br><span class="line">    `TraficSource` Nested(</span><br><span class="line">        ID Int8,</span><br><span class="line">        SearchEngineID UInt16,</span><br><span class="line">        AdvEngineID UInt8,</span><br><span class="line">        PlaceID UInt16,</span><br><span class="line">        SocialSourceNetworkID UInt8,</span><br><span class="line">        Domain String,</span><br><span class="line">        SearchPhrase String,</span><br><span class="line">        SocialSourcePage String),</span><br><span class="line">    `Attendance` FixedString(<span class="number">16</span>),</span><br><span class="line">    `CLID` UInt32,</span><br><span class="line">    `YCLID` UInt64,</span><br><span class="line">    `NormalizedRefererHash` UInt64,</span><br><span class="line">    `SearchPhraseHash` UInt64,</span><br><span class="line">    `RefererDomainHash` UInt64,</span><br><span class="line">    `NormalizedStartURLHash` UInt64,</span><br><span class="line">    `StartURLDomainHash` UInt64,</span><br><span class="line">    `NormalizedEndURLHash` UInt64,</span><br><span class="line">    `TopLevelDomain` UInt64,</span><br><span class="line">    `URLScheme` UInt64,</span><br><span class="line">    `OpenstatServiceNameHash` UInt64,</span><br><span class="line">    `OpenstatCampaignIDHash` UInt64,</span><br><span class="line">    `OpenstatAdIDHash` UInt64,</span><br><span class="line">    `OpenstatSourceIDHash` UInt64,</span><br><span class="line">    `UTMSourceHash` UInt64,</span><br><span class="line">    `UTMMediumHash` UInt64,</span><br><span class="line">    `UTMCampaignHash` UInt64,</span><br><span class="line">    `UTMContentHash` UInt64,</span><br><span class="line">    `UTMTermHash` UInt64,</span><br><span class="line">    `FromHash` UInt64,</span><br><span class="line">    `WebVisorEnabled` UInt8,</span><br><span class="line">    `WebVisorActivity` UInt32,</span><br><span class="line">    `ParsedParams` Nested(</span><br><span class="line">        Key1 String,</span><br><span class="line">        Key2 String,</span><br><span class="line">        Key3 String,</span><br><span class="line">        Key4 String,</span><br><span class="line">        Key5 String,</span><br><span class="line">        ValueDouble Float64),</span><br><span class="line">    `Market` Nested(</span><br><span class="line">        Type UInt8,</span><br><span class="line">        GoalID UInt32,</span><br><span class="line">        OrderID String,</span><br><span class="line">        OrderPrice Int64,</span><br><span class="line">        PP UInt32,</span><br><span class="line">        DirectPlaceID UInt32,</span><br><span class="line">        DirectOrderID UInt32,</span><br><span class="line">        DirectBannerID UInt32,</span><br><span class="line">        GoodID String,</span><br><span class="line">        GoodName String,</span><br><span class="line">        GoodQuantity Int32,</span><br><span class="line">        GoodPrice Int64),</span><br><span class="line">    `IslandID` FixedString(<span class="number">16</span>)</span><br><span class="line">)</span><br><span class="line">ENGINE <span class="operator">=</span> CollapsingMergeTree(Sign)</span><br><span class="line"><span class="keyword">PARTITION</span> <span class="keyword">BY</span> toYYYYMM(StartDate)</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> (CounterID, StartDate, intHash32(UserID), VisitID)</span><br><span class="line">SAMPLE <span class="keyword">BY</span> intHash32(UserID)</span><br></pre></td></tr></table></figure>
+
+<p>导入数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">clickhouse-client --host clickhouse-server --query &quot;INSERT INTO tutorial.hits_v1 FORMAT TSV&quot; --max_insert_block_size=100000 &lt; hits_v1.tsv</span><br><span class="line">clickhouse-client --host clickhouse-server --query &quot;INSERT INTO tutorial.visits_v1 FORMAT TSV&quot; --max_insert_block_size=100000 &lt; visits_v1.tsv</span><br></pre></td></tr></table></figure>
+
+<p>macos</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./clickhouse-macos-aarch64v23.8.9.54   client --query &quot;INSERT INTO tutorial.hits_v1 FORMAT TSV&quot; --max_insert_block_size=100000 &lt; ~/docker/clickhouse/data/hits_v1.tsv</span><br><span class="line">./clickhouse-macos-aarch64v23.8.9.54   client --query &quot;INSERT INTO tutorial.visits_v1 FORMAT TSV&quot; --max_insert_block_size=100000 &lt; ~/docker/clickhouse/data/visits_v1.tsv</span><br></pre></td></tr></table></figure>
+
+<p>比较发现，直接启动的比虚拟机里面的快两个数量级，虚拟机应该是在arm上跑了intel的程序。</p>
+<p>查询</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">:) SELECT COUNT(*) FROM tutorial.hits_v1</span><br><span class="line">┌─count()─┐</span><br><span class="line">│ 8873898 │</span><br><span class="line">└─────────┘</span><br><span class="line"></span><br><span class="line">1 row in set. Elapsed: 0.005 sec.</span><br><span class="line"></span><br><span class="line">:) SELECT COUNT(*) FROM tutorial.visits_v1</span><br><span class="line">Query id: acab693b-3d8d-4c72-8a51-7be2fa68be3a</span><br><span class="line"></span><br><span class="line">┌─count()─┐</span><br><span class="line">│ 1680609 │</span><br><span class="line">└─────────┘</span><br><span class="line"></span><br><span class="line">1 row in set. Elapsed: 0.042 sec.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">:) SELECT</span><br><span class="line">    StartURL AS URL,</span><br><span class="line">    AVG(Duration) AS AvgDuration</span><br><span class="line">FROM tutorial.visits_v1</span><br><span class="line">WHERE StartDate BETWEEN &#x27;2014-03-23&#x27; AND &#x27;2014-03-30&#x27;</span><br><span class="line">GROUP BY URL</span><br><span class="line">ORDER BY AvgDuration DESC</span><br><span class="line">LIMIT 10</span><br><span class="line"></span><br><span class="line">:) SELECT</span><br><span class="line">    sum(Sign) AS visits,</span><br><span class="line">    sumIf(Sign, has(Goals.ID, 1105530)) AS goal_visits,</span><br><span class="line">    (100. * goal_visits) / visits AS goal_percent</span><br><span class="line">FROM tutorial.visits_v1</span><br><span class="line">WHERE (CounterID = 912887) AND (toYYYYMM(StartDate) = 201403) AND (domain(StartURL) = &#x27;yandex.ru&#x27;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><a target="_blank" rel="noopener" href="https://builds.clickhouse.com/master/macos-aarch64">https://builds.clickhouse.com/master/macos-aarch64</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240827-%E4%BD%BF%E7%94%A8rocketmq/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20240827-%E4%BD%BF%E7%94%A8rocketmq/" class="post-title-link" itemprop="url">Untitled</a>
         </h2>
 
         <div class="post-meta">
@@ -185,7 +284,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2024-04-22 08:16:30 / Modified: 08:25:45" itemprop="dateCreated datePublished" datetime="2024-04-22T08:16:30+08:00">2024-04-22</time>
+              <time title="Created: 2024-08-27 15:46:58 / Modified: 16:19:08" itemprop="dateCreated datePublished" datetime="2024-08-27T15:46:58+08:00">2024-08-27</time>
             </span>
 
           
@@ -199,31 +298,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>macbook   silicon 运行kettle（data-integration）</p>
-<p>kettle在windows及intel电脑运行正常，但是在silicon芯片的macos上执行是提示：不支持arm64。搜索 发现解决方案： <a target="_blank" rel="noopener" href="https://medium.com/@gabriella.mayang/how-to-install-and-open-pentaho-data-integration-on-macbook-m2-apple-silicon-4081c2875a02">https://medium.com/@gabriella.mayang/how-to-install-and-open-pentaho-data-integration-on-macbook-m2-apple-silicon-4081c2875a02</a></p>
-<h1 id="Step-1-Download-JDK-and-JRE"><a href="#Step-1-Download-JDK-and-JRE" class="headerlink" title="Step 1: Download JDK and JRE"></a>Step 1: Download JDK and JRE</h1><p>I tried JDK from Oracle but it failed. Now the only JDK that I am using and proven successful in opening PDI in my M2 is the one from <strong>Eclipse Temurin OpenJDK.</strong></p>
-<ol>
-<li>Click here to download <a target="_blank" rel="noopener" href="https://adoptium.net/temurin/releases/?variant=openjdk8&amp;os=mac">https://adoptium.net/temurin/releases/?variant=openjdk8&amp;os=mac</a></li>
-<li>Choose JDK .pkg</li>
-</ol>
-<h1 id="Step-2-Download-MacOSX-X86-JAR"><a href="#Step-2-Download-MacOSX-X86-JAR" class="headerlink" title="Step 2: Download MacOSX X86 JAR"></a>Step 2: Download MacOSX X86 JAR</h1><ol>
-<li>Click here to download <a target="_blank" rel="noopener" href="https://mega.nz/file/VFhgnS6I#s4zUK81rXGdXcpJMuzUvDOHoixZmAl4jyXd0yMU11F0">https://mega.nz/file/VFhgnS6I#s4zUK81rXGdXcpJMuzUvDOHoixZmAl4jyXd0yMU11F0</a></li>
-<li>Move the file to ‘libswt/osx64’</li>
-</ol>
-<p>就是把下载的文件放到 data-integration/libswt/osx64 目录下。</p>
-<h1 id="Step-4-Create-New-Terminal-Profile-for-Intel"><a href="#Step-4-Create-New-Terminal-Profile-for-Intel" class="headerlink" title="Step 4: Create New Terminal Profile for Intel"></a>Step 4: Create New Terminal Profile for Intel</h1><p>注：这里是苹果原生的terminal，不是iterm。</p>
-<ol>
-<li>Open Terminal &gt; Settings</li>
-<li>Click the ‘**+’** button to add new profile and name it as “Rosetta Intel”. You can choose another name but make sure the new profile name indicates the profile usage is for Intel-based apps</li>
-<li>Go to ‘Shell’ tab and paste this in the ‘Run Command’ field:</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env /usr/bin/arch -x86_64 /bin/zsh --login</span><br></pre></td></tr></table></figure>
+          <p>20240827-使用rocketmq</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install java-1.8.0-openjdk-devel.x86_64</span><br></pre></td></tr></table></figure>
 
-<p>Uncheck ‘Run inside shell’. Uncheck the checkbox would prevent running the shell twice, which could bloat your environment variables since ~/.zshrc gets run twice</p>
-<h3 id="最后-JAVA-HOME"><a href="#最后-JAVA-HOME" class="headerlink" title="最后 JAVA_HOME"></a>最后 JAVA_HOME</h3><p>因为我用了多版本的jdk，所以需要单独设置一个java环境</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-8.jdk/Contents/Home</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>rocketmq-all-5.1.0-bin-release</p>
+<p>运行namesrv</p>
+<p><code>nohup sh mqnamesrv &amp;</code></p>
+<p>修改run broken.sh 添加如下行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JAVA_OPT=&quot;$&#123;JAVA_OPT&#125;  --add-exports=java.base/sun.nio.ch=ALL-UNNAMED&quot;</span><br></pre></td></tr></table></figure>
 
-<p>然后就成功了。</p>
+<p> 然后启动broker</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ sh ./bin/mqbroker -n 172.16.40.24:9876 -c conf/broker.conf</span><br><span class="line">The broker[broker-a, 172.16.40.24:10911] boot success. serializeType=JSON and name server is 192.168.31.99:9876</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ sudo firewall-cmd --zone=public --add-port=9876/tcp --permanent</span><br><span class="line">$ sudo firewall-cmd --zone=public --add-port=10911/tcp --permanent</span><br><span class="line">$ sudo firewall-cmd --reload</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p> 通过mqadmin创建 Topic。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"> $ </span><span class="language-bash">./bin/mqadmin updateTopic -t TopicTest -c DefaultCluster -n 172.16.40.24:9876</span></span><br><span class="line">create topic to 192.168.31.99:10911 success.</span><br><span class="line">TopicConfig [topicName=TopicTest, readQueueNums=8, writeQueueNums=8, perm=RW-, topicFilterType=SINGLE_TAG, topicSysFlag=0, order=false, attributes=&#123;&#125;]</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>producer</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">export</span>   NAMESRV_ADDR=172.16.40.24:9876</span><br><span class="line">$ ./bin/tools.sh  org.apache.rocketmq.example.quickstart.Producer</span><br><span class="line">$ ./bin/tools.sh org.apache.rocketmq.example.quickstart.Consumer</span><br></pre></td></tr></table></figure>
+
+<p>运行rocketmq-dashboard</p>
+<p>docker</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;3.3&#x27;</span><br><span class="line">services:</span><br><span class="line">  rocketmq-dashboard:</span><br><span class="line">    image: apacherocketmq/rocketmq-dashboard:latest</span><br><span class="line">    container_name: rocketmq-dashboard</span><br><span class="line">    networks:</span><br><span class="line">      - rocketmq</span><br><span class="line">    ports:</span><br><span class="line">      - 8080:8080</span><br><span class="line">    environment:</span><br><span class="line">      - JAVA_OPTS=-Drocketmq.namesrv.addr=172.16.40.24:9876</span><br><span class="line">networks:</span><br><span class="line">  rocketmq:</span><br><span class="line">    driver: bridge</span><br></pre></td></tr></table></figure>
+
+<p>打开防火墙</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo firewall-cmd --zone=public --add-port=8080/tcp --permanent</span><br><span class="line">$ sudo firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -243,7 +344,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240304-%E8%A7%A3%E5%86%B3%20%E8%AE%BF%E9%97%AEhttp%E8%87%AA%E5%8A%A8%E8%B7%B3%E8%BD%AC%E5%88%B0https%E7%9A%84%E9%97%AE%E9%A2%98/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2024-823-minio-%E5%AD%A6%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -257,7 +358,188 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/20240304-%E8%A7%A3%E5%86%B3%20%E8%AE%BF%E9%97%AEhttp%E8%87%AA%E5%8A%A8%E8%B7%B3%E8%BD%AC%E5%88%B0https%E7%9A%84%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">20240304-解决 访问http自动跳转到https的问题</a>
+            <a href="/2024-823-minio-%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-08-23 11:28:44" itemprop="dateCreated datePublished" datetime="2024-08-23T11:28:44+08:00">2024-08-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-08-26 10:32:39" itemprop="dateModified" datetime="2024-08-26T10:32:39+08:00">2024-08-26</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>minio 学习</p>
+<p>minio 172.165.40.4</p>
+<p><a target="_blank" rel="noopener" href="http://minio-console.haowujidian.com/">http://minio-console.haowujidian.com</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">accesskey: lOaMW50t9UdiolW3hAHN</span><br><span class="line">secretKey: omDmGbg4qGlQY1ukPzDgH39DncRZf7qNtmC3o9hx</span><br></pre></td></tr></table></figure>
+
+<p>windows下使用mc.exe </p>
+<p><a target="_blank" rel="noopener" href="http://dl.minio.org.cn/client/mc/release/windows-amd64/mc.exe">http://dl.minio.org.cn/client/mc/release/windows-amd64/mc.exe</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mc.exe alias set whx http://172.16.40.24:9000 whx Whxheart0210</span><br><span class="line">mc.exe alias set whx http://minio.haowujidian.com whx Whxheart0210</span><br><span class="line"></span><br><span class="line">./mc.exe admin info whx</span><br><span class="line">./mc.exe cp --recusive ediplusx64 whx/pubimage/</span><br><span class="line"></span><br><span class="line">./mc.exe ls whx/pubimage/</span><br></pre></td></tr></table></figure>
+
+<p>rclone 用于在云存储和本地存储之间的同步、复制</p>
+<p>windows:下载地址： <a target="_blank" rel="noopener" href="https://rclone.org/downloads/">https://rclone.org/downloads/</a></p>
+<p>配置文件</p>
+<p>C:\Users\whxhe\AppData\Roaming\rclone\rclone.conf</p>
+<p>macos:</p>
+<p>~/.config/rclone/rclone.conf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[whx]</span><br><span class="line">type = s3</span><br><span class="line">provider = Other</span><br><span class="line">env_auth = false</span><br><span class="line">access_key_id  = lOaMW50t9UdiolW3hAHN</span><br><span class="line">secret_access_key= omDmGbg4qGlQY1ukPzDgH39DncRZf7qNtmC3o9hx</span><br><span class="line">endpoint = http://minio.haowujidian.com</span><br></pre></td></tr></table></figure>
+
+<p>同步目录</p>
+<p><code>rclone sync d:\soft\whx whx:/pubimage/whx</code></p>
+<p>查看目录</p>
+<p><code>rclone ls whx:\pubimage\whx</code></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/centos7%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/centos7%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85docker/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-08-07 15:20:00" itemprop="dateCreated datePublished" datetime="2024-08-07T15:20:00+08:00">2024-08-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-08-08 10:22:35" itemprop="dateModified" datetime="2024-08-08T10:22:35+08:00">2024-08-08</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>centos7服务器安装docker</p>
+<p>修改 yum 软件源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line">yum clean all</span><br><span class="line">yum makecache</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum update</span><br><span class="line">yum install -y yum-utils \</span><br><span class="line">  device-mapper-persistent-data \</span><br><span class="line">  lvm2</span><br></pre></td></tr></table></figure>
+
+<p>添加 Docker 稳定版本的 yum 软件源</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">yum-config-manager \</span><br><span class="line">    --add-repo \</span><br><span class="line">    https://mirrors.ustc.edu.cn/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">sed -i &#x27;s+https://download.docker.com+https://mirrors.tuna.tsinghua.edu.cn/docker-ce+&#x27; /etc/yum.repos.d/docker-ce.repo</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>安装 Docker</p>
+<p>更新一下 yum 软件源的缓存，并安装 Docker。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum update</span><br><span class="line">yum install docker-ce</span><br></pre></td></tr></table></figure>
+
+<p>至此，Docker 已经安装完成了，Docker 服务是没有启动的，操作系统里的 docker 组被创建，但是没有用户在这个组里。</p>
+<p># Install docker-compose</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -L https://github.com/docker/compose/releases/download/2.29.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose</span><br><span class="line"></span><br><span class="line">chmod +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong></p>
+<p> 默认的 docker 组是没有用户的（也就是说需要使用 sudo 才能使用 docker 命令）。</p>
+<p>您可以将用户添加到 docker 组中（此用户就可以直接使用 docker 命令了）。</p>
+<p>加入 docker 用户组命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">whoami</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">#记录下当前用户名</span></span></span><br><span class="line">usermod -a -G docker USERNAME # Add current user to the docker group</span><br></pre></td></tr></table></figure>
+
+<p>启动 Docker</p>
+<p>如果想添加到开机启动</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable docker</span><br></pre></td></tr></table></figure>
+
+<p>启动 docker 服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start docker</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240717-%E5%88%86%E5%8C%BA%E6%8E%92%E5%BA%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20240717-%E5%88%86%E5%8C%BA%E6%8E%92%E5%BA%8F/" class="post-title-link" itemprop="url">Untitled</a>
         </h2>
 
         <div class="post-meta">
@@ -268,7 +550,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2024-03-04 09:20:34 / Modified: 09:58:33" itemprop="dateCreated datePublished" datetime="2024-03-04T09:20:34+08:00">2024-03-04</time>
+              <time title="Created: 2024-07-17 18:57:34 / Modified: 19:04:57" itemprop="dateCreated datePublished" datetime="2024-07-17T18:57:34+08:00">2024-07-17</time>
             </span>
 
           
@@ -282,18 +564,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>解决 访问http自动跳转到https的问题</p>
-<p>1、先访问http域名，然后点击地址栏所测那个“不安全”的警告，弹出对话框中选择网站设置，</p>
-<p><img src="../images/2024-03-04-09.37.38.png" alt="2024-03-04-09.37.38"></p>
-<p>2、然后再下面的不安全内容后面的下拉框中选择<strong>允许</strong></p>
-<p><img src="../images/2024-03-04-09.37.47.png" alt="2024-03-04-09.37.47"></p>
-<p>3、在地址栏输入: chrome://net-internals/#hsts</p>
-<img src="../images/截屏2024-03-04 09.53.37.png" alt="截屏2024-03-04 09.53.37" style="zoom: 67%;" />
+          <p>分区排序</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span>   baseinfo_tb_b_carclass m <span class="keyword">INNER</span> <span class="keyword">JOIN</span> (</span><br><span class="line"><span class="keyword">select</span> brand_id,class_id ,<span class="built_in">ROW_NUMBER</span>() <span class="keyword">OVER</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> BRAND_ID <span class="keyword">ORDER</span> <span class="keyword">BY</span> class_id,class_name) <span class="keyword">AS</span> sub_index</span><br><span class="line"><span class="keyword">from</span> baseinfo_tb_b_carclass m1 </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> brand_id ,class_id</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> brand_id,sub_index</span><br><span class="line">) mi </span><br><span class="line"><span class="keyword">on</span> mi.class_id<span class="operator">=</span>m.class_id  </span><br><span class="line"><span class="keyword">set</span> m.show_order<span class="operator">=</span>mi.sub_index;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">update</span> baseinfo_tb_b_carclass <span class="keyword">set</span> show_order<span class="operator">=</span><span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">update</span>   baseinfo_tb_b_carclass m <span class="keyword">INNER</span> <span class="keyword">JOIN</span> (</span><br><span class="line"><span class="keyword">select</span> brand_id,class_id ,<span class="built_in">ROW_NUMBER</span>() <span class="keyword">OVER</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> BRAND_ID <span class="keyword">ORDER</span> <span class="keyword">BY</span> class_id,class_name) <span class="keyword">AS</span> sub_index</span><br><span class="line"><span class="keyword">from</span> baseinfo_tb_b_carclass m1 </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> brand_id ,class_id</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> brand_id,sub_index</span><br><span class="line">) mi </span><br><span class="line"><span class="keyword">on</span> mi.class_id<span class="operator">=</span>m.class_id  </span><br><span class="line"><span class="keyword">set</span> m.show_order<span class="operator">=</span>mi.sub_index;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> m1.id,m1.dim,m1.dim_real,m1.cal_order,m1.show_order, m1.cal_order <span class="operator">+</span> mi.sub_index <span class="operator">*</span> POW(<span class="number">100</span>, mi.pow),mi.pow,mi.sub_index,POW(<span class="number">100</span>, mi.pow)</span><br><span class="line"><span class="keyword">from</span>  cem_metrics m1 <span class="keyword">INNER</span> <span class="keyword">JOIN</span> (<span class="keyword">select</span> <span class="keyword">distinct</span> store , dim, sub_code,  sub_index,pow</span><br><span class="line"><span class="keyword">from</span> cem_metrics m2</span><br><span class="line"><span class="keyword">where</span> m2.dim <span class="keyword">like</span> &quot;%_$&quot; <span class="keyword">and</span> m2.sub_code <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">and</span> m2.sub_code <span class="operator">!=</span><span class="string">&#x27;0&#x27;</span>  ) mi</span><br><span class="line"><span class="keyword">on</span>  mi.store<span class="operator">=</span>m1.store <span class="keyword">and</span> mi.dim<span class="operator">=</span>m1.dim_root <span class="keyword">and</span> mi.sub_code <span class="operator">=</span> m1.sub_code</span><br><span class="line"> <span class="keyword">where</span> m1.variable<span class="operator">=</span><span class="number">1</span></span><br><span class="line"><span class="keyword">and</span> m1.sub_code <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span> </span><br><span class="line"><span class="keyword">and</span> m1.sub_code <span class="operator">!=</span><span class="string">&#x27;0&#x27;</span></span><br><span class="line"><span class="keyword">and</span> m1.store <span class="operator">=</span> <span class="string">&#x27;nm00012164&#x27;</span></span><br><span class="line"><span class="keyword">and</span> m1.month<span class="operator">=</span><span class="number">4</span></span><br><span class="line"><span class="keyword">and</span> m1.dim <span class="keyword">like</span> <span class="string">&#x27;REV_YS_FIN_NC_FY_$%&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> m1.id,m1.dim,m1.dim_real,m1.cal_order,m1.show_order, m1.cal_order <span class="operator">+</span> mi.sub_index <span class="operator">*</span> POW(<span class="number">100</span>, mi.pow),mi.pow,mi.sub_index,POW(<span class="number">100</span>, mi.pow)</span><br><span class="line"><span class="keyword">from</span>  cem_metrics m1 <span class="keyword">INNER</span> <span class="keyword">JOIN</span> (<span class="keyword">select</span> <span class="keyword">distinct</span> store , dim, sub_code,  sub_index,pow</span><br><span class="line"><span class="keyword">from</span> cem_metrics m2</span><br><span class="line"><span class="keyword">where</span> m2.dim <span class="keyword">like</span> &quot;%_$&quot; <span class="keyword">and</span> m2.sub_code <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">and</span> m2.sub_code <span class="operator">!=</span><span class="string">&#x27;0&#x27;</span>  ) mi</span><br><span class="line"><span class="keyword">on</span>  mi.store<span class="operator">=</span>m1.store <span class="keyword">and</span> mi.dim<span class="operator">=</span>m1.dim_root <span class="keyword">and</span> mi.sub_code <span class="operator">=</span> m1.sub_code</span><br><span class="line"> <span class="keyword">where</span> m1.variable<span class="operator">=</span><span class="number">1</span></span><br><span class="line"><span class="keyword">and</span> m1.sub_code <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span> </span><br><span class="line"><span class="keyword">and</span> m1.sub_code <span class="operator">!=</span><span class="string">&#x27;0&#x27;</span></span><br><span class="line"><span class="keyword">and</span> m1.store <span class="operator">=</span> <span class="string">&#x27;nm00012164&#x27;</span></span><br><span class="line"><span class="keyword">and</span> m1.month<span class="operator">=</span><span class="number">6</span></span><br><span class="line"><span class="keyword">and</span> m1.dim <span class="keyword">like</span> <span class="string">&#x27;REV_YS_FIN_NC_FY_%&#x27;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="keyword">update</span> cem_metrics m1 <span class="keyword">INNER</span> <span class="keyword">JOIN</span> (<span class="keyword">select</span> <span class="keyword">distinct</span> store , dim, sub_code,  sub_index,pow</span><br><span class="line"><span class="keyword">from</span> cem_metrics m2</span><br><span class="line"><span class="keyword">where</span> m2.dim <span class="keyword">like</span> &quot;%_$&quot; <span class="keyword">and</span> m2.sub_code <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">and</span> m2.sub_code <span class="operator">!=</span><span class="string">&#x27;0&#x27;</span>  ) mi</span><br><span class="line"><span class="keyword">on</span>  mi.store<span class="operator">=</span>m1.store <span class="keyword">and</span> mi.dim<span class="operator">=</span>m1.dim_root <span class="keyword">and</span> mi.sub_code <span class="operator">=</span> m1.sub_code</span><br><span class="line"><span class="keyword">set</span> m1.show_order<span class="operator">=</span>m1.cal_order <span class="operator">+</span> mi.sub_index <span class="operator">*</span> POW(<span class="number">100</span>, <span class="number">2</span>)</span><br><span class="line"><span class="keyword">where</span> m1.variable<span class="operator">=</span><span class="number">1</span></span><br><span class="line"><span class="keyword">and</span> m1.sub_code <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span> </span><br><span class="line"><span class="keyword">and</span> m1.sub_code <span class="operator">!=</span><span class="string">&#x27;0&#x27;</span></span><br><span class="line"><span class="keyword">and</span> m1.store <span class="operator">=</span> <span class="string">&#x27;nm00012164&#x27;</span></span><br><span class="line"><span class="keyword">and</span> m1.month<span class="operator">=</span><span class="number">4</span></span><br><span class="line"><span class="keyword">and</span> m1.dim <span class="keyword">like</span> <span class="string">&#x27;BAS_NC_INVCNT_DEC_SUB%&#x27;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">update</span> cem_metrics m</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> cem_dim d </span><br><span class="line"><span class="keyword">on</span> d.code <span class="operator">=</span> m.dim</span><br><span class="line"><span class="keyword">set</span> m.name <span class="operator">=</span> d.name,m.cal_order<span class="operator">=</span>d.cal_order,m.show_order<span class="operator">=</span>d.cal_order,m.dim_parent <span class="operator">=</span> d.parent_id</span><br><span class="line">,m.dim_root<span class="operator">=</span>d.root_id,m.pow<span class="operator">=</span>d.pow,m.variable<span class="operator">=</span>d.variable,m.val_type<span class="operator">=</span>d.val_type ;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">update</span>   cem_metrics m <span class="keyword">INNER</span> <span class="keyword">JOIN</span> (<span class="keyword">select</span> store , dim, sub_code,<span class="built_in">ROW_NUMBER</span>() <span class="keyword">OVER</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> store,dim <span class="keyword">ORDER</span> <span class="keyword">BY</span> store,dim) <span class="keyword">AS</span> sub_index</span><br><span class="line"><span class="keyword">from</span> cem_metrics m1 </span><br><span class="line"><span class="keyword">where</span>   dim <span class="keyword">like</span> &quot;%_$&quot; <span class="keyword">and</span> sub_code <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">and</span> sub_code <span class="operator">!=</span><span class="string">&#x27;0&#x27;</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> store,dim, sub_code</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> store,dim, sub_code) mi </span><br><span class="line"><span class="keyword">on</span> mi.store<span class="operator">=</span>m.store <span class="keyword">and</span> mi.dim<span class="operator">=</span>m.dim <span class="keyword">and</span> mi.sub_code <span class="operator">=</span> m.sub_code</span><br><span class="line"><span class="keyword">set</span> m.sub_index<span class="operator">=</span>mi.sub_index;</span><br><span class="line"></span><br><span class="line"><span class="keyword">update</span>  cem_metrics m </span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> cem_dim dim <span class="keyword">on</span> dim.code <span class="operator">=</span> m.dim <span class="keyword">and</span> dim.has_sub_detail<span class="operator">=</span><span class="number">1</span> <span class="keyword">and</span> dim.sub_detail_type<span class="operator">=</span><span class="number">1</span></span><br><span class="line"><span class="keyword">inner</span> <span class="keyword">join</span> baseinfo_tb_b_carclass c <span class="keyword">on</span> c.CLASS_CODE <span class="operator">=</span>m.sub_code</span><br><span class="line"><span class="keyword">set</span> m.sub_index <span class="operator">=</span>c.show_order;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">update</span> cem_metrics <span class="keyword">set</span> show_order<span class="operator">=</span>cal_order;</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> <span class="keyword">select</span> m1.id,m1.dim,m1.dim_root,m1.cal_order,m1.pow,mi.cal_order,mi.show_order,<span class="keyword">CONVERT</span>(mi.show_order <span class="operator">+</span> m1.sub_index <span class="operator">*</span> POW(<span class="number">100</span>, m1.pow),<span class="type">char</span>)</span><br><span class="line"><span class="keyword">from</span> 	cem_metrics m1 <span class="keyword">INNER</span> <span class="keyword">JOIN</span> (<span class="keyword">select</span> <span class="keyword">distinct</span> store , dim,dim_root, sub_code,  sub_index,pow,cal_order,show_order</span><br><span class="line"><span class="keyword">from</span> cem_metrics m2</span><br><span class="line"><span class="keyword">where</span> m2.dim <span class="keyword">like</span> &quot;%_$&quot;  <span class="keyword">and</span> m2.dim_root<span class="operator">=</span>m2.dim  <span class="keyword">and</span> m2.sub_code <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">and</span> m2.sub_code <span class="operator">!=</span><span class="string">&#x27;0&#x27;</span>  ) mi</span><br><span class="line"><span class="keyword">on</span>  mi.store<span class="operator">=</span>m1.store <span class="keyword">and</span> mi.dim<span class="operator">=</span>m1.dim_root <span class="keyword">and</span> mi.sub_code <span class="operator">=</span> m1.sub_code</span><br><span class="line"><span class="keyword">where</span> m1.variable<span class="operator">=</span><span class="number">1</span></span><br><span class="line"><span class="keyword">and</span> m1.dim <span class="operator">!=</span> m1.dim_root</span><br><span class="line"><span class="keyword">and</span> m1.dim <span class="operator">=</span><span class="string">&#x27;REV_NC_SALE_RETAIL_$_AVG&#x27;</span></span><br><span class="line"><span class="keyword">and</span> m1.store<span class="operator">=</span><span class="string">&#x27;nm00012164&#x27;</span></span><br><span class="line"><span class="keyword">and</span> m1.`<span class="keyword">month</span>`<span class="operator">=</span><span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">update</span> cem_metrics    </span><br><span class="line"><span class="keyword">set</span> show_order<span class="operator">=</span>cal_order <span class="operator">+</span> sub_index <span class="operator">*</span> POW(<span class="number">100</span>, pow)</span><br><span class="line"><span class="keyword">where</span>  dim <span class="keyword">like</span> &quot;%_$&quot; <span class="keyword">and</span> dim_root<span class="operator">=</span>dim  <span class="keyword">and</span>  sub_code <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">and</span>  sub_code <span class="operator">!=</span><span class="string">&#x27;0&#x27;</span>  </span><br><span class="line"> <span class="keyword">and</span> variable<span class="operator">=</span><span class="number">1</span>;</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> <span class="keyword">update</span> cem_metrics m1 <span class="keyword">INNER</span> <span class="keyword">JOIN</span> (<span class="keyword">select</span> <span class="keyword">distinct</span> store , dim, sub_code,  sub_index,pow,cal_order,show_order</span><br><span class="line"><span class="keyword">from</span> cem_metrics m2</span><br><span class="line"><span class="keyword">where</span> m2.dim <span class="keyword">like</span> &quot;%_$&quot;  <span class="keyword">and</span> m2.dim_root<span class="operator">=</span>m2.dim  <span class="keyword">and</span> m2.sub_code <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">and</span> m2.sub_code <span class="operator">!=</span><span class="string">&#x27;0&#x27;</span>  ) mi</span><br><span class="line"><span class="keyword">on</span>  mi.store<span class="operator">=</span>m1.store <span class="keyword">and</span> mi.dim<span class="operator">=</span>m1.dim_root <span class="keyword">and</span> mi.sub_code <span class="operator">=</span> m1.sub_code</span><br><span class="line"><span class="keyword">set</span> m1.show_order<span class="operator">=</span>mi.show_order <span class="operator">+</span> m1.sub_index <span class="operator">*</span> POW(<span class="number">100</span>, m1.pow)</span><br><span class="line"><span class="keyword">where</span> m1.variable<span class="operator">=</span><span class="number">1</span></span><br><span class="line"><span class="keyword">and</span> m1.dim <span class="operator">!=</span> m1.dim_root;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">update</span> cem_metrics m</span><br><span class="line"><span class="keyword">set</span> m.show_name <span class="operator">=</span> m.name ;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">update</span> cem_metrics m</span><br><span class="line"><span class="keyword">set</span> m.show_name <span class="operator">=</span> m.sub_name</span><br><span class="line"><span class="keyword">where</span>   m.dim <span class="keyword">like</span> &quot;%_$&quot; <span class="keyword">and</span> m.sub_code <span class="operator">!=</span><span class="string">&#x27;0&#x27;</span> <span class="keyword">and</span>  m.sub_code <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">update</span> cem_metrics <span class="keyword">set</span> dim_real <span class="operator">=</span> dim   <span class="keyword">where</span> variable<span class="operator">=</span><span class="number">0</span>;</span><br><span class="line"> <span class="keyword">update</span> cem_metrics <span class="keyword">set</span> dim_real <span class="operator">=</span>replace(dim,&quot;$&quot;,sub_code)  <span class="keyword">where</span> variable<span class="operator">=</span><span class="number">1</span>;</span><br><span class="line">  <span class="keyword">update</span> cem_metrics <span class="keyword">set</span> dim_real_parent <span class="operator">=</span> dim_parent   <span class="keyword">where</span> variable<span class="operator">=</span><span class="number">0</span>;</span><br><span class="line"> <span class="keyword">update</span> cem_metrics <span class="keyword">set</span> dim_real_parent <span class="operator">=</span>replace(dim_parent,&quot;$&quot;,sub_code)  <span class="keyword">where</span> variable<span class="operator">=</span><span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>4、找到底部Delete domain security policies一栏，输入想处理的域名，点击delete。</p>
-<img src="../images/截屏2024-03-04 09.53.51.png" alt="截屏2024-03-04 09.53.51" style="zoom:67%;" />
-
-<p>5、搞定了，再次访问http域名不再自动跳转https了。</p>
 
       
     </div>
@@ -313,7 +586,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240226pytorch%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240712-%E5%AF%B9nginx%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%A4%87%E4%BB%BD%E5%92%8C%E5%88%A0%E9%99%A4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -327,7 +600,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/20240226pytorch%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/" class="post-title-link" itemprop="url">20240226pytorch学习之路</a>
+            <a href="/20240712-%E5%AF%B9nginx%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%A4%87%E4%BB%BD%E5%92%8C%E5%88%A0%E9%99%A4/" class="post-title-link" itemprop="url">Untitled</a>
         </h2>
 
         <div class="post-meta">
@@ -337,15 +610,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2024-02-26 09:20:34" itemprop="dateCreated datePublished" datetime="2024-02-26T09:20:34+08:00">2024-02-26</time>
+              <time title="Created: 2024-07-12 09:36:23" itemprop="dateCreated datePublished" datetime="2024-07-12T09:36:23+08:00">2024-07-12</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:07:02" itemprop="dateModified" datetime="2024-03-04T10:07:02+08:00">2024-03-04</time>
-              </span>
 
           
 
@@ -358,150 +624,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>pytorch学习之路</p>
-<p>pytorch包含以下组件</p>
-<p>torch: 一个像numpy 向量库</p>
-<p>torch.autograd 自动微分库，支持所有微分向量运算</p>
-<p>torch.jit 一个编译栈，从pytorch代码来创建可序列化、可以优化的模型</p>
-<p>torch.nn 神经元网络库，设计之初保持了最大化灵活性，深度继承了求导库</p>
-<p>torch.multiprocessing 多处理，在torch 向量访问处理器时使用了魔术化的内存共享。在数据加载和疯狂的训练模型的时候非常有用。</p>
-<p>torch。utils 数据记在和其他功能</p>
-<p>通常pytorch用作两个方面：</p>
-<p>1、替代numpy来使用gpu</p>
-<p>2、提供最大灵活性和速度的深度学习研究平台</p>
-<p>动态神经元网络：使用磁带记录仪回放这种独特的方法来创建神经元网络。</p>
-<p>pytorch使用反向模式自动微分技术，让我们经常零成本的改变网络行为；我们的灵感来自于这篇文章的几个研究报告。</p>
-<p>这个技术不是pytorch独有的。这是目前为止最快速的实现。你可以为你疯狂的研究获得最快的速度和灵活性。</p>
-<p>pytorch不是一个整体绑定到 c++框架的。他是深度集成到python中。你可以像使用numpy scipy scikit-learn一样自然的使用它。你可以写你自己全新神经元网络，使用你喜欢的库和包。我们的目标是不重复造轮子。</p>
-<p>必要的经验</p>
-<p>pytorch设计为只觉得、线性的思考、简单易用。当你执行一行代码，他被执行了。在现实世界中他不是异步视图。当你调试一行代码或者接收到错误信息和堆栈跟踪，理解他们是很直观的。堆栈调用之初你的代码在哪里被定义。我们希望你不要因为坏的堆栈调用、异步执行和不透明的执行引擎而花费时间调试你的代码。</p>
-<p>快速和学习</p>
-<p>pytorch有最小的框架成本。我们继承了加速库像intel MKL 和nvidia（cuDNN nccl)去最大化速度。最核心的，他核心的cpu gpu向量和神经元网络是成熟的并且经过多年测试的。</p>
-<p>因此，pytorch是非常快的，无论执行小规模还是大规模的模型。</p>
-<p>无痛扩展</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>二进制，命令行通过conda 或者pip 安装 参照： <a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">https://pytorch.org/get-started/locally/</a></p>
-<p>源代码安装</p>
-<p>需要满足：python 3.8+；编译器全面支持C++17，像clang或者gcc（gcc 9.4.0或者最新）</p>
-<p>强烈推荐安装conda环境。</p>
-<p>如果想要编译cuda支持，从我们的支持矩阵里选择一个我们支持的版本<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">select a supported version of CUDA from our support matrix</a>。然后安装nvidia cuda ,nvidia cuDNN v8.5 + ,CUDA兼容的编译器。</p>
-<p>如果要禁用CUDA，设置环境变量 USE_CUDA=0 .其它有用的环境变量在setup.py中。</p>
-<h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h4><h4 id="Get-the-PyTorch-Source"><a href="#Get-the-PyTorch-Source" class="headerlink" title="Get the PyTorch Source"></a>Get the PyTorch Source</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone --recursive https://github.com/pytorch/pytorch</span><br><span class="line">cd pytorch</span><br><span class="line"># if you are updating an existing checkout</span><br><span class="line">git submodule sync</span><br><span class="line">git submodule update --init --recursive</span><br></pre></td></tr></table></figure>
+          <p>对nginx日志文件进行备份和删除</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment">###########定时器（手动复制以下命令执行）############################################</span></span><br><span class="line"><span class="comment">#######每天凌晨执行###########</span></span><br><span class="line"><span class="comment">#crontab -e</span></span><br><span class="line"><span class="comment">#1 0 0 * * ? /data/log/rotate.sh</span></span><br><span class="line"><span class="comment">#systemctl start crond</span></span><br><span class="line"><span class="comment">#systemctl enable crond</span></span><br><span class="line"><span class="comment">###########定时器####################################################################</span></span><br><span class="line"><span class="comment">#/bin/sh: /data/log/rotate.sh: 权限不够</span></span><br><span class="line"><span class="comment">#执行以下命令</span></span><br><span class="line"><span class="comment">#find . -name &#x27;rotate.sh&#x27; | xargs chmod 775</span></span><br><span class="line"><span class="comment">##########nginx压缩##################################################################</span></span><br><span class="line">DATE=$(<span class="built_in">date</span> +<span class="string">&#x27;%Y%m%d%H%M%S&#x27;</span>)</span><br><span class="line"><span class="comment">##########nginx的路径################################################################</span></span><br><span class="line">nginx_log_path=/data/log/nginx</span><br><span class="line"><span class="comment">##########nginx日志备份的路径########################################################</span></span><br><span class="line">nginx_log_bak_path=/data/log/nginx</span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> -p <span class="variable">$nginx_log_bak_path</span>/<span class="variable">$DATE</span></span><br><span class="line"><span class="built_in">mv</span> <span class="variable">$nginx_log_path</span>/logs/access.log <span class="variable">$nginx_log_bak_path</span>/<span class="variable">$DATE</span>/access.<span class="variable">$DATE</span>.<span class="built_in">log</span></span><br><span class="line"><span class="built_in">mv</span> <span class="variable">$nginx_log_path</span>/logs/error.log <span class="variable">$nginx_log_bak_path</span>/<span class="variable">$DATE</span>/error.<span class="variable">$DATE</span>.<span class="built_in">log</span></span><br><span class="line"><span class="built_in">mv</span> <span class="variable">$nginx_log_path</span>/logs/dongge-access.log <span class="variable">$nginx_log_bak_path</span>/<span class="variable">$DATE</span>/dongge-access.<span class="variable">$DATE</span>.<span class="built_in">log</span></span><br><span class="line"><span class="built_in">mv</span> <span class="variable">$nginx_log_path</span>/logs/dongge-error.log <span class="variable">$nginx_log_bak_path</span>/<span class="variable">$DATE</span>/dongge-error.<span class="variable">$DATE</span>.<span class="built_in">log</span></span><br><span class="line"><span class="built_in">mv</span> <span class="variable">$nginx_log_path</span>/logs/newerp-access.log <span class="variable">$nginx_log_bak_path</span>/<span class="variable">$DATE</span>/newerp-access.<span class="variable">$DATE</span>.<span class="built_in">log</span></span><br><span class="line"><span class="built_in">mv</span> <span class="variable">$nginx_log_path</span>/logs/newerp-error.log <span class="variable">$nginx_log_bak_path</span>/<span class="variable">$DATE</span>/newerp-error.<span class="variable">$DATE</span>.<span class="built_in">log</span></span><br><span class="line"><span class="built_in">mv</span> <span class="variable">$nginx_log_path</span>/logs/olderp-access.log <span class="variable">$nginx_log_bak_path</span>/<span class="variable">$DATE</span>/olderp-access.<span class="variable">$DATE</span>.<span class="built_in">log</span></span><br><span class="line"><span class="built_in">mv</span> <span class="variable">$nginx_log_path</span>/logs/olderp-error.log <span class="variable">$nginx_log_bak_path</span>/<span class="variable">$DATE</span>/olderp-error.<span class="variable">$DATE</span>.<span class="built_in">log</span></span><br><span class="line"><span class="built_in">kill</span> -USR1 `<span class="built_in">cat</span> /var/run/nginx.pid/nginx.pid`</span><br><span class="line"><span class="built_in">sleep</span> 1</span><br><span class="line">gzip <span class="variable">$nginx_log_bak_path</span>/<span class="variable">$DATE</span>/access.<span class="variable">$DATE</span>.<span class="built_in">log</span></span><br><span class="line">gzip <span class="variable">$nginx_log_bak_path</span>/<span class="variable">$DATE</span>/error.<span class="variable">$DATE</span>.<span class="built_in">log</span></span><br><span class="line">gzip <span class="variable">$nginx_log_bak_path</span>/<span class="variable">$DATE</span>/dongge-access.<span class="variable">$DATE</span>.<span class="built_in">log</span></span><br><span class="line">gzip <span class="variable">$nginx_log_bak_path</span>/<span class="variable">$DATE</span>/dongge-error.<span class="variable">$DATE</span>.<span class="built_in">log</span></span><br><span class="line">gzip <span class="variable">$nginx_log_bak_path</span>/<span class="variable">$DATE</span>/newerp-access.<span class="variable">$DATE</span>.<span class="built_in">log</span></span><br><span class="line">gzip <span class="variable">$nginx_log_bak_path</span>/<span class="variable">$DATE</span>/newerp-error.<span class="variable">$DATE</span>.<span class="built_in">log</span></span><br><span class="line">gzip <span class="variable">$nginx_log_bak_path</span>/<span class="variable">$DATE</span>/olderp-access.<span class="variable">$DATE</span>.<span class="built_in">log</span></span><br><span class="line">gzip <span class="variable">$nginx_log_bak_path</span>/<span class="variable">$DATE</span>/olderp-error.<span class="variable">$DATE</span>.<span class="built_in">log</span></span><br><span class="line"><span class="comment">#########nginx压缩####################################################################</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#########删除文件（仅保存180天的备份数据）############################################</span></span><br><span class="line">find <span class="variable">$nginx_log_bak_path</span> -mtime +30 -name <span class="string">&quot;*.log&quot;</span> -<span class="built_in">exec</span> <span class="built_in">rm</span> -rf &#123;&#125; \;</span><br><span class="line"><span class="comment">################################删除文件##############################################</span></span><br></pre></td></tr></table></figure>
 
-
-
-<p>通用</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda install cmake ninja</span><br><span class="line"># Run this command from the PyTorch directory after cloning the source code using the “Get the PyTorch Source“ section below</span><br><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
-
-<p><strong>On Linux</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">conda install intel::mkl-static intel::mkl-include</span><br><span class="line"># CUDA only: Add LAPACK support for the GPU if needed</span><br><span class="line">conda install -c pytorch magma-cuda110  # or the magma-cuda* that matches your CUDA version from https://anaconda.org/pytorch/repo</span><br><span class="line"></span><br><span class="line"># (optional) If using torch.compile with inductor/triton, install the matching version of triton</span><br><span class="line"># Run from the pytorch directory after cloning</span><br><span class="line">make triton</span><br></pre></td></tr></table></figure>
-
-<p><strong>On MacOS</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Add this package on intel x86 processor machines only</span><br><span class="line">conda install intel::mkl-static intel::mkl-include</span><br><span class="line"># Add these packages if torch.distributed is needed</span><br><span class="line">conda install pkg-config libuv</span><br></pre></td></tr></table></figure>
-
-<p><strong>On Windows</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">conda install intel::mkl-static intel::mkl-include</span><br><span class="line"># Add these packages if torch.distributed is needed.</span><br><span class="line"># Distributed package support on Windows is a prototype feature and is subject to changes.</span><br><span class="line">conda install -c conda-forge libuv=1.39</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="Install-PyTorch"><a href="#Install-PyTorch" class="headerlink" title="Install PyTorch"></a>Install PyTorch</h4><p><strong>On macOS</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 setup.py develop</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240219-sd%E6%A8%A1%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/20240219-sd%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">20240219-sd模型</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-02-19 00:00:00" itemprop="dateCreated datePublished" datetime="2024-02-19T00:00:00+08:00">2024-02-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 09:59:24" itemprop="dateModified" datetime="2024-03-04T09:59:24+08:00">2024-03-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>20240219-sd模型</p>
-<p>常见的模型有以下几类：</p>
-<ul>
-<li><strong>Base 模型：</strong> 就是最常见的 AI 文生图模型，输入一段文字指令，AI 会根据你的指令生成图片。较常见的有 Stable Diffusion v1.5，Stable Diffusion XL 等。</li>
-<li><strong>LoRA 模型：</strong> 你可以简单将其理解为一种滤镜模型。通过它能生成更特殊的图片，比如在 Workflow 中加载线稿 LoRA 模型，就可以生成线稿风格的图片。甚至还有一些 LoRA 模型能让 AI 生成特定样貌的人物，比如一些名人的 LoRA，加载这种模型后，就可以生成特定的名人。但需要注意，这种模型没法脱离 Base 模型使用，这就意味着你需要先下载 Base 模型，然后再下载对应的 LoRA 模型才行。</li>
-<li><strong>Inpainting 模型：</strong> 如果你想要修改某张图片，比如去掉某个物体，或者修复某个物体，那么你就需要使用 Inpainting 模型。这种模型输入一张图片，然后输入一个遮罩，AI 会根据遮罩修复图片。这个模型可以单独使用。</li>
-<li><strong>Upscale 模型：</strong> 如果你想将一张图片放大，那么你就需要使用 Upscale 模型。这种模型输入一张图片，然后输入一个倍数，AI 会根据倍数放大图片。这个模型也可以单独使用。</li>
-<li><strong>ControlNet 模型：</strong> 如果你想控制图片中某个物体出现的位置，或者人物的站姿，那么你就需要使用 ControlNet 模型。但需要注意这个模型和 LoRA 类似，不能脱离 Base 模型使用。</li>
-<li><strong>图生视频模型：</strong> 这种模型输入一段文字指令，AI 会根据你的指令将图片转为视频。</li>
-</ul>
-<p>AI 生图模型需要大量的计算资源，如果你的电脑配置不够，那么即使你下载了模型，也可能无法运行，或者运行起来会很慢，生成一张图片可能要 30 ～ 40 秒。按照前面提到的类型，不同类型的模型对电脑配置的要求也不同。</p>
-<p>对配置影响最大的应该是 Base、Inpainting 还有图生视频模型。目前，市面上没有一个官方统一的 AI 模型运行配置要求，但根据我的经验：</p>
-<ul>
-<li>Base &amp; Inpainting 模型：<ul>
-<li>如果你是 Windows 电脑，显存小于 6G，或者是 M 系列的 MacBook 内存小于 16G，我会推荐你使用 Stable Diffusion v1.5 或者基于此模型微调后的模型。</li>
-<li>如果你的电脑配置比较好，显存大于 8G，或者 M 系列的 MacBook 内存大于 16G，我则会推荐你使用 Stable Diffusion XL 或者基于此模型微调后的模型。</li>
-</ul>
-</li>
-<li>如果你想使用图生视频模型，或者图片生视频模型，那么你的显存最好大于 16G，且最好使用 Nvidia 的显卡。不然基本很难将模型运行起来。</li>
-</ul>
-<p>如果你是初学者，我会推荐你使用 DreamShaper 这个模型，它有基于 SDv1.5 的 Base 模型，也有基于 SDXL 的版本。同时配套也很不错。有 Inpainting 模型，也有 LCM 模型等。而且生成的效果也很不错。</p>
-<h2 id="DreamShaper-系列模型"><a href="#DreamShaper-系列模型" class="headerlink" title="DreamShaper 系列模型"></a>DreamShaper 系列模型</h2><p>如果只推荐一个模型的话，我会推荐 DreamShaper，首先它的成像质量不差，整体质感有点像 Midjourney。</p>
-<p>其次，它的 SD v1.5 版本模型大小也不是很大，甚至比基础模型还要小一点点。</p>
-<p>最后，也是我最喜欢的一点，它的配套模型比较丰富。有 LCM、Inpainting 模型，还有基于 SDXL Turbo 微调的模型。 对于电脑配置较差的朋友，我推荐你们使用 SD v1.5 的模型，即它的 V8.0 版本。</p>
-<h4 id="DreamShaper-XL"><a href="#DreamShaper-XL" class="headerlink" title="DreamShaper XL"></a>DreamShaper XL</h4><p><a target="_blank" rel="noopener" href="https://civitai.com/models/112902/dreamshaper-xl">https://civitai.com/models/112902/dreamshaper-xl</a></p>
-<h2 id="Realistic-风格模型"><a href="#Realistic-风格模型" class="headerlink" title="Realistic 风格模型"></a>Realistic 风格模型</h2><p>如果你主要是以生成人像为主，那么 Realistic 风格模型是一个不错的选择。他们生成的人像质量比较高，且看起来更加真实。以下是两个基于 SD v1.5 微调的模型。</p>
-<p><a target="_blank" rel="noopener" href="https://civitai.com/models/43331/majicmix-realistic">https://civitai.com/models/43331/majicmix-realistic</a></p>
-<p>一般你会看到两种后缀的模型：</p>
-<ul>
-<li><strong>safetensors</strong>：这种模型一般用的是 numpy 格式保存，这就意味着它只保存了张量数据，没有任何代码，加载这类文件会更安全和更快。</li>
-<li><strong>ckpt</strong>：这种文件是序列化过的，这意味着它们可能会包含一些恶意代码，加载这类模型就可能会带来安全风险。</li>
-</ul>
-<p>所以在上述的案例中，我会推荐你下载 safetensors 格式的模型。</p>
-<p>另外，我建议你在搜索模型的时候，需要看看是不是该模型的官方发的，一般我会看模型的下载数，一般下载数越多的模型，越有可能是官方发的。</p>
 
       
     </div>
@@ -521,7 +646,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240218-%E7%94%A8diffusers%E6%90%AD%E5%BB%BAstable%20diffusion/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240701oracle%E7%B3%BB%E7%BB%9F%E9%94%99%E8%AF%AF%E4%BF%AE%E5%A4%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -535,7 +660,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/20240218-%E7%94%A8diffusers%E6%90%AD%E5%BB%BAstable%20diffusion/" class="post-title-link" itemprop="url">20240218-用diffusers搭建stable diffusion</a>
+            <a href="/20240701oracle%E7%B3%BB%E7%BB%9F%E9%94%99%E8%AF%AF%E4%BF%AE%E5%A4%8D/" class="post-title-link" itemprop="url">Untitled</a>
         </h2>
 
         <div class="post-meta">
@@ -545,15 +670,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2024-02-18 17:25:25" itemprop="dateCreated datePublished" datetime="2024-02-18T17:25:25+08:00">2024-02-18</time>
+              <time title="Created: 2024-07-01 09:11:28" itemprop="dateCreated datePublished" datetime="2024-07-01T09:11:28+08:00">2024-07-01</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:00:57" itemprop="dateModified" datetime="2024-03-04T10:00:57+08:00">2024-03-04</time>
-              </span>
 
           
 
@@ -566,168 +684,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>参照  <a target="_blank" rel="noopener" href="https://huggingface.co/docs/diffusers/api/pipelines/stable_diffusion/text2img#diffusers.StableDiffusionPipeline.__call__.negative_prompt">diffusers api</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">conda create -n dfu python=3.10.13</span><br><span class="line">conda activate dfu</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pip install diffusers --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple some-package</span><br><span class="line"></span><br><span class="line">pip install transformers==4.27.0 accelerate==0.12.0 invisible_watermark -i https://pypi.tuna.tsinghua.edu.cn/simple some-package</span><br><span class="line"></span><br><span class="line">conda install jupyter</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pip install diffusers transformers scipy ftfy </span><br><span class="line"></span><br><span class="line">pip install git+https://github.com/huggingface/accelerate</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <p>oracle系统错误修复</p>
+<p>某次重启服务器后，oracle提示：</p>
+<p>ORA-01034: ORACLE not available<br>ORA-27101: shared memory realm does not exist<br>Linux-x86_64 Error: 2: No such file or directory</p>
+<p>google查询知道 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/6555827/ora-01034-oracle-not-available-ora-27101-shared-memory-realm-does-not-exist">https://stackoverflow.com/questions/6555827/ora-01034-oracle-not-available-ora-27101-shared-memory-realm-does-not-exist</a></p>
+<p>Open command prompt and execute the below commands:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> oracle_sid<span class="operator">=</span>DATABASE NAME</span><br><span class="line">sqlplus <span class="operator">/</span>nolog</span><br><span class="line">conn sys<span class="operator">/</span>sys <span class="keyword">as</span> sysdba</span><br><span class="line">shutdown abort</span><br><span class="line">startup</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#读取diffuers库</span><br><span class="line">from diffusers import StableDiffusionPipeline</span><br><span class="line"></span><br><span class="line">#初始化SD模型，加载预训练权重</span><br><span class="line">pipe = StableDiffusionPipeline.from_pretrained(&quot;runwayml/stable-diffusion-v1-5&quot;)</span><br><span class="line">#使用GPU加速</span><br><span class="line">pipe.to(&quot;mps&quot;)</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#接下来，我们就可以运行pipeline了</span><br><span class="line">prompt = &quot;a photograph of an astronaut riding a horse&quot;</span><br><span class="line"># Number of denoising steps</span><br><span class="line">steps = 25         </span><br><span class="line"></span><br><span class="line"># Scale for classifier-free guidance</span><br><span class="line">CFG = 7.5</span><br><span class="line">image = pipe(prompt, guidance_scale=CFG, height=512, width=768, num_inference_steps=steps).images[0]</span><br><span class="line"></span><br><span class="line"># 由于没有固定seed，每次运行代码，我们都会得到一个不同的图片。</span><br><span class="line">display(image)</span><br></pre></td></tr></table></figure>
-
-<img src="../images/sd/20240218-whx.png" alt="20240218-whx" style="zoom:50%;" />
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">prompt = &quot;city future, 8k, exploration, cinematic, realistic, unreal engine, hyper detailed, volumetric light, moody cinematic epic concept art, realistic matte painting, hyper photorealistic&quot;</span><br><span class="line">negative_prompt =&quot;lowres, bad anatomy, text, error, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry, artist name&quot;</span><br><span class="line">steps = 20         </span><br><span class="line"></span><br><span class="line">result1 = pipe(prompt=prompt,negative_prompt=negative_prompt, guidance_scale=CFG, height=512, width=768, num_inference_steps=steps)</span><br><span class="line">image1 = result1.images[0]</span><br><span class="line"></span><br><span class="line"># 由于没有固定seed，每次运行代码，我们都会得到一个不同的图片。</span><br><span class="line">display(image1)</span><br></pre></td></tr></table></figure>
-
-<img src="../images/sd/202402181931-001.png" alt="202402181931-001" style="zoom:50%;" />
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240218-Stable%20Diffusion%20%E5%9F%BA%E7%A1%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/20240218-Stable%20Diffusion%20%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">20240218-Stable Diffusion 基础</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-02-18 14:40:19" itemprop="dateCreated datePublished" datetime="2024-02-18T14:40:19+08:00">2024-02-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:00:40" itemprop="dateModified" datetime="2024-03-04T10:00:40+08:00">2024-03-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Stable Diffusion 基础</p>
-<p>Stable Diffusion（SD）模型是由Stability AI和LAION等公司共同开发的<strong>生成式模型</strong>，总共有<strong>1B左右的参数量</strong>，可以用于文生图，图生图，图像inpainting，ControlNet控制生成，图像超分等丰富的任务</p>
-<p><strong>文生图任务是指将一段文本输入到SD模型中</strong>，经过一定的迭代次数，<strong>SD模型输出一张符合输入文本描述的图片</strong></p>
-<p><strong>而图生图任务在输入本文的基础上，再输入一张图片</strong>，SD模型将根据文本的提示，<strong>将输入图片进行重绘以更加符合文本的描述。</strong></p>
-<p>我们需要给SD模型一个文本信息与机器数据信息之间互相转换的“桥梁”——CLIP Text Encoder模型。 我们使用CLIP Text Encoder模型作为SD模型的<strong>前置模块</strong>，将输入的人类文本信息进行编码，输出特征矩阵，这个特征矩阵与文本信息相匹配，并且能够使得SD模型理解，完成对文本信息的编码后，就会输入到SD模型的“图像优化模块”中对图像的优化进行“控制”。</p>
-<p>如果是图生图任务，我们在输入文本信息的同时，还需要将原图片通过图像编码器（VAE Encoder）生成Latent Feature（隐空间特征）作为输入。</p>
-<p>如果是文生图任务，我们只需要输入文本信息，再用random函数生成一个<strong>高斯噪声矩阵作为</strong>Latent Feature的“替代”输入到SD模型的“图像优化模块”中。</p>
-<p><strong>“图像优化模块”作为SD模型中最为重要的模块，其工作流程是什么样的呢？</strong></p>
-<p>首先，“图像优化模块”是由一个<strong>U-Net网络</strong>和一个<strong>Schedule算法</strong>共同组成，U-Net网络负责预测噪声，<strong>不断优化生成过程，在预测噪声的同时不断注入文本语义信息</strong>。而<strong>schedule算法对每次U-Net预测的噪声进行优化处理（动态调整预测的噪声，控制U-Net预测噪声的强度）</strong>，从而统筹<strong>生成过程的进度</strong>。在SD中，U-Net的迭代优化步数大概是50或者100次，在这个过程中Latent Feature的质量不断的变好（<strong>纯噪声减少，图像语义信息增加，文本语义信息增加</strong>）。 </p>
-<p>U-Net网络和Schedule算法的工作完成以后，SD模型会将优化迭代后的Latent Feature输入到图像解码器（VAE Decoder）中，将Latent Feature重建成像素级图像。</p>
-<p>我们对比一下文生图任务中，初始Latent Feature和经过SD的“图像优化模块”处理后，再用图像解码器重建出来的图片。</p>
-<p>Latent Feature经过图像解码器重建后的图片是一个纯噪声图片。</p>
-<p>经过SD的“图像优化模块”处理后，再用图像解码器重建出来的图片，可以看到是一个张包含丰富内容信息的有效图片。</p>
-<p>Rocky再将其进行总结归纳制作成完整的Stable Diffusion前向推理流程图，方便大家更好的理解SD模型的前向推理过程：</p>
-<img src="../images/sd/v2-cbc067b9d12ad2c25aff103be299bf94_720w.webp" alt="v2-cbc067b9d12ad2c25aff103be299bf94_720w" style="zoom:100%;" />
-
-<ol>
-<li><strong>SD模型是生成式模型</strong>，输入可以是图片，文本以及两者的结合，输出是生成的图片。</li>
-<li><strong>SD模型属于扩散模型</strong>，扩散模型的整体逻辑的特点是过程分步化与可迭代，这给整个生成过程引入更多约束与优化提供了可能。</li>
-<li><strong>SD模型是基于Latent的扩散模型</strong>，将输入数据压缩到Latent隐空间中，比起常规扩散模型，大幅提高计算效率的同时，降低了显存占用，成为了SD模型破圈的关键一招。</li>
-<li><strong>站在CTO视角，将维度拉到最高维，Rocky认为SD模型是一个优化噪声的AI艺术工具。</strong></li>
-</ol>
-<p><strong>Stable Diffusion的整个训练过程在最高维度上可以看成是如何加噪声和如何去噪声的过程，并在针对噪声的“对抗与攻防”中学习到生成图片的能力。</strong></p>
-<p>Stable Diffusion整体的训练逻辑也非常清晰：</p>
-<ol>
-<li>从数据集中随机选择一个训练样本</li>
-<li>从K个噪声量级随机抽样一个timestep</li>
-<li>产生随机噪声</li>
-<li>计算当前所产生的噪声数据</li>
-<li>将噪声输入U-Net预测噪声</li>
-<li>计算产生的噪声和预测的噪声的L2损失</li>
-<li>计算梯度并更新SD模型参数</li>
-</ol>
-<p><strong>语义信息对图片生成的控制</strong></p>
-<p>SD模型在生成图片时，需要输入prompt，那么这些语义信息是如何影响图片的生成呢？</p>
-<p><strong>答案非常简单：注意力机制。</strong></p>
-<p>在SD模型的训练中，每个训练样本都会对应一个标签，我们将对应标签通过CLIP Text Encoder输出Text Embeddings，并将Text Embeddings以<strong>Cross Attention</strong>的形式与U-Net结构耦合，使得每次输入的图片信息与文字信息进行融合训练 </p>
-<h3 id="其他主流生成式模型介绍"><a href="#其他主流生成式模型介绍" class="headerlink" title="其他主流生成式模型介绍"></a>其他主流生成式模型介绍</h3><p>在AIGC时代中，虽然SD模型已经成为核心的生成式模型之一，但是曾在传统深度学习时代火爆的GAN，VAE，Flow-based model等模型也跨过周期在SD模型身边作为辅助，发挥了巨大的作用。</p>
-<p>GAN网络在AIGC时代依然发挥了巨大的作用，配合SD模型完成了很多算法工作流，比如：图像超分，脸部修复，风格迁移，图像编辑，图像fix，图像定权等。</p>
-<p>所以Rocky在这里简单讲解一下GAN的基本原理，让大家做个了解。GAN由生成器G和判别器D组成。其中，生成器主要负责生成相应的样本数据，输入一般是由高斯分布随机采样得到的噪声Z。而判别器的主要职责是区分生成器生成的样本与 gt 样本，输入一般是 gt 样本与相应的生成样本，我们想要的是对 gt 样本输出的置信度越接近1越好，而对生成样本输出的置信度越接近0越好。与一般神经网络不同的是，<strong>GAN在训练时要同时训练生成器与判别器，所以其训练难度是比较大的</strong>。</p>
-<p>我们可以将GAN中的生成器比喻为印假钞票的犯罪分子，判别器则被当作警察。犯罪分子努力让印出的假钞看起来逼真，警察则不断提升对于假钞的辨识能力。二者互相博弈，随着时间的进行，都会越来越强。在图像生成任务中也是如此，生成器不断生成尽可能逼真的假图像。判别器则判断图像是 gt 图像，还是生成的图像。<strong>二者不断博弈优化</strong>，最终生成器生成的图像使得判别器完全无法判别真假。</p>
-<h3 id="VAE模型"><a href="#VAE模型" class="headerlink" title="VAE模型"></a>VAE模型</h3><p>在Stable Diffusion中，<strong>VAE（变分自编码器，Variational Auto-Encoder）是基于Encoder-Decoder架构的生成模型</strong>。VAE的Encoder（编码器）结构能将输入图像转换为低维Latent特征，并作为U-Net的输入。VAE的Decoder（解码器）结构能将低维Latent特征重建还原成像素级图像。</p>
-<p><strong>Stable Diffusion中VAE的核心作用</strong></p>
-<p>总的来说，<strong>在Stable Diffusion中，VAE模型主要起到了图像压缩和图像重建的作用</strong></p>
-<p><strong>为什么VAE可以将图像压缩到一个非常小的Latent space（潜空间）后能再次对图像进行像素级重建呢？</strong></p>
-<p>因为虽然VAE对图像的压缩与重建过程是一个有损压缩与重建过程，但<strong>图像全图级特征关联并不是随机的，它们的分布具有很强的规律性</strong>：比如人脸的眼睛、鼻子、脸颊和嘴巴之间遵循特定的空间关系，又比如一只猫有四条腿，并且这是一个特定的生物结构特征。下面Rocky也使用VAE将图像重建成不同尺寸的生成图像，实验结论发现<strong>如果我们重建生成的图像尺寸在512×512之上时，其实特征损失带来的影响非常小</strong>。</p>
-<p><strong>Stable Diffusion中VAE的高阶作用</strong></p>
-<p>与此同时，VAE模型除了能进行图像压缩和图像重建的工作外，<strong>如果我们在SD系列模型中切换不同微调训练版本的VAE模型，能够发现生成图片的细节与整体颜色也会随之改变（更改生成图像的颜色表现，类似于色彩滤镜）。</strong></p>
-<h3 id="SD模型整体架构初识"><a href="#SD模型整体架构初识" class="headerlink" title="SD模型整体架构初识"></a><strong>SD模型整体架构初识</strong></h3><p><strong>Stable Diffusion模型整体上是一个End-to-End模型</strong>，主要由VAE（变分自编码器，Variational Auto-Encoder），U-Net以及CLIP Text Encoder三个核心组件构成。</p>
-<p>在FP16精度下Stable Diffusion模型大小2G（FP32：4G），其中U-Net大小1.6G，VAE模型大小160M以及CLIP Text Encoder模型大小235M（约123M参数）。其中U-Net结构包含约860M参数，以FP32精度下大小为3.4G左右。</p>
-<p><strong>Stable Diffusion中U-Net的核心作用</strong></p>
-<p>在Stable Diffusion中，<strong>U-Net模型是一个关键核心部分，能够预测噪声残差</strong>，并结合Sampling method（调度算法：PNDM，DDIM，K-LMS等）对输入的特征矩阵进行重构，<strong>逐步将其从随机高斯噪声转化成图片的Latent Feature</strong>。</p>
-<p>具体来说，在前向推理过程中，SD模型通过反复调用 U-Net，将预测出的噪声残差从原噪声矩阵中去除，得到逐步去噪后的图像Latent Feature，再通过VAE的Decoder结构将Latent Feature重建成像素级图像。</p>
-<p><strong>Rocky再从AI绘画应用视角解释一下SD中U-Net的原理与作用。</strong>其实大家在使用Stable Diffusion WebUI时，点击Generate按钮后，页面右下角图片生成框中展示的从噪声到图片的生成过程，其中就是U-Net在不断的为大家去除噪声的过程。到这里大家应该都能比较清楚的理解U-Net的作用了。</p>
-<p>Stable Diffusion中的U-Net，在传统深度学习时代的Encoder-Decoder结构的基础上，<strong>增加了ResNetBlock（包含Time Embedding）模块，Spatial Transformer（SelfAttention + CrossAttention + FeedForward）模块以及CrossAttnDownBlock，CrossAttnUpBlock和CrossAttnMidBlock模块</strong>。</p>
-<p><strong>ResNetBlock模块</strong></p>
-<p>在传统深度学习时代，ResNet的残差结构在图像分类，图像分割，目标检测等主流方向中几乎是不可或缺，<strong>其简洁稳定有效的“残差思想”终于在AIGC时代跨过周期，在SD模型的U-Net结构中继续繁荣</strong>。</p>
-<p>值得注意的是，<strong>Time Embedding正是输入到ResNetBlock模块中，为U-Net引入了时间信息（时间步长T，T的大小代表了噪声扰动的强度），模拟一个随时间变化不断增加不同强度噪声扰动的过程，让SD模型能够更好地理解时间相关性</strong>。</p>
-<p>同时，在SD模型调用U-Net重复迭代去噪的过程中，我们希望在迭代的早期，能够先生成整幅图片的轮廓与边缘特征，随着迭代的深入，再补充生成图片的高频和细节特征信息。<strong>由于在每个ResNetBlock模块中都有Time Embedding，就能告诉U-Net现在是整个迭代过程的哪一步，并及时控制U-Net够根据不同的输入特征和迭代阶段而预测不同的噪声残差</strong>。</p>
-<p><strong>Rocky再从AI绘画应用视角解释一下Time Embedding的作用。</strong>Time Embedding能够让SD模型在生成图片时考虑时间的影响，使得生成的图片更具有故事性、情感和沉浸感等艺术效果。并且Time Embedding可以帮助SD模型在不同的时间点将生成的图片添加完善不同情感和主题的内容，从而增加了AI绘画的多样性和表现力。</p>
-<p><strong>CrossAttention模块</strong></p>
-<p><strong>Spatial Transformer模块不改变输入输出的尺寸，只在图片对应的位置上融合了语义信息，所以不管是在传统深度学习时代，还是AIGC时代，Spatial Transformer都是将本文与图像结合的一个“万金油”模块</strong>。</p>
-<p>看CrossAttention模块的结构图，大家可能会疑惑<strong>为什么Context Embedding用来生成K和V，Latent Feature用来生成Q呢？</strong></p>
-<p>原因也非常简单：因为在Stable Diffusion中，主要的目的是想把文本信息注入到图像信息中里，所以用图片token对文本信息做 Attention实现逐步的文本特征提取和耦合。</p>
-<p><strong>Rocky再从AI绘画应用视角解释一下CrossAttention模块的作用。</strong>CrossAttention模块在AI绘画应用中可以被视为一种连接和表达的工具，它有助于在输入文本和生成图片之间建立联系，创造更具深度和多样性的艺术作品，引发观众的思考和情感共鸣。CrossAttention模块可以将图像和文本信息关联起来，就像艺术家可以将不同的元素融合到一幅作品中，这有助于在创作中实现不同信息之间的协同和互动，产生更具创意性的艺术作品。再者CrossAttention模块可以用于将文本中的情感元素传递到生成图片中，这种情感的交互可以增强艺术作品的表现力和观众的情感共鸣。</p>
-<p><strong>BasicTransformer Block模块</strong></p>
-<p>BasicTransformer Block模块是在CrossAttention子模块的基础上，增加了SelfAttention子模块和Feedforward子模块共同组成的，<strong>并且每个子模块都是一个残差结构</strong>，这样<strong>除了能让文本的语义信息与图像的语义信息更好的融合之外，还能通过SelfAttention机制让模型更好的学习图像数据的特征</strong>。</p>
-<p>首先，在Stable Diffusion U-Net的SelfAttention模块中，<strong>输入只有图像信息，所以SelfAttention主要是为了让SD模型更好的学习图像数据的整体特征</strong>。</p>
-<p>再者，<strong>SelfAttention可以将输入图像的不同部分（像素或图像Patch）进行交互，从而实现特征的整合和全局上下文的引入，能够让模型建立捕捉图像全局关系的能力，有助于模型理解不同位置的像素之间的依赖关系，以更好地理解图像的语义。</strong></p>
-<p>在此基础上，<strong>SelfAttention还能减少平移不变性问题</strong>，SelfAttention模块可以在不考虑位置的情况下捕捉特征之间的关系，因此具有一定的平移不变性。</p>
-<p><strong>Rocky再从AI绘画应用视角解释一下SelfAttention的作用。</strong>SelfAttention模块可以让SD模型在图片生成过程中捕捉内在关系、创造性表达情感和思想、突出重要元素，并创造出丰富多彩、具有深度和层次感的艺术作品。</p>
-<p><strong>Spatial Transformer模块</strong></p>
-<p>更进一步的，在BasicTransformer Block模块基础上，加入GroupNorm和两个卷积层就组成Spatial Transformer模块。Spatial Transformer模块是SD U-Net中的核心Base结构，Encoder中的CrossAttnDownBlock模块，Decoder中的CrossAttnUpBlock模块以及CrossAttnMidBlock模块都包含了大量的Spatial Transformer子模块。</p>
-<h3 id="CLIP-Text-Encoder模型"><a href="#CLIP-Text-Encoder模型" class="headerlink" title="CLIP Text Encoder模型"></a><strong>CLIP Text Encoder模型</strong></h3><p><strong>作为文生图模型，Stable Diffusion中的文本编码模块直接决定了语义信息的优良程度，从而影响到最后图片生成的多样性和可控性。</strong></p>
-<p>在这里，<strong>多模态领域的神器——CLIP（Contrastive Language-Image Pre-training）</strong>，跨过了周期，从传统深度学习时代进入AIGC时代，成为了SD系列模型中文本和图像之间的连接通道。<strong>并且从某种程度上讲，正是因为CLIP模型的前置出现，更加快速地推动了AI绘画领域的繁荣</strong>。</p>
-<p>首先，<strong>CLIP模型是一个基于对比学习的多模态模型，主要包含Text Encoder和Image Encoder两个模型</strong>。其中Text Encoder用来提取文本的特征，可以使用NLP中常用的text transformer模型作为Text Encoder；而Image Encoder主要用来提取图像的特征，可以使用CNN/vision transformer模型（ResNet和ViT）作为Image Encoder。<strong>与此同时，他直接使用4亿个图片与标签文本对数据集进行训练，来学习图片与本文内容的对应关系。</strong></p>
-<p>与U-Net的Encoder和Decoder一样，CLIP的Text Encoder和Image Encoder也能非常灵活的切换；其庞大图片与标签文本数据的预训练赋予了CLIP强大的zero-shot分类能力。</p>
-<p><strong>灵活的结构，简洁的思想，让CLIP不仅仅是个模型，也给我们一个很好的借鉴，往往伟大的产品都是大道至简的。更重要的是，CLIP把自然语言领域的抽象概念带到了计算机视觉领域</strong></p>
-<p>CLIP在训练时，从训练集中随机取出一张图片和标签文本。CLIP模型的任务主要是通过Text Encoder和Image Encoder分别将标签文本和图片提取<strong>embedding向量</strong>，然后用<strong>余弦相似度（cosine similarity）</strong>来比较两个embedding向量的<strong>相似性</strong>，以判断随机抽取的标签文本和图片是否匹配，并进行梯度反向传播，不断进行优化训练。</p>
-<p>完成CLIP的训练后，<strong>输入配对的图片和标签文本，则Text Encoder和Image Encoder可以输出相似的embedding向量</strong>，计算余弦相似度就可以得到接近1的结果。<strong>同时对于不匹配的图片和标签文本，输出的embedding向量计算余弦相似度则会接近0</strong>。</p>
-<p><strong>就这样，CLIP成为了计算机视觉和自然语言处理这两大AI方向的“桥梁”，AI领域的多模态应用有了经典的基石模型。</strong></p>
-<p><strong>上面我们讲到CLIP模型主要包含Text Encoder和Image Encoder两个模型</strong>，在Stable Diffusion中主要使用了Text Encoder模型。<strong>CLIP Text Encoder模型将输入的文本Prompt进行编码，转换成Text Embeddings（文本的语义信息）</strong>，通过前面一章节提到的U-Net网络中的<strong>CrossAttention模块嵌入Stable Diffusion中作为Condition，对生成图像的内容进行一定程度上的控制与引导</strong>，目前SD模型使用的的是<a target="_blank" rel="noopener" href="https://huggingface.co/openai/clip-vit-large-patch14">CLIP ViT-L/14</a>中的Text Encoder模型。</p>
-<p>CLIP ViT-L/14 中的Text Encoder是只包含Transformer结构的模型，一共由12个CLIPEncoderLayer模块组成，模型参数大小是123M，具体CLIP Text Encoder模型结构如下图所示。其中特征维度为768，token数量是77，<strong>所以输出的Text Embeddings的维度为77x768</strong>。</p>
+<p>按照上面执行命令后，问题得以解决。</p>
 
       
     </div>
@@ -747,7 +711,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240207-%E5%AD%A6%E4%B9%A0stable%20diffusion%20webui%E6%89%A9%E5%B1%95/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240625%E8%80%81%E7%9A%84%20asp.net%20%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%96%87%E4%BB%B6%20gb2312%20%E7%BC%96%E7%A0%81%E7%BB%9F%E4%B8%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -761,7 +725,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/20240207-%E5%AD%A6%E4%B9%A0stable%20diffusion%20webui%E6%89%A9%E5%B1%95/" class="post-title-link" itemprop="url">20240207-学习stable diffusion webui扩展</a>
+            <a href="/20240625%E8%80%81%E7%9A%84%20asp.net%20%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%96%87%E4%BB%B6%20gb2312%20%E7%BC%96%E7%A0%81%E7%BB%9F%E4%B8%80/" class="post-title-link" itemprop="url">Untitled</a>
         </h2>
 
         <div class="post-meta">
@@ -770,16 +734,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2024-02-06 11:21:50" itemprop="dateCreated datePublished" datetime="2024-02-06T11:21:50+08:00">2024-02-06</time>
+              <time title="Created: 2024-06-25 10:02:04 / Modified: 14:01:35" itemprop="dateCreated datePublished" datetime="2024-06-25T10:02:04+08:00">2024-06-25</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:01:17" itemprop="dateModified" datetime="2024-03-04T10:01:17+08:00">2024-03-04</time>
-              </span>
 
           
 
@@ -792,81 +750,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="ControlNet-安装骨架动作绘图"><a href="#ControlNet-安装骨架动作绘图" class="headerlink" title="ControlNet 安装骨架动作绘图"></a>ControlNet 安装骨架动作绘图</h2><p><a target="_blank" rel="noopener" href="https://ivonblog.com/posts/stable-diffusion-webui-manuals/extensions/controlnet/">Ivon的部落格</a></p>
-<p>如果你用过Stable Diffusion，可能已经注意到图像的输出有无限的结果可能性，就像在赌博一样，即使你输入了如此复杂和精心设计的提示，控制AI的能力仍然是有限的。所以我们就需要一种在最大大程度上能控制输出的方式。</p>
-<p>ControlNet是斯坦福大学研究人员开发的Stable Diffusion的扩展，使创作者能够轻松地控制AI图像和视频中的对象。它将根据边缘检测、草图处理或人体姿势等各种条件来控制图像生成。ControlNet可以概括为一种简单的稳定扩散微调方法。</p>
-<p>ControlNet是通过加入额外条件来控制扩散模型的神经网络结构，它可以让AI参考给定图片的动作/线条/景深，更精准的生成图片。</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/Mikubill/sd-webui-controlnet">https://github.com/Mikubill/sd-webui-controlnet</a></p>
-<p>克隆代码到本地，然后从本地安装。</p>
-<p>安装完成后从 <a target="_blank" rel="noopener" href="https://huggingface.co/lllyasviel/ControlNet-v1-1/tree/main">https://huggingface.co/lllyasviel/ControlNet-v1-1/tree/main</a> 下载所有的pth文件，保存到 stable-diffusion-webui/extensions/sd-webui-controlnet/models 目录。</p>
-<h3 id="各個模型的用途"><a href="#各個模型的用途" class="headerlink" title="各個模型的用途"></a>各個模型的用途</h3><p>ControlNet現有以下模型，您可以按照需求只下載需要的模型。</p>
-<h4 id="Anime-Lineart"><a href="#Anime-Lineart" class="headerlink" title="Anime Lineart"></a>Anime Lineart</h4><p>偵測線條，生成的圖片亦會保留原始的線條，適合處理動漫圖像</p>
-<h4 id="Canny"><a href="#Canny" class="headerlink" title="Canny"></a>Canny</h4><p>偵測圖片邊緣，比較模糊，不如Scribbles完整。</p>
-<p>Canny通过使用边缘检测器创建高对比度区域的轮廓来检测输入图像。线条可以捕捉到非常详细的信息，但如果你的图像背景中有一些物体，它很可能会检测到不需要的物体。所以背景中物体越少效果越好。用于此预处理器的最佳模型是control_sd15_canny。</p>
-<h4 id="Depth-amp-Depth-Leres"><a href="#Depth-amp-Depth-Leres" class="headerlink" title="Depth   &amp; Depth Leres"></a>Depth   <strong>&amp; Depth Leres</strong></h4><p>偵測輸入圖片的深度圖(depth map)。</p>
-<p>这个预处理器有助于生成输入图像的深度估计。深度通常用于控制图像内物体的空间定位。浅色区域意味着它离用户更近，而深色区域则离用户更远。</p>
-<p>在大图像时它可能会丢失图像内部的细节(面部表情等)。一般会与control_sd15_depth模型组合使用。Midas Resolution函数用于增加或减少detectmap中的大小和细节级别。它的级别越高，将使用更多的VRAM，但可以生成更高质量的图像，反之亦然。</p>
-<p>Depth Leres有与Depth 相同的基本概念，但在地图中包含更广泛的范围。但有时它会从图片中捕获了太多信息，可能会生成与原始图像略有不同的图像。所以最好先试用两种预处理器，然后决定哪一种。</p>
-<p><strong>HED (Holistically-Nested Edge Detection)</strong></p>
-<p>Hed可以在物体周围创建清晰和精细的边界，输出类似于Canny，但减少了噪声和更柔软的边缘。它的有效性在于能够捕捉复杂的细节和轮廓，同时保留细节特征(面部表情、头发、手指等)。Hed预处理器可用于修改图像的风格和颜色。用于此预处理器的最佳模型是control_sd15_hed。</p>
-<h4 id="Illumination"><a href="#Illumination" class="headerlink" title="Illumination"></a>Illumination</h4><p>偵測輸入圖片的光源與照明效果。</p>
-<h4 id="Inpaint"><a href="#Inpaint" class="headerlink" title="Inpaint"></a>Inpaint</h4><p>功能類似「內補繪製」，使用50%隨機遮罩＋50%隨機光流遮罩訓練而成。</p>
-<h4 id="Instruct-Pix2Pix"><a href="#Instruct-Pix2Pix" class="headerlink" title="Instruct Pix2Pix"></a>Instruct Pix2Pix</h4><p>模型檔名為<code>ip2p</code>，類似「圖生圖」，但是使用訓練50%的指示(instruction)提示詞和50%的敘述(description)提示詞訓練而成。因為是ControlNet，使用此模型時不需要調整CFG Scale。</p>
-<p>根據原作者的說法，此模型在下「使其成為X」的提示詞所生成的圖，效果比「使Y成為X」要好。</p>
-<blockquote>
-<p>Also, it seems that instructions like “make it into X” works better than “make Y into X”.</p>
-</blockquote>
-<h4 id="Lineart"><a href="#Lineart" class="headerlink" title="Lineart"></a>Lineart</h4><p>偵測線條，適合處理線稿，生成的圖片亦會保留原始的線條。</p>
-<h4 id="M-LSD-Mobile-Line-Segment-Detection"><a href="#M-LSD-Mobile-Line-Segment-Detection" class="headerlink" title="M-LSD ( Mobile Line Segment Detection)"></a>M-LSD <strong>( Mobile Line Segment Detection)</strong></h4><p>偵測輸入圖片的直線。MLSD Preprocessor 最适合生成强有力的线条，这些线条能够检测出需要独特和刚性轮廓的建筑和其他人造作品。但是它不适用于处理非刚性或弯曲的物体。MLSD适用于生成室内布局或建筑结构，因为它可以突出直线和边缘。用于此预处理器的最佳模型是control_sd15_mlsd。</p>
-<h4 id="Normal-map"><a href="#Normal-map" class="headerlink" title="Normal map"></a>Normal map</h4><p>法线图使用了三种主要颜色(红、绿、蓝)，通过不同的角度来精确定位物体的粗糙度和光滑程度。它生成法线图的基本估计，可以保留相当多的细节，但可能会产生意想不到的结果，因为法线图完全来自图像，而不是在3D建模软件中构建的。</p>
-<p>法线图有利于突出复杂的细节和轮廓，并且在定位对象方面也很有效，特别是在接近度和距离方面。“Normal Background Threshold”用于调整背景成分。设置一个更高的阈值可以移除背景的远处部分(将其混合成紫色)。降低阈值将命令AI保留甚至显示额外的背景元素。用于此预处理器的最佳模型是control_sd15_normal。</p>
-<h4 id="Openpose"><a href="#Openpose" class="headerlink" title="Openpose"></a>Openpose</h4><p>使用OpenPose技術偵測輸入圖片人物的動作，不一定會保留線條。</p>
-<p>这个预处理器生成了一个基本的骨骼火柴人形象。 这种技术被广泛采用，因为多个 OpenPose 骨架可以组合成一个图像，这有助于引导稳定扩散生成多个一致的主题。 骨架图有很多关节点，。</p>
-<p><img src="../images/sd/v2-de4552588266a99bc190a1da375b832d_720w.webp" alt="v2-de4552588266a99bc190a1da375b832d_720w"></p>
-<p>要优化 OpenPose 的结果，建议上传一张人体图像（全身或半身）以及想要提取的姿势。 用于此预处理器的最佳模型是 control_sd15_openpose。</p>
-<h4 id="Scribbles"><a href="#Scribbles" class="headerlink" title="Scribbles"></a>Scribbles</h4><p>偵測線條，偵測到的線條品質介於Soft Edge和Lineart之間。</p>
-<p>涂鸦的目的是从简单的黑白线条画和草图生成图像。用户也可以使用“Canvas”选项创建特定大小的空白画布，用于手动素描（也可以直接上传图像）。如果草图和绘图由白色背景上的黑线组成，则需要选中“Invert Input Color”复选框。用于这个预处理器的最佳模型是control_sd15_openpose。</p>
-<h4 id="Segmentation"><a href="#Segmentation" class="headerlink" title="Segmentation"></a>Segmentation</h4><p>模型檔名為<code>seg</code>，將偵測的圖片物件切成一個一個色塊處理，例如房子一個色塊，後面的天空一個色塊。</p>
-<h4 id="Shuffle"><a href="#Shuffle" class="headerlink" title="Shuffle"></a>Shuffle</h4><p>把輸入圖片的概念轉移到生成的圖片。</p>
-<p>作者給的例子：輸入灰色裝甲圖片，生成的鋼鐵人盔甲也會是灰色的。</p>
-<h4 id="Soft-Edge"><a href="#Soft-Edge" class="headerlink" title="Soft Edge"></a>Soft Edge</h4><p>偵測圖片邊緣，效果較為柔和，像用炭筆塗過。</p>
-<h4 id="Tile"><a href="#Tile" class="headerlink" title="Tile"></a>Tile</h4><p>輸入圖片，選取一個區域，使其變清晰的模型。</p>
-<p>开始使用</p>
-<p><strong>prompt：</strong></p>
-<p><code>a chinese girl, black hair, red shirt, Blue Jeans， Red High Heels, watery eyes,(ultra high res,photorealistic,realistic,best quality,photo-realistic), (((high detailed skin))),(real person,photograph)</code></p>
-<p><strong>negative prompt:</strong></p>
-<p>disfigured, ugly, bad, immature, cartoon, anime, 3d, painting, b&amp;w</p>
-<p>启用姿态openpos：</p>
-<p>参考图</p>
-<img src="../images/sd/00100-333969092.png" alt="00100-333969092" style="zoom:33%;" />
+          <p>20240625老的 asp.net 项目中文件 gb2312 编码统一</p>
+<p>传统windows下面的文件，很多老的项目中文件编码有gb2312的，也有unicode的，在vscode中修改的话经常会出错，因为写了个小脚本，把所有非unicode编码的文件统一改为unicode编码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line">__author__ = <span class="string">&#x27;whx&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> os,sys</span><br><span class="line"><span class="keyword">import</span> chardet</span><br><span class="line"><span class="keyword">import</span> glob </span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">convert</span>(<span class="params"> filename, in_enc = <span class="string">&quot;GBK&quot;</span>, out_enc=<span class="string">&quot;UTF-8-SIG&quot;</span> </span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        content = <span class="built_in">open</span>(filename, <span class="string">&#x27;rb&#x27;</span>).read()</span><br><span class="line">        result = chardet.detect(content)<span class="comment">#通过chardet.detect获取当前文件的编码格式串，返回类型为字典类型</span></span><br><span class="line">        coding = result.get(<span class="string">&#x27;encoding&#x27;</span>)<span class="comment">#获取encoding的值[编码格式]</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;UTF&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> coding <span class="keyword">and</span> <span class="string">&quot;utf&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> coding :<span class="comment">#文件格式如果不是utf-8的时候，才进行转码</span></span><br><span class="line">            <span class="built_in">print</span> (<span class="string">&quot;转换 &quot;</span>+ coding + <span class="string">&quot;to utf-8! &quot;</span> + filename)</span><br><span class="line">            new_content = content.decode( coding ).encode(out_enc)</span><br><span class="line">            <span class="built_in">open</span>(filename, <span class="string">&#x27;wb&#x27;</span>).write( new_content )</span><br><span class="line">            <span class="built_in">print</span> (<span class="string">&quot; done&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span> (<span class="string">&quot;不用修改 &quot;</span>+coding + <span class="string">&quot;:&quot;</span> +filename)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> ex:</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&quot; error&quot;</span>,ex)</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">filesAspx = glob.glob(<span class="string">&quot;D:\source\project/**/*.aspx&quot;</span>,recursive=<span class="literal">True</span>)</span><br><span class="line">filesCs = glob.glob(<span class="string">&quot;D:\source\project/**/*.cs&quot;</span>,recursive=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file_path <span class="keyword">in</span> filesAspx:</span><br><span class="line">   convert(file_path)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> file_path <span class="keyword">in</span> filesAspx:</span><br><span class="line">   convert(filesCs)</span><br><span class="line">    </span><br><span class="line">    </span><br></pre></td></tr></table></figure>
 
-<p>结果：</p>
-<img src="../images/sd/20240207154113-3314802259.png" alt="20240207154113-3314802259" style="zoom:50%;" />
-
-
-
-<h2 id="提示词工具"><a href="#提示词工具" class="headerlink" title="提示词工具"></a>提示词工具</h2><p><a target="_blank" rel="noopener" href="https://github.com/DominikDoom/a1111-sd-webui-tagcomplete.git">https://github.com/DominikDoom/a1111-sd-webui-tagcomplete.git</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/byzod/a1111-sd-webui-tagcomplete-CN/">https://github.com/byzod/a1111-sd-webui-tagcomplete-CN/</a> 中文</p>
-<h2 id="图片库浏览"><a href="#图片库浏览" class="headerlink" title="图片库浏览"></a>图片库浏览</h2><p><a target="_blank" rel="noopener" href="https://github.com/yfszzx/stable-diffusion-webui-images-browser.git">https://github.com/yfszzx/stable-diffusion-webui-images-browser.git</a></p>
-<h2 id="骨架人偶-PoseX"><a href="#骨架人偶-PoseX" class="headerlink" title="骨架人偶 PoseX"></a>骨架人偶 PoseX</h2><p><a target="_blank" rel="noopener" href="https://github.com/hnmr293/posex.git">https://github.com/hnmr293/posex.git</a></p>
-<p>需要先安裝ControlNet才能使用這個擴充功能</p>
-<p>PoseX是可以在Stable Diffuison WebUI直接拉人物骨架，再配合ControlNet生成姿勢的擴充功能。</p>
-<p>開啟文生圖的頁面，點選右下角PoseX，點選Send this image to ControlNet</p>
-<p>在下面的ControlNet，點選Enabled，preprocessor選取<code>none</code>，model選<code>openpose</code>，不需要上傳圖片。</p>
-<p>回到上面的PoseX，調整人物姿勢。左鍵點選移動，滾輪放大縮小，對模型左鍵點二下即可用右鍵移動單個骨架。</p>
-<h2 id="AI绘图转影片"><a href="#AI绘图转影片" class="headerlink" title="AI绘图转影片"></a>AI绘图转影片</h2><p><a target="_blank" rel="noopener" href="https://github.com/Scholar01/sd-webui-mov2mov">https://github.com/Scholar01/sd-webui-mov2mov</a></p>
-<p>需要先安裝ControlNet才能使用這個擴充功能</p>
-<p>將影片逐一抽出畫格，使用ControlNet生圖，然後再自動合成新影片。可以設定輸出的畫格率，將人物單獨處理。</p>
-<p>目前只有windows系统可以使用,如果您系统不支持,可以关闭该选项卡.</p>
-<h2 id="生成多个任务"><a href="#生成多个任务" class="headerlink" title="生成多个任务"></a>生成多个任务</h2><p><a target="_blank" rel="noopener" href="https://github.com/ashen-sensored/stable-diffusion-webui-two-shot">https://github.com/ashen-sensored/stable-diffusion-webui-two-shot</a></p>
-<p>nt Couple會分割繪圖時的提示詞，這樣就可以生成多重人物/物件，並精確指定位置顏色了。</p>
-<p>像是先用PoseX拉好骨架，再使用Latent Couple標出人物的概略位置。</p>
-<h2 id="用文生图-ControlNet-Latent-Couple生成指定位置的多个任务"><a href="#用文生图-ControlNet-Latent-Couple生成指定位置的多个任务" class="headerlink" title="用文生图+ControlNet+Latent Couple生成指定位置的多个任务"></a>用文生图+ControlNet+Latent Couple生成指定位置的多个任务</h2><p>於文生圖的界面會看到Latent Couple</p>
-<p>勾選Enabled啟用，設定長寬，再點選最下面的<code>Create blank canvas</code>建立空白畫布</p>
-<p>用滑鼠繪製色塊。例如用紅筆繪製一個人物，藍筆繪製另一個人物。</p>
-<p>點選<code>I&#39;ve finished my sketch</code>，下面就會顯示各個色塊的分割狀況。依序填入提示詞：在<code>General Prompt</code>填入畫風和背景的提示詞，藍筆部份填入貞德<code>Jeanne d&#39;Arc</code>相關的提示詞，紅筆部份填入艾比蓋兒<code>Abigail Williams</code>的相關提示詞</p>
-<p>點選<code>Prompt Info Update</code>，提示詞即會自動跑到上面的框框，再自行補上負向提示詞。</p>
-<p>搭配事先用PoseX拉好的骨架，再點選Generate開始生圖。</p>
 
       
     </div>
@@ -886,7 +773,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240206-stable%20diffusion%20webui%20%E4%BB%8Ecivital%20%E4%B8%8B%E8%BD%BD%E6%A8%A1%E5%9E%8B%E5%B9%B6%E5%AD%A6%E4%B9%A0%E6%96%87%E7%94%9F%E5%9B%BE/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240625%E8%80%81%E7%9A%84web%E5%BA%94%E7%94%A8jquery%E4%B8%AD%E6%94%AF%E6%8C%81%E6%96%B0%E7%89%88%E6%9C%ACjquery/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -900,7 +787,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/20240206-stable%20diffusion%20webui%20%E4%BB%8Ecivital%20%E4%B8%8B%E8%BD%BD%E6%A8%A1%E5%9E%8B%E5%B9%B6%E5%AD%A6%E4%B9%A0%E6%96%87%E7%94%9F%E5%9B%BE/" class="post-title-link" itemprop="url">20240206-stable diffusion webui 从civital 下载模型并学习文生图</a>
+            <a href="/20240625%E8%80%81%E7%9A%84web%E5%BA%94%E7%94%A8jquery%E4%B8%AD%E6%94%AF%E6%8C%81%E6%96%B0%E7%89%88%E6%9C%ACjquery/" class="post-title-link" itemprop="url">Untitled</a>
         </h2>
 
         <div class="post-meta">
@@ -909,16 +796,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2024-02-05 19:40:08" itemprop="dateCreated datePublished" datetime="2024-02-05T19:40:08+08:00">2024-02-05</time>
+              <time title="Created: 2024-06-25 09:26:41 / Modified: 14:01:37" itemprop="dateCreated datePublished" datetime="2024-06-25T09:26:41+08:00">2024-06-25</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-04-22 08:30:23" itemprop="dateModified" datetime="2024-04-22T08:30:23+08:00">2024-04-22</time>
-              </span>
 
           
 
@@ -931,84 +812,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>civital 下载模型并学习之二</p>
-<h1 id="Meow-Mix-Realistic-amp-Versatile"><a href="#Meow-Mix-Realistic-amp-Versatile" class="headerlink" title="Meow Mix - Realistic &amp; Versatile"></a>Meow Mix - Realistic &amp; Versatile</h1><p>Prompt：</p>
-<p><code>Jim is a middle-aged man with short, graying hair and a rugged appearance. He has a rough, unshaven chin and deep wrinkles around his eyes. He is tall and muscular, with broad shoulders and thick arms. He wears a dirty, faded t-shirt and faded jeans that hang loosely on his frame. His demeanor is angry and bitter, with a constant scowl on his face. He is a character who has been through a lot of hardship and is struggling to come to terms with the changes in society. Despite his rough exterior, there is a hint of sadness in his eyes, indicating that he is deeply hurt by the loss of his job and his wife. Overall, Jim is a complex and troubled character who is struggling to find his place in a world that is rapidly changing around him.</code></p>
-<p>Negative Prompt:</p>
-<p><code>canvas frame, cartoon, 3d, ((disfigured)), ((bad art)), ((deformed)),((extra limbs)),((close up)),((b&amp;w)), wierd colors, blurry, (((duplicate))), ((morbid)), ((mutilated)), [out of frame], extra fingers, mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((mutation))), (((deformed))), ((ugly)), blurry, ((bad anatomy)), (((bad proportions))), ((extra limbs)), cloned face, (((disfigured))), out of frame, ugly, extra limbs, (bad anatomy), gross proportions, (malformed limbs), ((missing arms)), ((missing legs)), (((extra arms))), (((extra legs))), mutated hands, (fused fingers), (too many fingers), (((long neck))), Photoshop, video game, ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, mutation, mutated, extra limbs, extra legs, extra arms, disfigured, deformed, cross-eye, body out of frame, blurry, bad art, bad anatomy, 3d render</code></p>
-<p><img src="../images/sd/00134-618633303.png" alt="00134-618633303"></p>
-<p><em>Steps: 20, Sampler: Euler a, CFG scale: 8, Seed: 618633303, Size: 512x512, Model hash: 834d9e407e, Model: meowMixRealistic_prunedFp16FIXED, Version: v1.7.0</em></p>
-<p>试着自己改</p>
-<p>Prompt：</p>
-<p><code>John is a middle-aged chinese man with graying short hair and a rugged appearance. He has a rough, unshaven chin and deep wrinkles around his eyes. He is tall and muscular, with broad shoulders and thick arms. He wears a dirty, faded t-shirt and faded jeans that hang loosely on his frame. His demeanor is angry and bitter, with a constant scowl on his face. He is a character who has been through a lot of hardship and is struggling to come to terms with the changes in society. Despite his rough exterior, there is a hint of sadness in his eyes, indicating that he is deeply hurt by the loss of his job and his wife. Overall, John is a complex and troubled character who is struggling to find his place in a world that is rapidly changing around him.</code></p>
-<img src="../images/sd/20240206095935-14219338.png" alt="20240206095935-14219338" style="zoom:50%;" />
-      
-    </div>
+          <p>20240625老的web应用jquery中支持新版本jquery</p>
+<p>老的项目中使用了1.6.x的jquery，需要升级其中的弹窗为layui，但是layui需要至少1.10.x，修改方式如下，将原来单行的jquery引用，改为保护多版本jquery，添加layui引用，最后恢复原来的jquery版本号，确保不影响原来其它jquery使用的地方。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;../js/jquery-1.3.2.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</span><br><span class="line">  </span><br></pre></td></tr></table></figure>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> &lt;script type=&quot;text/javascript&quot; src=&quot;../js/lib/jquery.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;../js/jquerynew.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;../js/layer/js/layer.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script  type=&quot;text/javascript&quot; &gt;var $jq = jQuery.noConflict(true);console.log($().jquery);&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240205-Stable%20diffusion%20webui%20%E4%BD%BF%E7%94%A8sdXL_v10VAEFix.safetensors%20%E6%A8%A1%E5%9E%8B%E6%97%B6%E5%80%99%E6%8F%90%E7%A4%BA%20%20Downloading%20VAEApprox%20model%20TimeoutError/">
+<p>顺便做一个批量替换的脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="comment">#@Author: whx</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> glob</span><br><span class="line"><span class="comment">#构建一个文本文件内容查找函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">replace_text</span>(<span class="params">file_path, search_str</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(file_path, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f ,<span class="built_in">open</span>(<span class="string">&quot;%s.bak&quot;</span>%file_path, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> fw:</span><br><span class="line">            data = f.read()</span><br><span class="line">            res = re.findall(search_str, data)</span><br><span class="line">            <span class="keyword">if</span> res :</span><br><span class="line">                newData = re.sub(search_str, <span class="string">r&#x27;&lt;script type=&quot;text/javascript&quot; src=&quot;\g&lt;2&gt;/jquery-\g&lt;3&gt;.js&quot;&gt;&lt;/script&gt;\n&lt;script type=&quot;text/javascript&quot; src=&quot;\g&lt;2&gt;/jquerynew.js&quot;&gt;&lt;/script&gt;\n&lt;script type=&quot;text/javascript&quot; src=&quot;\g&lt;2&gt;/layer.js&quot;&gt;&lt;/script&gt;\n&lt;script  type=&quot;text/javascript&quot; &gt;var $jq = jQuery.noConflict(true);console.log($().jquery);&lt;/script&gt;&#x27;</span> , data)</span><br><span class="line">                fw.write(newData)</span><br><span class="line">                f.close()</span><br><span class="line">                fw.close()</span><br><span class="line">                os.remove(file_path)</span><br><span class="line">                os.rename(<span class="string">&quot;%s.bak&quot;</span> % file_path, file_path)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                f.close()</span><br><span class="line">                fw.close()</span><br><span class="line">                os.remove(<span class="string">&quot;%s.bak&quot;</span> % file_path)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">except</span> UnicodeDecodeError:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(file_path, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;gbk&#x27;</span>) <span class="keyword">as</span> f ,<span class="built_in">open</span>(<span class="string">&quot;%s.bak&quot;</span>%file_path, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;gbk&#x27;</span>) <span class="keyword">as</span> fw:</span><br><span class="line">            data = f.read()</span><br><span class="line">            res = re.findall(search_str, data)</span><br><span class="line">            <span class="keyword">if</span> res :</span><br><span class="line">                newData = re.sub(search_str, <span class="string">r&#x27;&lt;script type=&quot;text/javascript&quot; src=&quot;\g&lt;2&gt;/jquery-\g&lt;3&gt;.js&quot;&gt;&lt;/script&gt;\n&lt;script type=&quot;text/javascript&quot; src=&quot;\g&lt;2&gt;/jquerynew.js&quot;&gt;&lt;/script&gt;\n&lt;script type=&quot;text/javascript&quot; src=&quot;\g&lt;2&gt;/layer.js&quot;&gt;&lt;/script&gt;\n&lt;script  type=&quot;text/javascript&quot; &gt;var $jq = jQuery.noConflict(true);console.log($().jquery);&lt;/script&gt;&#x27;</span> , data)</span><br><span class="line">                fw.write(newData)</span><br><span class="line">                f.close()</span><br><span class="line">                fw.close()</span><br><span class="line">                os.remove(file_path)</span><br><span class="line">                os.rename(<span class="string">&quot;%s.bak&quot;</span> % file_path, file_path)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                f.close()</span><br><span class="line">                fw.close()</span><br><span class="line">                os.remove(<span class="string">&quot;%s.bak&quot;</span> % file_path)</span><br><span class="line">files = glob.glob(<span class="string">&quot;D:\source\project/**/*.aspx*&quot;</span>,recursive=<span class="literal">True</span>)</span><br><span class="line">search_str = <span class="string">&quot;&lt;script(.*)src=\&quot;(.*)/jquery-(.*).js\&quot;(.*)&gt;(.*)&lt;/script&gt;&quot;</span></span><br><span class="line">search_str_reg = re.<span class="built_in">compile</span>(search_str,flags=re.IGNORECASE)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file_path <span class="keyword">in</span> files:</span><br><span class="line">   replace_text(file_path, search_str_reg )</span><br><span class="line">  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/20240205-Stable%20diffusion%20webui%20%E4%BD%BF%E7%94%A8sdXL_v10VAEFix.safetensors%20%E6%A8%A1%E5%9E%8B%E6%97%B6%E5%80%99%E6%8F%90%E7%A4%BA%20%20Downloading%20VAEApprox%20model%20TimeoutError/" class="post-title-link" itemprop="url">20240205-Stable diffusion webui 使用sdXL_v10VAEFix.safetensors 模型时候提示  Downloading VAEApprox model TimeoutError</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-02-05 12:20:43" itemprop="dateCreated datePublished" datetime="2024-02-05T12:20:43+08:00">2024-02-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:01:52" itemprop="dateModified" datetime="2024-03-04T10:01:52+08:00">2024-03-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Stable-diffusion-webui-使用sdXL-v10VAEFix-safetensors-模型时候提示-Downloading-VAEApprox-model-TimeoutError"><a href="#Stable-diffusion-webui-使用sdXL-v10VAEFix-safetensors-模型时候提示-Downloading-VAEApprox-model-TimeoutError" class="headerlink" title="Stable diffusion webui 使用sdXL_v10VAEFix.safetensors 模型时候提示  Downloading VAEApprox model TimeoutError"></a>Stable diffusion webui 使用sdXL_v10VAEFix.safetensors 模型时候提示  Downloading VAEApprox model TimeoutError</h1><p>使用sdXL_v10VAEFix.safetensors 模型时候提示  Downloading VAEApprox model to:  stable-diffusion-webui/models/VAE-approx/vaeapprox-sdxl.pt，大致是下载vaeapprox-sdxl.pt 文件失败。</p>
-<p>参考： <a target="_blank" rel="noopener" href="https://www.stablediffusion-cn.com/sd/sd-knowledge/1339.html">https://www.stablediffusion-cn.com/sd/sd-knowledge/1339.html</a></p>
-<p>究其原因是自动下载失败导致的，因为国内需要翻墙才能下载，但是启动 sd 的时候不能翻墙，导致下载失败。</p>
-<p>该文件在 <a target="_blank" rel="noopener" href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/releases/tag/v1.0.0-pre">Release v1.0.0-pre · AUTOMATIC1111/stable-diffusion-webui</a> ，自行下载并保存到models/VAE-approx目录下就行了</p>
 
       
     </div>
@@ -1028,7 +840,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240205-stable%20diffusion%20SDXL%E5%AD%A6%E4%B9%A0/">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240603-s3%20minio%E5%AD%A6%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1042,7 +854,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/20240205-stable%20diffusion%20SDXL%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">stable diffusion 提示词收集</a>
+            <a href="/20240603-s3%20minio%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">Untitled</a>
         </h2>
 
         <div class="post-meta">
@@ -1052,14 +864,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2024-02-05 10:26:25" itemprop="dateCreated datePublished" datetime="2024-02-05T10:26:25+08:00">2024-02-05</time>
+              <time title="Created: 2024-06-03 09:23:17" itemprop="dateCreated datePublished" datetime="2024-06-03T09:23:17+08:00">2024-06-03</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:06:56" itemprop="dateModified" datetime="2024-03-04T10:06:56+08:00">2024-03-04</time>
+                <time title="Modified: 2024-06-04 08:56:52" itemprop="dateModified" datetime="2024-06-04T08:56:52+08:00">2024-06-04</time>
               </span>
 
           
@@ -1073,64 +885,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>提示词：</p>
-<p><code>photo realistic, ultra details, natural light ultra detailed portrait of a female necromancer, skeleton face volumetric fog, Hyperrealism, breathtaking, ultra realistic, ultra detailed, cyber background, cinematic lighting, highly detailed, breathtaking, photography, stunning environment, wide-angle</code></p>
-<p>Negative prompt: <code>(deformed iris, deformed pupils), text, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, (extra fingers), (mutated hands), poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, (fused fingers), (too many fingers), long neck, camera</code><br>Steps: 50, Sampler: Euler, CFG scale: 8, Seed: 2599470049, Size: 512x512, Model hash: cc6cb27103, Model: v1-5-pruned-emaonly, Version: v1.7.0</p>
-<img src="../images/sd/00065-2599470049.png" alt="00065-2599470049" style="zoom:50%;" />
+          <p>s3 minio学习</p>
+<p>直接采用docker方式运行,docker-compose.yml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">minio:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">minio/minio</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;9000:9000&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;9001:9001&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/data</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./config:/root/.minio</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">MINIO_ROOT_USER:</span> <span class="string">whx</span></span><br><span class="line">      <span class="attr">MINIO_ROOT_PASSWORD:</span> <span class="string">Whxheart0210</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">server</span> <span class="string">--console-address</span> <span class="string">&quot;:9001&quot;</span> <span class="string">/data</span></span><br><span class="line">    </span><br></pre></td></tr></table></figure>
 
-<img src="../images/sd/00070-1453177103.png" alt="00070-1453177103" style="zoom:50%;" />
+<p>然后nginx做反向代理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line"></span><br><span class="line">       listen 80;</span><br><span class="line">       server_name                     s3.haowujidian.com;</span><br><span class="line">       client_max_body_size        20M;</span><br><span class="line"></span><br><span class="line">        root                            /data/www/s3.haowujidian.com;</span><br><span class="line">        error_page                      403     404      /404.php;</span><br><span class="line">        index                           index.html index.htm  index.php;</span><br><span class="line">        try_files $uri /index.html;</span><br><span class="line">        error_log                       /var/log/nginx/nginx-error.s3.log;</span><br><span class="line">        access_log                      /var/log/nginx/nginx-access.s3.log;</span><br><span class="line">        charset &quot;utf-8&quot;;</span><br><span class="line">        add_header X-Content-Type-Options nosniff;</span><br><span class="line">        add_header Content-Security-Policy &quot;default-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; data:;script-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27;; object-src &#x27;none&#x27;;style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;; child-src https:&quot;;</span><br><span class="line">        add_header X-XSS-Protection &quot;1; mode=block&quot;;</span><br><span class="line">        add_header Strict-Transport-Security &quot;max-age=31536000&quot;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">                charset &quot;utf8&quot;;</span><br><span class="line">                            proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">                proxy_set_header    Host            $http_host;</span><br><span class="line">                proxy_set_header    X-Real-IP       $remote_addr;</span><br><span class="line">                proxy_set_header    X-Forwarded-for $remote_addr;</span><br><span class="line">                proxy_connect_timeout 10000;</span><br><span class="line">                proxy_read_timeout 10000;</span><br><span class="line">                keepalive_timeout  6000;</span><br><span class="line">                #port_in_redirect off;</span><br><span class="line">                proxy_pass http://127.0.0.1:9000;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line"></span><br><span class="line">       listen 80;</span><br><span class="line">       server_name                     s3-console.haowujidian.com;</span><br><span class="line">        client_max_body_size            20M;</span><br><span class="line"></span><br><span class="line">        root                            /data/www/s3.haowujidian.com;</span><br><span class="line">        error_page                      403     404      /404.php;</span><br><span class="line">        index                           index.html index.htm  index.php;</span><br><span class="line">        try_files $uri /index.html;</span><br><span class="line">        error_log                       /var/log/nginx/nginx-error.s3.log;</span><br><span class="line">        access_log                      /var/log/nginx/nginx-access.s3.log;</span><br><span class="line">        charset &quot;utf-8&quot;;</span><br><span class="line">        add_header X-Content-Type-Options nosniff;</span><br><span class="line">        add_header Content-Security-Policy &quot;default-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; data:;script-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27;; object-src &#x27;none&#x27;;style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;; child-src https:&quot;;</span><br><span class="line">        add_header X-XSS-Protection &quot;1; mode=block&quot;;</span><br><span class="line">        add_header Strict-Transport-Security &quot;max-age=31536000&quot;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">                charset &quot;utf8&quot;;</span><br><span class="line">                            proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">                proxy_set_header    Host            $http_host;</span><br><span class="line">                proxy_set_header    X-Real-IP       $remote_addr;</span><br><span class="line">                proxy_set_header    X-Forwarded-for $remote_addr;</span><br><span class="line">                proxy_connect_timeout 10000;</span><br><span class="line">                proxy_read_timeout 10000;</span><br><span class="line">                keepalive_timeout  6000;</span><br><span class="line">                #port_in_redirect off;</span><br><span class="line">                proxy_pass http://127.0.0.1:9001;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><em>Steps: 20, Sampler: Euler a, CFG scale: 7.5, Seed: 1453177103, Size: 512x512, Model hash: e6bb9ea85b, Model: sdXL_v10VAEFix, VAE hash: e6bb9ea85b, VAE: sdXL_v10VAEFix.safetensors, Version: v1.7.0</em></p>
-<img src="../images/sd/00077-1453177105.png" alt="00077-1453177105" style="zoom:50%;" />
 
-<p>Steps: 20, Sampler: UniPC, CFG scale: 8, Seed: 1453177105, Size: 512x512, Model hash: e6bb9ea85b, Model: sdXL_v10VAEFix, VAE hash: e6bb9ea85b, VAE: sdXL_v10VAEFix.safetensors, Version: v1.7.0</p>
-<p><img src="../images/sd/00078-1453177106.png" alt="00078-1453177106"></p>
-<p><em>Steps: 20, Sampler: UniPC, CFG scale: 8, Seed: 1453177105, Size: 512x512, Model hash: e6bb9ea85b, Model: sdXL_v10VAEFix, VAE hash: e6bb9ea85b, VAE: sdXL_v10VAEFix.safetensors, Version: v1.7.0</em></p>
-<img src="../images/sd/00079-1453177107.png" alt="00079-1453177107" style="zoom:50%;" />
 
-<p><em>Steps: 20, Sampler: UniPC, CFG scale: 8, Seed: 1453177107, Size: 512x512, Model hash: e6bb9ea85b, Model: sdXL_v10VAEFix, VAE hash: e6bb9ea85b, VAE: sdXL_v10VAEFix.safetensors, Version: v1.7.0</em></p>
-<img src="../images/sd/00080-1453177108.png" alt="00080-1453177108" style="zoom:50%;" />
+<p>客户端学习</p>
+<p>下载mc客户端</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl --progress-bar -O https://dl.min.io/client/mc/release/darwin-arm64/mc </span><br><span class="line">chmod +x mc</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p><em>Steps: 20, Sampler: UniPC, CFG scale: 8, Seed: 1453177108, Size: 512x512, Model hash: e6bb9ea85b, Model: sdXL_v10VAEFix, VAE hash: e6bb9ea85b, VAE: sdXL_v10VAEFix.safetensors, Version: v1.7.0</em></p>
-<img src="../images/sd/00094-333969092.png" alt="00094-333969092" style="zoom:33%;" />
 
-<p><em>Steps: 20, Sampler: UniPC, CFG scale: 8, Seed: 333969092, Size: 1024x1024, Model hash: e6bb9ea85b, Model: sdXL_v10VAEFix, VAE hash: e6bb9ea85b, VAE: sdXL_v10VAEFix.safetensors, Version: v1.7.0</em></p>
-<img src="../images/sd/00096-333969092.png" alt="00096-333969092" style="zoom:33%;" />
-
-<p>Steps: 20, Sampler: Euler, CFG scale: 8, Seed: 333969092, Size: 1024x1024, Model hash: e6bb9ea85b, Model: sdXL_v10VAEFix, VAE hash: e6bb9ea85b, VAE: sdXL_v10VAEFix.safetensors, Version: v1.7.0</p>
-<img src="../images/sd/00095-2378502969.png" alt="00095-2378502969" style="zoom:33%;" />
-
-<p><em>Steps: 20, Sampler: Euler, CFG scale: 8, Seed: 2378502969, Size: 1024x1024, Model hash: e6bb9ea85b, Model: sdXL_v10VAEFix, VAE hash: e6bb9ea85b, VAE: sdXL_v10VAEFix.safetensors, Version: v1.7.0</em></p>
-<p>提示词：</p>
-<p><code>photo of young Chinese woman, highlight hair, sitting outside restaurant, wearing dress, rim lighting, studio lighting, looking at the camera, dslr, ultra quality, sharp focus, tack sharp, dof, film grain, Fujifilm XT3, crystal clear, 8K UHD, highly detailed glossy eyes, high detailed skin, skin pores</code></p>
-<p>Negative prompt:</p>
-<p><code>disfigured, ugly, bad, immature, cartoon, anime, 3d, painting, b&amp;w</code></p>
-<img src="../images/sd/00100-333969092.png" alt="00100-333969092" style="zoom:50%;" />
-
-<p><em>Steps: 20, Sampler: Euler, CFG scale: 8, Seed: 333969092, Size: 512x512, Model hash: e6bb9ea85b, Model: sdXL_v10VAEFix, VAE hash: e6bb9ea85b, VAE: sdXL_v10VAEFix.safetensors, Version: v1.7.0</em></p>
-<p><strong>prompt：</strong></p>
-<p><code>photo of young Caucasian woman, highlight hair, sitting outside restaurant, wearing dress, rim lighting, studio lighting, looking at the camera, dslr, ultra quality, sharp focus, tack sharp, dof, film grain, Fujifilm XT3, crystal clear, 8K UHD, highly detailed glossy eyes, high detailed skin, skin pores</code></p>
-<p><strong>Negative prompt:</strong></p>
-<p><code>disfigured, ugly, bad, immature, cartoon, anime, 3d, painting, b&amp;w</code></p>
-<img src="../images/sd/00101-333969092.png" alt="00101-333969092" style="zoom:50%;" />
-
-<p><strong>Prompt</strong>：</p>
-<p><code>masterpiece, best quality, greg rutkowski, fire, no humans, open mouth, wings, dragon, sharp teeth, teeth, tail, solo, breathing fire, horns, monster, claws, smoke , very detailed, high resolution, sharp, sharp image, 4k, 8k,</code></p>
-<p>Nagative Prompt：</p>
-<p><code>(deformed iris, deformed pupils), text, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, (extra fingers), (mutated hands), poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, (fused fingers), (too many fingers), long neck, camera</code></p>
-<img src="../images/sd/00111-5.png" alt="00111-5" style="zoom:50%;" />
-
-<p><em>Steps: 20, Sampler: Euler, CFG scale: 8, Seed: 5, Size: 512x512, Model hash: e6bb9ea85b, Model: sdXL_v10VAEFix, VAE hash: e6bb9ea85b, VAE: sdXL_v10VAEFix.safetensors, Version: v1.7.0</em></p>
-<img src="../images/sd/00113-3433749320.png" alt="00113-3433749320" style="zoom: 25%;" />
-
-<p><em>Steps: 20, Sampler: Euler, CFG scale: 8, Seed: 3433749320, Size: 1024x1024, Model hash: e6bb9ea85b, Model: sdXL_v10VAEFix, VAE hash: e6bb9ea85b, VAE: sdXL_v10VAEFix.safetensors, Version: v1.7.0</em></p>
-<img src="../images/sd/00117-3462443395.png" alt="00117-3462443395" style="zoom:25%;" />
-
-<img src="../images/sd/00116-3462443394.png" alt="00116-3462443394" style="zoom:25%;" />
-
-<img src="../images/sd/00115-3462443393.png" alt="00115-3462443393" style="zoom:25%;" />
-
-<img src="../images/sd/00114-3462443392.png" alt="00114-3462443392" style="zoom:25%;" />
       
     </div>
 
@@ -1148,7 +916,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1214,7 +982,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
