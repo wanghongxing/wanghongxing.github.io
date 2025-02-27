@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://hongxing.tech/centos7%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85docker/</loc>
+    <lastmod>2024-12-12</lastmod>
+  </url>
+  <url>
+    <loc>https://hongxing.tech/2023-1020-oracle%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2024-11-22</lastmod>
+  </url>
+  <url>
     <loc>https://hongxing.tech/20240111-%E5%BC%80%E6%BA%90%E5%A4%87%E4%BB%BDbackupPC/</loc>
     <lastmod>2024-10-12</lastmod>
   </url>
@@ -19,10 +27,6 @@
   <url>
     <loc>https://hongxing.tech/2024-823-minio-%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2024-08-26</lastmod>
-  </url>
-  <url>
-    <loc>https://hongxing.tech/centos7%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85docker/</loc>
-    <lastmod>2024-08-08</lastmod>
   </url>
   <url>
     <loc>https://hongxing.tech/20240717-%E5%88%86%E5%8C%BA%E6%8E%92%E5%BA%8F/</loc>
@@ -110,10 +114,6 @@
   </url>
   <url>
     <loc>https://hongxing.tech/2023-1219-%E5%BC%80%E6%BA%90oss/</loc>
-    <lastmod>2024-03-04</lastmod>
-  </url>
-  <url>
-    <loc>https://hongxing.tech/2023-1020-oracle%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2024-03-04</lastmod>
   </url>
   <url>
