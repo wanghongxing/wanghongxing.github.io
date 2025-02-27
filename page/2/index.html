@@ -236,7 +236,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/20240521-%E6%89%8B%E5%8A%A8%E7%94%B3%E8%AF%B7letsencrypt%E8%AF%81%E4%B9%A6/" class="post-title-link" itemprop="url">Untitled</a>
+            <a href="/20240521-%E6%89%8B%E5%8A%A8%E7%94%B3%E8%AF%B7letsencrypt%E8%AF%81%E4%B9%A6/" class="post-title-link" itemprop="url">手动申请letsencrypt证书</a>
         </h2>
 
         <div class="post-meta">
@@ -253,7 +253,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-05-27 13:52:39" itemprop="dateModified" datetime="2024-05-27T13:52:39+08:00">2024-05-27</time>
+                <time title="Modified: 2025-02-27 14:14:14" itemprop="dateModified" datetime="2025-02-27T14:14:14+08:00">2025-02-27</time>
               </span>
 
           
@@ -267,8 +267,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>手动申请letsencrypt证书</p>
-<p>系统安装docker，然后在执行如下命令</p>
+          <p>系统安装docker，然后在执行如下命令</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --rm --name certbot \</span><br><span class="line">           -v &quot;/etc/letsencrypt:/etc/letsencrypt&quot; \</span><br><span class="line">           -v &quot;/var/lib/www:/www&quot; \</span><br><span class="line">           certbot/certbot certonly</span><br></pre></td></tr></table></figure>
 
 <p>其中/var/lib/www是域名静态根目录，期间提示号域名的根目录的时候输入 /www</p>

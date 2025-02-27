@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"hongxing.tech","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="手动申请letsencrypt证书 系统安装docker，然后在执行如下命令 1234docker run -it --rm --name certbot \           -v &quot;&#x2F;etc&#x2F;letsencrypt:&#x2F;etc&#x2F;letsencrypt&quot; \           -v &quot;&#x2F;var&#x2F;lib&#x2F;www:&#x2F;www&quot; \           cert">
+  <meta name="description" content="系统安装docker，然后在执行如下命令 1234docker run -it --rm --name certbot \           -v &quot;&#x2F;etc&#x2F;letsencrypt:&#x2F;etc&#x2F;letsencrypt&quot; \           -v &quot;&#x2F;var&#x2F;lib&#x2F;www:&#x2F;www&quot; \           certbot&#x2F;certbot certon">
 <meta property="og:type" content="article">
-<meta property="og:title" content="红星">
+<meta property="og:title" content="手动申请letsencrypt证书">
 <meta property="og:url" content="https://hongxing.tech/20240521-%E6%89%8B%E5%8A%A8%E7%94%B3%E8%AF%B7letsencrypt%E8%AF%81%E4%B9%A6/index.html">
 <meta property="og:site_name" content="红星">
-<meta property="og:description" content="手动申请letsencrypt证书 系统安装docker，然后在执行如下命令 1234docker run -it --rm --name certbot \           -v &quot;&#x2F;etc&#x2F;letsencrypt:&#x2F;etc&#x2F;letsencrypt&quot; \           -v &quot;&#x2F;var&#x2F;lib&#x2F;www:&#x2F;www&quot; \           cert">
+<meta property="og:description" content="系统安装docker，然后在执行如下命令 1234docker run -it --rm --name certbot \           -v &quot;&#x2F;etc&#x2F;letsencrypt:&#x2F;etc&#x2F;letsencrypt&quot; \           -v &quot;&#x2F;var&#x2F;lib&#x2F;www:&#x2F;www&quot; \           certbot&#x2F;certbot certon">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-05-21T01:41:19.198Z">
-<meta property="article:modified_time" content="2024-05-27T05:52:39.463Z">
+<meta property="article:modified_time" content="2025-02-27T06:14:14.383Z">
 <meta property="article:author" content="wanghongxing">
 <meta name="twitter:card" content="summary">
 
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title> | 红星</title>
+  <title>手动申请letsencrypt证书 | 红星</title>
   
 
 
@@ -178,7 +178,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
+          手动申请letsencrypt证书
         </h1>
 
         <div class="post-meta">
@@ -195,7 +195,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-05-27 13:52:39" itemprop="dateModified" datetime="2024-05-27T13:52:39+08:00">2024-05-27</time>
+                <time title="Modified: 2025-02-27 14:14:14" itemprop="dateModified" datetime="2025-02-27T14:14:14+08:00">2025-02-27</time>
               </span>
 
           
@@ -209,8 +209,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>手动申请letsencrypt证书</p>
-<p>系统安装docker，然后在执行如下命令</p>
+        <p>系统安装docker，然后在执行如下命令</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --rm --name certbot \</span><br><span class="line">           -v &quot;/etc/letsencrypt:/etc/letsencrypt&quot; \</span><br><span class="line">           -v &quot;/var/lib/www:/www&quot; \</span><br><span class="line">           certbot/certbot certonly</span><br></pre></td></tr></table></figure>
 
 <p>其中/var/lib/www是域名静态根目录，期间提示号域名的根目录的时候输入 /www</p>
