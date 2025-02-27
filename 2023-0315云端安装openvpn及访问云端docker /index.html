@@ -22,13 +22,13 @@
 
   <meta name="description" content="需求：云端机房有几台 ECS 做开发服务器，有 RDS 、MQ、ES、MongoDB、Nacos ，大家用spring cloud微服务做开发，为了保证大家顺利开发，需要在保证安全的情况下让大家可以随时连接云端组件。 方案：1、买云服务商的vpn网关：花点钱的事情； 2、自己在ECS中安装vpn，每个开发人员接入vpn后开发。 下面主要讲第二种方案。 网络情况：云端vpc的网段是10.0.0.0&#x2F;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="红星">
+<meta property="og:title" content="2023-0315云端安装openvpn及访问云端docker">
 <meta property="og:url" content="https://hongxing.tech/2023-0315%E4%BA%91%E7%AB%AF%E5%AE%89%E8%A3%85openvpn%E5%8F%8A%E8%AE%BF%E9%97%AE%E4%BA%91%E7%AB%AFdocker%20/index.html">
 <meta property="og:site_name" content="红星">
 <meta property="og:description" content="需求：云端机房有几台 ECS 做开发服务器，有 RDS 、MQ、ES、MongoDB、Nacos ，大家用spring cloud微服务做开发，为了保证大家顺利开发，需要在保证安全的情况下让大家可以随时连接云端组件。 方案：1、买云服务商的vpn网关：花点钱的事情； 2、自己在ECS中安装vpn，每个开发人员接入vpn后开发。 下面主要讲第二种方案。 网络情况：云端vpc的网段是10.0.0.0&#x2F;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-07-04T01:38:16.708Z">
-<meta property="article:modified_time" content="2023-07-04T01:38:16.709Z">
+<meta property="article:modified_time" content="2025-02-27T06:28:30.203Z">
 <meta property="article:author" content="wanghongxing">
 <meta name="twitter:card" content="summary">
 
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title> | 红星</title>
+  <title>2023-0315云端安装openvpn及访问云端docker | 红星</title>
   
 
 
@@ -178,7 +178,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
+          2023-0315云端安装openvpn及访问云端docker
         </h1>
 
         <div class="post-meta">
@@ -190,6 +190,13 @@
 
               <time title="Created: 2023-07-04 09:38:16" itemprop="dateCreated datePublished" datetime="2023-07-04T09:38:16+08:00">2023-07-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-02-27 14:28:30" itemprop="dateModified" datetime="2025-02-27T14:28:30+08:00">2025-02-27</time>
+              </span>
 
           
 
