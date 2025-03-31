@@ -160,6 +160,538 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240124-npm%20install%20ssl%E8%AF%81%E4%B9%A6%E5%A4%B1%E6%95%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星的个人主页">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20240124-npm%20install%20ssl%E8%AF%81%E4%B9%A6%E5%A4%B1%E6%95%88/" class="post-title-link" itemprop="url">npm install ssl证书失效</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-01-24 12:33:49" itemprop="dateCreated datePublished" datetime="2024-01-24T12:33:49+08:00">2024-01-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-03-04 10:05:47" itemprop="dateModified" datetime="2024-03-04T10:05:47+08:00">2024-03-04</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>npm config set strict-ssl false</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240111-%E5%BC%80%E6%BA%90%E5%A4%87%E4%BB%BDbackupPC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星的个人主页">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20240111-%E5%BC%80%E6%BA%90%E5%A4%87%E4%BB%BDbackupPC/" class="post-title-link" itemprop="url">20240111开源备份backupPC</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-01-11 17:03:51" itemprop="dateCreated datePublished" datetime="2024-01-11T17:03:51+08:00">2024-01-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-10-12 14:25:27" itemprop="dateModified" datetime="2024-10-12T14:25:27+08:00">2024-10-12</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>3.x版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">yum install BackupPC</span><br><span class="line"></span><br><span class="line">cd /usr/share/BackupPC/</span><br><span class="line">chown backuppc:apache sbin/*</span><br><span class="line">cd sbin</span><br><span class="line"></span><br><span class="line">chmod u+s BackupPC_Admin</span><br><span class="line"></span><br><span class="line">usermod -s /bin/bash backuppc</span><br><span class="line"></span><br><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</span><br><span class="line">firewall-cmd --reload</span><br><span class="line"></span><br><span class="line"># /etc/BackupPC/config.pl</span><br><span class="line">$Conf&#123;CgiAdminUsers&#125;     = &#x27;backuppc&#x27;;</span><br><span class="line">$Conf&#123;PingPath&#125; = &#x27;/bin/ping&#x27;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">htpasswd -c /etc/BackupPC/apache.users backuppc</span><br><span class="line"></span><br><span class="line">zaq1XSW2</span><br><span class="line"></span><br><span class="line">systemctl restart backuppc</span><br><span class="line"> systemctl restart httpd</span><br></pre></td></tr></table></figure>
+
+
+
+<p>4.x</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">yum --enablerepo=extras -y install epel-release</span><br><span class="line">yum --enablerepo=epel-testing -y install BackupPC-XS rsync-bpc</span><br><span class="line"></span><br><span class="line"> yum groupinstall &quot;Development Tools&quot;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>安装BackupPC-XS</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> https://objects.githubusercontent.com/github-production-release-asset-2e65be/ </span><br><span class="line">tar zxf BackupPC-XS-0.62.tar.gz</span><br><span class="line">cd BackupPC-XS-0.62</span><br><span class="line"></span><br><span class="line">perl Makefile.PL</span><br><span class="line">make</span><br><span class="line">make test</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Install-the-following-requisites-for-BackupPC-version-4-3-1"><a href="#Install-the-following-requisites-for-BackupPC-version-4-3-1" class="headerlink" title="Install the following requisites for BackupPC version 4.3.1"></a>Install the following requisites for BackupPC version 4.3.1</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">yum -y install bzip2 httpd mod_perl par2cmdline perl-Archive-Zip perl-CGI \</span><br><span class="line">perl-Compress-Raw-Zlib perl-Data-Dumper perl-Digest-MD5 perl-File-Listing \</span><br><span class="line">perl-File-RsyncP perl-Net-FTP-AutoReconnect perl-Net-FTP-RetrHandle \</span><br><span class="line">perl-Time-ParseDate perl-XML-RSS perl-version rrdtool samba-client</span><br></pre></td></tr></table></figure>
+
+<h1 id="Lets-set-up-some-directories-that-we-are-going-to-use-later"><a href="#Lets-set-up-some-directories-that-we-are-going-to-use-later" class="headerlink" title="Lets set up some directories that we are going to use later."></a>Lets set up some directories that we are going to use later.</h1><p>My backuppc server has a raid10 array mounted at /data/. I am going to use this to store the data for backuppc. Lets create the backuppc folder on my raid. Note: this folder can grow to be extremely large.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /data/backuppc</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Now lets create one more folder for BackupPC to store some web interface files.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /var/www/html/backuppc</span><br></pre></td></tr></table></figure>
+
+
+
+<p>And create the cgi-bin directory for backuppc</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /var/www/cgi-bin/backuppc</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Make note of those 2 directories. The installer will ask for them if we don’t explicitly set them below.</p>
+<h1 id="Create-and-setup-the-backuppc-user"><a href="#Create-and-setup-the-backuppc-user" class="headerlink" title="Create and setup the backuppc user."></a>Create and setup the backuppc user.</h1><p>Create group backuppc.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupadd backuppc</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Create backuppc user, and tell it where its home folder is. My backuppc user’s home folder is /opt/backuppc. Change this to whatever you’d like.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">useradd --home-dir /opt/backuppc --create-home --shell /bin/bash --base-dir /opt/backuppc --gid backuppc backuppc</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="Set-Permissions-on-the-directories-we-created"><a href="#Set-Permissions-on-the-directories-we-created" class="headerlink" title="Set Permissions on the directories we created:"></a>Set Permissions on the directories we created:</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown -R backuppc:backuppc /data/backuppc</span><br><span class="line">chown -R backuppc:backuppc /opt/backuppc</span><br></pre></td></tr></table></figure>
+
+<h1 id="Download-the-BackupPC-tar-gz-archive-and-extract-it"><a href="#Download-the-BackupPC-tar-gz-archive-and-extract-it" class="headerlink" title="Download the BackupPC tar.gz archive and extract it."></a>Download the BackupPC tar.gz archive and extract it.</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd ~</span><br><span class="line">wget https://github.com/backuppc/backuppc/releases/download/4.4.0/BackupPC-4.4.0.tar.gz</span><br><span class="line">tar zxf BackupPC-4.4.0.tar.gz</span><br><span class="line">cd BackupPC-4.4.0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="Run-the-configure-pl-script"><a href="#Run-the-configure-pl-script" class="headerlink" title="Run the configure.pl script"></a>Run the configure.pl script</h1><p>Pay close attention to the paths in this command.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">perl configure.pl --batch --cgi-dir /var/www/cgi-bin/backuppc \</span><br><span class="line">--data-dir /data0/backuppc --hostname backuppc --html-dir /var/www/html/backuppc \</span><br><span class="line">--html-dir-url /backuppc --install-dir /opt/backuppc</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Alternatively, you can execute the perl script with no arguments and it will walk you through the install step by step. This is the preferred method if you are upgrading a version 3.X install. (Not supported by this guide)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl configure.pl</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">Ok, we&#x27;re about to:</span><br><span class="line"></span><br><span class="line">  - install the binaries, lib and docs in /usr/local/BackupPC</span><br><span class="line">  - create the data directory /data/BackupPC</span><br><span class="line">  - optionally install the cgi-bin interface</span><br><span class="line">  - create/update the config.pl file /etc/BackupPC/config.pl</span><br><span class="line">--&gt; Do you want to continue? [y]?</span><br><span class="line">Created /usr/local/BackupPC/bin</span><br><span class="line">Created /usr/local/BackupPC/share</span><br><span class="line">Created /usr/local/BackupPC/share/doc</span><br><span class="line">Created /usr/local/BackupPC/share/doc/BackupPC</span><br><span class="line">Created /usr/local/BackupPC/lib</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC/CGI</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC/Config</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC/Lang</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC/Storage</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC/Xfer</span><br><span class="line">Created /usr/local/BackupPC/lib/BackupPC/Zip</span><br><span class="line">Created /usr/local/BackupPC/lib/Net</span><br><span class="line">Created /usr/local/BackupPC/lib/Net/FTP</span><br><span class="line">Created /data/BackupPC</span><br><span class="line">Created /data/BackupPC/pool</span><br><span class="line">Created /data/BackupPC/cpool</span><br><span class="line">Created /data/BackupPC/pc</span><br><span class="line">Created /etc/BackupPC</span><br><span class="line">Created /var/log/BackupPC</span><br><span class="line">Created /var/run/BackupPC</span><br><span class="line">Installing binaries in /usr/local/BackupPC/bin</span><br><span class="line">Installing library in /usr/local/BackupPC/lib</span><br><span class="line">Making systemd and init.d scripts</span><br><span class="line">Making Apache configuration file for suid-perl</span><br><span class="line">Installing docs in /usr/local/BackupPC/share/doc/BackupPC</span><br><span class="line">Installing cgi script BackupPC_Admin in /var/www/cgi-bin/backuppc</span><br><span class="line">Installing config.pl and hosts in /etc/BackupPC</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">Enjoy!  </span><br></pre></td></tr></table></figure>
+
+<h1 id="Apache-config"><a href="#Apache-config" class="headerlink" title="Apache config"></a>Apache config</h1><p>I chose the CGI route (not S-CGI) and chose the directory /var/www/cgi-bin/backuppc for my CGI directory. I chose /var/www/html/backuppc as my images directory. You may need to set this path in the config if you ran the configure.pl script with no arguments.</p>
+<p>Now we need to copy the Apache config into the apache conf.d directory.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp httpd/BackupPC.conf /etc/httpd/conf.d/</span><br></pre></td></tr></table></figure>
+
+<h1 id="Install-the-included-systemd-script"><a href="#Install-the-included-systemd-script" class="headerlink" title="Install the included systemd script:"></a>Install the included systemd script:</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cp systemd/backuppc.service /etc/systemd/system/</span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl start backuppc</span><br><span class="line">systemctl enable backuppc</span><br></pre></td></tr></table></figure>
+
+<h1 id="Create-the-backuppc-authentication-file"><a href="#Create-the-backuppc-authentication-file" class="headerlink" title="Create the backuppc authentication file."></a>Create the backuppc authentication file.</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">htpasswd -c /etc/BackupPC/BackupPC.users backuppc</span><br><span class="line"></span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+
+
+<p>Note: this sets the username to backuppc (modify it to your liking)</p>
+<p>Set permissions on this file.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown backuppc:backuppc /etc/BackupPC/BackupPC.users</span><br></pre></td></tr></table></figure>
+
+<h1 id="Edit-the-config-pl-file-in-etc-BackupPC"><a href="#Edit-the-config-pl-file-in-etc-BackupPC" class="headerlink" title="Edit the config.pl file in /etc/BackupPC/"></a>Edit the config.pl file in /etc/BackupPC/</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/BackupPC/config.pl</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Check the image directory and image url variables.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$Conf&#123;CgiImageDir&#125; = &#x27;/var/www/html/backuppc&#x27;;</span><br><span class="line">$Conf&#123;CgiImageDirURL&#125; = &#x27;/BackupPc&#x27;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Also add backuppc as the administrative user: <code>$Conf&#123;CgiAdminUsers&#125;     = &#39;backuppc&#39;;</code></p>
+<p>这时候不能往/etc/BackupPC目录写东西，</p>
+<p>chcon -R -t httpd_sys_content_t /etc/BackupPC</p>
+<p>查看备份内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 列表</span><br><span class="line">BackupPC_ls -h bi-server -n 0 -s /data/bakdata /</span><br><span class="line">BackupPC_ls -h erp-oracle -n 1 -s /backup/bakdata /</span><br><span class="line"></span><br><span class="line">#查看文件</span><br><span class="line">BackupPC_zcat -h erp-oracle -n 1 -s /backup/bakdata /navy_bak221220_full.log</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240110-Linux%E6%9F%A5%E7%9C%8BCPU%E4%BF%A1%E6%81%AF%EF%BC%8C%E6%9C%BA%E5%99%A8%E5%9E%8B%E5%8F%B7%EF%BC%8C%E5%86%85%E5%AD%98%E7%AD%89%E4%BF%A1%E6%81%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星的个人主页">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20240110-Linux%E6%9F%A5%E7%9C%8BCPU%E4%BF%A1%E6%81%AF%EF%BC%8C%E6%9C%BA%E5%99%A8%E5%9E%8B%E5%8F%B7%EF%BC%8C%E5%86%85%E5%AD%98%E7%AD%89%E4%BF%A1%E6%81%AF/" class="post-title-link" itemprop="url">20240110- Linux查看CPU信息，机器型号，内存等信息</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-01-10 14:06:33" itemprop="dateCreated datePublished" datetime="2024-01-10T14:06:33+08:00">2024-01-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-03-04 10:07:02" itemprop="dateModified" datetime="2024-03-04T10:07:02+08:00">2024-03-04</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Linux查看CPU信息，机器型号，内存等信息"><a href="#Linux查看CPU信息，机器型号，内存等信息" class="headerlink" title="Linux查看CPU信息，机器型号，内存等信息"></a>Linux查看CPU信息，机器型号，内存等信息</h1><h2 id="1-系统"><a href="#1-系统" class="headerlink" title="1. 系统"></a>1. 系统</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">uname -a</td>
+<td align="left">查看内核/操作系统/CPU信息</td>
+</tr>
+<tr>
+<td align="left">head -n 1 /etc/issue</td>
+<td align="left">查看操作系统版本</td>
+</tr>
+<tr>
+<td align="left">cat /proc/cpuinfo</td>
+<td align="left">查看CPU信息</td>
+</tr>
+<tr>
+<td align="left">hostname</td>
+<td align="left">查看计算机名</td>
+</tr>
+<tr>
+<td align="left">lspci -tv</td>
+<td align="left">列出所有PCI设备</td>
+</tr>
+<tr>
+<td align="left">lsusb -tv</td>
+<td align="left">列出所有USB设备</td>
+</tr>
+<tr>
+<td align="left">lsmod</td>
+<td align="left">列出加载的内核模块</td>
+</tr>
+<tr>
+<td align="left">env</td>
+<td align="left">查看环境变量</td>
+</tr>
+<tr>
+<td align="left">lspci | grep -i nvidia</td>
+<td align="left">查看NVIDIA显卡</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="2-资源"><a href="#2-资源" class="headerlink" title="2. 资源"></a>2. 资源</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">free -m</td>
+<td align="left">查看内存使用量和交换区使用量</td>
+</tr>
+<tr>
+<td align="left">df -h</td>
+<td align="left">查看各分区使用情况</td>
+</tr>
+<tr>
+<td align="left">du -sh &lt;目录名&gt;</td>
+<td align="left">查看指定目录的大小</td>
+</tr>
+<tr>
+<td align="left">grep MemTotal /proc/meminfo</td>
+<td align="left">查看内存总量</td>
+</tr>
+<tr>
+<td align="left">grep MemFree /proc/meminfo</td>
+<td align="left">查看空闲内存量</td>
+</tr>
+<tr>
+<td align="left">uptime</td>
+<td align="left">查看系统运行时间、用户数、负载</td>
+</tr>
+<tr>
+<td align="left">cat /proc/loadavg</td>
+<td align="left">查看系统负载</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="3-磁盘和分区"><a href="#3-磁盘和分区" class="headerlink" title="3. 磁盘和分区"></a>3. 磁盘和分区</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">含义</th>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">mount</td>
+<td align="left">column -t</td>
+<td align="left">查看挂接的分区状态</td>
+</tr>
+<tr>
+<td align="left">fdisk -l</td>
+<td align="left">查看所有分区</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">swapon -s</td>
+<td align="left">查看所有交换分区</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">hdparm -i /dev/hda</td>
+<td align="left">查看磁盘参数(仅适用于IDE设备)</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">dmesg</td>
+<td align="left">grep IDE</td>
+<td align="left">查看启动时IDE设备检测状况</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="4-网络"><a href="#4-网络" class="headerlink" title="4. 网络"></a>4. 网络</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">ifconfig</td>
+<td align="left">查看所有网络接口的属性</td>
+</tr>
+<tr>
+<td align="left">iptables -L</td>
+<td align="left">查看防火墙设置</td>
+</tr>
+<tr>
+<td align="left">route -n</td>
+<td align="left">查看路由表</td>
+</tr>
+<tr>
+<td align="left">netstat -lntp</td>
+<td align="left">查看所有监听端口</td>
+</tr>
+<tr>
+<td align="left">netstat -antp</td>
+<td align="left">查看所有已经建立的连接</td>
+</tr>
+<tr>
+<td align="left">netstat -s</td>
+<td align="left">查看网络统计信息</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="5-进程"><a href="#5-进程" class="headerlink" title="5. 进程"></a>5. 进程</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">ps -ef</td>
+<td align="left">查看所有进程</td>
+</tr>
+<tr>
+<td align="left">top</td>
+<td align="left">实时显示进程状态</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="6-用户"><a href="#6-用户" class="headerlink" title="6. 用户"></a>6. 用户</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">w</td>
+<td align="left">查看活动用户</td>
+</tr>
+<tr>
+<td align="left">id &lt;用户名&gt;</td>
+<td align="left">查看指定用户信息</td>
+</tr>
+<tr>
+<td align="left">last</td>
+<td align="left">查看用户登录日志</td>
+</tr>
+<tr>
+<td align="left">cut -d: -f1 /etc/passwd</td>
+<td align="left">查看系统所有用户</td>
+</tr>
+<tr>
+<td align="left">cut -d: -f1 /etc/group</td>
+<td align="left">查看系统所有组</td>
+</tr>
+<tr>
+<td align="left">crontab -l</td>
+<td align="left">查看当前用户的计划任务</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="7-服务"><a href="#7-服务" class="headerlink" title="7. 服务"></a>7. 服务</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">chkconfig –list</td>
+<td align="left">列出所有系统服务</td>
+</tr>
+<tr>
+<td align="left">chkconfig –list | grep on</td>
+<td align="left">列出所有启动的系统服务</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="8-程序"><a href="#8-程序" class="headerlink" title="8. 程序"></a>8. 程序</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">rpm -qa</td>
+<td align="left">查看所有安装的软件包</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="9-查看CPU信息（型号）"><a href="#9-查看CPU信息（型号）" class="headerlink" title="9. 查看CPU信息（型号）"></a>9. 查看CPU信息（型号）</h2><ul>
+<li>CPU型号<br><code>cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c</code></li>
+<li>几颗核心<br><code>cat /proc/cpuinfo | grep physical | uniq -c </code></li>
+<li>查看CPU模式<br><code>getconf LONG_BIT</code></li>
+<li>查看CPU运算flags<br><code>cat /proc/cpuinfo | grep flags | grep &#39; lm &#39; | wc -l</code></li>
+<li>完整看cpu详细信息<br><code>dmidecode | grep &#39;Processor Information</code></li>
+<li>查看内存信息<br><code>cat /proc/meminfo</code></li>
+<li>查看当前操作系统内核信息<br><code>uname -a</code></li>
+<li>查看当前操作系统发行版信息<br><code>cat /etc/issue | grep Linux</code></li>
+<li>查看机器型号<br><code>dmidecode | grep &quot;Product Name</code></li>
+<li>查看网卡信息<br><code>dmesg | grep -i eth</code></li>
+</ul>
+<h2 id="10-GPU相关命令"><a href="#10-GPU相关命令" class="headerlink" title="10. GPU相关命令"></a>10. GPU相关命令</h2><ul>
+<li>查看显卡信息<br><code>lspci | grep -i vga</code></li>
+<li>若使用NVIDIA显卡<br><code>lspci | grep -i nvidia</code></li>
+<li>查看显卡详情<br><code>lspci -v -s 00:0f.0</code></li>
+<li>查看显存使用情况<br><code>nvidia-smi</code></li>
+<li>周期性输出显卡使用情况<br><code>watch -n 10 nvidia-smi</code></li>
+<li>查看cuda版本<br><code>cat /usr/local/cuda/version.txt</code></li>
+<li>查看cudnn版本<br><code>cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2</code></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
     <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2023-1219-%E5%BC%80%E6%BA%90oss/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -927,381 +1459,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2023-0704-mysql%20%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E7%9A%84%E6%97%B6%E5%80%99%E6%8F%90%E7%A4%BA%E5%AF%86%E7%A0%81%E5%A4%AA%E7%AE%80%E5%8D%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星的个人主页">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023-0704-mysql%20%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E7%9A%84%E6%97%B6%E5%80%99%E6%8F%90%E7%A4%BA%E5%AF%86%E7%A0%81%E5%A4%AA%E7%AE%80%E5%8D%95/" class="post-title-link" itemprop="url">2023-0704-mysql 创建用户的时候提示密码太简单</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-07-04 09:38:16" itemprop="dateCreated datePublished" datetime="2023-07-04T09:38:16+08:00">2023-07-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:03:11" itemprop="dateModified" datetime="2024-03-04T10:03:11+08:00">2024-03-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>mysql 创建用户的时候提示密码太简单</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE USER  &#x27;hardoop&#x27;@&#x27;%&#x27;  IDENTIFIED BY &#x27;123456&#x27;;</span><br><span class="line">ERROR 1819 (HY000): Your password does not satisfy the current policy requirements</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;validate_password%&#x27;;</span><br><span class="line">+--------------------------------------+--------+</span><br><span class="line">| Variable_name                        | Value  |</span><br><span class="line">+--------------------------------------+--------+</span><br><span class="line">| validate_password.check_user_name    | ON     |</span><br><span class="line">| validate_password.dictionary_file    |        |</span><br><span class="line">| validate_password.length             | 8      |</span><br><span class="line">| validate_password.mixed_case_count   | 1      |</span><br><span class="line">| validate_password.number_count       | 1      |</span><br><span class="line">| validate_password.policy             | MEDIUM |</span><br><span class="line">| validate_password.special_char_count | 1      |</span><br><span class="line">+--------------------------------------+--------+</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SET GLOBAL validate_password.length = 6;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; SET GLOBAL validate_password.number_count = 0;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line">mysql&gt; SET GLOBAL validate_password.policy = 0;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mysql&gt;  CREATE USER  &#x27;hardoop&#x27;@&#x27;%&#x27;  IDENTIFIED BY &#x27;123456&#x27;;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2023-0701-macbook%20%E5%AE%89%E8%A3%85hadoop%20hive/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星的个人主页">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023-0701-macbook%20%E5%AE%89%E8%A3%85hadoop%20hive/" class="post-title-link" itemprop="url">2023-0701-macbook 安装hadoop hive</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-07-04 09:38:16" itemprop="dateCreated datePublished" datetime="2023-07-04T09:38:16+08:00">2023-07-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:02:41" itemprop="dateModified" datetime="2024-03-04T10:02:41+08:00">2024-03-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>macbook 安装hadoop hive</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew install hardoop</span><br><span class="line"></span><br><span class="line">brew install hive</span><br></pre></td></tr></table></figure>
-
-<h2 id="配置hadoop"><a href="#配置hadoop" class="headerlink" title="配置hadoop"></a>配置hadoop</h2><p>hadoop安装的是3.3.4</p>
-<p>echo “127.0.0.1 wanghongxing” &gt;&gt; /etc/hosts</p>
-<p>目录是 /usr/local/Cellar/hadoop/3.3.4/</p>
-<p>进入 /usr/local/Cellar/hadoop/3.3.4/目录，</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd  /usr/local/Cellar/hadoop/3.3.4/</span><br><span class="line">mkdir tmp</span><br><span class="line">mkdir -p dfs/name</span><br><span class="line">mkdir hadoop</span><br></pre></td></tr></table></figure>
-
-<p>进入libexec目录，修改etc下的配置文件</p>
-<ul>
-<li>core-site.xml</li>
-<li>hdfs-site.xml</li>
-<li>mapred-site.xml</li>
-<li>yarn-site.xml</li>
-</ul>
-<h3 id="修改-core-site-xml-文件"><a href="#修改-core-site-xml-文件" class="headerlink" title="修改 core-site.xml 文件"></a><strong>修改 core-site.xml 文件</strong></h3><p>设置 Hadoop 的临时目录和文件系统，localhost:9000 表示本地主机。如果使用远程主机，要用相应的 IP 地址来代替，填写远程主机的域名，则需要到 /etc/hosts 文件中做 DNS 映射。在 core-site.xml 文件里作如下配置：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.defaultFS<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://localhost:9000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!--用来指定hadoop运行时产生文件的存放目录  自己创建--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/local/Cellar/hadoop/3.3.4/tmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="修改-hdfs-site-xml-文件"><a href="#修改-hdfs-site-xml-文件" class="headerlink" title="修改 hdfs-site.xml 文件"></a><strong>修改 hdfs-site.xml 文件</strong></h3><p>hdfs-site.xml 的配置修改如下，注意 name 和 data 的路径都要替换成本地的路径：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--不是root用户也可以写文件到hdfs--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.permissions<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span>    <span class="comment">&lt;!--关闭防火墙--&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--把路径换成本地的name坐在位置--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/local/Cellar/hadoop/3.3.4/dfs/name<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--在本地新建一个存放hadoop数据的文件夹，然后将路径在这里配置一下--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/local/Cellar/hadoop/3.3.4/hadoop<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="修改-mapred-site-xml-文件"><a href="#修改-mapred-site-xml-文件" class="headerlink" title="修改 mapred-site.xml 文件"></a><strong>修改 mapred-site.xml 文件</strong></h3><p>由于根目录下 etc/hadoop 中没有 mapred-site.xml 文件，所以需要创建该文件。但是目录中提供了 mapred-site.xml.template 模版文件。我们将其重命名为 mapred-site.xml，然后将 yarn 设置成数据处理框架：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--指定mapreduce运行在yarn上--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="修改-yarn-site-xml-文件"><a href="#修改-yarn-site-xml-文件" class="headerlink" title="修改 yarn-site.xml 文件"></a><strong>修改 yarn-site.xml 文件</strong></h3><p>配置数据的处理框架 yarn：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- Site specific YARN configuration properties --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>localhost:8088<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="名称节点设置"><a href="#名称节点设置" class="headerlink" title="名称节点设置"></a>名称节点设置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hdfs namenode -format</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="验证Hadoop"><a href="#验证Hadoop" class="headerlink" title="验证Hadoop"></a>验证Hadoop</h3><p>​     </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sbin/start-all.sh</span><br></pre></td></tr></table></figure>
-
-<h3 id="在浏览器访问Hadoop"><a href="#在浏览器访问Hadoop" class="headerlink" title="在浏览器访问Hadoop"></a>在浏览器访问Hadoop</h3><p>​    访问Hadoop的默认端口号为9870(老版本的是 50070 ). 使用以下网址，以获取浏览器Hadoop服务。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:9870/</span><br></pre></td></tr></table></figure>
-
-<h3 id="验证集群的所有应用程序"><a href="#验证集群的所有应用程序" class="headerlink" title="验证集群的所有应用程序"></a>验证集群的所有应用程序</h3><p>​    访问集群中的所有应用程序的默认端口号为8088。使用以下URL访问该服务。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:8088/</span><br></pre></td></tr></table></figure>
-
-<h3 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h3><p>关闭</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sbin/stop-all.sh</span><br><span class="line"></span><br><span class="line">rm -rf tmp/dfs</span><br><span class="line"></span><br><span class="line">sbin/start-all.sh</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>至此，hadoop看着么有问题。</p>
-<hr>
-<h2 id="配置hive"><a href="#配置hive" class="headerlink" title="配置hive"></a>配置hive</h2><h3 id="在-bash-profile文件新增"><a href="#在-bash-profile文件新增" class="headerlink" title="在 ~/.bash_profile文件新增"></a>在 ~/.bash_profile文件新增</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#Setting PATH for Hive</span><br><span class="line"></span><br><span class="line">export HIVE_HOME=/usr/local/Cellar/hive/3.1.3/libexec</span><br><span class="line"></span><br><span class="line">export PATH=$PATH:HIVE_HOME/bin</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">create database hivestore;</span><br><span class="line"></span><br><span class="line"> CREATE USER  &#x27;hardoop&#x27;@&#x27;%&#x27;  IDENTIFIED BY &#x27;123456&#x27;;</span><br><span class="line"></span><br><span class="line">GRANT ALL PRIVILEGES ON  *.* TO &#x27;hardoop&#x27;@&#x27;%&#x27; WITH GRANT OPTION;</span><br><span class="line"></span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
-
-<h3 id="修改Hive配置文件"><a href="#修改Hive配置文件" class="headerlink" title="**修改Hive配置文件"></a>**修改Hive配置文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd $HIVE_HOME/conf</span><br><span class="line">cp hive-default.xml.template hive-site.xml</span><br><span class="line">vim hive-site.xml</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionUserName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionPassword<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>123456<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionURL<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>jdbc:mysql://localhost:3306/hivestore<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionDriverName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.mysql.cj.jdbc.Driver<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.exec.local.scratchdir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/local/Cellar/hive/3.1.3/libexec/iotmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.querylog.location<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/local/Cellar/hive/3.1.3/libexec/iotmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.downloaded.resources.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/local/Cellar/hive/3.1.2/libexec/iotmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  </span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="下载mysql连接器"><a href="#下载mysql连接器" class="headerlink" title="下载mysql连接器"></a><strong>下载mysql连接器</strong></h3><p>在<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/connector/j/">https://dev.mysql.com/downloads/connector/j/</a></p>
-<p>mysql-connector，下载选platform independent的操作系统。解压以后，把jar文件复制到/usr/local/Cellar/hive/3.1.3/libexec/lib目录下面。</p>
-<p>在/usr/local/Cellar/hive/3.1.2/libexec/（即$HIVE_HOME）文件夹内新建iotmp文件夹</p>
-<h3 id="初始化库"><a href="#初始化库" class="headerlink" title="初始化库"></a><strong>初始化库</strong></h3><p>在/usr/local/Cellar/hive/3.1.2/libexec/bin目录下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schematool -initSchema -dbType mysql</span><br></pre></td></tr></table></figure>
-
-<p>查看初始化信息</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">schematool -dbType mysql -info</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="启动hive"><a href="#启动hive" class="headerlink" title="启动hive"></a>启动hive</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">wanghongxing:~ whx$ hive</span><br><span class="line">SLF4J: Class path contains multiple SLF4J bindings.</span><br><span class="line">SLF4J: Found binding in [jar:file:/usr/local/Cellar/hive/3.1.3/libexec/lib/log4j-slf4j-impl-2.17.1.jar!/org/slf4j/impl/StaticLoggerBinder.class]</span><br><span class="line">SLF4J: Found binding in [jar:file:/usr/local/Cellar/hadoop/3.3.4/libexec/share/hadoop/common/lib/slf4j-reload4j-1.7.36.jar!/org/slf4j/impl/StaticLoggerBinder.class]</span><br><span class="line">SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.</span><br><span class="line">SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]</span><br><span class="line">Hive Session ID = 8a401692-9f09-41f6-babb-0ac77fd8eb16</span><br><span class="line"></span><br><span class="line">Logging initialized using configuration in jar:file:/usr/local/Cellar/hive/3.1.3/libexec/lib/hive-common-3.1.3.jar!/hive-log4j2.properties Async: true</span><br><span class="line">Hive Session ID = 380b0568-e219-453f-abf8-12eb4d7cf331</span><br><span class="line">Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.</span><br><span class="line">hive&gt; show  databases ;</span><br><span class="line">OK</span><br><span class="line">default</span><br><span class="line">Time taken: 0.798 seconds, Fetched: 1 row(s)</span><br><span class="line">hive&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<hr>
-<p>折腾了半天，重新看hadoop，启动总是出问题，因为自己是arm芯片的macbook，决定用docker的方式折腾。</p>
-<p>从 <a target="_blank" rel="noopener" href="https://github.com/big-data-europe/docker-hadoop">https://github.com/big-data-europe/docker-hadoop</a> clone 了他的代码库</p>
-<p>看他头打包镜像的脚本，执行make build就可以打包。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">DOCKER_NETWORK = docker-hadoop_default</span><br><span class="line">ENV_FILE = hadoop.env</span><br><span class="line">current_branch := $(shell git rev-parse --abbrev-ref HEAD)</span><br><span class="line">build:</span><br><span class="line">	docker build -t bde2020/hadoop-base:$(current_branch) ./base</span><br><span class="line">	docker build -t bde2020/hadoop-namenode:$(current_branch) ./namenode</span><br><span class="line">	docker build -t bde2020/hadoop-datanode:$(current_branch) ./datanode</span><br><span class="line">	docker build -t bde2020/hadoop-resourcemanager:$(current_branch) ./resourcemanager</span><br><span class="line">	docker build -t bde2020/hadoop-nodemanager:$(current_branch) ./nodemanager</span><br><span class="line">	docker build -t bde2020/hadoop-historyserver:$(current_branch) ./historyserver</span><br><span class="line">	docker build -t bde2020/hadoop-submit:$(current_branch) ./submit</span><br><span class="line"></span><br><span class="line">wordcount:</span><br><span class="line">	docker build -t hadoop-wordcount ./submit</span><br><span class="line">	docker run --network $&#123;DOCKER_NETWORK&#125; --env-file $&#123;ENV_FILE&#125; bde2020/hadoop-base:$(current_branch) hdfs dfs -mkdir -p /input/</span><br><span class="line">	docker run --network $&#123;DOCKER_NETWORK&#125; --env-file $&#123;ENV_FILE&#125; bde2020/hadoop-base:$(current_branch) hdfs dfs -copyFromLocal -f /opt/hadoop-3.2.3/README.txt /input/</span><br><span class="line">	docker run --network $&#123;DOCKER_NETWORK&#125; --env-file $&#123;ENV_FILE&#125; hadoop-wordcount</span><br><span class="line">	docker run --network $&#123;DOCKER_NETWORK&#125; --env-file $&#123;ENV_FILE&#125; bde2020/hadoop-base:$(current_branch) hdfs dfs -cat /output/*</span><br><span class="line">	docker run --network $&#123;DOCKER_NETWORK&#125; --env-file $&#123;ENV_FILE&#125; bde2020/hadoop-base:$(current_branch) hdfs dfs -rm -r /output</span><br><span class="line">	docker run --network $&#123;DOCKER_NETWORK&#125; --env-file $&#123;ENV_FILE&#125; bde2020/hadoop-base:$(current_branch) hdfs dfs -rm -r /input</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>另外Dockerfile是从debian 来做，安装arm64版jdk比较麻烦，因为改成openjdk11,同时把jdk相应的安装去掉了，顺便把hardoop升级到3.2.3</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">FROM openjdk:11</span><br><span class="line"></span><br><span class="line">MAINTAINER Ivan Ermilov &lt;ivan.s.ermilov@gmail.com&gt;</span><br><span class="line">MAINTAINER Giannis Mouchakis &lt;gmouchakis@iit.demokritos.gr&gt;</span><br><span class="line"></span><br><span class="line">RUN apt-get update &amp;&amp; DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \</span><br><span class="line">      net-tools \</span><br><span class="line">      curl \</span><br><span class="line">      netcat \</span><br><span class="line">      gnupg \</span><br><span class="line">      libsnappy-dev \</span><br><span class="line">    &amp;&amp; rm -rf /var/lib/apt/lists/*</span><br><span class="line">      </span><br><span class="line"># ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/</span><br><span class="line"></span><br><span class="line">RUN curl -O https://dist.apache.org/repos/dist/release/hadoop/common/KEYS</span><br><span class="line"></span><br><span class="line">RUN gpg --import KEYS</span><br><span class="line"></span><br><span class="line">ENV HADOOP_VERSION 3.2.3</span><br><span class="line">ENV HADOOP_URL https://www.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz</span><br><span class="line"></span><br><span class="line">RUN set -x \</span><br><span class="line">    &amp;&amp; curl -fSL &quot;$HADOOP_URL&quot; -o /tmp/hadoop.tar.gz \</span><br><span class="line">    &amp;&amp; curl -fSL &quot;$HADOOP_URL.asc&quot; -o /tmp/hadoop.tar.gz.asc \</span><br><span class="line">    &amp;&amp; gpg --verify /tmp/hadoop.tar.gz.asc \</span><br><span class="line">    &amp;&amp; tar -xvf /tmp/hadoop.tar.gz -C /opt/ \</span><br><span class="line">    &amp;&amp; rm /tmp/hadoop.tar.gz*</span><br><span class="line"></span><br><span class="line">RUN ln -s /opt/hadoop-$HADOOP_VERSION/etc/hadoop /etc/hadoop</span><br><span class="line"></span><br><span class="line">RUN mkdir /opt/hadoop-$HADOOP_VERSION/logs</span><br><span class="line"></span><br><span class="line">RUN mkdir /hadoop-data</span><br><span class="line"></span><br><span class="line">ENV HADOOP_HOME=/opt/hadoop-$HADOOP_VERSION</span><br><span class="line">ENV HADOOP_CONF_DIR=/etc/hadoop</span><br><span class="line">ENV MULTIHOMED_NETWORK=1</span><br><span class="line">ENV USER=root</span><br><span class="line">ENV PATH $HADOOP_HOME/bin/:$PATH</span><br><span class="line"></span><br><span class="line">ADD entrypoint.sh /entrypoint.sh</span><br><span class="line"></span><br><span class="line">RUN chmod a+x /entrypoint.sh</span><br><span class="line"></span><br><span class="line">ENTRYPOINT [&quot;/entrypoint.sh&quot;]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>这个弄好后hadoop没有问题，但是加上 hive后总是有问题。</p>
-<p>拿出intel芯片的macbook，这样搞。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2023-0315%E4%BA%91%E7%AB%AF%E5%AE%89%E8%A3%85openvpn%E5%8F%8A%E8%AE%BF%E9%97%AE%E4%BA%91%E7%AB%AFdocker%20/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星的个人主页">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023-0315%E4%BA%91%E7%AB%AF%E5%AE%89%E8%A3%85openvpn%E5%8F%8A%E8%AE%BF%E9%97%AE%E4%BA%91%E7%AB%AFdocker%20/" class="post-title-link" itemprop="url">2023-0315云端安装openvpn及访问云端docker</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-07-04 09:38:16" itemprop="dateCreated datePublished" datetime="2023-07-04T09:38:16+08:00">2023-07-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-02-27 14:28:30" itemprop="dateModified" datetime="2025-02-27T14:28:30+08:00">2025-02-27</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="需求："><a href="#需求：" class="headerlink" title="需求："></a><strong>需求：</strong></h3><p>云端机房有几台 ECS 做开发服务器，有 RDS 、MQ、ES、MongoDB、Nacos ，大家用spring cloud微服务做开发，为了保证大家顺利开发，需要在保证安全的情况下让大家可以随时连接云端组件。</p>
-<h3 id="方案："><a href="#方案：" class="headerlink" title="方案："></a><strong>方案：</strong></h3><p>1、买云服务商的vpn网关：花点钱的事情；</p>
-<p>2、自己在ECS中安装vpn，每个开发人员接入vpn后开发。</p>
-<p>下面主要讲第二种方案。</p>
-<h3 id="网络情况："><a href="#网络情况：" class="headerlink" title="网络情况："></a><strong>网络情况：</strong></h3><p>云端vpc的网段是10.0.0.0/24</p>
-<p>服务器一：安装ES、MongoDb、Doris等组件；IP：10.0.0.11</p>
-<p>服务器二：安装nacos、redis、docker服务；IP：10.0.0.10</p>
-<p>服务器三：docker服务；IP：10.0.0.12</p>
-<h3 id="计划："><a href="#计划：" class="headerlink" title="计划："></a><strong>计划：</strong></h3><p>1、在服务器一上安装openvpn，接入客户端的ip段规划为10.8.0.0/24，让所有vpn接入的客户端可以直接访问服务器二、三；</p>
-<p>2、服务器一、二、三上可以直接连通所有vpn接入的客户端；</p>
-<p>3、vpn接入的客户端可以连通服务器二、三上的docker容器中的服务；</p>
-<p>1是 openvpn的基本功能；</p>
-<p>2需要在openvpn 服务端给vpn客户端推送路由信息；</p>
-<p>3需要服务器二三上需要被访问的docker容器接入直接的docker network，然后在openvpn服务端给vpn客户端推送到每个docker network的路由。</p>
-<h3 id="先处理docker-network"><a href="#先处理docker-network" class="headerlink" title="先处理docker network"></a>先处理docker network</h3><p>在服务器二、服务器三分别创建单独的docker network：</p>
-<p>服务器二： <code>docker network create --subnet=10.10.0.0/24 cem-network</code>。</p>
-<p>服务器三：<code>docker network create --subnet=10.12.0.0/24 cem-network</code>。</p>
-<p>然后这两个服务器中需要被vpn客户端访问的容器都需要创建在cem-network中。</p>
-<h3 id="安装openvpn服务"><a href="#安装openvpn服务" class="headerlink" title="安装openvpn服务"></a>安装openvpn服务</h3><p>先启动防火墙，需要防火墙做转发（也可以用iptables，这个最近这些年很少用了）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable firewalld</span><br><span class="line">sudo systemctl start firewalld</span><br></pre></td></tr></table></figure>
-
-<p>安装openvpn软件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">yum -y install epel-release</span><br><span class="line">yum install openvpn</span><br><span class="line">wget https://github.com/OpenVPN/easy-rsa-old/archive/2.3.3.tar.gz</span><br><span class="line">tar xfz 2.3.3.tar.gz</span><br><span class="line">mkdir /etc/openvpn/easy-rsa</span><br><span class="line">cp -rf easy-rsa-old-2.3.3/easy-rsa/2.0/* /etc/openvpn/easy-rsa</span><br><span class="line">cp /usr/share/doc/openvpn-2.4.12/sample/sample-config-files/server.conf /etc/openvpn</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>需改/etc/openvpn/server.conf配置文件，大致需要修改如下几点：</p>
-<p>然后在openvpn配制中增加到10.10.0.0/24的路由。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">client-to-client</span><br><span class="line">#下面这行注释掉</span><br><span class="line">;tls-auth ta.key 0  </span><br><span class="line">#添加这个</span><br><span class="line">tls-crypt myvpn.tlsauth</span><br><span class="line"></span><br><span class="line">#添加到云端服务器的路由</span><br><span class="line">#所有 10.0.0/24的都通过openvpn服务器来访问</span><br><span class="line">push &quot;route 10.0.0.0 255.255.255.0&quot;</span><br><span class="line">#访问10.10.0/24 容器的都通过10.0.0.10来路由</span><br><span class="line">push &quot;route 10.10.0.0 255.255.255.0 10.0.0.10 1&quot;</span><br><span class="line">#访问10.12.0/24 容器的都通过10.0.0.12来路由</span><br><span class="line">push &quot;route 10.12.0.0 255.255.255.0 10.0.0.12 1&quot;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">openvpn --genkey --secret /etc/openvpn/myvpn.tlsauth</span><br><span class="line">mkdir /etc/openvpn/easy-rsa/keys</span><br><span class="line">cd /etc/openvpn/easy-rsa</span><br><span class="line">source ./vars</span><br><span class="line">./clean-all</span><br><span class="line">./build-ca</span><br><span class="line">./build-key-server server</span><br><span class="line">./build-dh</span><br><span class="line">cd /etc/openvpn/easy-rsa/keys</span><br><span class="line">cp dh2048.pem ca.crt server.crt server.key /etc/openvpn</span><br><span class="line">cd /etc/openvpn/easy-rsa</span><br><span class="line"></span><br><span class="line">./build-key wanghongxing</span><br></pre></td></tr></table></figure>
-
-<p>然后修改防火墙配置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">firewall-cmd --zone=public --add-port=1194/tcp --permanent</span><br><span class="line">firewall-cmd --zone=public --add-port=1194/udp --permanent</span><br><span class="line">firewall-cmd --zone=trusted --add-service openvpn --permanent</span><br><span class="line"></span><br><span class="line">firewall-cmd --list-services --zone=trusted</span><br><span class="line">firewall-cmd --add-masquerade</span><br><span class="line">firewall-cmd --permanent --add-masquerade</span><br><span class="line">firewall-cmd --query-masquerade</span><br><span class="line">firewall-cmd --permanent --add-interface=tun0</span><br><span class="line">firewall-cmd --permanent --add-service=openvpn</span><br><span class="line">firewall-cmd --permanent --direct --passthrough ipv4 -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE</span><br><span class="line">firewall-cmd --reload</span><br><span class="line"></span><br><span class="line">echo &quot;net.ipv4.ip_forward = 1&quot; &gt;&gt;/etc/sysctl.conf</span><br><span class="line">systemctl restart openvpn@server.service</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="制作vpn客户端文件"><a href="#制作vpn客户端文件" class="headerlink" title="制作vpn客户端文件"></a>制作vpn客户端文件</h3><p>把 下面这几个文件复制下载到客户端电脑</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/etc/openvpn/ca.crt </span><br><span class="line">/etc/openvpn/myvpn.tlsauth</span><br><span class="line">/etc/openvpn/easy-rsa/keys/wanghongxing.crt</span><br><span class="line">/etc/openvpn/easy-rsa/keys/wanghongxing.csr</span><br><span class="line">/etc/openvpn/easy-rsa/keys/wanghongxing.key</span><br></pre></td></tr></table></figure>
-
-<p>然后编辑生成 whx.ovpn</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">client</span><br><span class="line">dev tun</span><br><span class="line">proto udp</span><br><span class="line">remote 114.116.201.xxx</span><br><span class="line">resolv-retry infinite</span><br><span class="line">nobind</span><br><span class="line">persist-key</span><br><span class="line">persist-tun</span><br><span class="line">ca ca.crt</span><br><span class="line">cert wanghongxing.crt</span><br><span class="line">key wanghongxing.key</span><br><span class="line">remote-cert-tls server</span><br><span class="line">tls-crypt myvpn.tlsauth</span><br><span class="line">verb 3</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="下载openvpn客户端"><a href="#下载openvpn客户端" class="headerlink" title="下载openvpn客户端"></a>下载openvpn客户端</h3><p>mac用户下载 Tunnelblick ，windows用户下载.</p>
-<p>然后倒入whx.ovpn</p>
-<h3 id="在服务器二三设置路由"><a href="#在服务器二三设置路由" class="headerlink" title="在服务器二三设置路由"></a>在服务器二三设置路由</h3><p>其服务器二三设置访问vpn客户端的路由</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ip route add 10.8.0.0/24 via 10.0.0.11 dev eth0</span><br><span class="line">#这样以后重启了也有效</span><br><span class="line">echo &quot;10.8.0.0/24 via 10.0.0.11 dev eth0&quot; &gt;&gt; /etc/sysconfig/network-scripts/route-eth0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>在服务器二设置访问服务器三容器的路由</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ip route add 10.12.0.0/24 via 10.0.0.12 dev eth0</span><br><span class="line">echo &quot;10.12.0.0/24 via 10.0.0.12 dev eth0&quot; &gt;&gt; /etc/sysconfig/network-scripts/route-eth0</span><br></pre></td></tr></table></figure>
-
-<p>在服务器三设置访问服务器二容器的路由</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ip route add 10.10.0.0/24 via 10.0.0.10 dev eth0</span><br><span class="line">echo &quot;10.10.0.0/24 via 10.0.0.10 dev eth0&quot; &gt;&gt; /etc/sysconfig/network-scripts/route-eth0</span><br></pre></td></tr></table></figure>
-
-<p>在服务器一设置访问服务器二三容器的路由</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ip route add 10.12.0.0/24 via 10.0.0.12 dev eth0</span><br><span class="line">ip route add 10.10.0.0/24 via 10.0.0.10 dev eth0</span><br><span class="line">echo &quot;10.12.0.0/24 via 10.0.0.12 dev eth0&quot; &gt;&gt; /etc/sysconfig/network-scripts/route-eth0</span><br><span class="line">echo &quot;10.10.0.0/24 via 10.0.0.10 dev eth0&quot; &gt;&gt; /etc/sysconfig/network-scripts/route-eth0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>ip route add 172.18.0.0/24 via 10.0.0.10 dev eth0</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</span><br><span class="line">firewall-cmd --zone=public --add-port=443/tcp --permanent</span><br><span class="line">firewall-cmd --zone=public --add-port=8848/tcp --permanent</span><br><span class="line">firewall-cmd --zone=public --add-port=9848/tcp --permanent</span><br><span class="line">firewall-cmd --permanent --zone=trusted --change-interface=docker0</span><br><span class="line"></span><br><span class="line">firewall-cmd --zone=public --add-port=6379/tcp --permanent</span><br><span class="line">firewall-cmd --zone=public --add-port=9876/tcp --permanent</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>docker network create –subnet=10.10.0.0/24 cem-network</p>
-<p>linux中手动添加路由的方法：</p>
-<p>ip route add 10.10.0.0/24 via 10.0.0.10 dev eth0</p>
-<p>macos中手动添加路由的方法：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo route -n add -net 10.10.0.0/24 10.0.0.10</span><br></pre></td></tr></table></figure>
-
-
-
-<p>为了让spring cloud微服务注册到nacos的时候使用特定ip段，需要在bootstrap中设置 preferred-networks ，比如内网用户设置为：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  cloud:</span><br><span class="line">    inetutils:</span><br><span class="line">      preferred-networks:</span><br><span class="line">        - 10.8</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>比如cem容器中设置为：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  cloud:</span><br><span class="line">    inetutils:</span><br><span class="line">      preferred-networks:</span><br><span class="line">        - 10.10</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1367,7 +1528,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

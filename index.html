@@ -160,6 +160,234 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20250318-word%20to%20markdown/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星的个人主页">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20250318-word%20to%20markdown/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-03-18 22:14:36 / Modified: 22:32:00" itemprop="dateCreated datePublished" datetime="2025-03-18T22:14:36+08:00">2025-03-18</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>word to markdown</p>
+<p>把doc文件转换为docx</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">soffice --convert-to docx --outdir whx *.doc*</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pandoc -f docx 天津市浩物机电汽车贸易有限公司—安全管理制度汇编.docx --extract-media ./myMediaFolder -o whx1.md -t markdown    </span><br><span class="line"></span><br><span class="line">pandoc -f docx  天津市浩物机电汽车贸易有限公司—安全管理制度汇编.docx -t pdf -o whx.pdf</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/sql%20server%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星的个人主页">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/sql%20server%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-03-15 09:29:42" itemprop="dateCreated datePublished" datetime="2025-03-15T09:29:42+08:00">2025-03-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-03-17 14:15:57" itemprop="dateModified" datetime="2025-03-17T14:15:57+08:00">2025-03-17</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>sql server</p>
+<p>找出有主键的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">USE cwbasehwjd;  -- 切换到目标数据库</span><br><span class="line"></span><br><span class="line">SELECT </span><br><span class="line">    CONSTRAINT_NAME,  -- 获取主键的名称</span><br><span class="line">    TABLE_NAME        -- 获取主键所在的表名</span><br><span class="line">FROM </span><br><span class="line">    INFORMATION_SCHEMA.TABLE_CONSTRAINTS  -- 查询表约束信息</span><br><span class="line">WHERE </span><br><span class="line"> CONSTRAINT_TYPE = &#x27;PRIMARY KEY&#x27;;  -- 只筛选主键</span><br></pre></td></tr></table></figure>
+
+<p>找出没有主键的表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">USE cwbasehwjd;  <span class="comment">-- 切换到目标数据库</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"> <span class="keyword">SELECT</span> name <span class="keyword">FROM</span> sys.tables</span><br><span class="line"><span class="keyword">EXCEPT</span></span><br><span class="line"><span class="keyword">SELECT</span> TABLE_NAME <span class="keyword">FROM</span> INFORMATION_SCHEMA.TABLE_CONSTRAINTS</span><br><span class="line"><span class="keyword">WHERE</span> CONSTRAINT_TYPE <span class="operator">=</span> <span class="string">&#x27;PRIMARY KEY&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>ms做法</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">USE [cwbasehwjd];  </span><br><span class="line">GO  </span><br><span class="line"><span class="keyword">SELECT</span> SCHEMA_NAME(t.schema_id) <span class="keyword">AS</span> schema_name  </span><br><span class="line">    ,t.name <span class="keyword">AS</span> table_name  </span><br><span class="line"><span class="keyword">FROM</span> sys.tables t   </span><br><span class="line"><span class="keyword">WHERE</span> object_id <span class="keyword">NOT</span> <span class="keyword">IN</span>   </span><br><span class="line">   (  </span><br><span class="line">    <span class="keyword">SELECT</span> parent_object_id   </span><br><span class="line">    <span class="keyword">FROM</span> sys.key_constraints   </span><br><span class="line">    <span class="keyword">WHERE</span> type_desc <span class="operator">=</span> <span class="string">&#x27;PRIMARY_KEY_CONSTRAINT&#x27;</span> <span class="comment">-- or type = &#x27;PK&#x27;  </span></span><br><span class="line">    );  </span><br><span class="line">GO  </span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>脚本寻找</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">USE cwbasehwjd;  -- 切换到目标数据库</span><br><span class="line"></span><br><span class="line">declare @TableName nvarchar(250)--游标中取出的数据表名</span><br><span class="line">declare @AllTableHasPrimaryKey int--是否全部都有主键</span><br><span class="line">set @AllTableHasPrimaryKey=1</span><br><span class="line">--声明读取数据库所有数据表名和编号的游标</span><br><span class="line">declare mycursor cursor for select name from dbo.SysObjects WHERE OBJECTPROPERTY(ID, &#x27;IsUserTable&#x27;) = 1 order by name</span><br><span class="line"> --打开游标</span><br><span class="line">open mycursor</span><br><span class="line">--从游标里取出数据赋值到我们刚才声明的数据表名变量中</span><br><span class="line">fetch next from mycursor into @TableName</span><br><span class="line">--如果游标执行成功      </span><br><span class="line">while (@@fetch_status=0)</span><br><span class="line">begin</span><br><span class="line"> </span><br><span class="line"> --判断当前数据表是否存在主键</span><br><span class="line"> IF NOT EXISTS (select * from information_schema.key_column_usage where TABLE_NAME=&#x27;&#x27;+@TableName+&#x27;&#x27;)</span><br><span class="line"> begin</span><br><span class="line"> set @AllTableHasPrimaryKey=0;</span><br><span class="line"> print &#x27;当前数据表[&#x27;+@TableName+&#x27;]没有主键&#x27;  </span><br><span class="line"> end</span><br><span class="line"> </span><br><span class="line"> --用游标去取下一条记录   </span><br><span class="line">    fetch next from mycursor into @TableName</span><br><span class="line">end</span><br><span class="line"> </span><br><span class="line">if(@AllTableHasPrimaryKey=1)</span><br><span class="line">begin</span><br><span class="line">print &#x27;数据库中所有数据表都有主键&#x27;</span><br><span class="line">end</span><br><span class="line"> </span><br><span class="line">--关闭游标</span><br><span class="line">close mycursor</span><br><span class="line">--撤销游标</span><br><span class="line">deallocate mycursor</span><br><span class="line">--脚本代码结束</span><br></pre></td></tr></table></figure>
+
+
+
+<p>查看每个表占用空间</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>  db_name() <span class="keyword">as</span> DbName,</span><br><span class="line">    t.NAME <span class="keyword">AS</span> TableName,</span><br><span class="line">    s.Name <span class="keyword">AS</span> SchemaName,</span><br><span class="line">    p.rows <span class="keyword">AS</span> RowCounts,</span><br><span class="line">    <span class="built_in">SUM</span>(a.total_pages) <span class="operator">*</span> <span class="number">8</span> <span class="keyword">AS</span> TotalSpaceKB, </span><br><span class="line">    <span class="built_in">CAST</span>(ROUND(((<span class="built_in">SUM</span>(a.total_pages) <span class="operator">*</span> <span class="number">8</span>) <span class="operator">/</span> <span class="number">1024.00</span>), <span class="number">2</span>) <span class="keyword">AS</span> <span class="type">NUMERIC</span>(<span class="number">36</span>, <span class="number">2</span>)) <span class="keyword">AS</span> 总共占用空间MB,</span><br><span class="line">    <span class="built_in">SUM</span>(a.used_pages) <span class="operator">*</span> <span class="number">8</span> <span class="keyword">AS</span> UsedSpaceKB, </span><br><span class="line">    <span class="built_in">CAST</span>(ROUND(((<span class="built_in">SUM</span>(a.used_pages) <span class="operator">*</span> <span class="number">8</span>) <span class="operator">/</span> <span class="number">1024.00</span>), <span class="number">2</span>) <span class="keyword">AS</span> <span class="type">NUMERIC</span>(<span class="number">36</span>, <span class="number">2</span>)) <span class="keyword">AS</span> UsedSpaceMB, </span><br><span class="line">    (<span class="built_in">SUM</span>(a.total_pages) <span class="operator">-</span> <span class="built_in">SUM</span>(a.used_pages)) <span class="operator">*</span> <span class="number">8</span> <span class="keyword">AS</span> UnusedSpaceKB,</span><br><span class="line">    <span class="built_in">CAST</span>(ROUND(((<span class="built_in">SUM</span>(a.total_pages) <span class="operator">-</span> <span class="built_in">SUM</span>(a.used_pages)) <span class="operator">*</span> <span class="number">8</span>) <span class="operator">/</span> <span class="number">1024.00</span>, <span class="number">2</span>) <span class="keyword">AS</span> <span class="type">NUMERIC</span>(<span class="number">36</span>, <span class="number">2</span>)) <span class="keyword">AS</span> UnusedSpaceMB</span><br><span class="line">,</span><br><span class="line">    t.create_date <span class="keyword">AS</span> CreatedDate,</span><br><span class="line"> t.modify_date <span class="keyword">AS</span> LastModifiedDate</span><br><span class="line"><span class="keyword">FROM</span> </span><br><span class="line">    sys.tables t</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span>      </span><br><span class="line">    sys.indexes i <span class="keyword">ON</span> t.OBJECT_ID <span class="operator">=</span> i.object_id</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> </span><br><span class="line">    sys.partitions p <span class="keyword">ON</span> i.object_id <span class="operator">=</span> p.OBJECT_ID <span class="keyword">AND</span> i.index_id <span class="operator">=</span> p.index_id</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> </span><br><span class="line">    sys.allocation_units a <span class="keyword">ON</span> p.partition_id <span class="operator">=</span> a.container_id</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> </span><br><span class="line">    sys.schemas s <span class="keyword">ON</span> t.schema_id <span class="operator">=</span> s.schema_id</span><br><span class="line"><span class="keyword">WHERE</span> </span><br><span class="line">    t.NAME <span class="keyword">NOT</span> <span class="keyword">LIKE</span> <span class="string">&#x27;dt%&#x27;</span> </span><br><span class="line">    <span class="keyword">AND</span> t.is_ms_shipped <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">AND</span> i.OBJECT_ID <span class="operator">&gt;</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> </span><br><span class="line">    t.Name, s.Name, p.Rows,t.create_date,t.modify_date</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> </span><br><span class="line">    总共占用空间MB <span class="keyword">desc</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>查看每个表的修改时间</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    name <span class="keyword">AS</span> TableName,</span><br><span class="line">    create_date <span class="keyword">AS</span> CreatedDate,</span><br><span class="line">    modify_date <span class="keyword">AS</span> LastModifiedDate</span><br><span class="line"><span class="keyword">FROM</span> </span><br><span class="line">    sys.tables</span><br><span class="line">    <span class="keyword">order</span> <span class="keyword">by</span> LastModifiedDate <span class="keyword">asc</span></span><br></pre></td></tr></table></figure>
+
+<p>问题：在同一个sql中，将一个数据库如test备份后，新建一个数据库用test备份文件进行覆盖还原，待还原成功的时候，test数据库一直显示“正在还原”。 在这种状态下，由于未提交的事务没有回滚，导致数据库不可以访问。</p>
+<p>解决：新建查询，执行<code>restore database XXX with recovery</code>语句后正常 – XXX代表数据库名称</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20250227-%E6%8E%A2%E7%B4%A2dify/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星的个人主页">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20250227-%E6%8E%A2%E7%B4%A2dify/" class="post-title-link" itemprop="url">20250227 探索dify</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-02-27 14:42:38 / Modified: 14:44:46" itemprop="dateCreated datePublished" datetime="2025-02-27T14:42:38+08:00">2025-02-27</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>dify 能做什么？</p>
+<ul>
+<li>快速将ai 应用穿衣变为现实</li>
+<li>将llm继承至现有业务</li>
+<li>欧维企业级的llm基础设施</li>
+<li>探索llm的能力边界</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
     <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240827-%E5%AD%A6%E4%B9%A0clickhouse/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -729,226 +957,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240625%E8%80%81%E7%9A%84%20asp.net%20%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%96%87%E4%BB%B6%20gb2312%20%E7%BC%96%E7%A0%81%E7%BB%9F%E4%B8%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星的个人主页">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/20240625%E8%80%81%E7%9A%84%20asp.net%20%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%96%87%E4%BB%B6%20gb2312%20%E7%BC%96%E7%A0%81%E7%BB%9F%E4%B8%80/" class="post-title-link" itemprop="url">20240625老的 asp.net 项目中文件 gb2312 编码统一</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-06-25 10:02:04" itemprop="dateCreated datePublished" datetime="2024-06-25T10:02:04+08:00">2024-06-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-02-27 14:15:31" itemprop="dateModified" datetime="2025-02-27T14:15:31+08:00">2025-02-27</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>传统windows下面的文件，很多老的项目中文件编码有gb2312的，也有unicode的，在vscode中修改的话经常会出错，因为写了个小脚本，把所有非unicode编码的文件统一改为unicode编码。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line">__author__ = <span class="string">&#x27;whx&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> os,sys</span><br><span class="line"><span class="keyword">import</span> chardet</span><br><span class="line"><span class="keyword">import</span> glob </span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">convert</span>(<span class="params"> filename, in_enc = <span class="string">&quot;GBK&quot;</span>, out_enc=<span class="string">&quot;UTF-8-SIG&quot;</span> </span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        content = <span class="built_in">open</span>(filename, <span class="string">&#x27;rb&#x27;</span>).read()</span><br><span class="line">        result = chardet.detect(content)<span class="comment">#通过chardet.detect获取当前文件的编码格式串，返回类型为字典类型</span></span><br><span class="line">        coding = result.get(<span class="string">&#x27;encoding&#x27;</span>)<span class="comment">#获取encoding的值[编码格式]</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;UTF&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> coding <span class="keyword">and</span> <span class="string">&quot;utf&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> coding :<span class="comment">#文件格式如果不是utf-8的时候，才进行转码</span></span><br><span class="line">            <span class="built_in">print</span> (<span class="string">&quot;转换 &quot;</span>+ coding + <span class="string">&quot;to utf-8! &quot;</span> + filename)</span><br><span class="line">            new_content = content.decode( coding ).encode(out_enc)</span><br><span class="line">            <span class="built_in">open</span>(filename, <span class="string">&#x27;wb&#x27;</span>).write( new_content )</span><br><span class="line">            <span class="built_in">print</span> (<span class="string">&quot; done&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span> (<span class="string">&quot;不用修改 &quot;</span>+coding + <span class="string">&quot;:&quot;</span> +filename)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> ex:</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&quot; error&quot;</span>,ex)</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">filesAspx = glob.glob(<span class="string">&quot;D:\source\project/**/*.aspx&quot;</span>,recursive=<span class="literal">True</span>)</span><br><span class="line">filesCs = glob.glob(<span class="string">&quot;D:\source\project/**/*.cs&quot;</span>,recursive=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file_path <span class="keyword">in</span> filesAspx:</span><br><span class="line">   convert(file_path)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> file_path <span class="keyword">in</span> filesAspx:</span><br><span class="line">   convert(filesCs)</span><br><span class="line">    </span><br><span class="line">    </span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240625%E8%80%81%E7%9A%84web%E5%BA%94%E7%94%A8jquery%E4%B8%AD%E6%94%AF%E6%8C%81%E6%96%B0%E7%89%88%E6%9C%ACjquery/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星的个人主页">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/20240625%E8%80%81%E7%9A%84web%E5%BA%94%E7%94%A8jquery%E4%B8%AD%E6%94%AF%E6%8C%81%E6%96%B0%E7%89%88%E6%9C%ACjquery/" class="post-title-link" itemprop="url">20240625老的web应用jquery中支持新版本jquery</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-06-25 09:26:41" itemprop="dateCreated datePublished" datetime="2024-06-25T09:26:41+08:00">2024-06-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-02-27 14:15:18" itemprop="dateModified" datetime="2025-02-27T14:15:18+08:00">2025-02-27</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>老的项目中使用了1.6.x的jquery，需要升级其中的弹窗为layui，但是layui需要至少1.10.x，修改方式如下，将原来单行的jquery引用，改为保护多版本jquery，添加layui引用，最后恢复原来的jquery版本号，确保不影响原来其它jquery使用的地方。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;../js/jquery-1.3.2.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</span><br><span class="line">  </span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> &lt;script type=&quot;text/javascript&quot; src=&quot;../js/lib/jquery.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;../js/jquerynew.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;../js/layer/js/layer.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script  type=&quot;text/javascript&quot; &gt;var $jq = jQuery.noConflict(true);console.log($().jquery);&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>顺便做一个批量替换的脚本</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="comment">#@Author: whx</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> glob</span><br><span class="line"><span class="comment">#构建一个文本文件内容查找函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">replace_text</span>(<span class="params">file_path, search_str</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(file_path, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f ,<span class="built_in">open</span>(<span class="string">&quot;%s.bak&quot;</span>%file_path, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> fw:</span><br><span class="line">            data = f.read()</span><br><span class="line">            res = re.findall(search_str, data)</span><br><span class="line">            <span class="keyword">if</span> res :</span><br><span class="line">                newData = re.sub(search_str, <span class="string">r&#x27;&lt;script type=&quot;text/javascript&quot; src=&quot;\g&lt;2&gt;/jquery-\g&lt;3&gt;.js&quot;&gt;&lt;/script&gt;\n&lt;script type=&quot;text/javascript&quot; src=&quot;\g&lt;2&gt;/jquerynew.js&quot;&gt;&lt;/script&gt;\n&lt;script type=&quot;text/javascript&quot; src=&quot;\g&lt;2&gt;/layer.js&quot;&gt;&lt;/script&gt;\n&lt;script  type=&quot;text/javascript&quot; &gt;var $jq = jQuery.noConflict(true);console.log($().jquery);&lt;/script&gt;&#x27;</span> , data)</span><br><span class="line">                fw.write(newData)</span><br><span class="line">                f.close()</span><br><span class="line">                fw.close()</span><br><span class="line">                os.remove(file_path)</span><br><span class="line">                os.rename(<span class="string">&quot;%s.bak&quot;</span> % file_path, file_path)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                f.close()</span><br><span class="line">                fw.close()</span><br><span class="line">                os.remove(<span class="string">&quot;%s.bak&quot;</span> % file_path)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">except</span> UnicodeDecodeError:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(file_path, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;gbk&#x27;</span>) <span class="keyword">as</span> f ,<span class="built_in">open</span>(<span class="string">&quot;%s.bak&quot;</span>%file_path, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;gbk&#x27;</span>) <span class="keyword">as</span> fw:</span><br><span class="line">            data = f.read()</span><br><span class="line">            res = re.findall(search_str, data)</span><br><span class="line">            <span class="keyword">if</span> res :</span><br><span class="line">                newData = re.sub(search_str, <span class="string">r&#x27;&lt;script type=&quot;text/javascript&quot; src=&quot;\g&lt;2&gt;/jquery-\g&lt;3&gt;.js&quot;&gt;&lt;/script&gt;\n&lt;script type=&quot;text/javascript&quot; src=&quot;\g&lt;2&gt;/jquerynew.js&quot;&gt;&lt;/script&gt;\n&lt;script type=&quot;text/javascript&quot; src=&quot;\g&lt;2&gt;/layer.js&quot;&gt;&lt;/script&gt;\n&lt;script  type=&quot;text/javascript&quot; &gt;var $jq = jQuery.noConflict(true);console.log($().jquery);&lt;/script&gt;&#x27;</span> , data)</span><br><span class="line">                fw.write(newData)</span><br><span class="line">                f.close()</span><br><span class="line">                fw.close()</span><br><span class="line">                os.remove(file_path)</span><br><span class="line">                os.rename(<span class="string">&quot;%s.bak&quot;</span> % file_path, file_path)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                f.close()</span><br><span class="line">                fw.close()</span><br><span class="line">                os.remove(<span class="string">&quot;%s.bak&quot;</span> % file_path)</span><br><span class="line">files = glob.glob(<span class="string">&quot;D:\source\project/**/*.aspx*&quot;</span>,recursive=<span class="literal">True</span>)</span><br><span class="line">search_str = <span class="string">&quot;&lt;script(.*)src=\&quot;(.*)/jquery-(.*).js\&quot;(.*)&gt;(.*)&lt;/script&gt;&quot;</span></span><br><span class="line">search_str_reg = re.<span class="built_in">compile</span>(search_str,flags=re.IGNORECASE)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file_path <span class="keyword">in</span> files:</span><br><span class="line">   replace_text(file_path, search_str_reg )</span><br><span class="line">  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240603-s3%20minio%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星的个人主页">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/20240603-s3%20minio%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">s3 minio学习</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-06-03 09:23:17" itemprop="dateCreated datePublished" datetime="2024-06-03T09:23:17+08:00">2024-06-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-02-27 14:15:43" itemprop="dateModified" datetime="2025-02-27T14:15:43+08:00">2025-02-27</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>s3 minio学习</p>
-<p>直接采用docker方式运行,docker-compose.yml</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">minio:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">minio/minio</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;9000:9000&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;9001:9001&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/data</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./config:/root/.minio</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">MINIO_ROOT_USER:</span> <span class="string">whx</span></span><br><span class="line">      <span class="attr">MINIO_ROOT_PASSWORD:</span> <span class="string">Whxheart0210</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">server</span> <span class="string">--console-address</span> <span class="string">&quot;:9001&quot;</span> <span class="string">/data</span></span><br><span class="line">    </span><br></pre></td></tr></table></figure>
-
-<p>然后nginx做反向代理</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line"></span><br><span class="line">       listen 80;</span><br><span class="line">       server_name                     s3.haowujidian.com;</span><br><span class="line">       client_max_body_size        20M;</span><br><span class="line"></span><br><span class="line">        root                            /data/www/s3.haowujidian.com;</span><br><span class="line">        error_page                      403     404      /404.php;</span><br><span class="line">        index                           index.html index.htm  index.php;</span><br><span class="line">        try_files $uri /index.html;</span><br><span class="line">        error_log                       /var/log/nginx/nginx-error.s3.log;</span><br><span class="line">        access_log                      /var/log/nginx/nginx-access.s3.log;</span><br><span class="line">        charset &quot;utf-8&quot;;</span><br><span class="line">        add_header X-Content-Type-Options nosniff;</span><br><span class="line">        add_header Content-Security-Policy &quot;default-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; data:;script-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27;; object-src &#x27;none&#x27;;style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;; child-src https:&quot;;</span><br><span class="line">        add_header X-XSS-Protection &quot;1; mode=block&quot;;</span><br><span class="line">        add_header Strict-Transport-Security &quot;max-age=31536000&quot;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">                charset &quot;utf8&quot;;</span><br><span class="line">                            proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">                proxy_set_header    Host            $http_host;</span><br><span class="line">                proxy_set_header    X-Real-IP       $remote_addr;</span><br><span class="line">                proxy_set_header    X-Forwarded-for $remote_addr;</span><br><span class="line">                proxy_connect_timeout 10000;</span><br><span class="line">                proxy_read_timeout 10000;</span><br><span class="line">                keepalive_timeout  6000;</span><br><span class="line">                #port_in_redirect off;</span><br><span class="line">                proxy_pass http://127.0.0.1:9000;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line"></span><br><span class="line">       listen 80;</span><br><span class="line">       server_name                     s3-console.haowujidian.com;</span><br><span class="line">        client_max_body_size            20M;</span><br><span class="line"></span><br><span class="line">        root                            /data/www/s3.haowujidian.com;</span><br><span class="line">        error_page                      403     404      /404.php;</span><br><span class="line">        index                           index.html index.htm  index.php;</span><br><span class="line">        try_files $uri /index.html;</span><br><span class="line">        error_log                       /var/log/nginx/nginx-error.s3.log;</span><br><span class="line">        access_log                      /var/log/nginx/nginx-access.s3.log;</span><br><span class="line">        charset &quot;utf-8&quot;;</span><br><span class="line">        add_header X-Content-Type-Options nosniff;</span><br><span class="line">        add_header Content-Security-Policy &quot;default-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; data:;script-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27;; object-src &#x27;none&#x27;;style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;; child-src https:&quot;;</span><br><span class="line">        add_header X-XSS-Protection &quot;1; mode=block&quot;;</span><br><span class="line">        add_header Strict-Transport-Security &quot;max-age=31536000&quot;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">                charset &quot;utf8&quot;;</span><br><span class="line">                            proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">                proxy_set_header    Host            $http_host;</span><br><span class="line">                proxy_set_header    X-Real-IP       $remote_addr;</span><br><span class="line">                proxy_set_header    X-Forwarded-for $remote_addr;</span><br><span class="line">                proxy_connect_timeout 10000;</span><br><span class="line">                proxy_read_timeout 10000;</span><br><span class="line">                keepalive_timeout  6000;</span><br><span class="line">                #port_in_redirect off;</span><br><span class="line">                proxy_pass http://127.0.0.1:9001;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>客户端学习</p>
-<p>下载mc客户端</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl --progress-bar -O https://dl.min.io/client/mc/release/darwin-arm64/mc </span><br><span class="line">chmod +x mc</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1014,7 +1026,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

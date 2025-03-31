@@ -160,6 +160,222 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240625%E8%80%81%E7%9A%84%20asp.net%20%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%96%87%E4%BB%B6%20gb2312%20%E7%BC%96%E7%A0%81%E7%BB%9F%E4%B8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星的个人主页">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20240625%E8%80%81%E7%9A%84%20asp.net%20%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%96%87%E4%BB%B6%20gb2312%20%E7%BC%96%E7%A0%81%E7%BB%9F%E4%B8%80/" class="post-title-link" itemprop="url">20240625老的 asp.net 项目中文件 gb2312 编码统一</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-06-25 10:02:04" itemprop="dateCreated datePublished" datetime="2024-06-25T10:02:04+08:00">2024-06-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-02-27 14:15:31" itemprop="dateModified" datetime="2025-02-27T14:15:31+08:00">2025-02-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>传统windows下面的文件，很多老的项目中文件编码有gb2312的，也有unicode的，在vscode中修改的话经常会出错，因为写了个小脚本，把所有非unicode编码的文件统一改为unicode编码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line">__author__ = <span class="string">&#x27;whx&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> os,sys</span><br><span class="line"><span class="keyword">import</span> chardet</span><br><span class="line"><span class="keyword">import</span> glob </span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">convert</span>(<span class="params"> filename, in_enc = <span class="string">&quot;GBK&quot;</span>, out_enc=<span class="string">&quot;UTF-8-SIG&quot;</span> </span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        content = <span class="built_in">open</span>(filename, <span class="string">&#x27;rb&#x27;</span>).read()</span><br><span class="line">        result = chardet.detect(content)<span class="comment">#通过chardet.detect获取当前文件的编码格式串，返回类型为字典类型</span></span><br><span class="line">        coding = result.get(<span class="string">&#x27;encoding&#x27;</span>)<span class="comment">#获取encoding的值[编码格式]</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;UTF&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> coding <span class="keyword">and</span> <span class="string">&quot;utf&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> coding :<span class="comment">#文件格式如果不是utf-8的时候，才进行转码</span></span><br><span class="line">            <span class="built_in">print</span> (<span class="string">&quot;转换 &quot;</span>+ coding + <span class="string">&quot;to utf-8! &quot;</span> + filename)</span><br><span class="line">            new_content = content.decode( coding ).encode(out_enc)</span><br><span class="line">            <span class="built_in">open</span>(filename, <span class="string">&#x27;wb&#x27;</span>).write( new_content )</span><br><span class="line">            <span class="built_in">print</span> (<span class="string">&quot; done&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span> (<span class="string">&quot;不用修改 &quot;</span>+coding + <span class="string">&quot;:&quot;</span> +filename)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> ex:</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&quot; error&quot;</span>,ex)</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">filesAspx = glob.glob(<span class="string">&quot;D:\source\project/**/*.aspx&quot;</span>,recursive=<span class="literal">True</span>)</span><br><span class="line">filesCs = glob.glob(<span class="string">&quot;D:\source\project/**/*.cs&quot;</span>,recursive=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file_path <span class="keyword">in</span> filesAspx:</span><br><span class="line">   convert(file_path)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> file_path <span class="keyword">in</span> filesAspx:</span><br><span class="line">   convert(filesCs)</span><br><span class="line">    </span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240625%E8%80%81%E7%9A%84web%E5%BA%94%E7%94%A8jquery%E4%B8%AD%E6%94%AF%E6%8C%81%E6%96%B0%E7%89%88%E6%9C%ACjquery/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星的个人主页">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20240625%E8%80%81%E7%9A%84web%E5%BA%94%E7%94%A8jquery%E4%B8%AD%E6%94%AF%E6%8C%81%E6%96%B0%E7%89%88%E6%9C%ACjquery/" class="post-title-link" itemprop="url">20240625老的web应用jquery中支持新版本jquery</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-06-25 09:26:41" itemprop="dateCreated datePublished" datetime="2024-06-25T09:26:41+08:00">2024-06-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-02-27 14:15:18" itemprop="dateModified" datetime="2025-02-27T14:15:18+08:00">2025-02-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>老的项目中使用了1.6.x的jquery，需要升级其中的弹窗为layui，但是layui需要至少1.10.x，修改方式如下，将原来单行的jquery引用，改为保护多版本jquery，添加layui引用，最后恢复原来的jquery版本号，确保不影响原来其它jquery使用的地方。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;../js/jquery-1.3.2.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> &lt;script type=&quot;text/javascript&quot; src=&quot;../js/lib/jquery.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;../js/jquerynew.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;../js/layer/js/layer.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script  type=&quot;text/javascript&quot; &gt;var $jq = jQuery.noConflict(true);console.log($().jquery);&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>顺便做一个批量替换的脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="comment">#@Author: whx</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> glob</span><br><span class="line"><span class="comment">#构建一个文本文件内容查找函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">replace_text</span>(<span class="params">file_path, search_str</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(file_path, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f ,<span class="built_in">open</span>(<span class="string">&quot;%s.bak&quot;</span>%file_path, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> fw:</span><br><span class="line">            data = f.read()</span><br><span class="line">            res = re.findall(search_str, data)</span><br><span class="line">            <span class="keyword">if</span> res :</span><br><span class="line">                newData = re.sub(search_str, <span class="string">r&#x27;&lt;script type=&quot;text/javascript&quot; src=&quot;\g&lt;2&gt;/jquery-\g&lt;3&gt;.js&quot;&gt;&lt;/script&gt;\n&lt;script type=&quot;text/javascript&quot; src=&quot;\g&lt;2&gt;/jquerynew.js&quot;&gt;&lt;/script&gt;\n&lt;script type=&quot;text/javascript&quot; src=&quot;\g&lt;2&gt;/layer.js&quot;&gt;&lt;/script&gt;\n&lt;script  type=&quot;text/javascript&quot; &gt;var $jq = jQuery.noConflict(true);console.log($().jquery);&lt;/script&gt;&#x27;</span> , data)</span><br><span class="line">                fw.write(newData)</span><br><span class="line">                f.close()</span><br><span class="line">                fw.close()</span><br><span class="line">                os.remove(file_path)</span><br><span class="line">                os.rename(<span class="string">&quot;%s.bak&quot;</span> % file_path, file_path)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                f.close()</span><br><span class="line">                fw.close()</span><br><span class="line">                os.remove(<span class="string">&quot;%s.bak&quot;</span> % file_path)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">except</span> UnicodeDecodeError:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(file_path, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;gbk&#x27;</span>) <span class="keyword">as</span> f ,<span class="built_in">open</span>(<span class="string">&quot;%s.bak&quot;</span>%file_path, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;gbk&#x27;</span>) <span class="keyword">as</span> fw:</span><br><span class="line">            data = f.read()</span><br><span class="line">            res = re.findall(search_str, data)</span><br><span class="line">            <span class="keyword">if</span> res :</span><br><span class="line">                newData = re.sub(search_str, <span class="string">r&#x27;&lt;script type=&quot;text/javascript&quot; src=&quot;\g&lt;2&gt;/jquery-\g&lt;3&gt;.js&quot;&gt;&lt;/script&gt;\n&lt;script type=&quot;text/javascript&quot; src=&quot;\g&lt;2&gt;/jquerynew.js&quot;&gt;&lt;/script&gt;\n&lt;script type=&quot;text/javascript&quot; src=&quot;\g&lt;2&gt;/layer.js&quot;&gt;&lt;/script&gt;\n&lt;script  type=&quot;text/javascript&quot; &gt;var $jq = jQuery.noConflict(true);console.log($().jquery);&lt;/script&gt;&#x27;</span> , data)</span><br><span class="line">                fw.write(newData)</span><br><span class="line">                f.close()</span><br><span class="line">                fw.close()</span><br><span class="line">                os.remove(file_path)</span><br><span class="line">                os.rename(<span class="string">&quot;%s.bak&quot;</span> % file_path, file_path)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                f.close()</span><br><span class="line">                fw.close()</span><br><span class="line">                os.remove(<span class="string">&quot;%s.bak&quot;</span> % file_path)</span><br><span class="line">files = glob.glob(<span class="string">&quot;D:\source\project/**/*.aspx*&quot;</span>,recursive=<span class="literal">True</span>)</span><br><span class="line">search_str = <span class="string">&quot;&lt;script(.*)src=\&quot;(.*)/jquery-(.*).js\&quot;(.*)&gt;(.*)&lt;/script&gt;&quot;</span></span><br><span class="line">search_str_reg = re.<span class="built_in">compile</span>(search_str,flags=re.IGNORECASE)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file_path <span class="keyword">in</span> files:</span><br><span class="line">   replace_text(file_path, search_str_reg )</span><br><span class="line">  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240603-s3%20minio%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星的个人主页">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/20240603-s3%20minio%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">s3 minio学习</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-06-03 09:23:17" itemprop="dateCreated datePublished" datetime="2024-06-03T09:23:17+08:00">2024-06-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-03-31 11:26:57" itemprop="dateModified" datetime="2025-03-31T11:26:57+08:00">2025-03-31</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>s3 minio学习</p>
+<p>直接采用docker方式运行,docker-compose.yml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">minio:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">minio/minio</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;9000:9000&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;9001:9001&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/data</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./config:/root/.minio</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">MINIO_ROOT_USER:</span> <span class="string">whx</span></span><br><span class="line">      <span class="attr">MINIO_ROOT_PASSWORD:</span> <span class="string">IamPasswod</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">server</span> <span class="string">--console-address</span> <span class="string">&quot;:9001&quot;</span> <span class="string">/data</span></span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<p>然后nginx做反向代理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line"></span><br><span class="line">       listen 80;</span><br><span class="line">       server_name                     s3.wanghongxing.com;</span><br><span class="line">       client_max_body_size        20M;</span><br><span class="line"></span><br><span class="line">        root                            /data/www/s3.wanghongxing.com;</span><br><span class="line">        error_page                      403     404      /404.php;</span><br><span class="line">        index                           index.html index.htm  index.php;</span><br><span class="line">        try_files $uri /index.html;</span><br><span class="line">        error_log                       /var/log/nginx/nginx-error.s3.log;</span><br><span class="line">        access_log                      /var/log/nginx/nginx-access.s3.log;</span><br><span class="line">        charset &quot;utf-8&quot;;</span><br><span class="line">        add_header X-Content-Type-Options nosniff;</span><br><span class="line">        add_header Content-Security-Policy &quot;default-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; data:;script-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27;; object-src &#x27;none&#x27;;style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;; child-src https:&quot;;</span><br><span class="line">        add_header X-XSS-Protection &quot;1; mode=block&quot;;</span><br><span class="line">        add_header Strict-Transport-Security &quot;max-age=31536000&quot;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">                charset &quot;utf8&quot;;</span><br><span class="line">                            proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">                proxy_set_header    Host            $http_host;</span><br><span class="line">                proxy_set_header    X-Real-IP       $remote_addr;</span><br><span class="line">                proxy_set_header    X-Forwarded-for $remote_addr;</span><br><span class="line">                proxy_connect_timeout 10000;</span><br><span class="line">                proxy_read_timeout 10000;</span><br><span class="line">                keepalive_timeout  6000;</span><br><span class="line">                #port_in_redirect off;</span><br><span class="line">                proxy_pass http://127.0.0.1:9000;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line"></span><br><span class="line">       listen 80;</span><br><span class="line">       server_name                     s3-console.wanghongxing.com;</span><br><span class="line">        client_max_body_size            20M;</span><br><span class="line"></span><br><span class="line">        root                            /data/www/s3.wanghongxing.com;</span><br><span class="line">        error_page                      403     404      /404.php;</span><br><span class="line">        index                           index.html index.htm  index.php;</span><br><span class="line">        try_files $uri /index.html;</span><br><span class="line">        error_log                       /var/log/nginx/nginx-error.s3.log;</span><br><span class="line">        access_log                      /var/log/nginx/nginx-access.s3.log;</span><br><span class="line">        charset &quot;utf-8&quot;;</span><br><span class="line">        add_header X-Content-Type-Options nosniff;</span><br><span class="line">        add_header Content-Security-Policy &quot;default-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; data:;script-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27;; object-src &#x27;none&#x27;;style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;; child-src https:&quot;;</span><br><span class="line">        add_header X-XSS-Protection &quot;1; mode=block&quot;;</span><br><span class="line">        add_header Strict-Transport-Security &quot;max-age=31536000&quot;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">                charset &quot;utf8&quot;;</span><br><span class="line">                            proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">                proxy_set_header    Host            $http_host;</span><br><span class="line">                proxy_set_header    X-Real-IP       $remote_addr;</span><br><span class="line">                proxy_set_header    X-Forwarded-for $remote_addr;</span><br><span class="line">                proxy_connect_timeout 10000;</span><br><span class="line">                proxy_read_timeout 10000;</span><br><span class="line">                keepalive_timeout  6000;</span><br><span class="line">                #port_in_redirect off;</span><br><span class="line">                proxy_pass http://127.0.0.1:9001;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>客户端学习</p>
+<p>下载mc客户端</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl --progress-bar -O https://dl.min.io/client/mc/release/darwin-arm64/mc </span><br><span class="line">chmod +x mc</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
     <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2024-5-20-macos%20m1miniconda%E4%BD%BF%E7%94%A8python2.7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -727,370 +943,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240218-Stable%20Diffusion%20%E5%9F%BA%E7%A1%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星的个人主页">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/20240218-Stable%20Diffusion%20%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">20240218-Stable Diffusion 基础</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-02-18 14:40:19" itemprop="dateCreated datePublished" datetime="2024-02-18T14:40:19+08:00">2024-02-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:00:40" itemprop="dateModified" datetime="2024-03-04T10:00:40+08:00">2024-03-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Stable Diffusion 基础</p>
-<p>Stable Diffusion（SD）模型是由Stability AI和LAION等公司共同开发的<strong>生成式模型</strong>，总共有<strong>1B左右的参数量</strong>，可以用于文生图，图生图，图像inpainting，ControlNet控制生成，图像超分等丰富的任务</p>
-<p><strong>文生图任务是指将一段文本输入到SD模型中</strong>，经过一定的迭代次数，<strong>SD模型输出一张符合输入文本描述的图片</strong></p>
-<p><strong>而图生图任务在输入本文的基础上，再输入一张图片</strong>，SD模型将根据文本的提示，<strong>将输入图片进行重绘以更加符合文本的描述。</strong></p>
-<p>我们需要给SD模型一个文本信息与机器数据信息之间互相转换的“桥梁”——CLIP Text Encoder模型。 我们使用CLIP Text Encoder模型作为SD模型的<strong>前置模块</strong>，将输入的人类文本信息进行编码，输出特征矩阵，这个特征矩阵与文本信息相匹配，并且能够使得SD模型理解，完成对文本信息的编码后，就会输入到SD模型的“图像优化模块”中对图像的优化进行“控制”。</p>
-<p>如果是图生图任务，我们在输入文本信息的同时，还需要将原图片通过图像编码器（VAE Encoder）生成Latent Feature（隐空间特征）作为输入。</p>
-<p>如果是文生图任务，我们只需要输入文本信息，再用random函数生成一个<strong>高斯噪声矩阵作为</strong>Latent Feature的“替代”输入到SD模型的“图像优化模块”中。</p>
-<p><strong>“图像优化模块”作为SD模型中最为重要的模块，其工作流程是什么样的呢？</strong></p>
-<p>首先，“图像优化模块”是由一个<strong>U-Net网络</strong>和一个<strong>Schedule算法</strong>共同组成，U-Net网络负责预测噪声，<strong>不断优化生成过程，在预测噪声的同时不断注入文本语义信息</strong>。而<strong>schedule算法对每次U-Net预测的噪声进行优化处理（动态调整预测的噪声，控制U-Net预测噪声的强度）</strong>，从而统筹<strong>生成过程的进度</strong>。在SD中，U-Net的迭代优化步数大概是50或者100次，在这个过程中Latent Feature的质量不断的变好（<strong>纯噪声减少，图像语义信息增加，文本语义信息增加</strong>）。 </p>
-<p>U-Net网络和Schedule算法的工作完成以后，SD模型会将优化迭代后的Latent Feature输入到图像解码器（VAE Decoder）中，将Latent Feature重建成像素级图像。</p>
-<p>我们对比一下文生图任务中，初始Latent Feature和经过SD的“图像优化模块”处理后，再用图像解码器重建出来的图片。</p>
-<p>Latent Feature经过图像解码器重建后的图片是一个纯噪声图片。</p>
-<p>经过SD的“图像优化模块”处理后，再用图像解码器重建出来的图片，可以看到是一个张包含丰富内容信息的有效图片。</p>
-<p>Rocky再将其进行总结归纳制作成完整的Stable Diffusion前向推理流程图，方便大家更好的理解SD模型的前向推理过程：</p>
-<img src="../images/sd/v2-cbc067b9d12ad2c25aff103be299bf94_720w.webp" alt="v2-cbc067b9d12ad2c25aff103be299bf94_720w" style="zoom:100%;" />
-
-<ol>
-<li><strong>SD模型是生成式模型</strong>，输入可以是图片，文本以及两者的结合，输出是生成的图片。</li>
-<li><strong>SD模型属于扩散模型</strong>，扩散模型的整体逻辑的特点是过程分步化与可迭代，这给整个生成过程引入更多约束与优化提供了可能。</li>
-<li><strong>SD模型是基于Latent的扩散模型</strong>，将输入数据压缩到Latent隐空间中，比起常规扩散模型，大幅提高计算效率的同时，降低了显存占用，成为了SD模型破圈的关键一招。</li>
-<li><strong>站在CTO视角，将维度拉到最高维，Rocky认为SD模型是一个优化噪声的AI艺术工具。</strong></li>
-</ol>
-<p><strong>Stable Diffusion的整个训练过程在最高维度上可以看成是如何加噪声和如何去噪声的过程，并在针对噪声的“对抗与攻防”中学习到生成图片的能力。</strong></p>
-<p>Stable Diffusion整体的训练逻辑也非常清晰：</p>
-<ol>
-<li>从数据集中随机选择一个训练样本</li>
-<li>从K个噪声量级随机抽样一个timestep</li>
-<li>产生随机噪声</li>
-<li>计算当前所产生的噪声数据</li>
-<li>将噪声输入U-Net预测噪声</li>
-<li>计算产生的噪声和预测的噪声的L2损失</li>
-<li>计算梯度并更新SD模型参数</li>
-</ol>
-<p><strong>语义信息对图片生成的控制</strong></p>
-<p>SD模型在生成图片时，需要输入prompt，那么这些语义信息是如何影响图片的生成呢？</p>
-<p><strong>答案非常简单：注意力机制。</strong></p>
-<p>在SD模型的训练中，每个训练样本都会对应一个标签，我们将对应标签通过CLIP Text Encoder输出Text Embeddings，并将Text Embeddings以<strong>Cross Attention</strong>的形式与U-Net结构耦合，使得每次输入的图片信息与文字信息进行融合训练 </p>
-<h3 id="其他主流生成式模型介绍"><a href="#其他主流生成式模型介绍" class="headerlink" title="其他主流生成式模型介绍"></a>其他主流生成式模型介绍</h3><p>在AIGC时代中，虽然SD模型已经成为核心的生成式模型之一，但是曾在传统深度学习时代火爆的GAN，VAE，Flow-based model等模型也跨过周期在SD模型身边作为辅助，发挥了巨大的作用。</p>
-<p>GAN网络在AIGC时代依然发挥了巨大的作用，配合SD模型完成了很多算法工作流，比如：图像超分，脸部修复，风格迁移，图像编辑，图像fix，图像定权等。</p>
-<p>所以Rocky在这里简单讲解一下GAN的基本原理，让大家做个了解。GAN由生成器G和判别器D组成。其中，生成器主要负责生成相应的样本数据，输入一般是由高斯分布随机采样得到的噪声Z。而判别器的主要职责是区分生成器生成的样本与 gt 样本，输入一般是 gt 样本与相应的生成样本，我们想要的是对 gt 样本输出的置信度越接近1越好，而对生成样本输出的置信度越接近0越好。与一般神经网络不同的是，<strong>GAN在训练时要同时训练生成器与判别器，所以其训练难度是比较大的</strong>。</p>
-<p>我们可以将GAN中的生成器比喻为印假钞票的犯罪分子，判别器则被当作警察。犯罪分子努力让印出的假钞看起来逼真，警察则不断提升对于假钞的辨识能力。二者互相博弈，随着时间的进行，都会越来越强。在图像生成任务中也是如此，生成器不断生成尽可能逼真的假图像。判别器则判断图像是 gt 图像，还是生成的图像。<strong>二者不断博弈优化</strong>，最终生成器生成的图像使得判别器完全无法判别真假。</p>
-<h3 id="VAE模型"><a href="#VAE模型" class="headerlink" title="VAE模型"></a>VAE模型</h3><p>在Stable Diffusion中，<strong>VAE（变分自编码器，Variational Auto-Encoder）是基于Encoder-Decoder架构的生成模型</strong>。VAE的Encoder（编码器）结构能将输入图像转换为低维Latent特征，并作为U-Net的输入。VAE的Decoder（解码器）结构能将低维Latent特征重建还原成像素级图像。</p>
-<p><strong>Stable Diffusion中VAE的核心作用</strong></p>
-<p>总的来说，<strong>在Stable Diffusion中，VAE模型主要起到了图像压缩和图像重建的作用</strong></p>
-<p><strong>为什么VAE可以将图像压缩到一个非常小的Latent space（潜空间）后能再次对图像进行像素级重建呢？</strong></p>
-<p>因为虽然VAE对图像的压缩与重建过程是一个有损压缩与重建过程，但<strong>图像全图级特征关联并不是随机的，它们的分布具有很强的规律性</strong>：比如人脸的眼睛、鼻子、脸颊和嘴巴之间遵循特定的空间关系，又比如一只猫有四条腿，并且这是一个特定的生物结构特征。下面Rocky也使用VAE将图像重建成不同尺寸的生成图像，实验结论发现<strong>如果我们重建生成的图像尺寸在512×512之上时，其实特征损失带来的影响非常小</strong>。</p>
-<p><strong>Stable Diffusion中VAE的高阶作用</strong></p>
-<p>与此同时，VAE模型除了能进行图像压缩和图像重建的工作外，<strong>如果我们在SD系列模型中切换不同微调训练版本的VAE模型，能够发现生成图片的细节与整体颜色也会随之改变（更改生成图像的颜色表现，类似于色彩滤镜）。</strong></p>
-<h3 id="SD模型整体架构初识"><a href="#SD模型整体架构初识" class="headerlink" title="SD模型整体架构初识"></a><strong>SD模型整体架构初识</strong></h3><p><strong>Stable Diffusion模型整体上是一个End-to-End模型</strong>，主要由VAE（变分自编码器，Variational Auto-Encoder），U-Net以及CLIP Text Encoder三个核心组件构成。</p>
-<p>在FP16精度下Stable Diffusion模型大小2G（FP32：4G），其中U-Net大小1.6G，VAE模型大小160M以及CLIP Text Encoder模型大小235M（约123M参数）。其中U-Net结构包含约860M参数，以FP32精度下大小为3.4G左右。</p>
-<p><strong>Stable Diffusion中U-Net的核心作用</strong></p>
-<p>在Stable Diffusion中，<strong>U-Net模型是一个关键核心部分，能够预测噪声残差</strong>，并结合Sampling method（调度算法：PNDM，DDIM，K-LMS等）对输入的特征矩阵进行重构，<strong>逐步将其从随机高斯噪声转化成图片的Latent Feature</strong>。</p>
-<p>具体来说，在前向推理过程中，SD模型通过反复调用 U-Net，将预测出的噪声残差从原噪声矩阵中去除，得到逐步去噪后的图像Latent Feature，再通过VAE的Decoder结构将Latent Feature重建成像素级图像。</p>
-<p><strong>Rocky再从AI绘画应用视角解释一下SD中U-Net的原理与作用。</strong>其实大家在使用Stable Diffusion WebUI时，点击Generate按钮后，页面右下角图片生成框中展示的从噪声到图片的生成过程，其中就是U-Net在不断的为大家去除噪声的过程。到这里大家应该都能比较清楚的理解U-Net的作用了。</p>
-<p>Stable Diffusion中的U-Net，在传统深度学习时代的Encoder-Decoder结构的基础上，<strong>增加了ResNetBlock（包含Time Embedding）模块，Spatial Transformer（SelfAttention + CrossAttention + FeedForward）模块以及CrossAttnDownBlock，CrossAttnUpBlock和CrossAttnMidBlock模块</strong>。</p>
-<p><strong>ResNetBlock模块</strong></p>
-<p>在传统深度学习时代，ResNet的残差结构在图像分类，图像分割，目标检测等主流方向中几乎是不可或缺，<strong>其简洁稳定有效的“残差思想”终于在AIGC时代跨过周期，在SD模型的U-Net结构中继续繁荣</strong>。</p>
-<p>值得注意的是，<strong>Time Embedding正是输入到ResNetBlock模块中，为U-Net引入了时间信息（时间步长T，T的大小代表了噪声扰动的强度），模拟一个随时间变化不断增加不同强度噪声扰动的过程，让SD模型能够更好地理解时间相关性</strong>。</p>
-<p>同时，在SD模型调用U-Net重复迭代去噪的过程中，我们希望在迭代的早期，能够先生成整幅图片的轮廓与边缘特征，随着迭代的深入，再补充生成图片的高频和细节特征信息。<strong>由于在每个ResNetBlock模块中都有Time Embedding，就能告诉U-Net现在是整个迭代过程的哪一步，并及时控制U-Net够根据不同的输入特征和迭代阶段而预测不同的噪声残差</strong>。</p>
-<p><strong>Rocky再从AI绘画应用视角解释一下Time Embedding的作用。</strong>Time Embedding能够让SD模型在生成图片时考虑时间的影响，使得生成的图片更具有故事性、情感和沉浸感等艺术效果。并且Time Embedding可以帮助SD模型在不同的时间点将生成的图片添加完善不同情感和主题的内容，从而增加了AI绘画的多样性和表现力。</p>
-<p><strong>CrossAttention模块</strong></p>
-<p><strong>Spatial Transformer模块不改变输入输出的尺寸，只在图片对应的位置上融合了语义信息，所以不管是在传统深度学习时代，还是AIGC时代，Spatial Transformer都是将本文与图像结合的一个“万金油”模块</strong>。</p>
-<p>看CrossAttention模块的结构图，大家可能会疑惑<strong>为什么Context Embedding用来生成K和V，Latent Feature用来生成Q呢？</strong></p>
-<p>原因也非常简单：因为在Stable Diffusion中，主要的目的是想把文本信息注入到图像信息中里，所以用图片token对文本信息做 Attention实现逐步的文本特征提取和耦合。</p>
-<p><strong>Rocky再从AI绘画应用视角解释一下CrossAttention模块的作用。</strong>CrossAttention模块在AI绘画应用中可以被视为一种连接和表达的工具，它有助于在输入文本和生成图片之间建立联系，创造更具深度和多样性的艺术作品，引发观众的思考和情感共鸣。CrossAttention模块可以将图像和文本信息关联起来，就像艺术家可以将不同的元素融合到一幅作品中，这有助于在创作中实现不同信息之间的协同和互动，产生更具创意性的艺术作品。再者CrossAttention模块可以用于将文本中的情感元素传递到生成图片中，这种情感的交互可以增强艺术作品的表现力和观众的情感共鸣。</p>
-<p><strong>BasicTransformer Block模块</strong></p>
-<p>BasicTransformer Block模块是在CrossAttention子模块的基础上，增加了SelfAttention子模块和Feedforward子模块共同组成的，<strong>并且每个子模块都是一个残差结构</strong>，这样<strong>除了能让文本的语义信息与图像的语义信息更好的融合之外，还能通过SelfAttention机制让模型更好的学习图像数据的特征</strong>。</p>
-<p>首先，在Stable Diffusion U-Net的SelfAttention模块中，<strong>输入只有图像信息，所以SelfAttention主要是为了让SD模型更好的学习图像数据的整体特征</strong>。</p>
-<p>再者，<strong>SelfAttention可以将输入图像的不同部分（像素或图像Patch）进行交互，从而实现特征的整合和全局上下文的引入，能够让模型建立捕捉图像全局关系的能力，有助于模型理解不同位置的像素之间的依赖关系，以更好地理解图像的语义。</strong></p>
-<p>在此基础上，<strong>SelfAttention还能减少平移不变性问题</strong>，SelfAttention模块可以在不考虑位置的情况下捕捉特征之间的关系，因此具有一定的平移不变性。</p>
-<p><strong>Rocky再从AI绘画应用视角解释一下SelfAttention的作用。</strong>SelfAttention模块可以让SD模型在图片生成过程中捕捉内在关系、创造性表达情感和思想、突出重要元素，并创造出丰富多彩、具有深度和层次感的艺术作品。</p>
-<p><strong>Spatial Transformer模块</strong></p>
-<p>更进一步的，在BasicTransformer Block模块基础上，加入GroupNorm和两个卷积层就组成Spatial Transformer模块。Spatial Transformer模块是SD U-Net中的核心Base结构，Encoder中的CrossAttnDownBlock模块，Decoder中的CrossAttnUpBlock模块以及CrossAttnMidBlock模块都包含了大量的Spatial Transformer子模块。</p>
-<h3 id="CLIP-Text-Encoder模型"><a href="#CLIP-Text-Encoder模型" class="headerlink" title="CLIP Text Encoder模型"></a><strong>CLIP Text Encoder模型</strong></h3><p><strong>作为文生图模型，Stable Diffusion中的文本编码模块直接决定了语义信息的优良程度，从而影响到最后图片生成的多样性和可控性。</strong></p>
-<p>在这里，<strong>多模态领域的神器——CLIP（Contrastive Language-Image Pre-training）</strong>，跨过了周期，从传统深度学习时代进入AIGC时代，成为了SD系列模型中文本和图像之间的连接通道。<strong>并且从某种程度上讲，正是因为CLIP模型的前置出现，更加快速地推动了AI绘画领域的繁荣</strong>。</p>
-<p>首先，<strong>CLIP模型是一个基于对比学习的多模态模型，主要包含Text Encoder和Image Encoder两个模型</strong>。其中Text Encoder用来提取文本的特征，可以使用NLP中常用的text transformer模型作为Text Encoder；而Image Encoder主要用来提取图像的特征，可以使用CNN/vision transformer模型（ResNet和ViT）作为Image Encoder。<strong>与此同时，他直接使用4亿个图片与标签文本对数据集进行训练，来学习图片与本文内容的对应关系。</strong></p>
-<p>与U-Net的Encoder和Decoder一样，CLIP的Text Encoder和Image Encoder也能非常灵活的切换；其庞大图片与标签文本数据的预训练赋予了CLIP强大的zero-shot分类能力。</p>
-<p><strong>灵活的结构，简洁的思想，让CLIP不仅仅是个模型，也给我们一个很好的借鉴，往往伟大的产品都是大道至简的。更重要的是，CLIP把自然语言领域的抽象概念带到了计算机视觉领域</strong></p>
-<p>CLIP在训练时，从训练集中随机取出一张图片和标签文本。CLIP模型的任务主要是通过Text Encoder和Image Encoder分别将标签文本和图片提取<strong>embedding向量</strong>，然后用<strong>余弦相似度（cosine similarity）</strong>来比较两个embedding向量的<strong>相似性</strong>，以判断随机抽取的标签文本和图片是否匹配，并进行梯度反向传播，不断进行优化训练。</p>
-<p>完成CLIP的训练后，<strong>输入配对的图片和标签文本，则Text Encoder和Image Encoder可以输出相似的embedding向量</strong>，计算余弦相似度就可以得到接近1的结果。<strong>同时对于不匹配的图片和标签文本，输出的embedding向量计算余弦相似度则会接近0</strong>。</p>
-<p><strong>就这样，CLIP成为了计算机视觉和自然语言处理这两大AI方向的“桥梁”，AI领域的多模态应用有了经典的基石模型。</strong></p>
-<p><strong>上面我们讲到CLIP模型主要包含Text Encoder和Image Encoder两个模型</strong>，在Stable Diffusion中主要使用了Text Encoder模型。<strong>CLIP Text Encoder模型将输入的文本Prompt进行编码，转换成Text Embeddings（文本的语义信息）</strong>，通过前面一章节提到的U-Net网络中的<strong>CrossAttention模块嵌入Stable Diffusion中作为Condition，对生成图像的内容进行一定程度上的控制与引导</strong>，目前SD模型使用的的是<a target="_blank" rel="noopener" href="https://huggingface.co/openai/clip-vit-large-patch14">CLIP ViT-L/14</a>中的Text Encoder模型。</p>
-<p>CLIP ViT-L/14 中的Text Encoder是只包含Transformer结构的模型，一共由12个CLIPEncoderLayer模块组成，模型参数大小是123M，具体CLIP Text Encoder模型结构如下图所示。其中特征维度为768，token数量是77，<strong>所以输出的Text Embeddings的维度为77x768</strong>。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240207-%E5%AD%A6%E4%B9%A0stable%20diffusion%20webui%E6%89%A9%E5%B1%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星的个人主页">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/20240207-%E5%AD%A6%E4%B9%A0stable%20diffusion%20webui%E6%89%A9%E5%B1%95/" class="post-title-link" itemprop="url">20240207-学习stable diffusion webui扩展</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-02-06 11:21:50" itemprop="dateCreated datePublished" datetime="2024-02-06T11:21:50+08:00">2024-02-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-03-04 10:01:17" itemprop="dateModified" datetime="2024-03-04T10:01:17+08:00">2024-03-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="ControlNet-安装骨架动作绘图"><a href="#ControlNet-安装骨架动作绘图" class="headerlink" title="ControlNet 安装骨架动作绘图"></a>ControlNet 安装骨架动作绘图</h2><p><a target="_blank" rel="noopener" href="https://ivonblog.com/posts/stable-diffusion-webui-manuals/extensions/controlnet/">Ivon的部落格</a></p>
-<p>如果你用过Stable Diffusion，可能已经注意到图像的输出有无限的结果可能性，就像在赌博一样，即使你输入了如此复杂和精心设计的提示，控制AI的能力仍然是有限的。所以我们就需要一种在最大大程度上能控制输出的方式。</p>
-<p>ControlNet是斯坦福大学研究人员开发的Stable Diffusion的扩展，使创作者能够轻松地控制AI图像和视频中的对象。它将根据边缘检测、草图处理或人体姿势等各种条件来控制图像生成。ControlNet可以概括为一种简单的稳定扩散微调方法。</p>
-<p>ControlNet是通过加入额外条件来控制扩散模型的神经网络结构，它可以让AI参考给定图片的动作/线条/景深，更精准的生成图片。</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/Mikubill/sd-webui-controlnet">https://github.com/Mikubill/sd-webui-controlnet</a></p>
-<p>克隆代码到本地，然后从本地安装。</p>
-<p>安装完成后从 <a target="_blank" rel="noopener" href="https://huggingface.co/lllyasviel/ControlNet-v1-1/tree/main">https://huggingface.co/lllyasviel/ControlNet-v1-1/tree/main</a> 下载所有的pth文件，保存到 stable-diffusion-webui/extensions/sd-webui-controlnet/models 目录。</p>
-<h3 id="各個模型的用途"><a href="#各個模型的用途" class="headerlink" title="各個模型的用途"></a>各個模型的用途</h3><p>ControlNet現有以下模型，您可以按照需求只下載需要的模型。</p>
-<h4 id="Anime-Lineart"><a href="#Anime-Lineart" class="headerlink" title="Anime Lineart"></a>Anime Lineart</h4><p>偵測線條，生成的圖片亦會保留原始的線條，適合處理動漫圖像</p>
-<h4 id="Canny"><a href="#Canny" class="headerlink" title="Canny"></a>Canny</h4><p>偵測圖片邊緣，比較模糊，不如Scribbles完整。</p>
-<p>Canny通过使用边缘检测器创建高对比度区域的轮廓来检测输入图像。线条可以捕捉到非常详细的信息，但如果你的图像背景中有一些物体，它很可能会检测到不需要的物体。所以背景中物体越少效果越好。用于此预处理器的最佳模型是control_sd15_canny。</p>
-<h4 id="Depth-amp-Depth-Leres"><a href="#Depth-amp-Depth-Leres" class="headerlink" title="Depth   &amp; Depth Leres"></a>Depth   <strong>&amp; Depth Leres</strong></h4><p>偵測輸入圖片的深度圖(depth map)。</p>
-<p>这个预处理器有助于生成输入图像的深度估计。深度通常用于控制图像内物体的空间定位。浅色区域意味着它离用户更近，而深色区域则离用户更远。</p>
-<p>在大图像时它可能会丢失图像内部的细节(面部表情等)。一般会与control_sd15_depth模型组合使用。Midas Resolution函数用于增加或减少detectmap中的大小和细节级别。它的级别越高，将使用更多的VRAM，但可以生成更高质量的图像，反之亦然。</p>
-<p>Depth Leres有与Depth 相同的基本概念，但在地图中包含更广泛的范围。但有时它会从图片中捕获了太多信息，可能会生成与原始图像略有不同的图像。所以最好先试用两种预处理器，然后决定哪一种。</p>
-<p><strong>HED (Holistically-Nested Edge Detection)</strong></p>
-<p>Hed可以在物体周围创建清晰和精细的边界，输出类似于Canny，但减少了噪声和更柔软的边缘。它的有效性在于能够捕捉复杂的细节和轮廓，同时保留细节特征(面部表情、头发、手指等)。Hed预处理器可用于修改图像的风格和颜色。用于此预处理器的最佳模型是control_sd15_hed。</p>
-<h4 id="Illumination"><a href="#Illumination" class="headerlink" title="Illumination"></a>Illumination</h4><p>偵測輸入圖片的光源與照明效果。</p>
-<h4 id="Inpaint"><a href="#Inpaint" class="headerlink" title="Inpaint"></a>Inpaint</h4><p>功能類似「內補繪製」，使用50%隨機遮罩＋50%隨機光流遮罩訓練而成。</p>
-<h4 id="Instruct-Pix2Pix"><a href="#Instruct-Pix2Pix" class="headerlink" title="Instruct Pix2Pix"></a>Instruct Pix2Pix</h4><p>模型檔名為<code>ip2p</code>，類似「圖生圖」，但是使用訓練50%的指示(instruction)提示詞和50%的敘述(description)提示詞訓練而成。因為是ControlNet，使用此模型時不需要調整CFG Scale。</p>
-<p>根據原作者的說法，此模型在下「使其成為X」的提示詞所生成的圖，效果比「使Y成為X」要好。</p>
-<blockquote>
-<p>Also, it seems that instructions like “make it into X” works better than “make Y into X”.</p>
-</blockquote>
-<h4 id="Lineart"><a href="#Lineart" class="headerlink" title="Lineart"></a>Lineart</h4><p>偵測線條，適合處理線稿，生成的圖片亦會保留原始的線條。</p>
-<h4 id="M-LSD-Mobile-Line-Segment-Detection"><a href="#M-LSD-Mobile-Line-Segment-Detection" class="headerlink" title="M-LSD ( Mobile Line Segment Detection)"></a>M-LSD <strong>( Mobile Line Segment Detection)</strong></h4><p>偵測輸入圖片的直線。MLSD Preprocessor 最适合生成强有力的线条，这些线条能够检测出需要独特和刚性轮廓的建筑和其他人造作品。但是它不适用于处理非刚性或弯曲的物体。MLSD适用于生成室内布局或建筑结构，因为它可以突出直线和边缘。用于此预处理器的最佳模型是control_sd15_mlsd。</p>
-<h4 id="Normal-map"><a href="#Normal-map" class="headerlink" title="Normal map"></a>Normal map</h4><p>法线图使用了三种主要颜色(红、绿、蓝)，通过不同的角度来精确定位物体的粗糙度和光滑程度。它生成法线图的基本估计，可以保留相当多的细节，但可能会产生意想不到的结果，因为法线图完全来自图像，而不是在3D建模软件中构建的。</p>
-<p>法线图有利于突出复杂的细节和轮廓，并且在定位对象方面也很有效，特别是在接近度和距离方面。“Normal Background Threshold”用于调整背景成分。设置一个更高的阈值可以移除背景的远处部分(将其混合成紫色)。降低阈值将命令AI保留甚至显示额外的背景元素。用于此预处理器的最佳模型是control_sd15_normal。</p>
-<h4 id="Openpose"><a href="#Openpose" class="headerlink" title="Openpose"></a>Openpose</h4><p>使用OpenPose技術偵測輸入圖片人物的動作，不一定會保留線條。</p>
-<p>这个预处理器生成了一个基本的骨骼火柴人形象。 这种技术被广泛采用，因为多个 OpenPose 骨架可以组合成一个图像，这有助于引导稳定扩散生成多个一致的主题。 骨架图有很多关节点，。</p>
-<p><img src="../images/sd/v2-de4552588266a99bc190a1da375b832d_720w.webp" alt="v2-de4552588266a99bc190a1da375b832d_720w"></p>
-<p>要优化 OpenPose 的结果，建议上传一张人体图像（全身或半身）以及想要提取的姿势。 用于此预处理器的最佳模型是 control_sd15_openpose。</p>
-<h4 id="Scribbles"><a href="#Scribbles" class="headerlink" title="Scribbles"></a>Scribbles</h4><p>偵測線條，偵測到的線條品質介於Soft Edge和Lineart之間。</p>
-<p>涂鸦的目的是从简单的黑白线条画和草图生成图像。用户也可以使用“Canvas”选项创建特定大小的空白画布，用于手动素描（也可以直接上传图像）。如果草图和绘图由白色背景上的黑线组成，则需要选中“Invert Input Color”复选框。用于这个预处理器的最佳模型是control_sd15_openpose。</p>
-<h4 id="Segmentation"><a href="#Segmentation" class="headerlink" title="Segmentation"></a>Segmentation</h4><p>模型檔名為<code>seg</code>，將偵測的圖片物件切成一個一個色塊處理，例如房子一個色塊，後面的天空一個色塊。</p>
-<h4 id="Shuffle"><a href="#Shuffle" class="headerlink" title="Shuffle"></a>Shuffle</h4><p>把輸入圖片的概念轉移到生成的圖片。</p>
-<p>作者給的例子：輸入灰色裝甲圖片，生成的鋼鐵人盔甲也會是灰色的。</p>
-<h4 id="Soft-Edge"><a href="#Soft-Edge" class="headerlink" title="Soft Edge"></a>Soft Edge</h4><p>偵測圖片邊緣，效果較為柔和，像用炭筆塗過。</p>
-<h4 id="Tile"><a href="#Tile" class="headerlink" title="Tile"></a>Tile</h4><p>輸入圖片，選取一個區域，使其變清晰的模型。</p>
-<p>开始使用</p>
-<p><strong>prompt：</strong></p>
-<p><code>a chinese girl, black hair, red shirt, Blue Jeans， Red High Heels, watery eyes,(ultra high res,photorealistic,realistic,best quality,photo-realistic), (((high detailed skin))),(real person,photograph)</code></p>
-<p><strong>negative prompt:</strong></p>
-<p>disfigured, ugly, bad, immature, cartoon, anime, 3d, painting, b&amp;w</p>
-<p>启用姿态openpos：</p>
-<p>参考图</p>
-<img src="../images/sd/00100-333969092.png" alt="00100-333969092" style="zoom:33%;" />
-
-<p>结果：</p>
-<img src="../images/sd/20240207154113-3314802259.png" alt="20240207154113-3314802259" style="zoom:50%;" />
-
-
-
-<h2 id="提示词工具"><a href="#提示词工具" class="headerlink" title="提示词工具"></a>提示词工具</h2><p><a target="_blank" rel="noopener" href="https://github.com/DominikDoom/a1111-sd-webui-tagcomplete.git">https://github.com/DominikDoom/a1111-sd-webui-tagcomplete.git</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/byzod/a1111-sd-webui-tagcomplete-CN/">https://github.com/byzod/a1111-sd-webui-tagcomplete-CN/</a> 中文</p>
-<h2 id="图片库浏览"><a href="#图片库浏览" class="headerlink" title="图片库浏览"></a>图片库浏览</h2><p><a target="_blank" rel="noopener" href="https://github.com/yfszzx/stable-diffusion-webui-images-browser.git">https://github.com/yfszzx/stable-diffusion-webui-images-browser.git</a></p>
-<h2 id="骨架人偶-PoseX"><a href="#骨架人偶-PoseX" class="headerlink" title="骨架人偶 PoseX"></a>骨架人偶 PoseX</h2><p><a target="_blank" rel="noopener" href="https://github.com/hnmr293/posex.git">https://github.com/hnmr293/posex.git</a></p>
-<p>需要先安裝ControlNet才能使用這個擴充功能</p>
-<p>PoseX是可以在Stable Diffuison WebUI直接拉人物骨架，再配合ControlNet生成姿勢的擴充功能。</p>
-<p>開啟文生圖的頁面，點選右下角PoseX，點選Send this image to ControlNet</p>
-<p>在下面的ControlNet，點選Enabled，preprocessor選取<code>none</code>，model選<code>openpose</code>，不需要上傳圖片。</p>
-<p>回到上面的PoseX，調整人物姿勢。左鍵點選移動，滾輪放大縮小，對模型左鍵點二下即可用右鍵移動單個骨架。</p>
-<h2 id="AI绘图转影片"><a href="#AI绘图转影片" class="headerlink" title="AI绘图转影片"></a>AI绘图转影片</h2><p><a target="_blank" rel="noopener" href="https://github.com/Scholar01/sd-webui-mov2mov">https://github.com/Scholar01/sd-webui-mov2mov</a></p>
-<p>需要先安裝ControlNet才能使用這個擴充功能</p>
-<p>將影片逐一抽出畫格，使用ControlNet生圖，然後再自動合成新影片。可以設定輸出的畫格率，將人物單獨處理。</p>
-<p>目前只有windows系统可以使用,如果您系统不支持,可以关闭该选项卡.</p>
-<h2 id="生成多个任务"><a href="#生成多个任务" class="headerlink" title="生成多个任务"></a>生成多个任务</h2><p><a target="_blank" rel="noopener" href="https://github.com/ashen-sensored/stable-diffusion-webui-two-shot">https://github.com/ashen-sensored/stable-diffusion-webui-two-shot</a></p>
-<p>nt Couple會分割繪圖時的提示詞，這樣就可以生成多重人物/物件，並精確指定位置顏色了。</p>
-<p>像是先用PoseX拉好骨架，再使用Latent Couple標出人物的概略位置。</p>
-<h2 id="用文生图-ControlNet-Latent-Couple生成指定位置的多个任务"><a href="#用文生图-ControlNet-Latent-Couple生成指定位置的多个任务" class="headerlink" title="用文生图+ControlNet+Latent Couple生成指定位置的多个任务"></a>用文生图+ControlNet+Latent Couple生成指定位置的多个任务</h2><p>於文生圖的界面會看到Latent Couple</p>
-<p>勾選Enabled啟用，設定長寬，再點選最下面的<code>Create blank canvas</code>建立空白畫布</p>
-<p>用滑鼠繪製色塊。例如用紅筆繪製一個人物，藍筆繪製另一個人物。</p>
-<p>點選<code>I&#39;ve finished my sketch</code>，下面就會顯示各個色塊的分割狀況。依序填入提示詞：在<code>General Prompt</code>填入畫風和背景的提示詞，藍筆部份填入貞德<code>Jeanne d&#39;Arc</code>相關的提示詞，紅筆部份填入艾比蓋兒<code>Abigail Williams</code>的相關提示詞</p>
-<p>點選<code>Prompt Info Update</code>，提示詞即會自動跑到上面的框框，再自行補上負向提示詞。</p>
-<p>搭配事先用PoseX拉好的骨架，再點選Generate開始生圖。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/20240206-stable%20diffusion%20webui%20%E4%BB%8Ecivital%20%E4%B8%8B%E8%BD%BD%E6%A8%A1%E5%9E%8B%E5%B9%B6%E5%AD%A6%E4%B9%A0%E6%96%87%E7%94%9F%E5%9B%BE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星的个人主页">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/20240206-stable%20diffusion%20webui%20%E4%BB%8Ecivital%20%E4%B8%8B%E8%BD%BD%E6%A8%A1%E5%9E%8B%E5%B9%B6%E5%AD%A6%E4%B9%A0%E6%96%87%E7%94%9F%E5%9B%BE/" class="post-title-link" itemprop="url">20240206-stable diffusion webui 从civital 下载模型并学习文生图</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-02-05 19:40:08" itemprop="dateCreated datePublished" datetime="2024-02-05T19:40:08+08:00">2024-02-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-04-22 08:30:23" itemprop="dateModified" datetime="2024-04-22T08:30:23+08:00">2024-04-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>civital 下载模型并学习之二</p>
-<h1 id="Meow-Mix-Realistic-amp-Versatile"><a href="#Meow-Mix-Realistic-amp-Versatile" class="headerlink" title="Meow Mix - Realistic &amp; Versatile"></a>Meow Mix - Realistic &amp; Versatile</h1><p>Prompt：</p>
-<p><code>Jim is a middle-aged man with short, graying hair and a rugged appearance. He has a rough, unshaven chin and deep wrinkles around his eyes. He is tall and muscular, with broad shoulders and thick arms. He wears a dirty, faded t-shirt and faded jeans that hang loosely on his frame. His demeanor is angry and bitter, with a constant scowl on his face. He is a character who has been through a lot of hardship and is struggling to come to terms with the changes in society. Despite his rough exterior, there is a hint of sadness in his eyes, indicating that he is deeply hurt by the loss of his job and his wife. Overall, Jim is a complex and troubled character who is struggling to find his place in a world that is rapidly changing around him.</code></p>
-<p>Negative Prompt:</p>
-<p><code>canvas frame, cartoon, 3d, ((disfigured)), ((bad art)), ((deformed)),((extra limbs)),((close up)),((b&amp;w)), wierd colors, blurry, (((duplicate))), ((morbid)), ((mutilated)), [out of frame], extra fingers, mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((mutation))), (((deformed))), ((ugly)), blurry, ((bad anatomy)), (((bad proportions))), ((extra limbs)), cloned face, (((disfigured))), out of frame, ugly, extra limbs, (bad anatomy), gross proportions, (malformed limbs), ((missing arms)), ((missing legs)), (((extra arms))), (((extra legs))), mutated hands, (fused fingers), (too many fingers), (((long neck))), Photoshop, video game, ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, mutation, mutated, extra limbs, extra legs, extra arms, disfigured, deformed, cross-eye, body out of frame, blurry, bad art, bad anatomy, 3d render</code></p>
-<p><img src="../images/sd/00134-618633303.png" alt="00134-618633303"></p>
-<p><em>Steps: 20, Sampler: Euler a, CFG scale: 8, Seed: 618633303, Size: 512x512, Model hash: 834d9e407e, Model: meowMixRealistic_prunedFp16FIXED, Version: v1.7.0</em></p>
-<p>试着自己改</p>
-<p>Prompt：</p>
-<p><code>John is a middle-aged chinese man with graying short hair and a rugged appearance. He has a rough, unshaven chin and deep wrinkles around his eyes. He is tall and muscular, with broad shoulders and thick arms. He wears a dirty, faded t-shirt and faded jeans that hang loosely on his frame. His demeanor is angry and bitter, with a constant scowl on his face. He is a character who has been through a lot of hardship and is struggling to come to terms with the changes in society. Despite his rough exterior, there is a hint of sadness in his eyes, indicating that he is deeply hurt by the loss of his job and his wife. Overall, John is a complex and troubled character who is struggling to find his place in a world that is rapidly changing around him.</code></p>
-<img src="../images/sd/20240206095935-14219338.png" alt="20240206095935-14219338" style="zoom:50%;" />
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1156,7 +1012,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

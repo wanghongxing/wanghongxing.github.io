@@ -160,6 +160,374 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2023-0118-IntelliJ-IDEA-%E6%8E%A5%E5%8F%A3%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星的个人主页">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023-0118-IntelliJ-IDEA-%E6%8E%A5%E5%8F%A3%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7/" class="post-title-link" itemprop="url">IntelliJ IDEA 接口调试工具</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-01-18 10:47:36" itemprop="dateCreated datePublished" datetime="2023-01-18T10:47:36+08:00">2023-01-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-01-27 14:37:17" itemprop="dateModified" datetime="2023-01-27T14:37:17+08:00">2023-01-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p> 我的应用采用的是ruoyi-vue-pro，无意中发现带了很多http后缀的文件，搜了一下看了<a target="_blank" rel="noopener" href="https://www.cnblogs.com/FraserYu/">日拱一兵</a>   <a target="_blank" rel="noopener" href="https://www.cnblogs.com/FraserYu/p/12290061.html">IntelliJ IDEA的这个接口调试工具真是太好用了！</a>这篇blog，知道了是 IntelliJ IDEA 的 <code>HTTP Client</code>,就拿来研究了一下。</p>
+<h3 id="新建http-client"><a href="#新建http-client" class="headerlink" title="新建http client"></a>新建http client</h3><p>在idea中新建文件中找到HTTP Request.</p>
+<p><img src="../images/ideal_http_client_menu.png" alt="截屏2023-01-18 10.50.17"></p>
+<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><p><em>注：很多都是拿ruoyi-vue-pro的例子</em></p>
+<p>环境变量需要定义在环境文件中，环境文件有两种：</p>
+<ol>
+<li>创建名为 <code>http-client.env.json</code> 的环境文件(其实里面就是保存 JSON 数据)，该文件里可以定义用在整个项目上的所有常规变量</li>
+<li>也可以创建名为<code>http-client.private.env.json</code>， 看文件名你应该也猜到这是保存敏感数据的，比如密码，token等，该文件默认是被加入到 VCS 的 ignore文件中的，同时优先级高于其他环境文件， 也就是说，该文件的变量会覆盖其他环境文件中的变量值</li>
+</ol>
+<p>里面的文件内容就像这样</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;local&quot;: &#123;</span><br><span class="line">    &quot;baseUrl&quot;: &quot;http://127.0.0.1:48080/platform/admin-api&quot;,</span><br><span class="line">    &quot;token&quot;: &quot;test1&quot;,</span><br><span class="line">    &quot;adminTenentId&quot;: &quot;1&quot;,</span><br><span class="line"></span><br><span class="line">    &quot;appApi&quot;: &quot;http://127.0.0.1:48080/platform/app-api&quot;,</span><br><span class="line">    &quot;appToken&quot;: &quot;test1&quot;,</span><br><span class="line">    &quot;appTenentId&quot;: &quot;1&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;gateway&quot;: &#123;</span><br><span class="line">    &quot;baseUrl&quot;: &quot;http://127.0.0.1:8888/platform/admin-api&quot;,</span><br><span class="line">    &quot;token&quot;: &quot;test1&quot;,</span><br><span class="line">    &quot;adminTenentId&quot;: &quot;1&quot;,</span><br><span class="line"></span><br><span class="line">    &quot;appApi&quot;: &quot;http://127.0.0.1:8888/platform/app-api&quot;,</span><br><span class="line">    &quot;appToken&quot;: &quot;test1&quot;,</span><br><span class="line">    &quot;appTenentId&quot;: &quot;1&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><em><strong>注：下面的用例都是参照<a target="_blank" rel="noopener" href="https://www.cnblogs.com/FraserYu/">日拱一兵</a>  来弄。</strong></em></p>
+<h3 id="使用-response-handler-脚本"><a href="#使用-response-handler-脚本" class="headerlink" title="使用 response handler 脚本"></a>使用 response handler 脚本</h3><p>我们要让登录成功后的所有请求都自动携带成功返回的 Token，这样不用我们每次都手动将其添加到header中，我直接把返回的json信息中的accessToken写入环境变量，就是用’&gt;’开头，后面用类似于模板标签的方式框住 js 脚本</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt; &#123;%</span><br><span class="line">client.global.set(&quot;token&quot;, response.body.data.accessToken);</span><br><span class="line"></span><br><span class="line">%&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编辑-HTTP-request-文件"><a href="#编辑-HTTP-request-文件" class="headerlink" title="编辑 HTTP request 文件"></a>编辑 HTTP request 文件</h3><p>我们模拟实际项目中场景来编辑文件</p>
+<ol>
+<li>用户登录，成功后获取 Token，通常是 POST 请求</li>
+<li>用户后续访问行为都要在请求头中携带登录成功返回的 Token</li>
+</ol>
+<p>通过点击 Add Request，选择相应的方法就可以编写啦</p>
+<h4 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">### 请求 /login 接口 =&gt; 成功（无验证码)</span><br><span class="line">POST &#123;&#123;baseUrl&#125;&#125;/system/auth/login</span><br><span class="line">Content-Type: application/json</span><br><span class="line">tenant-id: &#123;&#123;adminTenentId&#125;&#125;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;username&quot;: &quot;admin&quot;,</span><br><span class="line">  &quot;password&quot;: &quot;admin123&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&gt; &#123;%</span><br><span class="line">client.global.set(&quot;token&quot;, response.body.data.accessToken);</span><br><span class="line"> %&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>执行</p>
+<p><img src="../images/idea_http_client_run.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">http://&#123;&#123;baseUrl&#125;&#125;/system/auth/login</span><br><span class="line"></span><br><span class="line">HTTP/1.1 200 </span><br><span class="line">Vary: Origin</span><br><span class="line">Vary: Access-Control-Request-Method</span><br><span class="line">Vary: Access-Control-Request-Headers</span><br><span class="line">trace-id: </span><br><span class="line">X-Content-Type-Options: nosniff</span><br><span class="line">X-XSS-Protection: 1; mode=block</span><br><span class="line">Cache-Control: no-cache, no-store, max-age=0, must-revalidate</span><br><span class="line">Pragma: no-cache</span><br><span class="line">Expires: 0</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Date: Wed, 18 Jan 2023 02:43:41 GMT</span><br><span class="line">Keep-Alive: timeout=60</span><br><span class="line">Connection: keep-alive</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;code&quot;: 200,</span><br><span class="line">  &quot;data&quot;: &#123;</span><br><span class="line">    &quot;userId&quot;: 1,</span><br><span class="line">    &quot;accessToken&quot;: &quot;85f67291fcb54d65b9dffd35098ceafb&quot;,</span><br><span class="line">    &quot;refreshToken&quot;: &quot;c14484195eec4d8ca0548e22ff6858a5&quot;,</span><br><span class="line">    &quot;expiresTime&quot;: &quot;2023-01-18 11:13:41&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;message&quot;: &quot;&quot;</span><br><span class="line">&#125;</span><br><span class="line">Response file saved.</span><br><span class="line">&gt; 2023-01-18T104341.200.json</span><br><span class="line"></span><br><span class="line">Response code: 200; Time: 138ms; Content length: 180 bytes</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="然后后续使用这个token"><a href="#然后后续使用这个token" class="headerlink" title="然后后续使用这个token"></a>然后后续使用这个token</h4><p>获取权限信息这里需要使用刚才返回的 token</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">### 请求 /get-permission-info 接口 =&gt; 成功</span><br><span class="line">GET &#123;&#123;baseUrl&#125;&#125;/system/auth/get-permission-info</span><br><span class="line">Authorization: Bearer &#123;&#123;token&#125;&#125;</span><br><span class="line">tenant-id: &#123;&#123;adminTenentId&#125;&#125;</span><br><span class="line"></span><br><span class="line">### 请求 /list-menus 接口 =&gt; 成功</span><br><span class="line">GET &#123;&#123;baseUrl&#125;&#125;/system/auth/list-menus</span><br><span class="line">Authorization: Bearer &#123;&#123;token&#125;&#125;</span><br><span class="line">#Authorization: Bearer a6aa7714a2e44c95aaa8a2c5adc2a67a</span><br><span class="line">tenant-id: &#123;&#123;adminTenentId&#125;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>执行结果虽然没有显示发送的header，但是可以看到认证成功了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">http://&#123;&#123;baseUrl&#125;&#125;/system/auth/get-permission-info</span><br><span class="line"></span><br><span class="line">HTTP/1.1 200 </span><br><span class="line">Vary: Origin</span><br><span class="line">Vary: Access-Control-Request-Method</span><br><span class="line">Vary: Access-Control-Request-Headers</span><br><span class="line">trace-id: </span><br><span class="line">X-Content-Type-Options: nosniff</span><br><span class="line">X-XSS-Protection: 1; mode=block</span><br><span class="line">Cache-Control: no-cache, no-store, max-age=0, must-revalidate</span><br><span class="line">Pragma: no-cache</span><br><span class="line">Expires: 0</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Date: Wed, 18 Jan 2023 02:43:56 GMT</span><br><span class="line">Keep-Alive: timeout=60</span><br><span class="line">Connection: keep-alive</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;code&quot;: 200,</span><br><span class="line">  &quot;data&quot;: &#123;</span><br><span class="line">    &quot;user&quot;: &#123;</span><br><span class="line">      &quot;id&quot;: 1,</span><br><span class="line">      &quot;nickname&quot;: &quot;老王&quot;,</span><br><span class="line">      &quot;avatar&quot;: &quot;http://127.0.0.1:48080/platform/admin-api/infra/file/5/get/ef30195d8b2cd33a1d8233dfe6ea5881ca868b94b5dcf93be8cb78ba5151b8c7.jpg&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;roles&quot;: [</span><br><span class="line">      &quot;common&quot;,</span><br><span class="line">      &quot;super_admin&quot;,</span><br><span class="line">      &quot;ACTUATOR&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;permissions&quot;: [</span><br><span class="line">      &quot;&quot;,</span><br><span class="line">      &quot;infra:config:create&quot;,</span><br><span class="line">      &quot;bpm:task-assign-rule:create&quot;,</span><br><span class="line">      &quot;system:user:query&quot;,</span><br><span class="line">      &quot;system:error-code:query&quot;,</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="完事"><a href="#完事" class="headerlink" title="完事"></a>完事</h3><p>到这里基本差不多了，后续对需要测试的接口一个个写就行了，方便的地方就是一直在idea中写，不用打开postman。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2023-0107macos%E5%AE%89%E8%A3%85Anaconda/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星的个人主页">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023-0107macos%E5%AE%89%E8%A3%85Anaconda/" class="post-title-link" itemprop="url">macos环境安装Anaconda，然后安装python3.7.10，使用 paddlepaddle-2.3.2</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-01-07 20:37:30" itemprop="dateCreated datePublished" datetime="2023-01-07T20:37:30+08:00">2023-01-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-02-24 09:32:55" itemprop="dateModified" datetime="2023-02-24T09:32:55+08:00">2023-02-24</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>以前使用pyenv来管理python版本，最近看到别人用 anaconda，就了解了一下，试着安装。</p>
+<h3 id="安装anaconda"><a href="#安装anaconda" class="headerlink" title="安装anaconda"></a>安装anaconda</h3><p>从 anaconda 官网 <a target="_blank" rel="noopener" href="https://www.anaconda.com/products/distribution#macos">https://www.anaconda.com/products/distribution#macos</a> 下载可视化版本<a target="_blank" rel="noopener" href="https://repo.anaconda.com/archive/Anaconda3-2022.10-MacOSX-x86_64.pkg%EF%BC%8C%E7%84%B6%E5%90%8E%E5%AE%89%E8%A3%85%EF%BC%9B%E5%AE%89%E8%A3%85%E5%AE%8C%E5%90%8E%E7%B3%BB%E7%BB%9F%E5%A4%9A%E4%BA%86%E4%B8%80%E4%B8%AA">https://repo.anaconda.com/archive/Anaconda3-2022.10-MacOSX-x86_64.pkg，然后安装；安装完后系统多了一个</a> anaconda-navigator，安装目录是~/opt/anaconda3 ，打开后可以在environments下create新的环境，但是新建的时候python版本不能随便选，由于一直使用python-3.7.10来使用paddle，所以还是得自己手动创建。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">conda create -n paddle232-py3710 python=3.7.10</span><br><span class="line"></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># To activate this environment, use</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#     $ conda activate paddle232-py3710</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># To deactivate an active environment, use</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#     $ conda deactivate</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>创建好后在可视化界面也可以看到。</p>
+<h3 id="然后命令行激活"><a href="#然后命令行激活" class="headerlink" title="然后命令行激活"></a>然后命令行激活</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(base) wanghongxing:~ whx$ python -V</span><br><span class="line">Python 3.9.13</span><br><span class="line">(base) wanghongxing:~ whx$ conda activate paddle232-py3710</span><br><span class="line"></span><br><span class="line">(paddle232-py3710) wanghongxing:~ whx$ python -V</span><br><span class="line">Python 3.7.10</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，刚开始python是3.9.13，执行 <code>conda activate paddle232-py3710</code>后python版本变成3.7.10</p>
+<h3 id="安装paddle2-3-2"><a href="#安装paddle2-3-2" class="headerlink" title="安装paddle2.3.2"></a>安装paddle2.3.2</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">(paddle232-py3710) wanghongxing:~ python -m pip install paddlepaddle==2.3.2 -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line"></span><br><span class="line">Looking <span class="keyword">in</span> indexes: https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">Collecting paddlepaddle==2.3.2</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/ba/bf/bc6a1dd9a1126d8cd1467917d34bf12c9282152f99afc5b8cad29118eda4/paddlepaddle-2.3.2-cp37-cp37m-macosx_10_6_intel.whl (93.0 MB)</span><br><span class="line">Collecting numpy&gt;=1.13</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/32/dd/43d8b2b2ebf424f6555271a4c9f5b50dc3cc0aafa66c72b4d36863f71358/numpy-1.21.6-cp37-cp37m-macosx_10_9_x86_64.whl (16.9 MB)</span><br><span class="line">Collecting decorator</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/d5/50/83c593b07763e1161326b3b8c6686f0f4b0f24d5526546bee538c89837d6/decorator-5.1.1-py3-none-any.whl (9.1 kB)</span><br><span class="line">Collecting paddle-bfloat==0.1.7</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/c6/40/65edb5bf459317bdc808f884805784470c9b5ab38b81df23fac02e02f5b8/paddle_bfloat-0.1.7-cp37-cp37m-macosx_10_9_x86_64.whl (44 kB)</span><br><span class="line">Collecting six</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/d9/5a/e7c31adbe875f2abbb91bd84cf2dc52d792b5a01506781dbcf25c91daf11/six-1.16.0-py2.py3-none-any.whl (11 kB)</span><br><span class="line">Collecting protobuf&lt;=3.20.0,&gt;=3.1.0</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/be/f0/2633123b475c9ae6e9be25351c7ba6ca3adc223d73789ca2f6f5e4686723/protobuf-3.20.0-cp37-cp37m-macosx_10_9_x86_64.whl (961 kB)</span><br><span class="line">Collecting astor</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/c3/88/97eef84f48fa04fbd6750e62dcceafba6c63c81b7ac1420856c8dcc0a3f9/astor-0.8.1-py2.py3-none-any.whl (27 kB)</span><br><span class="line">Collecting Pillow</span><br><span class="line">  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/91/1d/57a09a69508a27c1c6caa4197ce7fac5be5b7d736889ba1a20931ff4efca/Pillow-9.4.0-1-cp37-cp37m-macosx_10_10_x86_64.whl (3.3 MB)</span><br><span class="line">     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.3/3.3 MB 14.4 MB/s eta 0:00:00</span><br><span class="line">Collecting opt-einsum==3.3.0</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/bc/19/404708a7e54ad2798907210462fd950c3442ea51acc8790f3da48d2bee8b/opt_einsum-3.3.0-py3-none-any.whl (65 kB)</span><br><span class="line">Collecting requests&gt;=2.20.0</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/ca/91/6d9b8ccacd0412c08820f72cebaa4f0c0441b5cda699c90f618b6f8a1b42/requests-2.28.1-py3-none-any.whl (62 kB)</span><br><span class="line">Collecting idna&lt;4,&gt;=2.5</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/fc/34/3030de6f1370931b9dbb4dad48f6ab1015ab1d32447850b9fc94e60097be/idna-3.4-py3-none-any.whl (61 kB)</span><br><span class="line">Collecting urllib3&lt;1.27,&gt;=1.21.1</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/65/0c/cc6644eaa594585e5875f46f3c83ee8762b647b51fc5b0fb253a242df2dc/urllib3-1.26.13-py2.py3-none-any.whl (140 kB)</span><br><span class="line">Collecting charset-normalizer&lt;3,&gt;=2</span><br><span class="line">  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/db/51/a507c856293ab05cdc1db77ff4bc1268ddd39f29e7dc4919aa497f0adbec/charset_normalizer-2.1.1-py3-none-any.whl (39 kB)</span><br><span class="line">Requirement already satisfied: certifi&gt;=2017.4.17 <span class="keyword">in</span> ./opt/anaconda3/envs/paddle232-py3710/lib/python3.7/site-packages (from requests&gt;=2.20.0-&gt;paddlepaddle==2.3.2) (2022.12.7)</span><br><span class="line">Installing collected packages: paddle-bfloat, urllib3, six, protobuf, Pillow, numpy, idna, decorator, charset-normalizer, astor, requests, opt-einsum, paddlepaddle</span><br><span class="line">Successfully installed Pillow-9.4.0 astor-0.8.1 charset-normalizer-2.1.1 decorator-5.1.1 idna-3.4 numpy-1.21.6 opt-einsum-3.3.0 paddle-bfloat-0.1.7 paddlepaddle-2.3.2 protobuf-3.20.0 requests-2.28.1 six-1.16.0 urllib3-1.26.13</span><br><span class="line"></span><br><span class="line">(paddle232-py3710) wanghongxing:~ whx$ <span class="built_in">which</span> paddle</span><br><span class="line">/Users/whx/opt/anaconda3/envs/paddle232-py3710/bin/paddle</span><br><span class="line">(paddle232-py3710) wanghongxing:~ whx$ paddle version</span><br><span class="line">&lt;stdin&gt;:3: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.</span><br><span class="line">PaddlePaddle 2.3.2, compiled with</span><br><span class="line">    with_avx: ON</span><br><span class="line">    with_gpu: OFF</span><br><span class="line">    with_mkl: OFF</span><br><span class="line">    with_mkldnn: OFF</span><br><span class="line">    with_python: ON</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>安装paddle</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">(paddle232-py3710) wanghongxing:guyuai-emotion-train whx$ pip3 install paddle</span><br><span class="line">Collecting paddle</span><br><span class="line">  Using cached paddle-1.0.2.tar.gz (579 kB)</span><br><span class="line">  Preparing metadata (setup.py) ... error</span><br><span class="line">  error: subprocess-exited-with-error</span><br><span class="line">  </span><br><span class="line">  × python setup.py egg_info did not run successfully.</span><br><span class="line">  │ <span class="built_in">exit</span> code: 1</span><br><span class="line">  ╰─&gt; [8 lines of output]</span><br><span class="line">      Traceback (most recent call last):</span><br><span class="line">        File <span class="string">&quot;&lt;string&gt;&quot;</span>, line 36, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">        File <span class="string">&quot;&lt;pip-setuptools-caller&gt;&quot;</span>, line 34, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">        File <span class="string">&quot;/private/var/folders/6d/lxb9s6557cx2wq_2fs6s2_bm0000gr/T/pip-install-h1m6_55m/paddle_d36d8dad2117474f8fc2aaa140c6ac30/setup.py&quot;</span>, line 3, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">          import paddle</span><br><span class="line">        File <span class="string">&quot;/private/var/folders/6d/lxb9s6557cx2wq_2fs6s2_bm0000gr/T/pip-install-h1m6_55m/paddle_d36d8dad2117474f8fc2aaa140c6ac30/paddle/__init__.py&quot;</span>, line 5, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">          import common, dual, tight, data, prox</span><br><span class="line">      ModuleNotFoundError: No module named <span class="string">&#x27;common&#x27;</span></span><br><span class="line">      [end of output]</span><br><span class="line">  </span><br><span class="line">  note: This error originates from a subprocess, and is likely not a problem with pip.</span><br><span class="line">error: metadata-generation-failed</span><br><span class="line"></span><br><span class="line">× Encountered error <span class="keyword">while</span> generating package metadata.</span><br><span class="line">╰─&gt; See above <span class="keyword">for</span> output.</span><br><span class="line"></span><br><span class="line">note: This is an issue with the package mentioned above, not pip.</span><br><span class="line">hint: See above <span class="keyword">for</span> details.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后手动安装依赖包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">pip install common</span><br><span class="line">pip install dual</span><br><span class="line">pip install tight</span><br><span class="line">pip install data</span><br><span class="line">pip install prox</span><br><span class="line"></span><br><span class="line">(paddle232-py3710) wanghongxing:guyuai-emotion-train whx$ pip3 install paddle==1.0.2</span><br><span class="line">Collecting paddle==1.0.2</span><br><span class="line">  Using cached paddle-1.0.2.tar.gz (579 kB)</span><br><span class="line">  Preparing metadata (setup.py) ... <span class="keyword">done</span></span><br><span class="line">Building wheels <span class="keyword">for</span> collected packages: paddle</span><br><span class="line">  Building wheel <span class="keyword">for</span> paddle (setup.py) ... <span class="keyword">done</span></span><br><span class="line">  Created wheel <span class="keyword">for</span> paddle: filename=paddle-1.0.2-py3-none-any.whl size=33366 sha256=63916ce0eea092ef9e690f3e992b51f32f955eabc66070be6e9feba60d672973</span><br><span class="line">  Stored <span class="keyword">in</span> directory: /Users/whx/Library/Caches/pip/wheels/e2/38/0e/382f68d54c6949b370f1438aa96172ff44a8ed367134cce32e</span><br><span class="line">Successfully built paddle</span><br><span class="line">Installing collected packages: paddle</span><br><span class="line">Successfully installed paddle-1.0.2</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>安装完后仍然执行异常，没办法，删除<code>rm -rf ~/opt/anaconda3</code>，重新下载命令行版本，下载地址<code>https://repo.anaconda.com/archive/Anaconda3-2022.10-MacOSX-x86_64.sh</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bash Anaconda3-2022.10-MacOSX-x86_64.sh</span><br><span class="line">conda create -n paddle232-py3710 python=3.7.10</span><br><span class="line">conda activate paddle232-py3710</span><br><span class="line">pip install paddle==1.0.2</span><br><span class="line">python -m pip install paddlepaddle==2.3.2 -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这时候 paddle2.3.2 环境正常。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">arch -x86_64 bash</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2020-12-18-ipfs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="wanghongxing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="红星的个人主页">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020-12-18-ipfs/" class="post-title-link" itemprop="url">IPFS 测试</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-01-02 20:03:01" itemprop="dateCreated datePublished" datetime="2023-01-02T20:03:01+08:00">2023-01-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-01-03 23:18:12" itemprop="dateModified" datetime="2023-01-03T23:18:12+08:00">2023-01-03</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>ipfs 搭建私有网络 作为服务运行</p>
+<p>主节点：whx: 192.168.33.10</p>
+<p>worker: 192.168.33.21</p>
+<p>下载：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/ipfs/go-ipfs/releases/download/v0.7.0/go-ipfs_v0.7.0_linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>解压缩 <code>tar xzf go-ipfs_v0.7.0_linux-amd64.tar.gz</code></p>
+<p>切换root，两个节点都执行</p>
+<p>初始化：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd go-ipfs</span><br><span class="line">sudo bash install.sh</span><br><span class="line">cp /usr/local/bin/ipfs /usr/bin/ipfs</span><br><span class="line">ipfs --version</span><br><span class="line">/usr/local/bin/ipfs init</span><br></pre></td></tr></table></figure>
+
+
+
+<p>主节点：</p>
+<p>安装golang </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install epel-release</span><br><span class="line">yum install go</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>创建共享key</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># go get github.com/Kubuxu/go-ipfs-swarm-key-gen/ipfs-swarm-key-gen</span><br><span class="line"># go/bin/ipfs-swarm-key-gen &gt; /root/.ipfs/swarm.key</span><br><span class="line"># ipfs bootstrap rm all</span><br><span class="line"># ipfs id</span><br><span class="line">&#123;</span><br><span class="line">	&quot;ID&quot;: &quot;12D3KooWNvmkBW5noeQLzEpSpktYSZjq69727Z9e9F1sEJtuwJEb&quot;,</span><br><span class="line">	&quot;PublicKey&quot;: &quot;CAESIMLMEqwfQn4BGZEcmH9ch+Oz93YYWqg//+i5/2dG26nI&quot;,</span><br><span class="line">	&quot;Addresses&quot;: null,</span><br><span class="line">	&quot;AgentVersion&quot;: &quot;go-ipfs/0.7.0/&quot;,</span><br><span class="line">	&quot;ProtocolVersion&quot;: &quot;ipfs/0.1.0&quot;,</span><br><span class="line">	&quot;Protocols&quot;: null</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>worker节点复制swarm.key</strong>，然后</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ipfs bootstrap <span class="built_in">rm</span> all</span><br><span class="line">ipfs bootstrap add /ip4/192.168.33.10/tcp/4001/ipfs/12D3KooWNvmkBW5noeQLzEpSpktYSZjq69727Z9e9F1sEJtuwJEb</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>两台服务器都把ipfs作为服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /lib/systemd/system</span><br><span class="line">vi ipfs.service</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=IPFS</span><br><span class="line">[Service]</span><br><span class="line">ExecStart=/usr/local/bin/ipfs daemon</span><br><span class="line">Restart=always</span><br><span class="line">User=root</span><br><span class="line">Group=root</span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>启用服务：</p>
+<p>systemctl enable ipfs.service</p>
+<p>systemctl start ipfs.service</p>
+<p>systemctl status ipfs.service</p>
+<p>测试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;from whx &quot;&gt; whx.txt</span><br><span class="line"></span><br><span class="line"># ipfs add whx.txt</span><br><span class="line">added QmYkeyhAYTaWdizfFEno2EtBTRdjazcSwYnhTWt4q7L5zU whx.txt</span><br><span class="line"># ipfs cat /ipfs/QmYkeyhAYTaWdizfFEno2EtBTRdjazcSwYnhTWt4q7L5zU</span><br><span class="line">from whx</span><br><span class="line"></span><br><span class="line"># echo &quot;from test3&quot;&gt;test.txt</span><br><span class="line"># ipfs add test.txt</span><br><span class="line">added QmXazQTUuAoiXEDqoCd4eF9g5okoMHWE2KMtAviS3dQ7h2 test.txt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>添加一个目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tree test</span></span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">├── index.html</span><br><span class="line">├── sub</span><br><span class="line">│   └── sub.html</span><br><span class="line">└── test.html</span><br><span class="line"><span class="comment"># ipfs add -r test</span></span><br><span class="line">added QmQV4SEvUf8UhLmf7bsjx97jtY4Pw1XBk2be2GUdyxRTMx <span class="built_in">test</span>/index.html</span><br><span class="line">added QmRxqKo5fUnpNPzvWcPnBZfkV9533bqZLBzRWFeWtkjbME <span class="built_in">test</span>/sub/sub.html</span><br><span class="line">added QmbNyHGiz83bNbUnyNjXTjr1pm8AhD5XHyhQfS6iLiwBT1 <span class="built_in">test</span>/test.html</span><br><span class="line">added QmZicCMMw7xfcbMHbZ1hNJ1n9om1jDFywdjQFXEkGwGQMW <span class="built_in">test</span>/sub</span><br><span class="line">added QmWBEkwUxHL81GScHYcKdMio7PBzJDNRHZxUpc8uRFdyQT <span class="built_in">test</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ipfs ls /ipfs/QmWBEkwUxHL81GScHYcKdMio7PBzJDNRHZxUpc8uRFdyQT/</span></span><br><span class="line">QmQV4SEvUf8UhLmf7bsjx97jtY4Pw1XBk2be2GUdyxRTMx 20 index.html</span><br><span class="line">QmZicCMMw7xfcbMHbZ1hNJ1n9om1jDFywdjQFXEkGwGQMW -  sub/</span><br><span class="line">QmbNyHGiz83bNbUnyNjXTjr1pm8AhD5XHyhQfS6iLiwBT1 20 test.html</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># echo &quot;aaaa&quot; &gt;test\sub\test.txt</span></span><br><span class="line"><span class="comment"># ipfs add -r test</span></span><br><span class="line">added QmQV4SEvUf8UhLmf7bsjx97jtY4Pw1XBk2be2GUdyxRTMx <span class="built_in">test</span>/index.html</span><br><span class="line">added QmRxqKo5fUnpNPzvWcPnBZfkV9533bqZLBzRWFeWtkjbME <span class="built_in">test</span>/sub/sub.html</span><br><span class="line">added QmbxCEbzgQZmy38pew5Wy6cbfiefW8z3vGbepZuZzcgchP <span class="built_in">test</span>/sub/test1.txt</span><br><span class="line">added QmbNyHGiz83bNbUnyNjXTjr1pm8AhD5XHyhQfS6iLiwBT1 <span class="built_in">test</span>/test.html</span><br><span class="line">added QmWR5PNWprgGfnYS9t3MUZGV1YtYifWkebgrh7UB6Zi3xD <span class="built_in">test</span>/sub</span><br><span class="line">added QmeoLK9ZsQK9zroLjb7HNxhyqE37ieL66uFnLRJoWD4bxL <span class="built_in">test</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ipfs ls /ipfs/QmeoLK9ZsQK9zroLjb7HNxhyqE37ieL66uFnLRJoWD4bxL</span></span><br><span class="line">QmQV4SEvUf8UhLmf7bsjx97jtY4Pw1XBk2be2GUdyxRTMx 20 index.html</span><br><span class="line">QmWR5PNWprgGfnYS9t3MUZGV1YtYifWkebgrh7UB6Zi3xD -  sub/</span><br><span class="line">QmbNyHGiz83bNbUnyNjXTjr1pm8AhD5XHyhQfS6iLiwBT1 20 test.html</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注意到两次的不同</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">QmZicCMMw7xfcbMHbZ1hNJ1n9om1jDFywdjQFXEkGwGQMW -  sub/</span><br><span class="line"></span><br><span class="line">QmWR5PNWprgGfnYS9t3MUZGV1YtYifWkebgrh7UB6Zi3xD -  sub/</span><br><span class="line"></span><br><span class="line"><span class="comment"># ipfs ls QmZicCMMw7xfcbMHbZ1hNJ1n9om1jDFywdjQFXEkGwGQMW</span></span><br><span class="line">QmRxqKo5fUnpNPzvWcPnBZfkV9533bqZLBzRWFeWtkjbME 21 sub.html</span><br><span class="line"></span><br><span class="line"><span class="comment"># ipfs ls QmWR5PNWprgGfnYS9t3MUZGV1YtYifWkebgrh7UB6Zi3xD</span></span><br><span class="line">QmRxqKo5fUnpNPzvWcPnBZfkV9533bqZLBzRWFeWtkjbME 21 sub.html</span><br><span class="line">QmbxCEbzgQZmy38pew5Wy6cbfiefW8z3vGbepZuZzcgchP 10 test1.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="绑定节点名-publish"><a href="#绑定节点名-publish" class="headerlink" title="绑定节点名 publish"></a>绑定节点名 publish</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ipfs name publish QmeoLK9ZsQK9zroLjb7HNxhyqE37ieL66uFnLRJoWD4bxL</span></span><br><span class="line">Published to k51qzi5uqu5dk53t2hi2f8dhupwl2kkxypggp4dd7svxkxirwg411zfthqn08e: /ipfs/QmeoLK9ZsQK9zroLjb7HNxhyqE37ieL66uFnLRJoWD4bxL</span><br><span class="line"><span class="comment"># ipfs cat /ipns/k51qzi5uqu5dk53t2hi2f8dhupwl2kkxypggp4dd7svxkxirwg411zfthqn08e/index.html</span></span><br><span class="line">index.html from <span class="built_in">test</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># echo &quot;index.html version new&quot; &gt;test/index.html</span></span><br><span class="line"><span class="comment"># ipfs add -r test</span></span><br><span class="line">added QmNZt9aFJHtggpXupw2VjsvZ1RksV7AfjhLgBSSN5q9a51 <span class="built_in">test</span>/index.html</span><br><span class="line">added QmRxqKo5fUnpNPzvWcPnBZfkV9533bqZLBzRWFeWtkjbME <span class="built_in">test</span>/sub/sub.html</span><br><span class="line">added QmbxCEbzgQZmy38pew5Wy6cbfiefW8z3vGbepZuZzcgchP <span class="built_in">test</span>/sub/test1.txt</span><br><span class="line">added QmbNyHGiz83bNbUnyNjXTjr1pm8AhD5XHyhQfS6iLiwBT1 <span class="built_in">test</span>/test.html</span><br><span class="line">added QmWR5PNWprgGfnYS9t3MUZGV1YtYifWkebgrh7UB6Zi3xD <span class="built_in">test</span>/sub</span><br><span class="line">added QmbwhfHfarbU3X9wa8ovtK7Q4fGkd8R3B8biH4kUD7CmuU <span class="built_in">test</span></span><br><span class="line"><span class="comment">#  ipfs name publish QmbwhfHfarbU3X9wa8ovtK7Q4fGkd8R3B8biH4kUD7CmuU</span></span><br><span class="line">Published to k51qzi5uqu5dk53t2hi2f8dhupwl2kkxypggp4dd7svxkxirwg411zfthqn08e: /ipfs/QmbwhfHfarbU3X9wa8ovtK7Q4fGkd8R3B8biH4kUD7CmuU</span><br><span class="line"><span class="comment"># ipfs cat /ipns/k51qzi5uqu5dk53t2hi2f8dhupwl2kkxypggp4dd7svxkxirwg411zfthqn08e/index.html</span></span><br><span class="line">index.html version new</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>节点直接不能互相发现，这是因为swarm announce的ip 不固定，多网卡的情况下回在虚拟机里绑定到docker网卡，修改方法是修改.ipfs/config</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;Addresses&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;Announce&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="string">&quot;/ip4/1.2.3.4/tcp/4001&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>下载webui</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ipfs-shipyard/ipfs-webui/releases/download/v2.11.1/ipfs-webui.tar.gz">https://github.com/ipfs-shipyard/ipfs-webui/releases/download/v2.11.1/ipfs-webui.tar.gz</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar zxf ipfs-webui.tar.gz</span></span><br><span class="line"><span class="comment"># ipfs add -r build</span></span><br><span class="line">added QmaFK9e6DjMuqnsi9hDJoJb6E1iFxJaHHWiKUoUpVjeg7h build/static</span><br><span class="line">added QmZtzPm6EgQToncp6RuHdaTtyPpWQy2gvTrXuMsYQxHV5k build</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin &#x27;[&quot;http://bafybeiflxftai7lnntipulvvmn3vfcs3ktig4kgzxollh276zqmchxz6cm.ipfs.localhost:8080&quot;, &quot;http://localhost:3000&quot;, &quot;http://127.0.0.1:5001&quot;, &quot;https://webui.ipfs.io&quot;]&#x27;</span><br><span class="line"># ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods &#x27;[&quot;PUT&quot;, &quot;POST&quot;]&#x27;</span><br><span class="line"></span><br><span class="line"># curl -v http://localhost:8080/ipfs/QmZtzPm6EgQToncp6RuHdaTtyPpWQy2gvTrXuMsYQxHV5k</span><br><span class="line">&lt; Location: http://bafybeiflxftai7lnntipulvvmn3vfcs3ktig4kgzxollh276zqmchxz6cm.ipfs.localhost:8080/</span><br><span class="line">echo &quot;127.0.0.1 bafybeiflxftai7lnntipulvvmn3vfcs3ktig4kgzxollh276zqmchxz6cm.ipfs.localhost&quot;&gt;&gt;/etc/hosts</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>访问如下地址</p>
+<p><a target="_blank" rel="noopener" href="http://bafybeiflxftai7lnntipulvvmn3vfcs3ktig4kgzxollh276zqmchxz6cm.ipfs.localhost:8080/#/welcome">http://bafybeiflxftai7lnntipulvvmn3vfcs3ktig4kgzxollh276zqmchxz6cm.ipfs.localhost:8080/#/welcome</a></p>
+<hr>
+<p>ipfs key</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ipfs key list -l</span></span><br><span class="line">k51qzi5uqu5dk53t2hi2f8dhupwl2kkxypggp4dd7svxkxirwg411zfthqn08e self</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<hr>
+<p>云端服务器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># ipfs id</span><br><span class="line">&#123;</span><br><span class="line">	&quot;ID&quot;: &quot;12D3KooWDiAhxybZwdsdHrnjogpbdnKuBPDSFn883cwyDpJb5hiZ&quot;,</span><br><span class="line">	&quot;PublicKey&quot;: &quot;CAESIDnYTZXIdT2889xegXXVgnDQwTx9GuoY/FKXqOYBGU8q&quot;,</span><br><span class="line">	&quot;Addresses&quot;: [</span><br><span class="line">		&quot;/ip4/127.0.0.1/tcp/4001/p2p/12D3KooWDiAhxybZwdsdHrnjogpbdnKuBPDSFn883cwyDpJb5hiZ&quot;,</span><br><span class="line">		&quot;/ip4/192.168.1.16/tcp/4001/p2p/12D3KooWDiAhxybZwdsdHrnjogpbdnKuBPDSFn883cwyDpJb5hiZ&quot;,</span><br><span class="line">		&quot;/ip6/::1/tcp/4001/p2p/12D3KooWDiAhxybZwdsdHrnjogpbdnKuBPDSFn883cwyDpJb5hiZ&quot;</span><br><span class="line">	],</span><br><span class="line">	&quot;AgentVersion&quot;: &quot;go-ipfs/0.7.0/&quot;,</span><br><span class="line">	&quot;ProtocolVersion&quot;: &quot;ipfs/0.1.0&quot;,</span><br><span class="line">	&quot;Protocols&quot;: [</span><br><span class="line">		&quot;/ipfs/bitswap&quot;,</span><br><span class="line">		&quot;/ipfs/bitswap/1.0.0&quot;,</span><br><span class="line">		&quot;/ipfs/bitswap/1.1.0&quot;,</span><br><span class="line">		&quot;/ipfs/bitswap/1.2.0&quot;,</span><br><span class="line">		&quot;/ipfs/id/1.0.0&quot;,</span><br><span class="line">		&quot;/ipfs/id/push/1.0.0&quot;,</span><br><span class="line">		&quot;/ipfs/lan/kad/1.0.0&quot;,</span><br><span class="line">		&quot;/ipfs/ping/1.0.0&quot;,</span><br><span class="line">		&quot;/libp2p/autonat/1.0.0&quot;,</span><br><span class="line">		&quot;/libp2p/circuit/relay/0.1.0&quot;,</span><br><span class="line">		&quot;/p2p/id/delta/1.0.0&quot;,</span><br><span class="line">		&quot;/x/&quot;</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在服务器安装节点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">114.115.210.207</span><br><span class="line">114.115.212.160</span><br><span class="line">119.3.165.66</span><br></pre></td></tr></table></figure>
+
+<p>然后再所有内网节点加入前两个节点，不加入第三个节点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ipfs bootstrap add /ip4/114.115.210.207/tcp/4001/ipfs/12D3KooWDiAhxybZwdsdHrnjogpbdnKuBPDSFn883cwyDpJb5hiZ</span><br><span class="line">ipfs bootstrap add /ip4/114.115.212.160/tcp/4001/ipfs/12D3KooWART3DbX2qT93YjPzBxyEVLqaFSoH9rm6Wt9ZZE2VwErh</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后在内网节点添加文件，不在两台bootstrap中查看，在第三台上不能看到文件。</p>
+<p>在两台bootstrap中的任意一台查看过文件后，可以在第三台上看到。</p>
+<p>结论：内网的文件需要在外网服务器上pin后，才能在别的节点查看。</p>
+<p>todo：在一台nat后的服务器上添加文件，研究其它节点的情况。</p>
+<hr>
+<p>研究nodejs版本的各个例子</p>
+<p>browser-http-client-upload-file：</p>
+<p>启动后点击查看的时候会把<code>http://localhost:8080/ipfs/Qmb3b88paN4AocnjyTNCpRqh2CsbskhvoLbE7o6BhHmD85</code></p>
+<p>重定向到</p>
+<p><code>http://Qmb3b88paN4AocnjyTNCpRqh2CsbskhvoLbE7o6BhHmD85.ipfs .localhost:8080/ipfs/</code></p>
+<p>修改配置文件后不跳转了，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ipfs config --json Gateway.PublicGateways &#x27;&#123;</span><br><span class="line">    &quot;localhost:8080&quot;: &#123;</span><br><span class="line">      &quot;UseSubdomains&quot;: false,</span><br><span class="line">      &quot;Paths&quot;: [&quot;/ipfs&quot;, &quot;/ipns&quot;, &quot;/api&quot;]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;&#x27;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+<hr>
+<p>浏览器直接访问ipfs api 的时候报access-control-allow 错，添加配置后重启ipfs即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin &#x27;[&quot;*&quot;]&#x27;</span><br><span class="line">ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods &#x27;[&quot;PUT&quot;, &quot;GET&quot;, &quot;POST&quot;]&#x27;</span><br><span class="line">ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials &#x27;[&quot;true&quot;]&#x27;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
     <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2020-11-18-ipfs-cluster%20%E6%B5%8B%E8%AF%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1054,238 +1422,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2018-mark-down-use/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星的个人主页">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018-mark-down-use/" class="post-title-link" itemprop="url">mark down 的基本用法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-04-29 15:01:48" itemprop="dateCreated datePublished" datetime="2018-04-29T15:01:48+08:00">2018-04-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-19 09:41:41" itemprop="dateModified" datetime="2023-01-19T09:41:41+08:00">2023-01-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/fabric/" itemprop="url" rel="index"><span itemprop="name">fabric</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="标题1"><a href="#标题1" class="headerlink" title="标题1"></a>标题1</h1><p>allala</p>
-<h2 id="标题二"><a href="#标题二" class="headerlink" title="标题二"></a>标题二</h2><p>第二部分</p>
-<h2 id="无序列表：使用星号、加号或是减号作为列表标记"><a href="#无序列表：使用星号、加号或是减号作为列表标记" class="headerlink" title="无序列表：使用星号、加号或是减号作为列表标记"></a>无序列表：使用星号、加号或是减号作为列表标记</h2><ul>
-<li>Red</li>
-<li>Green</li>
-<li>Blue</li>
-</ul>
-<h2 id="有序列表：使用数字接着一个英文句点"><a href="#有序列表：使用数字接着一个英文句点" class="headerlink" title="有序列表：使用数字接着一个英文句点"></a>有序列表：使用数字接着一个英文句点</h2><ol>
-<li><p>Red</p>
-</li>
-<li><p>Green</p>
-</li>
-<li><p>Blue</p>
-<blockquote>
-<p>aaa<br>bbb</p>
-</blockquote>
-</li>
-<li><p>11</p>
-</li>
-<li><p>333</p>
-</li>
-<li><p><input disabled="" type="checkbox">  不勾选</p>
-</li>
-<li><p><input checked="" disabled="" type="checkbox">  勾选</p>
-</li>
-<li><p>223</p>
-</li>
-</ol>
-<ul>
-<li><input disabled="" type="checkbox"> 不勾选</li>
-<li><input checked="" disabled="" type="checkbox"> 勾选</li>
-</ul>
-<h2 id="强调"><a href="#强调" class="headerlink" title="强调"></a>强调</h2><p>在Markdown中，可以使用 * 和  _  来表示斜体和加粗。</p>
-<h2 id="斜体："><a href="#斜体：" class="headerlink" title="斜体："></a>斜体：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*Coding，让开发更简单*</span><br><span class="line">_Coding，让开发更简单_</span><br></pre></td></tr></table></figure>
-<p><em>Coding，让开发更简单</em><br><em>Coding，让开发更简单</em></p>
-<h2 id="加粗："><a href="#加粗：" class="headerlink" title="加粗："></a>加粗：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">**Coding，让开发更简单**</span><br><span class="line">__Coding，让开发更简单__</span><br></pre></td></tr></table></figure>
-
-<p><strong>Coding，让开发更简单</strong><br><strong>Coding，让开发更简单</strong></p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>只要把你的代码块包裹在 “` 之间，你就不需要通过无休止的缩进来标记代码块了。 在围栏式代码块中，你可以指定一个可选的语言标识符，然后我们就可以为它启用语法着色了。 举个例子，这样可以为一段 Ruby 代码着色：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span> <span class="string">&#x27;redcarpet&#x27;</span></span><br><span class="line">markdown = <span class="title class_">Redcarpet</span>.<span class="title function_">new</span>(<span class="string">&quot;Hello World!&quot;</span>)</span><br><span class="line">puts markdown.<span class="property">to_html</span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="自动链接"><a href="#自动链接" class="headerlink" title="自动链接"></a>自动链接</h2><p>方括号显示说明，圆括号内显示网址， Markdown 会自动把它转成链接，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[超强大的云开发平台Coding](http://coding.net)</span><br></pre></td></tr></table></figure>
-<p><a target="_blank" rel="noopener" href="http://coding.net/">超强大的云开发平台Coding</a></p>
-<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>在 Markdown 中，可以制作表格，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">First Header | Second Header | Third Header</span><br><span class="line">------------ | ------------- | ------------</span><br><span class="line">Content Cell | Content Cell  | Content Cell</span><br><span class="line">Content Cell | Content Cell  | Content Cell</span><br></pre></td></tr></table></figure>
-
-
-<table>
-<thead>
-<tr>
-<th>First Header</th>
-<th>Second Header</th>
-<th>Third Header</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-<tr>
-<td>Content Cell</td>
-<td>Content Cell</td>
-<td>Content Cell</td>
-</tr>
-</tbody></table>
-<p>分割线</p>
-<p>在 Markdown 中，可以使用 3 个以上『-』符号制作分割线，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这是分隔线上部分内容</span><br><span class="line">---</span><br><span class="line">这是分隔线下部分内容</span><br></pre></td></tr></table></figure>
-<p>效果图如下：</p>
-<h2 id="这是分隔线上部分内容"><a href="#这是分隔线上部分内容" class="headerlink" title="这是分隔线上部分内容"></a>这是分隔线上部分内容</h2><p>这是分隔线下部分内容</p>
-<p>没有了</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://hongxing.tech/2018-hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="wanghongxing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="红星的个人主页">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018-hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-03-30 11:20:34" itemprop="dateCreated datePublished" datetime="2018-03-30T11:20:34+08:00">2018-03-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-03 23:19:06" itemprop="dateModified" datetime="2023-01-03T23:19:06+08:00">2023-01-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>git init .</p>
-<p>增加 theme<br>git submodule add <a href="mailto:&#103;&#105;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#x63;&#111;&#x6d;">&#103;&#105;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#x63;&#111;&#x6d;</a>:theme-next/hexo-theme-next themes/next</p>
-<p>git commit -m “init”</p>
-<h3 id="推送到远程仓"><a href="#推送到远程仓" class="headerlink" title="推送到远程仓"></a>推送到远程仓</h3><p>git remote add origin <a href="mailto:&#x67;&#x69;&#x74;&#64;&#x67;&#105;&#116;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;">&#x67;&#x69;&#x74;&#64;&#x67;&#105;&#116;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#109;</a>:wanghongxing/wanghongxing.github.io.git<br>git push –set-upstream origin src</p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1351,7 +1491,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
